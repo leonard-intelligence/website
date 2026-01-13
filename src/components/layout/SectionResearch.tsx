@@ -1,8 +1,5 @@
-import React from 'react';
-import { FxImage } from '../fx/FxImage';
 import { ArrowUpRight } from 'lucide-react';
-import { cn } from '../../lib/utils';
-import { TechCard, TechCardImage } from '../ui/TechCard';
+import { TechCard, TechCardImage } from "@/components/ui/TechCard";
 
 export function SectionResearch() {
     return (

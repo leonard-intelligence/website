@@ -1,6 +1,7 @@
-// FX Components barrel export
+// FX Components barrel export - Updated split context
 export { FxImage } from './FxImage';
 export { FxDebugPanel } from './FxDebugPanel';
-export { FxProvider, useFxConfig, useFxDebug } from './FxContext';
+export { useFxConfig, useFxDebug } from './FxContext';
 export { FX_DEFAULTS, hexToRgb } from './fxConfig';
 export type { FxConfig, BeadsConfig, DuotoneConfig, HoverConfig } from './fxConfig';
+export * from './FxProvider';

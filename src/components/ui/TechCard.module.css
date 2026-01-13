@@ -1,0 +1,131 @@
+/* Base Card Style */
+.card {
+  border-radius: 0 !important;
+  transition: all 0.2s ease;
+  
+  /* Consolidating styles from index.css */
+  background: #000;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: none !important;
+  position: relative;
+  overflow: visible !important; /* Allow markers to sit on edges */
+  padding-bottom: 24px;
+}
+
+.card h3 {
+  padding: 0 24px;
+  margin-bottom: 12px;
+  background: #000;
+}
+
+.card p {
+  padding: 0 24px;
+  background: #000;
+  font-size: 0.95rem;
+  line-height: 1.5;
+  color: var(--muted-foreground);
+  margin-bottom: 1.5rem;
+  flex-grow: 1;
+}
+
+/* TECHNICAL CORNER MARKERS (::after) */
+.card::after {
+  content: '';
+  position: absolute;
+  top: -1px;
+  left: -1px;
+  right: -1px;
+  bottom: -1px;
+  z-index: 20;
+  pointer-events: none;
+
+  /* MARKER CONFIG */
+  --m-color: #ffffff;
+  --m-size: 8px;
+  --m-width: 1px;
+
+  background:
+    /* Top Left L */
+    linear-gradient(to right, var(--m-color) 100%, transparent) 0 0,
+    linear-gradient(to bottom, var(--m-color) 100%, transparent) 0 0,
+    /* Top Right L */
+    linear-gradient(to left, var(--m-color) 100%, transparent) 100% 0,
+    linear-gradient(to bottom, var(--m-color) 100%, transparent) 100% 0,
+    /* Bottom Left L */
+    linear-gradient(to right, var(--m-color) 100%, transparent) 0 100%,
+    linear-gradient(to top, var(--m-color) 100%, transparent) 0 100%,
+    /* Bottom Right L */
+    linear-gradient(to left, var(--m-color) 100%, transparent) 100% 100%,
+    linear-gradient(to top, var(--m-color) 100%, transparent) 100% 100%;
+
+  background-repeat: no-repeat;
+  background-size: var(--m-size) var(--m-width), var(--m-width) var(--m-size);
+  transition: all 0.2s;
+}
+
+.card:hover {
+  border: 1px solid #ffffff;
+  background: #000;
+  transform: none;
+}
+
+.card:hover::after {
+  --m-color: #ffffff;
+}
+
+/* IMAGE WRAPPER */
+.imageWrapper {
+  width: 100%;
+  aspect-ratio: 3 / 2;
+  height: auto;
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 0 !important;
+  margin-bottom: 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden; /* Changed from card override */
+  
+  /* Striped Texture */
+  background-color: #050505;
+  background-image: repeating-linear-gradient(45deg,
+      rgba(255, 255, 255, 0.03),
+      rgba(255, 255, 255, 0.03) 1px,
+      transparent 1px,
+      transparent 8px);
+  
+  border: 1px solid var(--border);
+  margin: 0 0 24px 0;
+  padding: 24px;
+  position: relative;
+  transition: border-color 0.2s;
+}
+
+.imageWrapperFull {
+  padding: 0 !important;
+}
+
+.imageWrapperFull .image {
+  max-width: 100% !important;
+  max-height: 100% !important;
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+}
+
+.image {
+  width: auto;
+  height: auto;
+  max-width: 90%;
+  max-height: 90%;
+  object-fit: contain;
+  position: absolute !important;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  transition: transform 0.3s ease;
+}
+
+.card:hover .image {
+  transform: translate(-50%, -50%);
+}

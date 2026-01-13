@@ -87,6 +87,7 @@ export const FX_DEFAULTS: FxConfig = {
             duotoneModulation: true,
             modulationColor: '#000000',
             modulationColor2: '#0011ff',
+            useLuminanceAsDepth: true,
         }
     }
 };
@@ -100,6 +101,9 @@ export interface AutoInteractionConfig {
     duotoneModulation?: boolean; // If true, auto effect modulates duotone intensity
     modulationColor?: string; // Optional custom color for modulation (Color A / Shadow)
     modulationColor2?: string; // Optional second color (Color B / Highlight) for Duotone Tint
+    useLuminanceAsDepth?: boolean; // New: Use image luminance as fallback for depth
+    depthSpeed?: number;        // New: How much depth affects speed (0.0 - 10.0)
+    depthBrightness?: number;   // New: How much depth affects brightness (0.0 - 2.0)
 }
 
 /**

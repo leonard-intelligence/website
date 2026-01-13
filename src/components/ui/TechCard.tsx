@@ -1,25 +1,30 @@
-import { cn } from "../../lib/utils";
+import { cn } from "@/lib/utils";
 import React from "react";
-import { FxImage } from "../fx";
+import { FxImage } from "@/components/fx";
+import styles from "./TechCard.module.css";
+import { useFxConfig } from "@/components/fx/FxContext";
+import { useState } from "react";
 
 interface TechCardProps extends React.HTMLAttributes<HTMLDivElement> {
     children: React.ReactNode;
     className?: string;
-    showMarkers?: boolean;
 }
 
-// Simplified TechCard relying on global CSS (index.css)
-export function TechCard({ children, className, showMarkers = true, ...props }: TechCardProps) {
+// Simplified TechCard relying on CSS Module
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+export function TechCard({ children, className, ...props }: TechCardProps & { showMarkers?: boolean }) {
+    // Determine if showMarkers is passed (even if unused by CSS module now, we strip it)
+    const { showMarkers, ...domProps } = props as any;
+
     return (
         <div
             className={cn(
-                "product-card", // Applies all the CSS logic (padding, outline, markers)
+                styles.card,
                 className
             )}
-            {...props}
+            {...domProps}
         >
             {children}
-            {/* Markers are now handled by CSS ::after */}
         </div>
     );
 }
@@ -31,9 +36,6 @@ interface TechCardImageProps {
     useFx?: boolean; // Enable FX effects
     layout?: 'contained' | 'full';
 }
-
-import { useFxConfig } from "../fx/FxContext";
-import { useState } from "react";
 
 // Image Wrapper with optional FX effects
 export const TechCardImage = ({ src, alt, className, useFx = true, layout = 'contained' }: TechCardImageProps) => {
@@ -49,7 +51,7 @@ export const TechCardImage = ({ src, alt, className, useFx = true, layout = 'con
     const hoverConfig = globalConfig.hover;
 
     // Construct config overrides
-    const configOverrides: Partial<any> = {
+    const configOverrides: Record<string, unknown> = {
         // Disable sphere interaction on cards
         interaction: {
             enabled: false,
@@ -79,7 +81,7 @@ export const TechCardImage = ({ src, alt, className, useFx = true, layout = 'con
 
     return (
         <div
-            className={cn("card-image-wrapper", layout === 'full' && "full", className)}
+            className={cn(styles.imageWrapper, layout === 'full' && styles.imageWrapperFull, className)}
             onMouseEnter={() => setIsHovered(true)}
             onMouseLeave={() => setIsHovered(false)}
         >
@@ -87,11 +89,7 @@ export const TechCardImage = ({ src, alt, className, useFx = true, layout = 'con
                 <FxImage
                     src={src}
                     alt={alt}
-                    className="card-image"
-                    imgStyle={layout === 'full' ? { objectFit: 'cover', width: '100%', height: '100%' } : undefined}
-                    config={configOverrides}
-                    alt={alt}
-                    className="card-image"
+                    className={styles.image} // Using module class
                     imgStyle={layout === 'full' ? { objectFit: 'cover', width: '100%', height: '100%' } : undefined}
                     config={configOverrides}
                 />
@@ -99,7 +97,7 @@ export const TechCardImage = ({ src, alt, className, useFx = true, layout = 'con
                 <img
                     src={src}
                     alt={alt}
-                    className="card-image"
+                    className={styles.image}
                 />
             )}
         </div>

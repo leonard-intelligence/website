@@ -1,10 +1,10 @@
-import { TechCard } from "../ui/TechCard";
+import { TechCard } from "@/components/ui/TechCard";
 
 export function Pillars() {
     return (
         <section className="pillars-section" id="solutions">
             <div className="bento-container reveal delay-200">
-                <TechCard className="bento-card card-text p-8">
+                <TechCard className="card-text p-8">
                     <div className="card-icon text-3xl mb-6">🎯</div>
                     <h3 className="text-xl font-bold mb-4">Sur-Mesure "Métier"</h3>
                     <p className="text-muted-foreground mb-6">Pas de gadget. Des copilotes et agents alignés sur vos process réels (Factures, RH, Juridique, Support).</p>
@@ -15,12 +15,12 @@ export function Pillars() {
                     </div>
                 </TechCard>
                 <div className="bento-stack flex flex-col gap-6">
-                    <TechCard className="bento-card card-visual p-8 flex-1">
+                    <TechCard className="card-visual p-8 flex-1">
                         <div className="card-icon text-3xl mb-6">👁️</div>
                         <h3 className="text-xl font-bold mb-4">Multimodal Natif</h3>
                         <p className="text-muted-foreground">Texte, Image, Audio, Vidéo. Une IA qui voit, écoute et analyse tout.</p>
                     </TechCard>
-                    <TechCard className="bento-card card-auto p-8 border-emerald-500/30 bg-emerald-500/5" showMarkers={false}>
+                    <TechCard className="card-auto p-8 border-emerald-500/30 bg-emerald-500/5">
                         <div className="card-icon text-3xl mb-6">🇪🇺</div>
                         <h3 className="text-xl font-bold mb-4 text-emerald-400">Souveraineté Totale</h3>
                         <p className="text-emerald-500/80">Déploiement <strong className="text-emerald-400">Local</strong> ou <strong className="text-emerald-400">Cloud UE</strong> dédié. Vos données ne fuitent jamais.</p>

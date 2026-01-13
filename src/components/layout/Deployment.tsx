@@ -1,4 +1,4 @@
-import { TechCard, TechCardImage } from "../ui/TechCard";
+import { TechCard, TechCardImage } from "@/components/ui/TechCard";
 import serverImage from "../../assets/abstract-network.png"; // Using available abstract asset
 
 export function Deployment() {

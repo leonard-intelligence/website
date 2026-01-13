@@ -60,6 +60,14 @@ uniform bool u_autoDuotone; // New: Modulate duotone
 uniform vec3 u_autoColor;   // New: Tint color (Shadow)
 uniform vec3 u_autoColor2;  // New: Tint color (Highlight)
 
+uniform float u_autoDepthSpeed;      // New
+uniform float u_autoDepthBrightness; // New
+
+// Depth Uniforms
+uniform sampler2D u_depthMap;
+uniform bool u_hasDepth;
+uniform bool u_useLuminanceAsDepth;
+
 float luminance(vec3 color) {
     return dot(color, vec3(0.299, 0.587, 0.114));
 }
@@ -195,14 +203,33 @@ float getAutoInteractionValue(vec2 uv) {
                  
                  autoVal = (line * 0.3 + packet * 0.7) * u_autoStrength;
             } else if (u_autoType == 8) { // Matrix (Rain)
+                 // DEPTH LOGIC
+                 float depthRef = 0.0; // Default flat
+                 if (u_hasDepth) {
+                     depthRef = texture2D(u_depthMap, uv).r;
+                 } else if (u_useLuminanceAsDepth) {
+                     depthRef = luminance(texture2D(u_image, uv).rgb);
+                 }
+                 
+                 // Increase contrast on depth to make it "pop" on edges
+                 depthRef = smoothstep(0.1, 0.6, depthRef);
+
                  vec2 uvSt = scaledUV * vec2(1.0, 0.5); 
                  vec2 ipos = floor(uvSt * 15.0);
+                 
                  float speed = 1.0 + random(vec2(ipos.x, 0.0)) * 2.0;
+                 // Dynamic Speed based on Depth
+                 speed += depthRef * u_autoDepthSpeed; 
+
                  float yOffset = time * speed;
                  float charVal = random(ipos + floor(yOffset));
                  float trail = fract(uvSt.y * 2.0 + yOffset);
                  trail = pow(1.0 - trail, 4.0);
-                 autoVal = step(0.5, charVal) * trail * u_autoStrength;
+                 
+                 // Depth Boosts visibility/brightness
+                 float depthBoost = (depthRef * u_autoDepthBrightness) + 0.4;
+                 
+                 autoVal = step(0.5, charVal) * trail * u_autoStrength * depthBoost;
             } else if (u_autoType == 9) { // Scanline (Holo)
                  float scan = sin(scaledUV.y * 50.0 - time * 5.0);
                  scan = smoothstep(0.4, 0.6, scan);

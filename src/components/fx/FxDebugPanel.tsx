@@ -3,8 +3,8 @@
  * Only visible when ?fxdebug=1 or localStorage.FX_DEBUG === '1'
  */
 
-import { useState, useEffect } from 'react';
-import type { FxConfig } from './fxConfig';
+import { useState } from 'react';
+import type { FxConfig, InteractionConfig, AutoInteractionConfig } from './fxConfig';
 import { useFxDebug } from './FxContext';
 
 interface FxDebugPanelProps {
@@ -18,13 +18,9 @@ function isDebugEnabled(): boolean {
 }
 
 export function FxDebugPanel({ onConfigChange }: FxDebugPanelProps) {
-    const [isVisible, setIsVisible] = useState(false);
+    const [isVisible, setIsVisible] = useState(isDebugEnabled);
     const { config, updateConfig: contextUpdateConfig } = useFxDebug();
     const [copied, setCopied] = useState(false);
-
-    useEffect(() => {
-        setIsVisible(isDebugEnabled());
-    }, []);
 
     const updateConfig = (updates: Partial<FxConfig>) => {
         contextUpdateConfig(updates);
@@ -122,7 +118,7 @@ export function FxDebugPanel({ onConfigChange }: FxDebugPanelProps) {
                     <span>Mode</span>
                     <select
                         value={config.interaction?.mode ?? 'shape'}
-                        onChange={e => updateInteraction({ mode: e.target.value as any })}
+                        onChange={e => updateInteraction({ mode: e.target.value as InteractionConfig['mode'] })}
                         style={styles.select}
                     >
                         <option value="none">None</option>
@@ -203,7 +199,7 @@ export function FxDebugPanel({ onConfigChange }: FxDebugPanelProps) {
                             <span>Type</span>
                             <select
                                 value={config.interaction?.auto?.type ?? 'wave'}
-                                onChange={e => updateInteraction({ auto: { ...(config.interaction?.auto || { enabled: true, speed: 0.5, strength: 0.5 }), type: e.target.value as any } })}
+                                onChange={e => updateInteraction({ auto: { ...(config.interaction?.auto || { enabled: true, speed: 0.5, strength: 0.5 }), type: e.target.value as AutoInteractionConfig['type'] } })}
                                 style={styles.select}
                             >
                                 <option value="wave">Wave</option>
@@ -256,6 +252,31 @@ export function FxDebugPanel({ onConfigChange }: FxDebugPanelProps) {
                                 step="0.05"
                                 value={config.interaction?.auto?.strength ?? 0.5}
                                 onChange={e => updateInteraction({ auto: { ...(config.interaction?.auto), strength: Number(e.target.value) } })}
+                                style={styles.slider}
+                            />
+                        </div>
+
+                        <div style={styles.row}>
+                            <span>Depth Speed: {(config.interaction?.auto?.depthSpeed ?? 3.0).toFixed(1)}</span>
+                            <input
+                                type="range"
+                                min="0.0"
+                                max="10.0"
+                                step="0.5"
+                                value={config.interaction?.auto?.depthSpeed ?? 3.0}
+                                onChange={e => updateInteraction({ auto: { ...(config.interaction?.auto), depthSpeed: Number(e.target.value) } })}
+                                style={styles.slider}
+                            />
+                        </div>
+                        <div style={styles.row}>
+                            <span>Depth Bright: {(config.interaction?.auto?.depthBrightness ?? 0.8).toFixed(2)}</span>
+                            <input
+                                type="range"
+                                min="0.0"
+                                max="2.0"
+                                step="0.1"
+                                value={config.interaction?.auto?.depthBrightness ?? 0.8}
+                                onChange={e => updateInteraction({ auto: { ...(config.interaction?.auto), depthBrightness: Number(e.target.value) } })}
                                 style={styles.slider}
                             />
                         </div>

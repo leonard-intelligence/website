@@ -1,4 +1,4 @@
-import { TechCard } from "../ui/TechCard";
+import { TechCard } from "@/components/ui/TechCard";
 
 export function Solutions() {
     return (

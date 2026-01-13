@@ -4,7 +4,7 @@
  * Applies effects with uniform screen-space bead size
  */
 
-import { useEffect, useRef, useState, useCallback } from 'react';
+import { useEffect, useRef, useState, useCallback, useMemo, type CSSProperties } from 'react';
 import type { FxConfig } from './fxConfig';
 import { hexToRgb } from './fxConfig';
 import { useFxConfig } from './FxContext';
@@ -12,17 +12,19 @@ import { VERTEX_SHADER, FRAGMENT_SHADER } from './shaders/fxShaders';
 
 interface FxImageProps {
     src: string;
+    depthSrc?: string; // New: Optional depth map source
     alt?: string;
     className?: string;
     config?: Partial<FxConfig>;
-    style?: React.CSSProperties; // Container style
-    imgStyle?: React.CSSProperties; // Inner Image style override
+    style?: CSSProperties; // Container style
+    imgStyle?: CSSProperties; // Inner Image style override
 }
 
 interface WebGLState {
     gl: WebGLRenderingContext;
     program: WebGLProgram;
     texture: WebGLTexture;
+    depthTexture?: WebGLTexture | null; // New
     uniforms: Record<string, WebGLUniformLocation | null>;
     colorState?: { cA: number[], cB: number[] };
 }
@@ -108,21 +110,24 @@ function setupQuad(gl: WebGLRenderingContext, program: WebGLProgram) {
     gl.vertexAttribPointer(texLoc, 2, gl.FLOAT, false, 0, 0);
 }
 
-export function FxImage({ src, alt = '', className = '', config, style, imgStyle }: FxImageProps) {
+export function FxImage({ src, depthSrc, alt = '', className = '', config, style, imgStyle }: FxImageProps) {
     const containerRef = useRef<HTMLDivElement>(null);
     const canvasRef = useRef<HTMLCanvasElement>(null);
+
     const imgRef = useRef<HTMLImageElement>(null);
+    const depthImgRef = useRef<HTMLImageElement>(null); // New
     const webglRef = useRef<WebGLState | null>(null);
     const mouseRef = useRef<{ x: number, y: number } | null>(null);
 
     const [imageLoaded, setImageLoaded] = useState(false);
+    const [depthLoaded, setDepthLoaded] = useState(false); // New
     const [webglSupported, setWebglSupported] = useState(true);
 
     // Get global config from context
     const contextConfig = useFxConfig();
 
     // Merge: context config (from debug panel) + explicit prop overrides
-    const mergedConfig: FxConfig = {
+    const mergedConfig: FxConfig = useMemo(() => ({
         ...contextConfig,
         ...config,
         order: config?.order || contextConfig.order || ['beads', 'glassBeads', 'duotone'],
@@ -131,105 +136,12 @@ export function FxImage({ src, alt = '', className = '', config, style, imgStyle
         duotone: { ...contextConfig.duotone, ...config?.duotone },
         hover: { ...contextConfig.hover, ...config?.hover },
         interaction: { ...contextConfig.interaction, ...config?.interaction },
-    };
+    }), [contextConfig, config]);
 
     /**
      * Initialize WebGL context and program
      */
-    const initWebGL = useCallback(() => {
-        const canvas = canvasRef.current;
-        const img = imgRef.current;
-        if (!canvas || !img || !imageLoaded) return;
 
-        const gl = canvas.getContext('webgl', {
-            premultipliedAlpha: false,
-            preserveDrawingBuffer: false // optimizing memory
-        });
-        if (!gl) {
-            console.warn('WebGL not supported, falling back to original image');
-            setWebglSupported(false);
-            return;
-        }
-
-        // Handle Context Lost/Restored
-        const handleContextLost = (e: Event) => {
-            e.preventDefault();
-            console.log('WebGL Context Lost', src);
-            // Animation frame usage will stop naturally as webglRef is likely invalidated or checking gl.isContextLost()
-        };
-
-        const handleContextRestored = () => {
-            console.log('WebGL Context Restored', src);
-            initWebGL();
-        };
-
-        canvas.addEventListener('webglcontextlost', handleContextLost, false);
-        canvas.addEventListener('webglcontextrestored', handleContextRestored, false);
-
-        const program = createProgram(gl);
-        if (!program) {
-            setWebglSupported(false);
-            return;
-        }
-
-        gl.useProgram(program);
-        setupQuad(gl, program);
-
-        // Create and configure texture
-        const texture = gl.createTexture();
-        if (!texture) {
-            setWebglSupported(false);
-            return;
-        }
-
-        gl.bindTexture(gl.TEXTURE_2D, texture);
-        gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
-        gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
-        gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
-        gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
-        gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, img);
-
-        const uniforms = {
-            u_image: gl.getUniformLocation(program, 'u_image'),
-            u_resolution: gl.getUniformLocation(program, 'u_resolution'),
-            u_dpr: gl.getUniformLocation(program, 'u_dpr'),
-            u_time: gl.getUniformLocation(program, 'u_time'),
-            u_containerAspect: gl.getUniformLocation(program, 'u_containerAspect'),
-            u_imageAspect: gl.getUniformLocation(program, 'u_imageAspect'),
-            u_order: gl.getUniformLocation(program, 'u_order'),
-            // Mouse Interaction
-            u_mouse: gl.getUniformLocation(program, 'u_mouse'),
-            u_interMode: gl.getUniformLocation(program, 'u_interMode'), // 0=none, 1=reveal, 2=shape
-            u_interVariant: gl.getUniformLocation(program, 'u_interVariant'), // 0=overlap, 1=push
-            u_interRadius: gl.getUniformLocation(program, 'u_interRadius'),
-            u_interSoftness: gl.getUniformLocation(program, 'u_interSoftness'),
-            u_interActiveSize: gl.getUniformLocation(program, 'u_interActiveSize'),
-            // Auto
-            u_autoEnabled: gl.getUniformLocation(program, 'u_autoEnabled'),
-            u_autoType: gl.getUniformLocation(program, 'u_autoType'),
-            u_autoSpeed: gl.getUniformLocation(program, 'u_autoSpeed'),
-            u_autoScale: gl.getUniformLocation(program, 'u_autoScale'),
-            u_autoStrength: gl.getUniformLocation(program, 'u_autoStrength'),
-            u_autoDuotone: gl.getUniformLocation(program, 'u_autoDuotone'),
-            u_autoColor: gl.getUniformLocation(program, 'u_autoColor'),
-            u_autoColor2: gl.getUniformLocation(program, 'u_autoColor2'),
-            // Beads
-            u_beadsEnabled: gl.getUniformLocation(program, 'u_beadsEnabled'),
-            u_beadSize: gl.getUniformLocation(program, 'u_beadSize'),
-            u_beadSoftness: gl.getUniformLocation(program, 'u_beadSoftness'),
-            u_beadStrength: gl.getUniformLocation(program, 'u_beadStrength'),
-            u_beadShape: gl.getUniformLocation(program, 'u_beadShape'),
-            // Duotone
-            u_duotoneEnabled: gl.getUniformLocation(program, 'u_duotoneEnabled'),
-            u_colorA: gl.getUniformLocation(program, 'u_colorA'),
-            u_colorB: gl.getUniformLocation(program, 'u_colorB'),
-            u_duotoneStrength: gl.getUniformLocation(program, 'u_duotoneStrength'),
-        };
-
-        webglRef.current = { gl, program, texture, uniforms };
-
-        render();
-    }, [imageLoaded]);
 
     // State for smooth transitions
     const shapeValueRef = useRef(0); // 0 = circle, 1 = square
@@ -257,7 +169,7 @@ export function FxImage({ src, alt = '', className = '', config, style, imgStyle
         // ALWAYS READ FROM REF inside the loop
         const currentConfig = configRef.current;
 
-        const { gl, uniforms } = webgl;
+        const { gl, uniforms, texture, depthTexture } = webgl;
         const dpr = Math.min(window.devicePixelRatio, 2);
 
         // ... resizing logic ...
@@ -282,7 +194,21 @@ export function FxImage({ src, alt = '', className = '', config, style, imgStyle
             .concat([0, 0, 0])
             .slice(0, 3);
 
+        gl.activeTexture(gl.TEXTURE0);
+        gl.bindTexture(gl.TEXTURE_2D, texture);
         gl.uniform1i(uniforms.u_image, 0);
+
+        if (depthTexture) {
+            gl.activeTexture(gl.TEXTURE1);
+            gl.bindTexture(gl.TEXTURE_2D, depthTexture);
+            gl.uniform1i(uniforms.u_depthMap, 1);
+            gl.uniform1i(uniforms.u_hasDepth, 1);
+        } else {
+            gl.uniform1i(uniforms.u_hasDepth, 0);
+        }
+
+        gl.uniform1i(uniforms.u_useLuminanceAsDepth, currentConfig.interaction?.auto?.useLuminanceAsDepth ? 1 : 0);
+
         gl.uniform2f(uniforms.u_resolution, width, height);
         gl.uniform1f(uniforms.u_dpr, dpr);
         gl.uniform1f(uniforms.u_time, performance.now() / 1000);
@@ -324,6 +250,8 @@ export function FxImage({ src, alt = '', className = '', config, style, imgStyle
         gl.uniform1f(uniforms.u_autoSpeed, auto?.speed ?? 0.5);
         gl.uniform1f(uniforms.u_autoScale, auto?.scale ?? 1.0);
         gl.uniform1f(uniforms.u_autoStrength, auto?.strength ?? 0.5);
+        gl.uniform1f(uniforms.u_autoDepthSpeed, auto?.depthSpeed ?? 3.0);
+        gl.uniform1f(uniforms.u_autoDepthBrightness, auto?.depthBrightness ?? 0.8);
         gl.uniform1i(uniforms.u_autoDuotone, auto?.duotoneModulation ? 1 : 0);
 
         const autoColor = hexToRgb(auto?.modulationColor || '#60a5fa');
@@ -383,6 +311,133 @@ export function FxImage({ src, alt = '', className = '', config, style, imgStyle
     }, []); // Check deps: empty array means render is stable. Reading configRef.current is safe.
 
     /**
+     * Initialize WebGL context and program
+     */
+    const initWebGL = useCallback(() => {
+        const canvas = canvasRef.current;
+
+        const img = imgRef.current;
+        const depthImg = depthImgRef.current;
+        // If depthSrc is provided, wait for it to load too
+        if (!canvas || !img || !imageLoaded) return;
+        if (depthSrc && !depthLoaded) return;
+
+        const gl = canvas.getContext('webgl', {
+            premultipliedAlpha: false,
+            preserveDrawingBuffer: false // optimizing memory
+        });
+        if (!gl) {
+            console.warn('WebGL not supported, falling back to original image');
+            setWebglSupported(false);
+            return;
+        }
+
+        // Handle Context Lost/Restored
+        const handleContextLost = (e: Event) => {
+            e.preventDefault();
+            console.log('WebGL Context Lost', src);
+            // Animation frame usage will stop naturally as webglRef is likely invalidated or checking gl.isContextLost()
+        };
+
+        const handleContextRestored = () => {
+            // initWebGL depends on definition of initWebGL - hoisting of function expression issues?
+            // Actually, initWebGL is a const, so we cannot reference it inside itself unless it's defined.
+            // But we can reference a container or use a mutable ref for the recursive call in restore.
+            // Let's rely on React state/effects to re-trigger if needed, or just warn.
+            console.log('WebGL Context Restored', src);
+            // Since initWebGL is a callback, it might be stale or not hoisted. 
+            // Ideally we should just set a state that triggers the effect again.
+            setImageLoaded(false); setTimeout(() => setImageLoaded(true), 10);
+        };
+
+        canvas.addEventListener('webglcontextlost', handleContextLost, false);
+        canvas.addEventListener('webglcontextrestored', handleContextRestored, false);
+
+        const program = createProgram(gl);
+        if (!program) {
+            setWebglSupported(false);
+            return;
+        }
+
+        gl.useProgram(program);
+        setupQuad(gl, program);
+
+        // Create and configure texture
+        const texture = gl.createTexture();
+        if (!texture) {
+            setWebglSupported(false);
+            return;
+        }
+
+        gl.bindTexture(gl.TEXTURE_2D, texture);
+        gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
+        gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
+        gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
+        gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
+        gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, img);
+
+        // Create Depth Texture if available
+        let depthTexture: WebGLTexture | null = null;
+        if (depthSrc && depthImg) {
+            depthTexture = gl.createTexture();
+            if (depthTexture) {
+                gl.bindTexture(gl.TEXTURE_2D, depthTexture);
+                gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
+                gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
+                gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
+                gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
+                gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, depthImg);
+            }
+        }
+
+        const uniforms = {
+            u_image: gl.getUniformLocation(program, 'u_image'),
+            u_depthMap: gl.getUniformLocation(program, 'u_depthMap'), // New
+            u_hasDepth: gl.getUniformLocation(program, 'u_hasDepth'), // New
+            u_useLuminanceAsDepth: gl.getUniformLocation(program, 'u_useLuminanceAsDepth'), // New
+            u_resolution: gl.getUniformLocation(program, 'u_resolution'),
+            u_dpr: gl.getUniformLocation(program, 'u_dpr'),
+            u_time: gl.getUniformLocation(program, 'u_time'),
+            u_containerAspect: gl.getUniformLocation(program, 'u_containerAspect'),
+            u_imageAspect: gl.getUniformLocation(program, 'u_imageAspect'),
+            u_order: gl.getUniformLocation(program, 'u_order'),
+            // Mouse Interaction
+            u_mouse: gl.getUniformLocation(program, 'u_mouse'),
+            u_interMode: gl.getUniformLocation(program, 'u_interMode'), // 0=none, 1=reveal, 2=shape
+            u_interVariant: gl.getUniformLocation(program, 'u_interVariant'), // 0=overlap, 1=push
+            u_interRadius: gl.getUniformLocation(program, 'u_interRadius'),
+            u_interSoftness: gl.getUniformLocation(program, 'u_interSoftness'),
+            u_interActiveSize: gl.getUniformLocation(program, 'u_interActiveSize'),
+            // Auto
+            u_autoEnabled: gl.getUniformLocation(program, 'u_autoEnabled'),
+            u_autoType: gl.getUniformLocation(program, 'u_autoType'),
+            u_autoSpeed: gl.getUniformLocation(program, 'u_autoSpeed'),
+            u_autoScale: gl.getUniformLocation(program, 'u_autoScale'),
+            u_autoStrength: gl.getUniformLocation(program, 'u_autoStrength'),
+            u_autoDepthSpeed: gl.getUniformLocation(program, 'u_autoDepthSpeed'),
+            u_autoDepthBrightness: gl.getUniformLocation(program, 'u_autoDepthBrightness'),
+            u_autoDuotone: gl.getUniformLocation(program, 'u_autoDuotone'),
+            u_autoColor: gl.getUniformLocation(program, 'u_autoColor'),
+            u_autoColor2: gl.getUniformLocation(program, 'u_autoColor2'),
+            // Beads
+            u_beadsEnabled: gl.getUniformLocation(program, 'u_beadsEnabled'),
+            u_beadSize: gl.getUniformLocation(program, 'u_beadSize'),
+            u_beadSoftness: gl.getUniformLocation(program, 'u_beadSoftness'),
+            u_beadStrength: gl.getUniformLocation(program, 'u_beadStrength'),
+            u_beadShape: gl.getUniformLocation(program, 'u_beadShape'),
+            // Duotone
+            u_duotoneEnabled: gl.getUniformLocation(program, 'u_duotoneEnabled'),
+            u_colorA: gl.getUniformLocation(program, 'u_colorA'),
+            u_colorB: gl.getUniformLocation(program, 'u_colorB'),
+            u_duotoneStrength: gl.getUniformLocation(program, 'u_duotoneStrength'),
+        };
+
+        webglRef.current = { gl, program, texture, depthTexture, uniforms };
+
+        render();
+    }, [imageLoaded, depthLoaded, depthSrc, render, src]);
+
+    /**
      * Handle image load
      */
     const handleImageLoad = useCallback(() => {
@@ -392,7 +447,9 @@ export function FxImage({ src, alt = '', className = '', config, style, imgStyle
     // Reset state when src changes
     useEffect(() => {
         setImageLoaded(false);
-    }, [src]);
+        setDepthLoaded(false);
+        setWebglSupported(true); // Retry WebGL for new image
+    }, [src, depthSrc]);
 
     // Check if effects should be applied
     // Disable WebGL for GIFs to allow animation
@@ -427,16 +484,19 @@ export function FxImage({ src, alt = '', className = '', config, style, imgStyle
             initWebGL();
         }
 
-        // Cleanup on unmount or config change that disables effects
+        // Cleanup
         return () => {
+            // We rely on Garbage Collection for the context. 
+            // Explicitly losing context can cause issues if the canvas is reused or rapidly remounted.
             const gl = webglRef.current?.gl;
+            // Unbind textures to help GC
             if (gl) {
-                const ext = gl.getExtension('WEBGL_lose_context');
-                if (ext) ext.loseContext();
+                gl.bindTexture(gl.TEXTURE_2D, null);
+                gl.useProgram(null);
             }
             webglRef.current = null;
         };
-    }, [imageLoaded, effectsActive, isVisible, initWebGL]);
+    }, [imageLoaded, depthLoaded, effectsActive, isVisible, initWebGL]);
 
     /**
      * Re-render when config changes
@@ -503,6 +563,18 @@ export function FxImage({ src, alt = '', className = '', config, style, imgStyle
                     ...imgStyle,
                 }}
             />
+
+            {/* Hidden Depth Image loader */}
+            {depthSrc && (
+                <img
+                    ref={depthImgRef}
+                    src={depthSrc}
+                    alt=""
+                    crossOrigin="anonymous"
+                    onLoad={() => setDepthLoaded(true)}
+                    style={{ display: 'none' }}
+                />
+            )}
 
             {/* WebGL canvas overlay - only show when effects are active */}
             {effectsActive && imageLoaded && (
