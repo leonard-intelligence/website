@@ -10,7 +10,7 @@ export function Hero() {
             <div className="absolute inset-0 z-0 select-none pointer-events-none">
                 <FxImage
                     src={config.heroImage || '/assets/hero_background.webp'}
-                    alt=""
+                    alt="Fond abstrait représentant le flux de données dans un réseau de neurones artificiels"
                     style={{ width: '100%', height: '100%' }}
                     imgStyle={{ height: '100%', objectFit: 'cover' }}
                     config={{
@@ -18,7 +18,9 @@ export function Hero() {
                             enabled: true,
                             mode: 'shape',
                             variant: 'push',
-                            radius: 0.3
+                            radius: 0.3,
+                            softness: 0,
+                            activeSize: 10
                         }
                     }}
                 />
@@ -26,8 +28,8 @@ export function Hero() {
 
             <div className="hero-content-wrapper z-10 relative">
                 <h1 className="hero-headline">
-                    L’IA sur-mesure pour vos<br />
-                    <span className="gradient-text">process internes</span>
+                    Expertise en IA Générative et Data pour<br />
+                    <span className="gradient-text">Entreprises Innovantes</span>
                 </h1>
 
                 <p className="hero-subtext">

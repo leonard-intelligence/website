@@ -42,6 +42,7 @@ export interface FxConfig {
     order: string[];
     heroImage: string;
     beads: BeadsConfig;
+    glassBeads: BeadsConfig; // New: Secondary beads layer
     duotone: DuotoneConfig;
     hover: HoverConfig;
     interaction: InteractionConfig;
@@ -57,6 +58,13 @@ export const FX_DEFAULTS: FxConfig = {
         sizePx: 10,
         softness: 0.2,
         strength: 1,
+    },
+    glassBeads: {
+        enabled: false,
+        shape: 'circle',
+        sizePx: 20,
+        softness: 0.2,
+        strength: 0.5,
     },
     duotone: {
         enabled: true,

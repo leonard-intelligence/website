@@ -3,9 +3,9 @@ import { Navbar } from './components/layout/Navbar';
 import { Hero } from './components/layout/Hero';
 import { TrustBar } from './components/layout/TrustBar';
 import { UseCaseGrid } from './components/layout/UseCaseGrid';
-import { SectionResearch } from './components/layout/SectionResearch';
-import { Pillars } from './components/layout/Pillars';
-import { Solutions } from './components/layout/Solutions';
+import { SectionVision } from './components/layout/SectionVision';
+import { SectionText } from './components/layout/SectionText';
+import { SectionImage } from './components/layout/SectionImage';
 import { Methodology } from './components/layout/Methodology';
 import { Deployment } from './components/layout/Deployment';
 import { CTASection } from './components/layout/CTASection';
@@ -25,16 +25,19 @@ export function App() {
                 <Navbar />
                 <Hero />
                 <TrustBar />
+
+                {/* 1. Catalog / Use Cases */}
                 <UseCaseGrid />
 
-                {/* Sovereign AI Catalog V2 replaces the individual sections */}
+                {/* 2. Deep Dive Sections */}
+                <SectionVision />
+                <SectionText />
+                <SectionImage />
 
-                <SectionResearch />    {/* Block 6: Research (Kept as distinct) */}
-
-                <Pillars />
-                <Solutions />
-                <Methodology />
+                {/* 3. Deployment & Methodology */}
                 <Deployment />
+                <Methodology />
+
                 <CTASection />
                 <Footer />
 

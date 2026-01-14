@@ -43,6 +43,10 @@ export function FxDebugPanel({ onConfigChange }: FxDebugPanelProps) {
         updateConfig({ interaction: { ...config.interaction, ...updates } });
     };
 
+    const updateGlassBeads = (updates: Partial<FxConfig['glassBeads']>) => {
+        updateConfig({ glassBeads: { ...config.glassBeads, ...updates } });
+    };
+
     const copyToClipboard = () => {
         const jsonConfig = JSON.stringify(config, null, 2);
         navigator.clipboard.writeText(jsonConfig);
@@ -187,7 +191,7 @@ export function FxDebugPanel({ onConfigChange }: FxDebugPanelProps) {
                         <input
                             type="checkbox"
                             checked={config.interaction?.auto?.enabled ?? false}
-                            onChange={e => updateInteraction({ auto: { ...(config.interaction?.auto || { type: 'wave', speed: 0.5, strength: 0.5 }), enabled: e.target.checked } })}
+                            onChange={e => updateInteraction({ auto: { ...(config.interaction?.auto || { type: 'wave', speed: 0.5, strength: 0.5 }) as AutoInteractionConfig, enabled: e.target.checked ?? false } })}
                         />
                         <span>Automated (Wave/Noise)</span>
                     </label>
@@ -199,7 +203,7 @@ export function FxDebugPanel({ onConfigChange }: FxDebugPanelProps) {
                             <span>Type</span>
                             <select
                                 value={config.interaction?.auto?.type ?? 'wave'}
-                                onChange={e => updateInteraction({ auto: { ...(config.interaction?.auto || { enabled: true, speed: 0.5, strength: 0.5 }), type: e.target.value as AutoInteractionConfig['type'] } })}
+                                onChange={e => updateInteraction({ auto: { ...(config.interaction?.auto || { enabled: true, speed: 0.5, strength: 0.5 }) as AutoInteractionConfig, type: e.target.value as AutoInteractionConfig['type'] } })}
                                 style={styles.select}
                             >
                                 <option value="wave">Wave</option>
@@ -227,7 +231,7 @@ export function FxDebugPanel({ onConfigChange }: FxDebugPanelProps) {
                                 max="2.0"
                                 step="0.1"
                                 value={config.interaction?.auto?.speed ?? 0.5}
-                                onChange={e => updateInteraction({ auto: { ...(config.interaction?.auto), speed: Number(e.target.value) } })}
+                                onChange={e => updateInteraction({ auto: { ...(config.interaction?.auto as AutoInteractionConfig), speed: Number(e.target.value) } })}
                                 style={styles.slider}
                             />
                         </div>
@@ -239,7 +243,7 @@ export function FxDebugPanel({ onConfigChange }: FxDebugPanelProps) {
                                 max="5.0"
                                 step="0.1"
                                 value={config.interaction?.auto?.scale ?? 1.0}
-                                onChange={e => updateInteraction({ auto: { ...(config.interaction?.auto), scale: Number(e.target.value) } })}
+                                onChange={e => updateInteraction({ auto: { ...(config.interaction?.auto as AutoInteractionConfig), scale: Number(e.target.value) } })}
                                 style={styles.slider}
                             />
                         </div>
@@ -251,7 +255,7 @@ export function FxDebugPanel({ onConfigChange }: FxDebugPanelProps) {
                                 max="1.0"
                                 step="0.05"
                                 value={config.interaction?.auto?.strength ?? 0.5}
-                                onChange={e => updateInteraction({ auto: { ...(config.interaction?.auto), strength: Number(e.target.value) } })}
+                                onChange={e => updateInteraction({ auto: { ...(config.interaction?.auto as AutoInteractionConfig), strength: Number(e.target.value) } })}
                                 style={styles.slider}
                             />
                         </div>
@@ -264,7 +268,7 @@ export function FxDebugPanel({ onConfigChange }: FxDebugPanelProps) {
                                 max="10.0"
                                 step="0.5"
                                 value={config.interaction?.auto?.depthSpeed ?? 3.0}
-                                onChange={e => updateInteraction({ auto: { ...(config.interaction?.auto), depthSpeed: Number(e.target.value) } })}
+                                onChange={e => updateInteraction({ auto: { ...(config.interaction?.auto as AutoInteractionConfig), depthSpeed: Number(e.target.value) } })}
                                 style={styles.slider}
                             />
                         </div>
@@ -276,7 +280,7 @@ export function FxDebugPanel({ onConfigChange }: FxDebugPanelProps) {
                                 max="2.0"
                                 step="0.1"
                                 value={config.interaction?.auto?.depthBrightness ?? 0.8}
-                                onChange={e => updateInteraction({ auto: { ...(config.interaction?.auto), depthBrightness: Number(e.target.value) } })}
+                                onChange={e => updateInteraction({ auto: { ...(config.interaction?.auto as AutoInteractionConfig), depthBrightness: Number(e.target.value) } })}
                                 style={styles.slider}
                             />
                         </div>
@@ -285,7 +289,7 @@ export function FxDebugPanel({ onConfigChange }: FxDebugPanelProps) {
                                 <input
                                     type="checkbox"
                                     checked={config.interaction?.auto?.duotoneModulation ?? false}
-                                    onChange={e => updateInteraction({ auto: { ...(config.interaction?.auto), duotoneModulation: e.target.checked } })}
+                                    onChange={e => updateInteraction({ auto: { ...(config.interaction?.auto as AutoInteractionConfig), duotoneModulation: e.target.checked } })}
                                 />
                                 <span>Tint on FX</span>
                             </label>
@@ -295,14 +299,14 @@ export function FxDebugPanel({ onConfigChange }: FxDebugPanelProps) {
                                         type="color"
                                         title="Shadow Color"
                                         value={config.interaction?.auto?.modulationColor || '#60a5fa'}
-                                        onChange={e => updateInteraction({ auto: { ...(config.interaction?.auto), modulationColor: e.target.value } })}
+                                        onChange={e => updateInteraction({ auto: { ...(config.interaction?.auto as AutoInteractionConfig), modulationColor: e.target.value } })}
                                         style={{ width: '24px', height: '24px', border: 'none', background: 'none', cursor: 'pointer' }}
                                     />
                                     <input
                                         type="color"
                                         title="Highlight Color"
                                         value={config.interaction?.auto?.modulationColor2 || config.interaction?.auto?.modulationColor || '#60a5fa'}
-                                        onChange={e => updateInteraction({ auto: { ...(config.interaction?.auto), modulationColor2: e.target.value } })}
+                                        onChange={e => updateInteraction({ auto: { ...(config.interaction?.auto as AutoInteractionConfig), modulationColor2: e.target.value } })}
                                         style={{ width: '24px', height: '24px', border: 'none', background: 'none', cursor: 'pointer' }}
                                     />
                                 </div>
@@ -310,6 +314,70 @@ export function FxDebugPanel({ onConfigChange }: FxDebugPanelProps) {
                         </div>
                     </div>
                 )}
+            </div>
+
+            {/* Glass Beads Section */}
+            <div style={styles.section}>
+                <div style={styles.sectionTitle}>Glass Beads</div>
+
+                <label style={styles.row}>
+                    <input
+                        type="checkbox"
+                        checked={config.glassBeads?.enabled ?? false}
+                        onChange={e => updateGlassBeads({ enabled: e.target.checked })}
+                    />
+                    <span>Enabled</span>
+                </label>
+
+                <div style={styles.row}>
+                    <span>Shape</span>
+                    <select
+                        value={config.glassBeads?.shape ?? 'circle'}
+                        onChange={e => updateGlassBeads({ shape: e.target.value as 'circle' | 'square' })}
+                        style={styles.select}
+                    >
+                        <option value="circle">Circle</option>
+                        <option value="square">Square</option>
+                    </select>
+                </div>
+
+                <div style={styles.row}>
+                    <span>Size (px): {config.glassBeads?.sizePx ?? 20}</span>
+                    <input
+                        type="range"
+                        min="2"
+                        max="60"
+                        value={config.glassBeads?.sizePx ?? 20}
+                        onChange={e => updateGlassBeads({ sizePx: Number(e.target.value) })}
+                        style={styles.slider}
+                    />
+                </div>
+
+                <div style={styles.row}>
+                    <span>Softness: {(config.glassBeads?.softness ?? 0.2).toFixed(2)}</span>
+                    <input
+                        type="range"
+                        min="0"
+                        max="1"
+                        step="0.05"
+                        value={config.glassBeads?.softness ?? 0.2}
+                        onChange={e => updateGlassBeads({ softness: Number(e.target.value) })}
+                        style={styles.slider}
+                    />
+                </div>
+
+                <div style={styles.row}>
+                    <span>Strength: {(config.glassBeads?.strength ?? 0.5).toFixed(2)}</span>
+                    <input
+                        type="range"
+                        min="0"
+                        max="1"
+                        step="0.05"
+                        value={config.glassBeads?.strength ?? 0.5}
+                        onChange={e => updateGlassBeads({ strength: Number(e.target.value) })}
+                        style={styles.slider}
+                    />
+                </div>
             </div>
 
             {/* Layer Order */}

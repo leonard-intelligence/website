@@ -155,7 +155,7 @@ export function FxImage({ src, depthSrc, alt = '', className = '', config, style
     }, [mergedConfig]);
 
     // Animation Frame ID ref
-    const requestRef = useRef<number>();
+    const requestRef = useRef<number>(0);
 
     /**
      * Render the effect

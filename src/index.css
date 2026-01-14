@@ -395,11 +395,6 @@
 }
 
 /* CARDS & SECTIONS (Strict Square) */
-/* Cards & Sections (Strict Square) - Styles moved to TechCard.module.css */
-
-
-
-/* Card Image styles moved to TechCard.module.css */
 
 
 
@@ -504,19 +499,6 @@
    The T is at the junction: horizontal on the border line,
    vertical bar extends DOWN into the text area
    ============================================ */
-
-
-
-
-
-
-/* Hover effect on card should NOT affect image wrapper border */
-/* Removed: .product-card:hover .card-image-wrapper { border-color: #ffffff; } */
-/* Removed: .product-card:hover .card-image-wrapper::after { --tj-color: #ffffff; } */
-
-
-
-
 
 
 

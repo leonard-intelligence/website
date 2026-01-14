@@ -2,13 +2,14 @@
 .card {
   border-radius: 0 !important;
   transition: all 0.2s ease;
-  
+
   /* Consolidating styles from index.css */
   background: #000;
   border: 1px solid rgba(255, 255, 255, 0.1);
   box-shadow: none !important;
   position: relative;
-  overflow: visible !important; /* Allow markers to sit on edges */
+  overflow: visible !important;
+  /* Allow markers to sit on edges */
   padding-bottom: 24px;
 }
 
@@ -84,8 +85,9 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  overflow: hidden; /* Changed from card override */
-  
+  overflow: hidden;
+  /* Changed from card override */
+
   /* Striped Texture */
   background-color: #050505;
   background-image: repeating-linear-gradient(45deg,
@@ -93,9 +95,9 @@
       rgba(255, 255, 255, 0.03) 1px,
       transparent 1px,
       transparent 8px);
-  
+
   border: 1px solid var(--border);
-  margin: 0 0 24px 0;
+  margin: 0;
   padding: 24px;
   position: relative;
   transition: border-color 0.2s;
@@ -103,6 +105,8 @@
 
 .imageWrapperFull {
   padding: 0 !important;
+  height: 100% !important;
+  aspect-ratio: unset !important;
 }
 
 .imageWrapperFull .image {
