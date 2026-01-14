@@ -27,9 +27,12 @@ export function useReveal() {
         // Initial scan
         observeElements(document.querySelectorAll('.reveal, .reveal-left'));
 
-        // Mutation Observer to catch lazy loaded modules
-        const mutationObserver = new MutationObserver((mutations) => {
-            mutations.forEach((mutation) => {
+        // Mutation Observer to catch lazy loaded modules (debounced for performance)
+        let pendingMutations: MutationRecord[] = [];
+        let idleCallbackId: number | null = null;
+
+        const processMutations = () => {
+            pendingMutations.forEach((mutation) => {
                 mutation.addedNodes.forEach((node) => {
                     if (node instanceof HTMLElement) {
                         // Check if the node itself is revealable
@@ -44,6 +47,22 @@ export function useReveal() {
                     }
                 });
             });
+            pendingMutations = [];
+            idleCallbackId = null;
+        };
+
+        const mutationObserver = new MutationObserver((mutations) => {
+            pendingMutations.push(...mutations);
+
+            // Debounce using requestIdleCallback (or setTimeout fallback)
+            if (idleCallbackId === null) {
+                const ric = (window as Window & { requestIdleCallback?: typeof requestIdleCallback }).requestIdleCallback;
+                if (ric) {
+                    idleCallbackId = ric(processMutations, { timeout: 100 });
+                } else {
+                    idleCallbackId = setTimeout(processMutations, 50) as unknown as number;
+                }
+            }
         });
 
         // Observe the entire body for added nodes

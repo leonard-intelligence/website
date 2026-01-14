@@ -157,6 +157,9 @@ export function FxImage({ src, depthSrc, alt = '', className = '', config, style
     // Animation Frame ID ref
     const requestRef = useRef<number>(0);
 
+    // Visibility tracking for animation pause (performance optimization)
+    const isInViewportRef = useRef(false);
+
     /**
      * Render the effect
      */
@@ -307,7 +310,10 @@ export function FxImage({ src, depthSrc, alt = '', className = '', config, style
 
         gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
 
-        requestRef.current = requestAnimationFrame(render);
+        // Only continue loop if visible in viewport (performance optimization)
+        if (isInViewportRef.current) {
+            requestRef.current = requestAnimationFrame(render);
+        }
     }, []); // Check deps: empty array means render is stable. Reading configRef.current is safe.
 
     /**
@@ -458,23 +464,32 @@ export function FxImage({ src, depthSrc, alt = '', className = '', config, style
 
     const [isVisible, setIsVisible] = useState(false);
 
-    // Visibility Observer (Lazy Init)
+    // Visibility Observer (Lazy Init + Animation Pause)
     useEffect(() => {
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
+                // Update viewport ref for animation loop control
+                isInViewportRef.current = entry.isIntersecting;
+
                 if (entry.isIntersecting) {
-                    setIsVisible(true);
-                    observer.disconnect(); // Once visible, keep it (don't toggle to avoid thrashing)
+                    // First time visible: trigger lazy init
+                    if (!isVisible) {
+                        setIsVisible(true);
+                    }
+                    // Restart animation loop if WebGL is ready
+                    if (webglRef.current && !requestRef.current) {
+                        requestRef.current = requestAnimationFrame(render);
+                    }
                 }
             });
-        });
+        }, { threshold: 0.01 }); // Trigger when even 1% visible
 
         if (containerRef.current) {
             observer.observe(containerRef.current);
         }
 
         return () => observer.disconnect();
-    }, []);
+    }, [isVisible, render]);
 
     /**
      * Initialize WebGL when image loads and is visible
