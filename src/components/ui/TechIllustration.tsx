@@ -1,5 +1,5 @@
 import { cn } from "@/lib/utils";
-import React, { useState } from "react";
+import { useState } from "react";
 import { FxImage } from "@/components/fx";
 import { useFxConfig } from "@/components/fx/FxContext";
 

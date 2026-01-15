@@ -23,12 +23,12 @@ export function Contact() {
     };
 
     return (
-        <section id="contact" className="py-24 bg-black relative border-t border-white/10">
-            <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-2 gap-16">
+        <section id="section-contact" className="py-24 bg-black relative border-t border-white/10 contact">
+            <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-2 gap-16 contact__container">
 
                 {/* Contact Info */}
-                <div>
-                    <h2 className="text-4xl md:text-5xl font-bold font-mono uppercase text-white mb-6">
+                <div className="contact__info">
+                    <h2 id="contact-heading" className="text-4xl md:text-5xl font-bold font-mono uppercase text-white mb-6 contact__heading">
                         Parlons <span className="text-brand-blue">Données.</span>
                     </h2>
                     <p className="text-gray-400 text-lg mb-12 leading-relaxed font-sans">
@@ -62,7 +62,7 @@ export function Contact() {
                 </div>
 
                 {/* Contact Form */}
-                <div className="bg-black border border-white/10 p-8 relative">
+                <div id="contact-form-wrapper" className="bg-black border border-white/10 p-8 relative contact__form-wrapper">
                     {/* Decorative Corner Markers */}
                     <div className="absolute top-0 left-0 w-2 h-2 border-t border-l border-white/50"></div>
                     <div className="absolute top-0 right-0 w-2 h-2 border-t border-r border-white/50"></div>
@@ -85,7 +85,7 @@ export function Contact() {
                             </Button>
                         </div>
                     ) : (
-                        <form onSubmit={handleSubmit} className="space-y-6">
+                        <form id="contact-form" onSubmit={handleSubmit} className="space-y-6 contact__form">
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                                 <div className="space-y-2">
                                     <Label htmlFor="firstName" className="text-gray-300 font-mono uppercase text-xs">Prénom</Label>

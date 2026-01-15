@@ -37,7 +37,7 @@ export function App() {
                     <UseCaseGrid />
 
                     {/* 2. Deep Dive Sections */}
-                    <div id="expertises" className="flex flex-col gap-32 py-24">
+                    <div id="section-expertises" className="flex flex-col gap-32 py-24 expertises">
                         <SectionVision />
                         <SectionText />
                         <SectionImage />

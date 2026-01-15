@@ -14,19 +14,19 @@ export function TrustBar() {
     const duplicatedLogos = [...logos, ...logos];
 
     return (
-        <section className="backers-bar reveal delay-100" aria-label="Technologies et modèles partenaires">
-            <div className="backers-grid">
-                <div className="backer-label" id="trust-bar-label">Propulsé par les meilleurs modèles.</div>
-                <div 
-                    className="logos-scroll-container" 
-                    role="list" 
-                    aria-labelledby="trust-bar-label"
+        <section id="section-trustbar" className="backers-bar trustbar reveal delay-100" aria-label="Technologies et modèles partenaires">
+            <div className="backers-grid trustbar__container">
+                <div className="backer-label trustbar__label" id="trustbar-label">Propulsé par les meilleurs modèles.</div>
+                <div
+                    className="logos-scroll-container trustbar__scroll"
+                    role="list"
+                    aria-labelledby="trustbar-label"
                 >
-                    <div className="logos-scroll-track" aria-hidden="false">
+                    <div className="logos-scroll-track trustbar__track" aria-hidden="false">
                         {duplicatedLogos.map((logo, index) => (
-                            <div 
-                                key={`${logo.name}-${index}`} 
-                                className="backer-item" 
+                            <div
+                                key={`${logo.name}-${index}`}
+                                className="backer-item trustbar__item"
                                 title={logo.name}
                                 role="listitem"
                                 aria-label={logo.name}
@@ -34,7 +34,7 @@ export function TrustBar() {
                                 <img
                                     src={logo.src}
                                     alt={logo.name}
-                                    className="h-8 w-auto"
+                                    className="h-8 w-auto trustbar__logo"
                                     style={{ filter: 'brightness(0) invert(1)' }}
                                 />
                             </div>

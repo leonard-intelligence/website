@@ -29,13 +29,13 @@ export function Methodology() {
     ];
 
     return (
-        <section className="method-section py-24 bg-black border-b border-white/10 reveal" id="method" aria-labelledby="method-heading">
-            <div className="max-w-7xl mx-auto px-6">
-                <div className="flex flex-col md:flex-row justify-between items-end mb-16">
+        <section id="section-methodology" className="method-section methodology py-24 bg-black border-b border-white/10 reveal" aria-labelledby="methodology-heading">
+            <div className="max-w-7xl mx-auto px-6 methodology__container">
+                <div className="flex flex-col md:flex-row justify-between items-end mb-16 methodology__header">
                     <div>
                         <div className="absolute -inset-4 bg-blue-500/10 blur-3xl -z-10 rounded-full opacity-50" aria-hidden="true" />
                         <span className="text-brand-blue font-mono text-sm tracking-widest uppercase mb-4 block">Processus</span>
-                        <h2 id="method-heading" className="text-4xl font-bold font-display text-white relative z-10">
+                        <h2 id="methodology-heading" className="text-4xl font-bold font-display text-white relative z-10 methodology__heading">
                             De l'idée à <span className="text-white">l'impact</span>.
                         </h2>
                     </div>
@@ -44,7 +44,7 @@ export function Methodology() {
                     </p>
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-4 gap-6 relative">
+                <div className="grid grid-cols-1 md:grid-cols-4 gap-6 relative methodology__steps">
                     {/* Connecting line for desktop */}
                     <div className="hidden md:block absolute top-8 left-0 right-0 h-px bg-white/10 -z-10 translate-y-1/2" />
 

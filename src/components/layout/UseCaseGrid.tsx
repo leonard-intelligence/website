@@ -30,12 +30,12 @@ export function UseCaseGrid() {
     };
 
     return (
-        <section ref={sectionRef} className="catalogue-section py-24 bg-black reveal delay-200 border-b border-white/10" id="solutions">
+        <section ref={sectionRef} id="section-solutions" className="catalogue-section catalogue py-24 bg-black reveal delay-200 border-b border-white/10">
 
 
             {/* Scrollable Tabs */}
-            <div className="sticky top-[60px] z-40 bg-black/80 backdrop-blur-md mb-12">
-                <div className="flex flex-wrap justify-center py-4 px-6 gap-2 max-w-7xl mx-auto">
+            <div className="sticky top-[60px] z-40 bg-black/80 backdrop-blur-md mb-12 catalogue__tabs-container">
+                <div className="flex flex-wrap justify-center py-4 px-6 gap-2 max-w-7xl mx-auto catalogue__tabs">
                     {CATALOGUE.map((cat) => (
                         <button
                             key={cat.id}
@@ -55,11 +55,11 @@ export function UseCaseGrid() {
             </div>
 
             {/* Active Content */}
-            <div className="max-w-7xl mx-auto px-6 min-h-[500px]">
+            <div className="max-w-7xl mx-auto px-6 min-h-[500px] catalogue__content">
                 <div key={activeTabId} className="animate-in fade-in slide-in-from-bottom-4 duration-500">
 
                     {/* Category Intro Block */}
-                    <div className="mb-12 flex flex-col md:flex-row items-start md:items-center justify-between gap-6 p-8 border border-white/10 bg-white/5 rounded-none">
+                    <div className="mb-12 flex flex-col md:flex-row items-start md:items-center justify-between gap-6 p-8 border border-white/10 bg-white/5 rounded-none catalogue__intro">
                         <div>
                             <div className="flex items-center gap-3 mb-2">
                                 <span className="text-3xl">{activeCategory.emoji}</span>
@@ -72,7 +72,7 @@ export function UseCaseGrid() {
                         </div>
                     </div>
 
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 catalogue__grid">
                         {activeCategory.items.map((item, index) => (
                             <TechCard key={index} className="flex flex-col h-full group bg-black p-0 transition-all duration-500">
                                 {/* Large Square/Rect Image Area */}
