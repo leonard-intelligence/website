@@ -4,7 +4,7 @@
  */
 
 import { useState } from 'react';
-import type { FxConfig, InteractionConfig, AutoInteractionConfig } from './fxConfig';
+import type { FxConfig, InteractionConfig, AutoInteractionConfig, RainConfig } from './fxConfig';
 import { useFxDebug } from './FxContext';
 
 interface FxDebugPanelProps {
@@ -221,6 +221,7 @@ export function FxDebugPanel({ onConfigChange }: FxDebugPanelProps) {
                                 <option value="hex">Hex (Cyber)</option>
                                 <option value="blueprint">Blueprint (Schematic)</option>
                                 <option value="stream">Stream (High Speed)</option>
+                                <option value="rain">🌧️ Rain + Ripple (3D)</option>
                             </select>
                         </div>
                         <div style={styles.row}>
@@ -312,6 +313,93 @@ export function FxDebugPanel({ onConfigChange }: FxDebugPanelProps) {
                                 </div>
                             )}
                         </div>
+
+                        {/* Rain-specific controls */}
+                        {config.interaction?.auto?.type === 'rain' && (
+                            <div style={{ marginTop: '12px', paddingTop: '12px', borderTop: '1px solid rgba(255,255,255,0.1)' }}>
+                                <div style={{ fontSize: '11px', color: '#60a5fa', marginBottom: '8px', textTransform: 'uppercase', letterSpacing: '0.05em' }}>🌧️ Rain Settings</div>
+
+                                <div style={styles.row}>
+                                    <span>Drop Speed: {(config.interaction?.auto?.rain?.dropSpeed ?? 0.5).toFixed(2)}</span>
+                                    <input
+                                        type="range"
+                                        min="0.1"
+                                        max="2.0"
+                                        step="0.1"
+                                        value={config.interaction?.auto?.rain?.dropSpeed ?? 0.5}
+                                        onChange={e => updateInteraction({ auto: { ...(config.interaction?.auto as AutoInteractionConfig), rain: { ...(config.interaction?.auto?.rain || { dropSpeed: 0.5, density: 20, surfaceDepth: 0.5, rippleSpeed: 0.5, rippleDecay: 3, rippleStrength: 0.8 }) as RainConfig, dropSpeed: Number(e.target.value) } } })}
+                                        style={styles.slider}
+                                    />
+                                </div>
+
+                                <div style={styles.row}>
+                                    <span>Density: {Math.round(config.interaction?.auto?.rain?.density ?? 20)}</span>
+                                    <input
+                                        type="range"
+                                        min="5"
+                                        max="50"
+                                        step="1"
+                                        value={config.interaction?.auto?.rain?.density ?? 20}
+                                        onChange={e => updateInteraction({ auto: { ...(config.interaction?.auto as AutoInteractionConfig), rain: { ...(config.interaction?.auto?.rain || { dropSpeed: 0.5, density: 20, surfaceDepth: 0.5, rippleSpeed: 0.5, rippleDecay: 3, rippleStrength: 0.8 }) as RainConfig, density: Number(e.target.value) } } })}
+                                        style={styles.slider}
+                                    />
+                                </div>
+
+                                <div style={styles.row}>
+                                    <span>Surface Depth: {(config.interaction?.auto?.rain?.surfaceDepth ?? 0.5).toFixed(2)}</span>
+                                    <input
+                                        type="range"
+                                        min="0.0"
+                                        max="1.0"
+                                        step="0.05"
+                                        value={config.interaction?.auto?.rain?.surfaceDepth ?? 0.5}
+                                        onChange={e => updateInteraction({ auto: { ...(config.interaction?.auto as AutoInteractionConfig), rain: { ...(config.interaction?.auto?.rain || { dropSpeed: 0.5, density: 20, surfaceDepth: 0.5, rippleSpeed: 0.5, rippleDecay: 3, rippleStrength: 0.8 }) as RainConfig, surfaceDepth: Number(e.target.value) } } })}
+                                        style={styles.slider}
+                                    />
+                                </div>
+
+                                <div style={{ fontSize: '11px', color: '#60a5fa', marginTop: '12px', marginBottom: '8px', textTransform: 'uppercase', letterSpacing: '0.05em' }}>💧 Ripple Settings</div>
+
+                                <div style={styles.row}>
+                                    <span>Ripple Speed: {(config.interaction?.auto?.rain?.rippleSpeed ?? 0.5).toFixed(2)}</span>
+                                    <input
+                                        type="range"
+                                        min="0.1"
+                                        max="2.0"
+                                        step="0.1"
+                                        value={config.interaction?.auto?.rain?.rippleSpeed ?? 0.5}
+                                        onChange={e => updateInteraction({ auto: { ...(config.interaction?.auto as AutoInteractionConfig), rain: { ...(config.interaction?.auto?.rain || { dropSpeed: 0.5, density: 20, surfaceDepth: 0.5, rippleSpeed: 0.5, rippleDecay: 3, rippleStrength: 0.8 }) as RainConfig, rippleSpeed: Number(e.target.value) } } })}
+                                        style={styles.slider}
+                                    />
+                                </div>
+
+                                <div style={styles.row}>
+                                    <span>Ripple Decay: {(config.interaction?.auto?.rain?.rippleDecay ?? 3.0).toFixed(1)}</span>
+                                    <input
+                                        type="range"
+                                        min="1.0"
+                                        max="10.0"
+                                        step="0.5"
+                                        value={config.interaction?.auto?.rain?.rippleDecay ?? 3.0}
+                                        onChange={e => updateInteraction({ auto: { ...(config.interaction?.auto as AutoInteractionConfig), rain: { ...(config.interaction?.auto?.rain || { dropSpeed: 0.5, density: 20, surfaceDepth: 0.5, rippleSpeed: 0.5, rippleDecay: 3, rippleStrength: 0.8 }) as RainConfig, rippleDecay: Number(e.target.value) } } })}
+                                        style={styles.slider}
+                                    />
+                                </div>
+
+                                <div style={styles.row}>
+                                    <span>Ripple Strength: {(config.interaction?.auto?.rain?.rippleStrength ?? 0.8).toFixed(2)}</span>
+                                    <input
+                                        type="range"
+                                        min="0.0"
+                                        max="1.0"
+                                        step="0.05"
+                                        value={config.interaction?.auto?.rain?.rippleStrength ?? 0.8}
+                                        onChange={e => updateInteraction({ auto: { ...(config.interaction?.auto as AutoInteractionConfig), rain: { ...(config.interaction?.auto?.rain || { dropSpeed: 0.5, density: 20, surfaceDepth: 0.5, rippleSpeed: 0.5, rippleDecay: 3, rippleStrength: 0.8 }) as RainConfig, rippleStrength: Number(e.target.value) } } })}
+                                        style={styles.slider}
+                                    />
+                                </div>
+                            </div>
+                        )}
                     </div>
                 )}
             </div>

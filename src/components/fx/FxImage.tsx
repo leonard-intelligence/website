@@ -247,6 +247,7 @@ export function FxImage({ src, depthSrc, alt = '', className = '', config, style
         else if (auto?.type === 'hex') autoTypeInt = 12;
         else if (auto?.type === 'blueprint') autoTypeInt = 13;
         else if (auto?.type === 'stream') autoTypeInt = 14;
+        else if (auto?.type === 'rain') autoTypeInt = 15;
 
         gl.uniform1i(uniforms.u_autoEnabled, auto?.enabled ? 1 : 0);
         gl.uniform1i(uniforms.u_autoType, autoTypeInt);
@@ -256,6 +257,15 @@ export function FxImage({ src, depthSrc, alt = '', className = '', config, style
         gl.uniform1f(uniforms.u_autoDepthSpeed, auto?.depthSpeed ?? 3.0);
         gl.uniform1f(uniforms.u_autoDepthBrightness, auto?.depthBrightness ?? 0.8);
         gl.uniform1i(uniforms.u_autoDuotone, auto?.duotoneModulation ? 1 : 0);
+
+        // Rain-specific uniforms
+        const rain = auto?.rain;
+        gl.uniform1f(uniforms.u_rainDropSpeed, rain?.dropSpeed ?? 0.5);
+        gl.uniform1f(uniforms.u_rainDensity, rain?.density ?? 20.0);
+        gl.uniform1f(uniforms.u_rainSurfaceDepth, rain?.surfaceDepth ?? 0.5);
+        gl.uniform1f(uniforms.u_rippleSpeed, rain?.rippleSpeed ?? 0.5);
+        gl.uniform1f(uniforms.u_rippleDecay, rain?.rippleDecay ?? 3.0);
+        gl.uniform1f(uniforms.u_rippleStrength, rain?.rippleStrength ?? 0.8);
 
         const autoColor = hexToRgb(auto?.modulationColor || '#60a5fa');
         gl.uniform3f(uniforms.u_autoColor, autoColor[0], autoColor[1], autoColor[2]);
@@ -313,6 +323,9 @@ export function FxImage({ src, depthSrc, alt = '', className = '', config, style
         // Only continue loop if visible in viewport (performance optimization)
         if (isInViewportRef.current) {
             requestRef.current = requestAnimationFrame(render);
+        } else {
+            // Reset ref so loop can be restarted when visible again
+            requestRef.current = 0;
         }
     }, []); // Check deps: empty array means render is stable. Reading configRef.current is safe.
 
@@ -425,6 +438,13 @@ export function FxImage({ src, depthSrc, alt = '', className = '', config, style
             u_autoDuotone: gl.getUniformLocation(program, 'u_autoDuotone'),
             u_autoColor: gl.getUniformLocation(program, 'u_autoColor'),
             u_autoColor2: gl.getUniformLocation(program, 'u_autoColor2'),
+            // Rain
+            u_rainDropSpeed: gl.getUniformLocation(program, 'u_rainDropSpeed'),
+            u_rainDensity: gl.getUniformLocation(program, 'u_rainDensity'),
+            u_rainSurfaceDepth: gl.getUniformLocation(program, 'u_rainSurfaceDepth'),
+            u_rippleSpeed: gl.getUniformLocation(program, 'u_rippleSpeed'),
+            u_rippleDecay: gl.getUniformLocation(program, 'u_rippleDecay'),
+            u_rippleStrength: gl.getUniformLocation(program, 'u_rippleStrength'),
             // Beads
             u_beadsEnabled: gl.getUniformLocation(program, 'u_beadsEnabled'),
             u_beadSize: gl.getUniformLocation(program, 'u_beadSize'),

@@ -506,6 +506,10 @@
 
 
 /* NEW TECH UTILITIES */
+.tech-panel {
+  @apply border border-white/20 bg-black/60 backdrop-blur-md rounded transition-colors;
+}
+
 .tech-corners {
   --m-color: #ffffff;
   --m-size: 8px;

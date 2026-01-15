@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { TechCard, TechCardImage } from "../ui/TechCard";
 import { CATALOGUE } from "../../data/catalogue";
 import { ArrowUpRight } from "lucide-react";
@@ -11,11 +11,26 @@ const DEFAULT_IMAGES = [
 
 export function UseCaseGrid() {
     const [activeTabId, setActiveTabId] = useState(CATALOGUE[0].id);
+    const sectionRef = useRef<HTMLElement>(null);
 
     const activeCategory = CATALOGUE.find(c => c.id === activeTabId) || CATALOGUE[0];
 
+    const handleTabClick = (tabId: string) => {
+        setActiveTabId(tabId);
+        // Scroll to the top of the section with a small offset to account for sticky nav
+        if (sectionRef.current) {
+            const offset = 80; // Account for sticky navbar height
+            const elementPosition = sectionRef.current.getBoundingClientRect().top;
+            const offsetPosition = elementPosition + window.pageYOffset - offset;
+            window.scrollTo({
+                top: offsetPosition,
+                behavior: 'smooth'
+            });
+        }
+    };
+
     return (
-        <section className="catalogue-section py-24 bg-black reveal delay-200 border-b border-white/10" id="solutions">
+        <section ref={sectionRef} className="catalogue-section py-24 bg-black reveal delay-200 border-b border-white/10" id="solutions">
 
 
             {/* Scrollable Tabs */}
@@ -24,7 +39,7 @@ export function UseCaseGrid() {
                     {CATALOGUE.map((cat) => (
                         <button
                             key={cat.id}
-                            onClick={() => setActiveTabId(cat.id)}
+                            onClick={() => handleTabClick(cat.id)}
                             className={`
                                 flex items-center gap-3 px-6 py-3 border transition-all duration-300 font-mono text-sm uppercase tracking-wider
                                 ${activeTabId === cat.id

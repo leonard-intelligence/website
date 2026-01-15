@@ -11,6 +11,7 @@ const UseCaseGrid = lazy(() => import('./components/layout/UseCaseGrid').then(m 
 const SectionVision = lazy(() => import('./components/layout/SectionVision').then(m => ({ default: m.SectionVision })));
 const SectionText = lazy(() => import('./components/layout/SectionText').then(m => ({ default: m.SectionText })));
 const SectionImage = lazy(() => import('./components/layout/SectionImage').then(m => ({ default: m.SectionImage })));
+const SectionAudio = lazy(() => import('./components/layout/SectionAudio').then(m => ({ default: m.SectionAudio })));
 const Methodology = lazy(() => import('./components/layout/Methodology').then(m => ({ default: m.Methodology })));
 const Deployment = lazy(() => import('./components/layout/Deployment').then(m => ({ default: m.Deployment })));
 const CTASection = lazy(() => import('./components/layout/CTASection').then(m => ({ default: m.CTASection })));
@@ -40,6 +41,7 @@ export function App() {
                         <SectionVision />
                         <SectionText />
                         <SectionImage />
+                        <SectionAudio />
                     </div>
 
                     {/* 3. Deployment & Methodology */}

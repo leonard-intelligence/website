@@ -68,6 +68,14 @@ uniform sampler2D u_depthMap;
 uniform bool u_hasDepth;
 uniform bool u_useLuminanceAsDepth;
 
+// Rain Effect Uniforms
+uniform float u_rainDropSpeed;
+uniform float u_rainDensity;
+uniform float u_rainSurfaceDepth;
+uniform float u_rippleSpeed;
+uniform float u_rippleDecay;
+uniform float u_rippleStrength;
+
 float luminance(vec3 color) {
     return dot(color, vec3(0.299, 0.587, 0.114));
 }
@@ -298,6 +306,122 @@ float getAutoInteractionValue(vec2 uv) {
                  float burst = smoothstep(0.8, 1.0, snoise(st * 0.5 + time));
                  
                  autoVal = (lines * 0.5 + burst) * u_autoStrength;
+            } else if (u_autoType == 15) { // Rain + Ripple (3D-aware)
+                 // Get depth for 3D surface simulation
+                 float depth = 0.5;
+                 if (u_hasDepth) {
+                     depth = texture2D(u_depthMap, uv).r;
+                 } else if (u_useLuminanceAsDepth) {
+                     depth = luminance(texture2D(u_image, uv).rgb);
+                 }
+                 depth = smoothstep(0.1, 0.9, depth); // Increase contrast
+                 
+                 // Rain column parameters
+                 float columnWidth = 1.0 / u_rainDensity;
+                 float columnId = floor(uv.x / columnWidth);
+                 float columnRandom = random(vec2(columnId, 0.0));
+                 float columnRandom2 = random(vec2(columnId, 1.0));
+                 
+                 // Drop position (falls down with time)
+                 float dropSpeed = u_rainDropSpeed * (0.3 + columnRandom * 0.7);
+                 float dropPhase = fract(time * dropSpeed * 0.5 + columnRandom2);
+                 float dropY = dropPhase; // 0 = top, 1 = bottom
+                 
+                 // Surface collision threshold based on depth
+                 // Bright areas (high depth) = closer surface = collides earlier
+                 float surfaceThreshold = 1.0 - depth * u_rainSurfaceDepth;
+                 bool hasCollided = dropY > surfaceThreshold;
+                 
+                 float ripple = 0.0;
+                 float trail = 0.0;
+                 
+                 // Multiple rain layers for density
+                 for (int layer = 0; layer < 3; layer++) {
+                     float layerOffset = float(layer) * 0.33;
+                     float layerColumnId = floor((uv.x + layerOffset * columnWidth * 0.5) / columnWidth);
+                     float layerRandom = random(vec2(layerColumnId, float(layer)));
+                     float layerRandom2 = random(vec2(layerColumnId, float(layer) + 10.0));
+                     
+                     float layerDropSpeed = u_rainDropSpeed * (0.3 + layerRandom * 0.7);
+                     float layerDropPhase = fract(time * layerDropSpeed * 0.5 + layerRandom2 + layerOffset);
+                     
+                     // Get depth at this column center
+                     vec2 colCenterUV = vec2((layerColumnId + 0.5) * columnWidth, uv.y);
+                     float colDepth = 0.5;
+                     if (u_hasDepth) {
+                         colDepth = texture2D(u_depthMap, colCenterUV).r;
+                     } else if (u_useLuminanceAsDepth) {
+                         colDepth = luminance(texture2D(u_image, colCenterUV).rgb);
+                     }
+                     colDepth = smoothstep(0.1, 0.9, colDepth);
+                     
+                     float layerSurfaceThreshold = 1.0 - colDepth * u_rainSurfaceDepth;
+                     bool layerCollided = layerDropPhase > layerSurfaceThreshold;
+                     
+                     if (layerCollided) {
+                         // Time since collision
+                         float collisionTime = (layerDropPhase - layerSurfaceThreshold) / (layerDropSpeed * 0.5);
+                         collisionTime = min(collisionTime, 2.0); // Clamp max time
+                         
+                         // Ripple center
+                         vec2 rippleCenter = vec2(
+                             (layerColumnId + 0.5) * columnWidth,
+                             1.0 - layerSurfaceThreshold
+                         );
+                         
+                         // Distance to ripple center (aspect corrected)
+                         vec2 delta = uv - rippleCenter;
+                         delta.x *= u_resolution.x / u_resolution.y;
+                         float dist = length(delta);
+                         
+                         // Expanding ring
+                         float waveRadius = collisionTime * u_rippleSpeed * 0.3;
+                         float waveThickness = 0.015 + collisionTime * 0.01;
+                         
+                         // Ring pattern
+                         float ring = smoothstep(waveRadius - waveThickness, waveRadius, dist)
+                                    - smoothstep(waveRadius, waveRadius + waveThickness, dist);
+                         
+                         // Attenuation over time and distance
+                         float attenuation = exp(-collisionTime * u_rippleDecay) * exp(-dist * 8.0);
+                         
+                         // Depth gradient modulation (follows 3D contours)
+                         // Use local depth samples to simulate wave following surface
+                         float depthHere = depth;
+                         float depthRight = 0.5;
+                         float depthUp = 0.5;
+                         vec2 texelSize = 1.0 / u_resolution;
+                         if (u_hasDepth) {
+                             depthRight = texture2D(u_depthMap, uv + vec2(texelSize.x * 2.0, 0.0)).r;
+                             depthUp = texture2D(u_depthMap, uv + vec2(0.0, texelSize.y * 2.0)).r;
+                         } else if (u_useLuminanceAsDepth) {
+                             depthRight = luminance(texture2D(u_image, uv + vec2(texelSize.x * 2.0, 0.0)).rgb);
+                             depthUp = luminance(texture2D(u_image, uv + vec2(0.0, texelSize.y * 2.0)).rgb);
+                         }
+                         float depthGradient = abs(depthRight - depthHere) + abs(depthUp - depthHere);
+                         float surfaceModulation = 1.0 + depthGradient * 3.0;
+                         
+                         ripple += ring * attenuation * u_rippleStrength * surfaceModulation * (0.5 + float(layer) * 0.25);
+                     } else {
+                         // Rain drop trail (before collision)
+                         float dropX = (layerColumnId + 0.5) * columnWidth;
+                         float dx = abs(uv.x - dropX);
+                         float dropScreenY = 1.0 - layerDropPhase;
+                         float dy = uv.y - dropScreenY;
+                         
+                         // Thin vertical trail
+                         float trailWidth = 0.003 * (1.0 - float(layer) * 0.2);
+                         float trailLength = 0.08;
+                         float trailMask = smoothstep(trailWidth, 0.0, dx) 
+                                         * smoothstep(0.0, 0.02, dy) 
+                                         * smoothstep(trailLength, 0.0, dy);
+                         
+                         // Fade based on layer
+                         trail += trailMask * (0.4 - float(layer) * 0.1);
+                     }
+                 }
+                 
+                 autoVal = clamp(ripple + trail, 0.0, 1.0) * u_autoStrength;
             }
 
             return autoVal;

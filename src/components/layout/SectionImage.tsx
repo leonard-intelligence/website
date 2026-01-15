@@ -1,5 +1,5 @@
 import { ArrowUpRight, Image as ImageIcon, Paintbrush, Layers } from 'lucide-react';
-import { TechCard } from "@/components/ui/TechCard";
+import { TechIllustration } from "@/components/ui/TechIllustration";
 
 export function SectionImage() {
     return (
@@ -19,29 +19,48 @@ export function SectionImage() {
                     </div>
 
                     {/* Central Image Area */}
-                    <div className="absolute inset-0 z-0 flex items-center justify-center opacity-50 mix-blend-overlay pointer-events-none">
-                        <div className="w-full h-full bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-blue-900/10 via-black to-black opacity-40" />
+                    <div className="absolute inset-0 z-0 flex items-center justify-center pointer-events-none">
+                        <TechIllustration
+                            src="/assets/flux_bg.png"
+                            alt="Flux Background"
+                            className="absolute inset-0 w-full h-full opacity-50"
+                            aspectRatio="aspect-auto"
+                        />
+                        <div className="w-full h-full bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-blue-900/10 via-black/40 to-black opacity-80 absolute inset-0" />
                     </div>
 
                     {/* Bottom Left Card */}
                     <div className="mt-auto relative z-10">
-                        <TechCard className="max-w-md bg-black/80 backdrop-blur-sm p-6 transition-colors group">
-                            <div className="flex justify-between items-start mb-4">
-                                <div className="flex items-center gap-3">
-                                    <h3 className="text-xl text-white font-mono">Flux-Pro</h3>
-                                    <span className="text-[10px] uppercase border border-orange-500/30 text-orange-500 px-1 py-0.5">LoRA</span>
+                        <div className="max-w-md tech-panel p-6 group">
+                            <div className="flex justify-between items-center mb-4 border-b border-white/10 pb-3">
+                                <div className="flex items-center gap-2">
+                                    <span className="relative flex h-2 w-2">
+                                        <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+                                        <span className="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
+                                    </span>
+                                    <span className="font-mono text-xs text-green-400 tracking-widest">SYSTEM ONLINE</span>
                                 </div>
-                                <div className="flex items-center gap-2 text-xs font-mono uppercase text-muted-foreground">
-                                    <Paintbrush className="w-3 h-3" /> Génératif
+                                <span className="font-mono text-xs text-zinc-500">FLUX-PRO v1.0</span>
+                            </div>
+
+                            <div className="flex justify-between items-start mb-4">
+                                <h3 className="text-xl text-white font-mono">Flux-Pro Gen_AI</h3>
+                                <div className="flex items-center gap-2 text-[10px] font-mono uppercase text-muted-foreground border border-white/10 px-2 py-1 rounded">
+                                    <Paintbrush className="w-3 h-3" /> Génératif LoRA
                                 </div>
                             </div>
-                            <p className="text-muted-foreground text-sm font-mono leading-relaxed mb-6">
+
+                            <p className="text-zinc-400 text-sm font-mono leading-relaxed mb-6">
                                 Modèles entraînés sur mesure qui respectent parfaitement votre charte graphique, vos palettes de couleurs et vos produits.
                             </p>
-                            <div className="text-xs text-muted-foreground font-mono">
-                                <span>Res: 4K+</span>
+
+                            <div className="grid grid-cols-2 gap-2 text-[10px] font-mono text-zinc-500 bg-white/5 p-3 rounded border border-white/5">
+                                <div className="flex justify-between"><span>TRAINING</span><span className="text-white">COMPLETED</span></div>
+                                <div className="flex justify-between"><span>ACCURACY</span><span className="text-green-400">99.8%</span></div>
+                                <div className="flex justify-between"><span>RES</span><span className="text-white">4K+ UBER_REAL</span></div>
+                                <div className="flex justify-between"><span>LATENCY</span><span className="text-white">24ms</span></div>
                             </div>
-                        </TechCard>
+                        </div>
                     </div>
                 </div>
 

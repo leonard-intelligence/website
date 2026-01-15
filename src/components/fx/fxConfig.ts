@@ -100,9 +100,18 @@ export const FX_DEFAULTS: FxConfig = {
     }
 };
 
+export interface RainConfig {
+    dropSpeed: number;      // 0.1 - 2.0: vitesse de chute des gouttes
+    density: number;        // 1 - 50: nombre de colonnes de pluie
+    surfaceDepth: number;   // 0.0 - 1.0: influence de la profondeur sur la collision
+    rippleSpeed: number;    // 0.1 - 2.0: vitesse de propagation des ondes
+    rippleDecay: number;    // 1.0 - 10.0: vitesse d'atténuation
+    rippleStrength: number; // 0.0 - 1.0: intensité des ondes
+}
+
 export interface AutoInteractionConfig {
     enabled: boolean;
-    type: 'wave' | 'noise' | 'pulse' | 'spiral' | 'glitch' | 'net' | 'liquid' | 'circuit' | 'matrix' | 'scanline' | 'aurora' | 'solar' | 'hex' | 'blueprint' | 'stream';
+    type: 'wave' | 'noise' | 'pulse' | 'spiral' | 'glitch' | 'net' | 'liquid' | 'circuit' | 'matrix' | 'scanline' | 'aurora' | 'solar' | 'hex' | 'blueprint' | 'stream' | 'rain';
     speed: number;       // 0.1 - 2.0
     scale: number;       // 0.1 - 5.0 (frequency/zoom)
     strength: number;    // 0.0 - 1.0 (modifier for radius/intensity)
@@ -112,6 +121,7 @@ export interface AutoInteractionConfig {
     useLuminanceAsDepth?: boolean; // New: Use image luminance as fallback for depth
     depthSpeed?: number;        // New: How much depth affects speed (0.0 - 10.0)
     depthBrightness?: number;   // New: How much depth affects brightness (0.0 - 2.0)
+    rain?: RainConfig;          // Rain-specific configuration
 }
 
 /**

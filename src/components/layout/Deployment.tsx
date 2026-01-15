@@ -79,7 +79,7 @@ export function Deployment() {
                                 className="object-cover opacity-60 grayscale hover:grayscale-0 transition-all duration-1000"
                             />
                             {/* Overlay UI elements to make it look 'tech' */}
-                            <div className="absolute top-10 left-10 right-10 p-6 border border-white/20 bg-black/60 backdrop-blur-md rounded">
+                            <div className="absolute top-10 left-10 right-10 tech-panel p-6">
                                 <div className="flex justify-between items-center mb-4 border-b border-white/10 pb-2">
                                     <span className="font-mono text-xs text-green-400">● SYSTEM ONLINE</span>
                                     <span className="font-mono text-xs text-gray-500">UNK-800 X1</span>
