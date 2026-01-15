@@ -8,9 +8,10 @@ interface TechIllustrationProps {
     alt: string;
     className?: string;
     aspectRatio?: string; // e.g. "aspect-video"
+    config?: Record<string, unknown>; // Allow config overrides
 }
 
-export function TechIllustration({ src, alt, className, aspectRatio = "aspect-video" }: TechIllustrationProps) {
+export function TechIllustration({ src, alt, className, aspectRatio = "aspect-video", config }: TechIllustrationProps) {
     const [isHovered, setIsHovered] = useState(false);
     const globalConfig = useFxConfig();
 
@@ -20,13 +21,14 @@ export function TechIllustration({ src, alt, className, aspectRatio = "aspect-vi
     const currentShape = isHovered ? hoverShape : globalShape;
 
     // Determine interaction config
-    const hoverConfig = globalConfig.hover;
+
 
     // Construct config overrides
     const configOverrides: Record<string, unknown> = {
-        // Disable sphere interaction on illustrations by default
+        enabled: true, // Force enable FX
+        // Enable sphere interaction (beads) but disable auto-animation (shaders)
         interaction: {
-            enabled: false,
+            enabled: true,
             auto: {
                 enabled: false,
             }
@@ -34,16 +36,24 @@ export function TechIllustration({ src, alt, className, aspectRatio = "aspect-vi
         // Swap shape on hover
         beads: {
             shape: currentShape
-        }
+        },
+        // Default to Black & White Duotone
+        duotone: {
+            enabled: true,
+            colorA: '#000000',
+            colorB: '#ffffff',
+            strength: 1.0
+        },
+        ...config // Merge passed config last
     };
 
-    // Apply Hover Duotone Override if enabled
-    if (isHovered && hoverConfig.duotoneEnabled) {
+    // Apply Hover Duotone Override (Blue)
+    if (isHovered) {
         configOverrides.duotone = {
             enabled: true,
-            colorA: hoverConfig.colorA || '#0a0094',
-            colorB: hoverConfig.colorB || '#ffffff',
-            strength: hoverConfig.strength ?? globalConfig.duotone.strength
+            colorA: '#0a0094', // Blue
+            colorB: '#ffffff', // White
+            strength: 1.0
         };
     }
 
@@ -56,7 +66,8 @@ export function TechIllustration({ src, alt, className, aspectRatio = "aspect-vi
             <FxImage
                 src={src}
                 alt={alt}
-                className="w-full h-full object-cover"
+                className="w-full h-full"
+                imgStyle={{ objectFit: 'cover', width: '100%', height: '100%' }}
                 config={configOverrides}
             />
         </div>

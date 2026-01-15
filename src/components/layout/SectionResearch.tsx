@@ -1,5 +1,5 @@
 import { ArrowUpRight } from 'lucide-react';
-import { TechCard, TechCardImage } from "@/components/ui/TechCard";
+import { TechIllustration } from "@/components/ui/TechIllustration";
 
 export function SectionResearch() {
     return (
@@ -23,35 +23,54 @@ export function SectionResearch() {
                         Ideally, this would be a specific transparent "3" image. 
                         For now using a placeholder visual. 
                      */}
-                    <div className="absolute inset-0 z-0 flex items-center justify-center opacity-80 pointer-events-none">
-                        {/* Placeholder for the "3" Graphic - In real implementation, this is an image */}
-                        {/* We use TechCardImage just for the logic/FX, but positioned absolutely */}
-                        <TechCardImage
+                    <div className="absolute inset-0 z-0 flex items-center justify-center opacity-80 expertise__background">
+                        <TechIllustration
                             src="/assets/visual-research.png"
                             alt="Intellect 3"
-                            className="w-[60%] h-auto object-contain border-none bg-transparent"
-                            layout="contained"
+                            className="absolute inset-0 w-full h-full"
+                            aspectRatio=""
                         />
+                        <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent pointer-events-none" />
                     </div>
 
 
                     {/* Bottom Left Card "Intellect 3" */}
                     <div className="mt-auto relative z-10">
-                        <TechCard className="max-w-md bg-black/80 backdrop-blur-sm p-6 transition-colors group">
-                            <div className="flex justify-between items-start mb-4">
-                                <div className="flex items-center gap-3">
-                                    <h3 className="text-xl text-white font-mono">Intellect 3</h3>
-                                    <span className="text-[10px] uppercase border border-white/20 px-1 py-0.5 text-muted-foreground">New</span>
+                        <div className="max-w-md tech-panel p-6 group">
+                            <div className="flex justify-between items-center mb-4 border-b border-white/10 pb-3">
+                                <div className="flex items-center gap-2">
+                                    <span className="relative flex h-2 w-2">
+                                        <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-orange-400 opacity-75"></span>
+                                        <span className="relative inline-flex rounded-full h-2 w-2 bg-orange-500"></span>
+                                    </span>
+                                    <span className="font-mono text-xs text-orange-400 tracking-widest">RELEASED</span>
                                 </div>
-                                <button className="flex items-center gap-2 text-xs font-mono uppercase bg-zinc-800 hover:bg-zinc-700 text-white px-3 py-1.5 transition-colors">
-                                    Chat with Intellect-3 <ArrowUpRight className="w-3 h-3" />
+                                <span className="font-mono text-xs text-zinc-500 border border-white/10 px-1 py-0.5 rounded">INTELLECT-3 v1.0</span>
+                            </div>
+
+                            <div className="flex justify-between items-start mb-4">
+                                <div>
+                                    <h3 className="text-xl text-white font-mono mb-1">Intellect 3</h3>
+                                    <div className="flex items-center gap-2 text-[10px] font-mono uppercase text-muted-foreground">
+                                        <span className="border border-white/10 px-2 py-1 rounded">RL-Foundation</span>
+                                    </div>
+                                </div>
+                                <button className="flex items-center gap-2 text-xs font-mono uppercase bg-white text-black font-bold px-3 py-1.5 hover:bg-zinc-200 transition-colors">
+                                    Chat <ArrowUpRight className="w-3 h-3" />
                                 </button>
                             </div>
-                            <p className="text-muted-foreground text-sm font-mono leading-relaxed mb-6">
-                                Today, we release INTELLECT-3, a 100B+ parameter Mixture-of-Experts model trained on our RL stack(...)
+
+                            <p className="text-zinc-400 text-sm font-mono leading-relaxed mb-6">
+                                Today, we release INTELLECT-3, a 100B+ parameter Mixture-of-Experts model trained on our RL stack. Use it for complex reasoning tasks.
                             </p>
-                            <div className="text-xs text-muted-foreground font-mono">Nov. 2025</div>
-                        </TechCard>
+
+                            <div className="grid grid-cols-2 gap-2 text-[10px] font-mono text-zinc-500 bg-white/5 p-3 rounded border border-white/5">
+                                <div className="flex justify-between"><span>PARAMS</span><span className="text-white">100B+</span></div>
+                                <div className="flex justify-between"><span>ARCH</span><span className="text-orange-400">MoE</span></div>
+                                <div className="flex justify-between"><span>LICENSE</span><span className="text-white">APACHE 2.0</span></div>
+                                <div className="flex justify-between"><span>DATE</span><span className="text-white">NOV. 2025</span></div>
+                            </div>
+                        </div>
                     </div>
                 </div>
 

@@ -11,6 +11,7 @@ interface FxContextValue {
     config: FxConfig;
     setConfig: (config: FxConfig) => void;
     updateConfig: (updates: Partial<FxConfig>) => void;
+    mouseRef: React.MutableRefObject<{ x: number, y: number }>;
 }
 
 export const FxContext = createContext<FxContextValue | null>(null);
@@ -36,6 +37,7 @@ export function useFxDebug() {
             config: FX_DEFAULTS,
             setConfig: () => { },
             updateConfig: () => { },
+            mouseRef: { current: { x: 0, y: 0 } },
         };
     }
     return context;

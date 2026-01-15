@@ -4,11 +4,12 @@
  * Applies effects with uniform screen-space bead size
  */
 
-import { useEffect, useRef, useState, useCallback, useMemo, type CSSProperties } from 'react';
+import { useEffect, useRef, useState, useCallback, useMemo, useContext, type CSSProperties } from 'react';
 import type { FxConfig } from './fxConfig';
 import { hexToRgb } from './fxConfig';
-import { useFxConfig } from './FxContext';
+import { useFxConfig, FxContext } from './FxContext';
 import { VERTEX_SHADER, FRAGMENT_SHADER } from './shaders/fxShaders';
+
 
 interface FxImageProps {
     src: string;
@@ -117,11 +118,15 @@ export function FxImage({ src, depthSrc, alt = '', className = '', config, style
     const imgRef = useRef<HTMLImageElement>(null);
     const depthImgRef = useRef<HTMLImageElement>(null); // New
     const webglRef = useRef<WebGLState | null>(null);
-    const mouseRef = useRef<{ x: number, y: number } | null>(null);
+    // Remove local mouseRef, we will use the one from context (or pass it in render loop)
 
     const [imageLoaded, setImageLoaded] = useState(false);
     const [depthLoaded, setDepthLoaded] = useState(false); // New
     const [webglSupported, setWebglSupported] = useState(true);
+
+    const context = useContext(FxContext);
+    // We need the mouseRef from context
+    const globalMouseRef = context?.mouseRef;
 
     // Get global config from context
     const contextConfig = useFxConfig();
@@ -216,7 +221,7 @@ export function FxImage({ src, depthSrc, alt = '', className = '', config, style
         gl.uniform1f(uniforms.u_dpr, dpr);
         gl.uniform1f(uniforms.u_time, performance.now() / 1000);
 
-        const mouse = mouseRef.current || { x: -1, y: -1 };
+        const mouse = globalMouseRef?.current || { x: -1, y: -1 };
         const mx = (mouse.x - rect.left) / rect.width;
         const my = (mouse.y - rect.top) / rect.height;
         gl.uniform2f(uniforms.u_mouse, mx, my);
@@ -491,25 +496,21 @@ export function FxImage({ src, depthSrc, alt = '', className = '', config, style
                 // Update viewport ref for animation loop control
                 isInViewportRef.current = entry.isIntersecting;
 
-                if (entry.isIntersecting) {
-                    // First time visible: trigger lazy init
-                    if (!isVisible) {
-                        setIsVisible(true);
-                    }
-                    // Restart animation loop if WebGL is ready
-                    if (webglRef.current && !requestRef.current) {
-                        requestRef.current = requestAnimationFrame(render);
-                    }
-                }
+                // Dynamic visibility: Create/Destroy context based on viewport
+                // This prevents "Too Many WebGL Contexts" error on pages with many FX images
+                setIsVisible(entry.isIntersecting);
+
+                // No need to manually restart loop here; initWebGL effect will trigger
+                // when isVisible becomes true and component mounts canvas.
             });
-        }, { threshold: 0.01 }); // Trigger when even 1% visible
+        }, { threshold: 0.0, rootMargin: '200px' }); // Load 200px before appearing
 
         if (containerRef.current) {
             observer.observe(containerRef.current);
         }
 
         return () => observer.disconnect();
-    }, [isVisible, render]);
+    }, []);
 
     /**
      * Initialize WebGL when image loads and is visible
@@ -537,7 +538,7 @@ export function FxImage({ src, depthSrc, alt = '', className = '', config, style
      * Re-render when config changes
      */
     useEffect(() => {
-        if (webglRef.current) {
+        if (webglRef.current && isVisible) {
             // Cancel any existing frame to prevent double loops
             if (requestRef.current) cancelAnimationFrame(requestRef.current);
             requestRef.current = requestAnimationFrame(render);
@@ -545,7 +546,7 @@ export function FxImage({ src, depthSrc, alt = '', className = '', config, style
         return () => {
             if (requestRef.current) cancelAnimationFrame(requestRef.current);
         };
-    }, [render, webglSupported, imageLoaded]);
+    }, [render, webglSupported, imageLoaded, isVisible, mergedConfig]);
 
     /**
      * Handle resize
@@ -553,26 +554,15 @@ export function FxImage({ src, depthSrc, alt = '', className = '', config, style
     // Handle Resize
     useEffect(() => {
         const handleResize = () => {
-            if (webglRef.current) {
+            if (webglRef.current && isVisible) {
                 render();
             }
         };
         window.addEventListener('resize', handleResize);
         return () => window.removeEventListener('resize', handleResize);
-    }, [render]);
+    }, [render, isVisible]);
 
-    // Handle Global Mouse
-    useEffect(() => {
-        const handleMouseMove = (e: MouseEvent) => {
-            mouseRef.current = { x: e.clientX, y: e.clientY };
-        };
-
-        // We don't strictly need mouseleave for window, 
-        // as the shader distance check handles 'out of bounds' naturally.
-
-        window.addEventListener('mousemove', handleMouseMove);
-        return () => window.removeEventListener('mousemove', handleMouseMove);
-    }, []);
+    // Handle Global Mouse - REMOVED (Centralized in FxProvider)
 
     return (
         <div
@@ -581,7 +571,7 @@ export function FxImage({ src, depthSrc, alt = '', className = '', config, style
             style={{ position: 'relative', display: 'inline-block', ...style }}
         // Events removed here as we track window globally for background support
         >
-            {/* Source image - always visible when effects disabled, hidden when effects active */}
+            {/* Source image - always visible when effects disabled OR when canvas is hidden (e.g. out of viewport), hidden when effects active AND visible */}
             <img
                 ref={imgRef}
                 src={src}
@@ -594,7 +584,7 @@ export function FxImage({ src, depthSrc, alt = '', className = '', config, style
                     maxHeight: '100%',
                     width: 'auto',
                     height: 'auto',
-                    visibility: (effectsActive && imageLoaded) ? 'hidden' : 'visible',
+                    visibility: (effectsActive && imageLoaded && isVisible) ? 'hidden' : 'visible',
                     ...imgStyle,
                 }}
             />
@@ -611,8 +601,8 @@ export function FxImage({ src, depthSrc, alt = '', className = '', config, style
                 />
             )}
 
-            {/* WebGL canvas overlay - only show when effects are active */}
-            {effectsActive && imageLoaded && (
+            {/* WebGL canvas overlay - only show when effects are active AND visible */}
+            {effectsActive && imageLoaded && isVisible && (
                 <canvas
                     ref={canvasRef}
                     className="fx-image-canvas"

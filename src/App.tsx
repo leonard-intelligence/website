@@ -3,7 +3,7 @@ import { useReveal } from './hooks/useReveal';
 import { Navbar } from './components/layout/Navbar';
 import { Hero } from './components/layout/Hero';
 import { TrustBar } from './components/layout/TrustBar';
-import { FxDebugPanel, FxProvider } from './components/fx';
+import { FxProvider } from './components/fx';
 import { SectionLoader } from './components/ui/SectionLoader';
 
 // Lazy load below-the-fold sections
@@ -53,8 +53,6 @@ export function App() {
                     <Footer />
                 </Suspense>
 
-                {/* Debug Panel - visible with ?fxdebug=1 */}
-                <FxDebugPanel />
             </div>
         </FxProvider>
     );

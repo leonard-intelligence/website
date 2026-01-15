@@ -1,5 +1,4 @@
 import { ArrowUpRight, Eye, Video, ScanFace } from 'lucide-react';
-import { TechCard } from "@/components/ui/TechCard";
 import { TechIllustration } from "@/components/ui/TechIllustration";
 
 export function SectionVision() {
@@ -20,36 +19,48 @@ export function SectionVision() {
                     </div>
 
                     {/* Central Image Area */}
-                    <div className="absolute inset-0 z-0 flex items-center justify-center pointer-events-none expertise__background">
+                    <div className="absolute inset-0 z-0 flex items-center justify-center expertise__background">
                         <TechIllustration
                             src="/assets/vision_background.png"
                             alt="Vision AI Background"
                             className="absolute inset-0 w-full h-full"
-                            aspectRatio="aspect-auto"
+                            aspectRatio=""
                         />
-                        <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent" />
+                        <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent pointer-events-none" />
                     </div>
 
                     {/* Bottom Left Card */}
                     <div className="mt-auto relative z-10 expertise__card-wrapper">
-                        <TechCard id="expertise-vision-card" className="max-w-md bg-black/80 backdrop-blur-sm p-6 transition-colors group expertise__card">
-                            <div className="flex justify-between items-start mb-4 expertise__card-header">
-                                <div className="flex items-center gap-3">
-                                    <h3 className="text-xl text-white font-mono expertise__card-title">Vision-1B</h3>
-                                    <span className="text-[10px] uppercase border border-blue-500/30 text-blue-500 px-1 py-0.5 expertise__card-badge">Live</span>
+                        <div id="expertise-vision-card" className="max-w-md tech-panel p-6 group expertise__card">
+                            <div className="flex justify-between items-center mb-4 border-b border-white/10 pb-3 expertise__card-header">
+                                <div className="flex items-center gap-2">
+                                    <span className="relative flex h-2 w-2">
+                                        <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75"></span>
+                                        <span className="relative inline-flex rounded-full h-2 w-2 bg-blue-500"></span>
+                                    </span>
+                                    <span className="font-mono text-xs text-blue-400 tracking-widest">LIVE STREAM</span>
                                 </div>
-                                <div className="flex items-center gap-2 text-xs font-mono uppercase text-muted-foreground expertise__card-meta">
+                                <span className="font-mono text-xs text-zinc-500 expertise__card-badge">VISION-1B v2.0</span>
+                            </div>
+
+                            <div className="flex justify-between items-start mb-4">
+                                <h3 className="text-xl text-white font-mono expertise__card-title">Vision-1B</h3>
+                                <div className="flex items-center gap-2 text-[10px] font-mono uppercase text-muted-foreground border border-white/10 px-2 py-1 rounded expertise__card-meta">
                                     <Eye className="w-3 h-3" /> Suivi d'objets
                                 </div>
                             </div>
-                            <p className="text-muted-foreground text-sm font-mono leading-relaxed mb-6 expertise__card-description">
+
+                            <p className="text-zinc-400 text-sm font-mono leading-relaxed mb-6 expertise__card-description">
                                 Vision par ordinateur avancée capable de détecter les anomalies, suivre les stocks et assurer la conformité de sécurité sur les flux vidéo.
                             </p>
-                            <div className="text-xs text-muted-foreground font-mono flex items-center gap-4 expertise__card-stats">
-                                <span>FPS: 60+</span>
-                                <span>Latence: &lt;50ms</span>
+
+                            <div className="grid grid-cols-2 gap-2 text-[10px] font-mono text-zinc-500 bg-white/5 p-3 rounded border border-white/5 expertise__card-stats">
+                                <div className="flex justify-between"><span>FPS</span><span className="text-white">60+</span></div>
+                                <div className="flex justify-between"><span>LATENCY</span><span className="text-blue-400">&lt;50ms</span></div>
+                                <div className="flex justify-between"><span>ACCURACY</span><span className="text-white">99.2%</span></div>
+                                <div className="flex justify-between"><span>STATUS</span><span className="text-green-400">ACTIVE</span></div>
                             </div>
-                        </TechCard>
+                        </div>
                     </div>
                 </div>
 

@@ -69,34 +69,38 @@ export const TechCardImage = ({ src, alt, className, useFx = true, layout = 'con
     const currentShape = isHovered ? hoverShape : globalShape;
 
     // Determine interaction config
-    const hoverConfig = globalConfig.hover;
+
 
     // Construct config overrides
     const configOverrides: Record<string, unknown> = {
-        // Disable sphere interaction on cards
+        enabled: true, // Force enable FX
+        // Enable sphere interaction on cards default
         interaction: {
-            enabled: false,
+            enabled: true,
             auto: {
-                enabled: false,
-                type: 'wave',
-                speed: 0,
-                strength: 0,
-                scale: 0
+                enabled: false, // Don't auto-animate small cards
             }
         },
         // Swap shape on hover
         beads: {
             shape: currentShape
+        },
+        // Default to Black & White Duotone
+        duotone: {
+            enabled: true,
+            colorA: '#000000',
+            colorB: '#ffffff',
+            strength: 1.0
         }
     };
 
-    // Apply Hover Duotone Override if enabled
-    if (isHovered && hoverConfig.duotoneEnabled) {
+    // Apply Hover Duotone Override
+    if (isHovered) {
         configOverrides.duotone = {
             enabled: true,
-            colorA: hoverConfig.colorA || '#ff0000',
-            colorB: hoverConfig.colorB || '#ffff00',
-            strength: hoverConfig.strength ?? globalConfig.duotone.strength
+            colorA: '#0a0094', // Blue
+            colorB: '#ffffff', // White
+            strength: 1.0
         };
     }
 

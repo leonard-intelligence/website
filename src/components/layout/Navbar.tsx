@@ -13,9 +13,14 @@ export function Navbar() {
                     <span className="tab-number navbar__tab-number">01</span>
                 </a>
 
+                <a href="#section-expertises" className="nav-tab navbar__tab">
+                    <span className="tab-label navbar__tab-label">EXPERTISES</span>
+                    <span className="tab-number navbar__tab-number">02</span>
+                </a>
+
                 <a href="#section-methodology" className="nav-tab navbar__tab">
                     <span className="tab-label navbar__tab-label">MÉTHODOLOGIE</span>
-                    <span className="tab-number navbar__tab-number">02</span>
+                    <span className="tab-number navbar__tab-number">03</span>
                 </a>
             </div>
 

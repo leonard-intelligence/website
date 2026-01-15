@@ -1,5 +1,4 @@
 import { ArrowUpRight, Mic, Activity, Waves } from 'lucide-react';
-import { TechCard } from "@/components/ui/TechCard";
 import { TechIllustration } from "@/components/ui/TechIllustration";
 
 export function SectionAudio() {
@@ -56,36 +55,48 @@ export function SectionAudio() {
                     </div>
 
                     {/* Central Image Area - Waveform Visualization */}
-                    <div className="absolute inset-0 z-0 flex items-center justify-center opacity-40 mix-blend-screen pointer-events-none expertise__background">
+                    <div className="absolute inset-0 z-0 flex items-center justify-center opacity-40 mix-blend-screen expertise__background">
                         <TechIllustration
                             src="/assets/audio_background.jpg"
                             alt="Audio Analytics Visualization"
                             className="absolute inset-0 w-full h-full"
-                            aspectRatio="aspect-auto"
+                            aspectRatio=""
                         />
-                        <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent" />
+                        <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent pointer-events-none" />
                     </div>
 
                     {/* Bottom Right Card */}
                     <div className="mt-auto relative z-10 ml-auto expertise__card-wrapper">
-                        <TechCard id="expertise-audio-card" className="max-w-md bg-black/80 backdrop-blur-sm p-6 transition-colors group expertise__card">
-                            <div className="flex justify-between items-start mb-4 expertise__card-header">
-                                <div className="flex items-center gap-3">
-                                    <h3 className="text-xl text-white font-mono expertise__card-title">Whisper-v3-Turbo</h3>
-                                    <span className="text-[10px] uppercase border border-cyan-500/30 text-cyan-500 px-1 py-0.5 expertise__card-badge">Optimized</span>
+                        <div id="expertise-audio-card" className="max-w-md tech-panel p-6 group expertise__card">
+                            <div className="flex justify-between items-center mb-4 border-b border-white/10 pb-3 expertise__card-header">
+                                <div className="flex items-center gap-2">
+                                    <span className="relative flex h-2 w-2">
+                                        <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-cyan-400 opacity-75"></span>
+                                        <span className="relative inline-flex rounded-full h-2 w-2 bg-cyan-500"></span>
+                                    </span>
+                                    <span className="font-mono text-xs text-cyan-400 tracking-widest">LIVE STREAM</span>
                                 </div>
-                                <div className="flex items-center gap-2 text-xs font-mono uppercase text-muted-foreground expertise__card-meta">
-                                    <Mic className="w-3 h-3" /> <span className="text-cyan-400">Live Stream</span>
+                                <span className="font-mono text-xs text-zinc-500 expertise__card-badge">WHISPER-V3 TURBO</span>
+                            </div>
+
+                            <div className="flex justify-between items-start mb-4">
+                                <h3 className="text-xl text-white font-mono expertise__card-title">Whisper-v3-Turbo</h3>
+                                <div className="flex items-center gap-2 text-[10px] font-mono uppercase text-muted-foreground border border-white/10 px-2 py-1 rounded expertise__card-meta">
+                                    <Mic className="w-3 h-3" /> Optimized
                                 </div>
                             </div>
-                            <p className="text-muted-foreground text-sm font-mono leading-relaxed mb-6 expertise__card-description">
+
+                            <p className="text-zinc-400 text-sm font-mono leading-relaxed mb-6 expertise__card-description">
                                 Pipeline d'analyse audio temps réel capable d'identifier les locuteurs, les émotions et les intentions derrière les mots.
                             </p>
-                            <div className="text-xs text-muted-foreground font-mono flex items-center gap-4 expertise__card-stats">
-                                <span>WER: &lt;5%</span>
-                                <span>Diarization: ON</span>
+
+                            <div className="grid grid-cols-2 gap-2 text-[10px] font-mono text-zinc-500 bg-white/5 p-3 rounded border border-white/5 expertise__card-stats">
+                                <div className="flex justify-between"><span>WER</span><span className="text-white">&lt;5%</span></div>
+                                <div className="flex justify-between"><span>DIARIZATION</span><span className="text-cyan-400">ON</span></div>
+                                <div className="flex justify-between"><span>LANGUAGES</span><span className="text-white">99+</span></div>
+                                <div className="flex justify-between"><span>STATUS</span><span className="text-green-400">ACTIVE</span></div>
                             </div>
-                        </TechCard>
+                        </div>
                     </div>
                 </div>
 

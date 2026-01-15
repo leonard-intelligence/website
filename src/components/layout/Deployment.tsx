@@ -9,8 +9,8 @@ export function Deployment() {
     return (
         <section id="section-deployment" className="deployment-section deployment py-24 bg-black border-b border-white/10 reveal" aria-labelledby="deployment-heading">
             <div className="max-w-7xl mx-auto px-6 deployment__container">
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center deployment__grid">
-                    <div className="deployment__content">
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-stretch deployment__grid">
+                    <div className="deployment__content flex flex-col justify-center">
                         <span className="text-brand-blue font-mono text-sm tracking-widest uppercase mb-4 block">Infrastructure</span>
                         <h2 id="deployment-heading" className="text-4xl md:text-5xl font-bold mb-6 font-display text-white leading-tight deployment__heading">
                             Déploiement <span className="text-white/50">Souverain</span> & Sécurisé.
@@ -70,16 +70,16 @@ export function Deployment() {
                         </div>
                     </div>
 
-                    <div className="relative h-[600px] hidden lg:block deployment__visual">
-                        <TechCard className="h-full border-none" showMarkers={false}>
+                    <div className="deployment__visual hidden lg:block h-full min-h-[500px]">
+                        <TechCard className="h-full border-none p-0 overflow-hidden" showMarkers={false}>
                             <TechCardImage
                                 src={serverImage}
                                 alt="Server Rack"
                                 layout="full"
-                                className="object-cover opacity-60 grayscale hover:grayscale-0 transition-all duration-1000"
+                                className="object-cover opacity-60 grayscale hover:grayscale-0 transition-all duration-1000 h-full w-full"
                             />
                             {/* Overlay UI elements to make it look 'tech' */}
-                            <div id="deployment-panel" className="absolute top-10 left-10 right-10 tech-panel p-6 deployment__panel">
+                            <div id="deployment-panel" className="absolute top-10 left-10 right-10 tech-panel p-6 deployment__panel bg-black/80 backdrop-blur-md border border-white/10 max-w-xs ml-auto mr-auto lg:mr-0 lg:ml-10">
                                 <div className="flex justify-between items-center mb-4 border-b border-white/10 pb-2">
                                     <span className="font-mono text-xs text-green-400">● SYSTEM ONLINE</span>
                                     <span className="font-mono text-xs text-gray-500">UNK-800 X1</span>

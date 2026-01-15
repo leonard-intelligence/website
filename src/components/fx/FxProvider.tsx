@@ -1,4 +1,4 @@
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useRef, useEffect } from 'react';
 import type { ReactNode } from 'react';
 import { FxContext } from './FxContext';
 import { FX_DEFAULTS, type FxConfig } from './fxConfig';
@@ -36,8 +36,19 @@ export function FxProvider({ children, initialConfig }: FxProviderProps) {
         }));
     }, []);
 
+    // Global mouse tracking using ref (no re-renders)
+    const mouseRef = useRef({ x: 0, y: 0 });
+
+    useEffect(() => {
+        const handleMouseMove = (e: MouseEvent) => {
+            mouseRef.current = { x: e.clientX, y: e.clientY };
+        };
+        window.addEventListener('mousemove', handleMouseMove);
+        return () => window.removeEventListener('mousemove', handleMouseMove);
+    }, []);
+
     return (
-        <FxContext.Provider value={{ config, setConfig, updateConfig }}>
+        <FxContext.Provider value={{ config, setConfig, updateConfig, mouseRef }}>
             {children}
         </FxContext.Provider>
     );

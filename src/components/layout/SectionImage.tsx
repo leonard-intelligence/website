@@ -19,14 +19,14 @@ export function SectionImage() {
                     </div>
 
                     {/* Central Image Area */}
-                    <div className="absolute inset-0 z-0 flex items-center justify-center pointer-events-none expertise__background">
+                    <div className="absolute inset-0 z-0 flex items-center justify-center expertise__background">
                         <TechIllustration
                             src="/assets/flux_bg.png"
                             alt="Flux Background"
                             className="absolute inset-0 w-full h-full opacity-50"
-                            aspectRatio="aspect-auto"
+                            aspectRatio=""
                         />
-                        <div className="w-full h-full bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-blue-900/10 via-black/40 to-black opacity-80 absolute inset-0" />
+                        <div className="w-full h-full bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-blue-900/10 via-black/40 to-black opacity-80 absolute inset-0 pointer-events-none" />
                     </div>
 
                     {/* Bottom Left Card */}
