@@ -1,9 +1,13 @@
+import logo from '../../assets/logo.png';
+
 export function Navbar() {
     return (
         <nav id="section-navbar" className="agency-nav navbar reveal delay-100">
             <div className="nav-left navbar__left">
                 <div className="nav-brand navbar__brand">
-                    <div className="brand-logo navbar__logo">MELIES<span className="text-light navbar__logo-suffix">.ai</span></div>
+                    <div className="brand-logo navbar__logo">
+                        <img src={logo} alt="Leonard Intelligence Logo" className="navbar__logo-image" style={{ height: '32px', marginRight: '10px' }} />
+                    </div>
                 </div>
             </div>
 
