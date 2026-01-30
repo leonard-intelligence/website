@@ -15,14 +15,14 @@ export function SectionPatrimoine() {
                     {/* Header */}
                     <div className="mb-8">
                         <div className="text-[#E67E22] font-mono mb-2 text-lg">
-                            03 Mémoire d'Entreprise.
+                            Mémoire d'Entreprise.
                         </div>
                         <h2
                             id="patrimoine-heading"
                             className="text-4xl md:text-5xl font-mono text-white max-w-xl leading-tight uppercase tracking-[-0.02em]"
                         >
-                            Ne perdez plus le savoir-faire<br />
-                            <span className="text-muted-foreground">de vos experts.</span>
+                            <span className="text-white/50">Ne perdez plus</span><br />
+                            le savoir-faire de vos experts.
                         </h2>
                     </div>
 
@@ -86,35 +86,35 @@ export function SectionPatrimoine() {
                                 /// MODULE DOC ///
                             </div>
                         </div>
-                        <p className="font-mono text-muted-foreground text-sm leading-relaxed">
+                        <p className="font-mono text-gray-400 text-sm leading-relaxed">
                             Votre assistant IA indexe vos procédures, vos documents, votre expertise. Questions en langage naturel.
                         </p>
                     </div>
 
                     {/* Feature Items */}
                     <div className="flex-1 flex flex-col">
-                        <div className="flex-1 border-b border-white/10 p-8 group hover:bg-white/5 transition-colors cursor-pointer relative">
+                        <div className="flex-1 border-b border-white/10 p-8 group hover:bg-white/5 transition-colors relative">
                             <div className="w-8 h-8 bg-black border border-white/10 flex items-center justify-center mb-4 text-[#E67E22]">
                                 <BookOpen className="w-4 h-4" />
                             </div>
                             <h3 className="text-white font-mono text-lg mb-2 uppercase tracking-[-0.02em]">Procédures Indexées</h3>
-                            <p className="text-muted-foreground text-sm font-mono">Tous vos documents internes accessibles instantanément.</p>
+                            <p className="text-gray-400 text-sm font-mono">Tous vos documents internes accessibles instantanément.</p>
                         </div>
 
-                        <div className="flex-1 border-b border-white/10 p-8 group hover:bg-white/5 transition-colors cursor-pointer relative">
+                        <div className="flex-1 border-b border-white/10 p-8 group hover:bg-white/5 transition-colors relative">
                             <div className="w-8 h-8 bg-black border border-white/10 flex items-center justify-center mb-4 text-[#E67E22]">
                                 <MessageCircle className="w-4 h-4" />
                             </div>
                             <h3 className="text-white font-mono text-lg mb-2 uppercase tracking-[-0.02em]">Questions Naturelles</h3>
-                            <p className="text-muted-foreground text-sm font-mono">Posez vos questions comme à un collègue expert.</p>
+                            <p className="text-gray-400 text-sm font-mono">Posez vos questions comme à un collègue expert.</p>
                         </div>
 
-                        <div className="flex-1 p-8 group hover:bg-white/5 transition-colors cursor-pointer relative">
+                        <div className="flex-1 p-8 group hover:bg-white/5 transition-colors relative">
                             <div className="w-8 h-8 bg-black border border-white/10 flex items-center justify-center mb-4 text-[#E67E22]">
                                 <FileText className="w-4 h-4" />
                             </div>
                             <h3 className="text-white font-mono text-lg mb-2 uppercase tracking-[-0.02em]">Sources Citées</h3>
-                            <p className="text-muted-foreground text-sm font-mono">Chaque réponse avec références vérifiables.</p>
+                            <p className="text-gray-400 text-sm font-mono">Chaque réponse avec références vérifiables.</p>
                         </div>
                     </div>
                 </div>

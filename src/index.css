@@ -163,6 +163,8 @@
 @theme inline {
   --font-mono: 'JetBrains Mono Variable', monospace;
   --font-sans: 'Geist Sans', sans-serif;
+  --font-jacquard: 'Jacquard 24', cursive;
+  --font-junicode: 'Junicode', serif;
   /* Keep Inter for softer body text if needed, or use Mono for strict tech feel. Prime uses both. */
 }
 
@@ -175,7 +177,6 @@
     /* standard reset usually included */
   }
 
-  html,
   body {
     overflow-x: hidden;
     max-width: 100vw;
@@ -185,8 +186,6 @@
     font-family: var(--font-sans);
     background-color: var(--background);
     color: var(--foreground);
-    /* Technical Grid Removed */
-    /* Technical Grid */
   }
 }
 
@@ -215,5 +214,275 @@
 
   to {
     transform: translateX(calc(-100% / 3));
+  }
+}
+
+/* TECHNICAL PATTERNS */
+.bg-pattern-grid {
+  background-size: 60px 60px;
+  background-image:
+    linear-gradient(to right, rgba(255, 255, 255, 0.08) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.08) 1px, transparent 1px);
+}
+
+.bg-pattern-diagonal {
+  background-image: repeating-linear-gradient(45deg,
+      rgba(255, 255, 255, 0.08) 0,
+      rgba(255, 255, 255, 0.08) 1px,
+      transparent 0,
+      transparent 10px);
+}
+
+/* ==========================================================================
+   MODERN ANIMATIONS SYSTEM
+   ========================================================================== */
+
+/* REVEAL VARIANTS */
+.reveal-up {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: all 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.reveal-up.active {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.reveal-left {
+  opacity: 0;
+  transform: translateX(-30px);
+  transition: all 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.reveal-left.active {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.reveal-right {
+  opacity: 0;
+  transform: translateX(30px);
+  transition: all 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.reveal-right.active {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.reveal-scale {
+  opacity: 0;
+  transform: scale(0.95);
+  transition: all 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.reveal-scale.active {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* STAGGER DELAYS */
+.stagger-1 {
+  transition-delay: 0.1s;
+}
+
+.stagger-2 {
+  transition-delay: 0.2s;
+}
+
+.stagger-3 {
+  transition-delay: 0.3s;
+}
+
+.stagger-4 {
+  transition-delay: 0.4s;
+}
+
+.stagger-5 {
+  transition-delay: 0.5s;
+}
+
+.stagger-6 {
+  transition-delay: 0.6s;
+}
+
+/* HOVER LIFT EFFECT */
+.hover-lift {
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+    box-shadow 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.hover-lift:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+}
+
+/* GLOW EFFECT */
+.hover-glow {
+  transition: box-shadow 0.3s ease;
+}
+
+.hover-glow:hover {
+  box-shadow: 0 0 30px rgba(230, 126, 34, 0.3);
+}
+
+/* ANIMATED UNDERLINE FOR LINKS */
+.animated-underline {
+  position: relative;
+}
+
+.animated-underline::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0;
+  height: 1px;
+  background: currentColor;
+  transition: width 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.animated-underline:hover::after {
+  width: 100%;
+}
+
+/* PULSE GLOW FOR CTA */
+@keyframes pulse-glow {
+
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 rgba(230, 126, 34, 0.4);
+  }
+
+  50% {
+    box-shadow: 0 0 20px 5px rgba(230, 126, 34, 0.2);
+  }
+}
+
+.animate-pulse-glow {
+  animation: pulse-glow 3s ease-in-out infinite;
+}
+
+/* ICON BOUNCE ON HOVER */
+.icon-bounce {
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.group:hover .icon-bounce {
+  transform: scale(1.15);
+}
+
+/* FADE IN KEYFRAME */
+@keyframes fade-in-up {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in-up {
+  animation: fade-in-up 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* FADE IN (simple) */
+@keyframes fade-in {
+  from {
+    opacity: 0;
+    transform: scale(0.85) translateY(20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+.animate-fade-in {
+  animation: fade-in 0.8s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+/* HERO IMAGE EXIT - Combined scale + fade */
+@keyframes hero-exit {
+  0% {
+    opacity: 1;
+    scale: 1;
+  }
+
+  100% {
+    opacity: 0;
+    scale: 1.5;
+  }
+}
+
+.animate-hero-exit {
+  animation: hero-exit 1s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+/* COUNTER ANIMATION SUPPORT */
+.counter-animate {
+  display: inline-block;
+  min-width: 3ch;
+}
+
+/* FORM INPUT FOCUS ANIMATION */
+.input-animate {
+  transition: border-color 0.3s ease, box-shadow 0.3s ease, transform 0.2s ease;
+}
+
+.input-animate:focus {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(230, 126, 34, 0.15);
+}
+
+/* CORNER MARKERS ANIMATION */
+@keyframes corner-expand {
+  from {
+    width: 0;
+    height: 0;
+  }
+
+  to {
+    width: 0.5rem;
+    height: 0.5rem;
+  }
+}
+
+.corner-animate {
+  animation: corner-expand 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* ==========================================================================
+   ACCESSIBILITY: Reduced Motion
+   ========================================================================== */
+@media (prefers-reduced-motion: reduce) {
+
+  .reveal,
+  .reveal-up,
+  .reveal-left,
+  .reveal-right,
+  .reveal-scale {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+
+  .hover-lift:hover {
+    transform: none;
+  }
+
+  .animate-pulse-glow,
+  .animate-fade-in-up {
+    animation: none;
+  }
+
+  .icon-bounce,
+  .animated-underline::after {
+    transition: none;
   }
 }

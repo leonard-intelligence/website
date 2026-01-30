@@ -1,6 +1,6 @@
 export function Footer() {
     return (
-        <footer id="section-footer" className="bg-black py-20 border-t border-white/10 text-sm">
+        <footer id="section-footer" className="bg-black py-20 border-t border-white/10 text-sm reveal-up">
             <div className="max-w-7xl mx-auto px-6">
 
                 {/* Top Section: Brand + Tagline */}
@@ -17,7 +17,7 @@ export function Footer() {
                     </div>
                     {/* Sovereign positioning statement like Onepoint */}
                     <div className="mt-4 md:mt-0 text-right">
-                        <a href="mailto:hello@leonardintelligence.com" className="text-white hover:text-[#E67E22] transition-colors font-mono text-sm block mb-1">
+                        <a href="mailto:hello@leonardintelligence.com" className="text-white hover:text-[#E67E22] transition-colors font-mono text-sm block mb-1 animated-underline">
                             hello@leonardintelligence.com
                         </a>
                         <p className="text-gray-500 font-mono text-[10px]">France 🇫🇷</p>
@@ -29,28 +29,28 @@ export function Footer() {
 
                     {/* Expertise */}
                     <nav aria-label="Expertises" className="flex flex-col">
-                        <h4 className="font-mono font-bold text-white mb-6 uppercase text-xs tracking-wider">Expertises</h4>
+                        <h4 className="font-mono font-semibold text-white mb-6 uppercase text-xs tracking-wider">Expertises</h4>
                         <ul className="space-y-3 text-gray-500 font-mono text-xs">
-                            <li className="hover:text-white cursor-pointer transition-colors">Visual Intelligence</li>
-                            <li className="hover:text-white cursor-pointer transition-colors">Language & Process</li>
-                            <li className="hover:text-white cursor-pointer transition-colors">Audio & Signal</li>
-                            <li className="hover:text-white cursor-pointer transition-colors">Architecture</li>
+                            <li className="hover:text-white transition-colors">Visual Intelligence</li>
+                            <li className="hover:text-white transition-colors">Language & Process</li>
+                            <li className="hover:text-white transition-colors">Audio & Signal</li>
+                            <li className="hover:text-white transition-colors">Architecture</li>
                         </ul>
                     </nav>
 
                     {/* Industries */}
                     <nav aria-label="Secteurs" className="flex flex-col">
-                        <h4 className="font-mono font-bold text-white mb-6 uppercase text-xs tracking-wider">Secteurs</h4>
+                        <h4 className="font-mono font-semibold text-white mb-6 uppercase text-xs tracking-wider">Secteurs</h4>
                         <ul className="space-y-3 text-gray-500 font-mono text-xs">
-                            <li className="hover:text-white cursor-pointer transition-colors">Retail & E-commerce</li>
-                            <li className="hover:text-white cursor-pointer transition-colors">Industrie & Qualité</li>
-                            <li className="hover:text-white cursor-pointer transition-colors">Service & B2B</li>
+                            <li className="hover:text-white transition-colors">Retail & E-commerce</li>
+                            <li className="hover:text-white transition-colors">Industrie & Qualité</li>
+                            <li className="hover:text-white transition-colors">Service & B2B</li>
                         </ul>
                     </nav>
 
                     {/* Resources */}
                     <nav aria-label="Liens utiles" className="flex flex-col">
-                        <h4 className="font-mono font-bold text-white mb-6 uppercase text-xs tracking-wider">Liens</h4>
+                        <h4 className="font-mono font-semibold text-white mb-6 uppercase text-xs tracking-wider">Liens</h4>
                         <ul className="space-y-3 text-gray-500 font-mono text-xs">
                             <li>
                                 <a
@@ -63,14 +63,18 @@ export function Footer() {
                                     LinkedIn
                                 </a>
                             </li>
-                            <li className="hover:text-white cursor-pointer transition-colors">Mentions légales</li>
-                            <li className="hover:text-white cursor-pointer transition-colors">CGV</li>
+                            <li>
+                                <a href="/mentions-legales" className="hover:text-white transition-colors">Mentions légales</a>
+                            </li>
+                            <li>
+                                <a href="/cgv" className="hover:text-white transition-colors">CGV</a>
+                            </li>
                         </ul>
                     </nav>
 
                     {/* Company */}
                     <div className="flex flex-col">
-                        <h4 className="font-mono font-bold text-white mb-6 uppercase text-xs tracking-wider">Audit</h4>
+                        <h4 className="font-mono font-semibold text-white mb-6 uppercase text-xs tracking-wider">Audit</h4>
                         <p className="text-gray-500 font-mono text-xs mb-4">
                             Identification des opportunités d'automatisation pour votre entreprise.
                         </p>

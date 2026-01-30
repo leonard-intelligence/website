@@ -1,24 +1,10 @@
 import { cn } from "@/lib/utils";
-import React, { createContext, useContext, useState } from "react";
+import React, { useState } from "react";
 import { FxImage } from "@/components/fx";
 import styles from "./TechCard.module.css";
 import { useFxConfig } from "@/components/fx/FxContext";
 
-// Context to share hover state
-interface TechCardContextType {
-    isHovered: boolean;
-}
-
-const TechCardContext = createContext<TechCardContextType | undefined>(undefined);
-
-export const useTechCardContext = () => {
-    const context = useContext(TechCardContext);
-    if (!context) {
-        // Fallback for standalone usage if needed, or throw error
-        return { isHovered: false };
-    }
-    return context;
-};
+import { TechCardContext, useTechCardContext } from "./TechCardContext";
 
 interface TechCardProps extends React.HTMLAttributes<HTMLDivElement> {
     children: React.ReactNode;
@@ -26,10 +12,7 @@ interface TechCardProps extends React.HTMLAttributes<HTMLDivElement> {
 }
 
 // Simplified TechCard relying on CSS Module
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-export function TechCard({ children, className, ...props }: TechCardProps & { showMarkers?: boolean }) {
-    // Determine if showMarkers is passed (even if unused by CSS module now, we strip it)
-    const { showMarkers, ...domProps } = props as any;
+export function TechCard({ children, className, ...props }: TechCardProps) {
     const [isHovered, setIsHovered] = useState(false);
 
     return (
@@ -41,7 +24,7 @@ export function TechCard({ children, className, ...props }: TechCardProps & { sh
                 )}
                 onMouseEnter={() => setIsHovered(true)}
                 onMouseLeave={() => setIsHovered(false)}
-                {...domProps}
+                {...props}
             >
                 {children}
             </div>

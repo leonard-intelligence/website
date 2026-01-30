@@ -1,12 +1,21 @@
 
 
-
+import { useState, useEffect } from 'react';
 import { FxImage } from '../fx/FxImage';
 import { useFxConfig } from '../fx/FxContext';
 import { TrustBar } from './TrustBar';
 
 export function Hero() {
     const config = useFxConfig();
+    const [animationPhase, setAnimationPhase] = useState<'intro' | 'content'>('intro');
+
+    useEffect(() => {
+        // Sequence: 1.5s of illustration with effects, then transition to content
+        const timer = setTimeout(() => {
+            setAnimationPhase('content');
+        }, 1500);
+        return () => clearTimeout(timer);
+    }, []);
 
 
 
@@ -15,7 +24,7 @@ export function Hero() {
         /* Replaced .hero-section with direct styles */
         <section
             id="section-hero"
-            className="relative min-h-[100dvh] w-full flex flex-col group bg-background bg-[linear-gradient(to_right,rgba(255,255,255,0.03)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.03)_1px,transparent_1px)] bg-[size:60px_60px]"
+            className="relative min-h-[100dvh] w-full flex flex-col group bg-pattern-grid"
             aria-label="Introduction"
         >
 
@@ -23,55 +32,54 @@ export function Hero() {
             <div className="relative flex-grow flex items-center w-full">
 
                 {/* Content Layer */}
-                <div className="container mx-auto px-6 z-20 relative w-full pt-20 pb-12">
+                <div className={`container mx-auto px-6 z-20 relative w-full pt-32 lg:pt-20 pb-12 transition-all duration-1000 ${animationPhase === 'intro' ? 'opacity-0 translate-y-4' : 'opacity-100 translate-y-0'
+                    }`}>
                     <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 w-full">
 
                         {/* LEFT COLUMN: Content */}
                         <div className="lg:col-span-7 flex flex-col items-start text-left">
 
                             {/* Status Badge */}
-                            <div className="inline-flex items-center gap-2 bg-black/80 px-4 py-2 rounded-full text-[0.8rem] font-mono border border-white/10 mb-10 text-[#E67E22]">
+                            <div className="inline-flex items-center gap-2 bg-black/80 px-4 py-2 rounded-full text-[0.8rem] font-mono border border-white/10 mb-8 lg:mb-10 text-[#E67E22]">
                                 <span className="w-1.5 h-1.5 bg-[#E67E22] rounded-full animate-pulse"></span>
                                 <span>Expert Mistral AI · Infrastructure SecNumCloud</span>
                             </div>
 
-                            <h1 id="hero-headline" className="font-mono text-[4rem] font-medium leading-[1.1] tracking-[-0.04em] mb-8 max-w-[950px] uppercase text-white drop-shadow-xl">
+                            <h1 id="hero-headline" className="font-mono text-4xl lg:text-[4rem] font-medium leading-[1.1] tracking-[-0.04em] mb-6 lg:mb-8 max-w-[950px] uppercase text-white drop-shadow-xl">
                                 Prenez l'avantage.<br />
                                 <span className="text-white/70">IA souveraine.<br />Sur-mesure.</span>
                             </h1>
 
-                            <h2 className="font-mono text-xl text-[#E67E22] mb-6 tracking-wide">
+                            <h2 className="font-mono text-lg lg:text-xl text-[#E67E22] mb-6 tracking-wide">
                                 TEXTE. IMAGE. AUDIO. VIDÉO.
                             </h2>
 
-                            <p className="font-mono text-[1.1rem] text-white/90 leading-relaxed max-w-xl mb-12 drop-shadow-lg font-medium">
+                            <p className="font-mono text-[1rem] lg:text-[1.1rem] text-white/90 leading-relaxed max-w-xl mb-10 lg:mb-12 drop-shadow-lg font-medium pr-4">
                                 Intégration IA complète. Vos données restent chez vous.
                                 Open-source prioritaire, propriétaire si nécessaire. Déploiement sur-mesure.
                             </p>
 
-                            <div className="flex gap-4 mt-2">
+                            <div className="flex flex-col sm:flex-row gap-4 mt-2 w-full sm:w-auto">
                                 <a
                                     href="#section-contact"
                                     id="hero-cta-primary"
-                                    className="bg-[#3D2314] text-[#E67E22] border border-[#8B4513] px-6 py-3 font-mono font-semibold uppercase text-base inline-block transition-all hover:bg-[#4A2A1A] hover:-translate-y-0.5 shadow-lg"
+                                    className="bg-[#3D2314] text-[#E67E22] border border-[#8B4513] px-6 py-3 font-mono font-semibold uppercase text-base inline-block transition-all hover:bg-[#4A2A1A] hover:-translate-y-0.5 shadow-lg text-center"
                                 >
                                     DEMANDER UN AUDIT
                                 </a>
                                 <a
                                     href="#section-solutions"
                                     id="hero-cta-secondary"
-                                    className="bg-transparent text-[#E67E22] px-6 py-3 font-mono font-medium text-[0.85rem] uppercase inline-block border border-[#E67E22]/50 transition-all hover:bg-[#E67E22]/10 hover:border-[#E67E22]"
+                                    className="bg-transparent text-[#E67E22] px-6 py-3 font-mono font-medium text-[0.85rem] uppercase inline-block border border-[#E67E22]/50 transition-all hover:bg-[#E67E22]/10 hover:border-[#E67E22] text-center"
                                 >
                                     EXPLORER NOS SOLUTIONS
                                 </a>
                             </div>
                         </div>
 
-
-                        {/* RIGHT COLUMN: Visual (Hero Image) */}
+                        {/* RIGHT COLUMN: Visual (Hero Image) - Desktop layout */}
                         <div className="hidden lg:flex lg:col-span-5 items-center justify-center relative">
-                            {/* Constrained Container for "Left Block Height" matching and Spacing */}
-                            <div className="relative w-full max-w-md aspect-[3/4] rounded-2xl overflow-hidden shadow-2xl">
+                            <div className="relative w-full max-w-md aspect-[3/4] rounded-2xl overflow-hidden shadow-2xl animate-fade-in">
                                 <FxImage
                                     src={config.heroImage || '/assets/hero-tests/hero%2014.png'}
                                     alt="Visualisation abstraite de l'intelligence artificielle"
@@ -83,38 +91,37 @@ export function Hero() {
                                         objectFit: 'cover',
                                         objectPosition: 'center center'
                                     }}
-                                    config={{
+                                    config={config.fxConfig || {
                                         fitMode: 'cover',
-                                        duotone: {
-                                            enabled: true,
-                                            colorA: '#000000',
-                                            colorB: '#ffffff',
-                                            strength: 1
-                                        },
-                                        interaction: {
-                                            enabled: true,
-                                            mode: 'shape',
-                                            variant: 'push',
-                                            radius: 0.15,
-                                            softness: 0.5,
-                                            activeSize: 15,
-                                            auto: {
-                                                enabled: true,
-                                                type: 'matrix',
-                                                speed: 0.1,
-                                                strength: 1,
-                                                scale: 1.5,
-                                                duotoneModulation: true,
-                                                modulationColor: '#001133',
-                                                modulationColor2: '#0066ff',
-                                                useLuminanceAsDepth: true
-                                            }
-                                        }
+                                        duotone: { enabled: true, colorA: '#000000', colorB: '#ffffff', strength: 1 },
+                                        interaction: { enabled: true, mode: 'shape', variant: 'push', radius: 0.15, softness: 0.5, activeSize: 15 }
                                     }}
                                 />
                             </div>
                         </div>
                     </div>
+                </div>
+
+                {/* MOBILE OVERLAY - Door illustration with FX effects */}
+                <div className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[65%] max-w-[280px] aspect-[3/4] z-10 lg:hidden rounded-2xl overflow-hidden ${animationPhase === 'intro' ? 'animate-fade-in' : 'animate-hero-exit pointer-events-none'
+                    }`}>
+                    <FxImage
+                        src={config.heroImage || '/assets/hero-tests/hero%2014.png'}
+                        alt="Visualisation mobile"
+                        className="w-full h-full"
+                        style={{ width: '100%', height: '100%' }}
+                        imgStyle={{
+                            width: '100%',
+                            height: '100%',
+                            objectFit: 'cover',
+                            objectPosition: 'center center'
+                        }}
+                        config={config.fxConfig || {
+                            fitMode: 'cover',
+                            duotone: { enabled: true, colorA: '#000000', colorB: '#ffffff', strength: 1 },
+                            interaction: { enabled: true, mode: 'shape', variant: 'push', radius: 0.15, softness: 0.5, activeSize: 15 }
+                        }}
+                    />
                 </div>
 
             </div>

@@ -20,7 +20,7 @@ export function JsonLd() {
         "contactPoint": {
             "@type": "ContactPoint",
             "contactType": "sales",
-            "email": "contact@leonardintelligence.com"
+            "email": "hello@leonardintelligence.com"
         }
     };
 

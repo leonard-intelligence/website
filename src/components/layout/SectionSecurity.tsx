@@ -11,24 +11,24 @@ export function SectionSecurity() {
             <div className="grid grid-cols-1 lg:grid-cols-12">
                 {/* Left: Content */}
                 <div className="lg:col-span-7 p-12 border-r border-b border-white/10">
-                    <div className="text-blue-500 font-mono mb-2 text-lg">02 Souveraineté Numérique.</div>
+                    <div className="text-[#E67E22] font-mono mb-2 text-lg">Souveraineté Numérique.</div>
                     <h2
                         id="security-heading"
                         className="text-4xl md:text-5xl font-mono text-white max-w-xl leading-tight uppercase tracking-[-0.02em] mb-6"
                     >
-                        Vos données ne sortent<br />
-                        <span className="text-muted-foreground">pas de chez vous.</span>
+                        <span className="text-white/50">Vos données ne sortent</span><br />
+                        pas de chez vous.
                     </h2>
-                    <p className="font-mono text-sm text-muted-foreground leading-relaxed max-w-md">
+                    <p className="font-mono text-sm text-gray-400 leading-relaxed max-w-md">
                         Déploiement local ou cloud privé européen. Zéro dépendance aux géants américains. Cloud Act ? Pas concerné.
                     </p>
                 </div>
 
                 {/* Right: Shield Visual */}
-                <div className="lg:col-span-5 p-12 border-b border-white/10 flex items-center justify-center bg-blue-500/5">
+                <div className="lg:col-span-5 p-12 border-b border-white/10 flex items-center justify-center bg-[#E67E22]/5">
                     <div className="relative">
-                        <div className="w-32 h-32 border-2 border-blue-500/30 flex items-center justify-center">
-                            <Shield className="w-16 h-16 text-blue-400" />
+                        <div className="w-32 h-32 border-2 border-[#E67E22]/30 flex items-center justify-center">
+                            <Shield className="w-16 h-16 text-[#E67E22]" />
                         </div>
                         <div className="absolute -top-2 -right-2 w-4 h-4 bg-[#E67E22] rounded-full animate-pulse" />
                     </div>
@@ -38,15 +38,15 @@ export function SectionSecurity() {
             {/* BADGES ROW: 6 columns */}
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6">
                 <div className="p-6 border-r border-white/10 flex flex-col items-center justify-center text-center hover:bg-white/5 transition-colors">
-                    <Server className="w-6 h-6 text-blue-400 mb-3" />
+                    <Server className="w-6 h-6 text-[#E67E22] mb-3" />
                     <span className="font-mono text-xs text-white uppercase tracking-wider">SecNumCloud</span>
                 </div>
                 <div className="p-6 border-r border-white/10 flex flex-col items-center justify-center text-center hover:bg-white/5 transition-colors">
-                    <Shield className="w-6 h-6 text-blue-400 mb-3" />
+                    <Shield className="w-6 h-6 text-[#E67E22] mb-3" />
                     <span className="font-mono text-xs text-white uppercase tracking-wider">RGPD</span>
                 </div>
                 <div className="p-6 border-r border-white/10 flex flex-col items-center justify-center text-center hover:bg-white/5 transition-colors">
-                    <Globe className="w-6 h-6 text-blue-400 mb-3" />
+                    <Globe className="w-6 h-6 text-[#E67E22] mb-3" />
                     <span className="font-mono text-xs text-white uppercase tracking-wider">Héberg. UE</span>
                 </div>
                 <div className="p-6 border-r border-white/10 flex flex-col items-center justify-center text-center hover:bg-white/5 transition-colors">
@@ -58,15 +58,15 @@ export function SectionSecurity() {
                     <span className="font-mono text-xs text-white uppercase tracking-wider">HDS Ready</span>
                 </div>
                 <div className="p-6 flex flex-col items-center justify-center text-center hover:bg-white/5 transition-colors">
-                    <Building className="w-6 h-6 text-blue-400 mb-3" />
+                    <Building className="w-6 h-6 text-[#E67E22] mb-3" />
                     <span className="font-mono text-xs text-white uppercase tracking-wider">On-Premise</span>
                 </div>
             </div>
 
             {/* BOTTOM: Infrastructure note */}
-            <div className="p-6 border-t border-white/10 bg-blue-500/5">
+            <div className="p-6 border-t border-white/10 bg-[#E67E22]/5">
                 <p className="font-mono text-xs text-center text-white/60">
-                    Infrastructure dédiée chez <span className="text-blue-400">OVH</span>, <span className="text-blue-400">NumSpot</span> ou <span className="text-blue-400">Outscale</span> (certifié SecNumCloud)
+                    Infrastructure dédiée chez <span className="text-[#E67E22]">OVH</span>, <span className="text-[#E67E22]">NumSpot</span> ou <span className="text-[#E67E22]">Outscale</span> (certifié SecNumCloud)
                 </p>
             </div>
         </section>
