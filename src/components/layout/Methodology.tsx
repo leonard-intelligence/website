@@ -1,75 +1,100 @@
 import { TechCard } from "../ui/TechCard";
 
 export function Methodology() {
-    // Branded methodology like Artefact's "GenAI Factory" - positions us as industrialization experts
-    const steps = [
-        {
-            num: "01",
-            title: "Diagnostic & Conformité",
-            desc: "On évalue vos besoins, vos données et votre niveau de risque AI Act. Vous repartez avec un plan d'action clair.",
-            duration: "1-2 semaines",
-        },
-        {
-            num: "02",
-            title: "Prototype Rapide",
-            desc: "Un premier assistant IA fonctionnel, déployé sur votre infrastructure. Vous validez la valeur avant d'aller plus loin.",
-            duration: "2-4 semaines",
-        },
-        {
-            num: "03",
-            title: "Mise en Production",
-            desc: "Connexion à vos outils existants (ERP, CRM, emails). Tests de sécurité et montée en charge.",
-            duration: "1-3 mois",
-            tag: "SCALE"
-        },
-        {
-            num: "04",
-            title: "Évolution & Autonomie",
-            desc: "On forme vos équipes, on optimise les performances. Vous gagnez en autonomie, on reste disponible.",
-            duration: "Continu",
-        }
-    ];
-
     return (
-        <section id="section-methodology" className="method-section methodology py-24 bg-black border-b border-white/10 reveal" aria-labelledby="methodology-heading">
-            <div className="max-w-7xl mx-auto px-6 methodology__container">
-                <div className="flex flex-col md:flex-row justify-between items-end mb-16 methodology__header">
+        <section id="section-methodology" className="py-24 bg-black border-b border-white/10 reveal" aria-labelledby="methodology-heading">
+            <div className="max-w-7xl mx-auto px-6">
+                <div className="flex flex-col md:flex-row justify-between items-end mb-16">
                     <div>
                         <div className="absolute -inset-4 bg-blue-500/10 blur-3xl -z-10 rounded-full opacity-50" aria-hidden="true" />
-                        {/* Branded methodology name like Artefact's GenAI Factory */}
                         <span className="text-emerald-400 font-mono text-sm tracking-widest uppercase mb-4 block flex items-center gap-2">
                             <span className="w-2 h-2 bg-emerald-400 rounded-full animate-pulse"></span>
-                            Notre Approche
+                            Approche Technique
                         </span>
-                        <h2 id="methodology-heading" className="text-4xl font-bold font-display text-white relative z-10 methodology__heading">
-                            Du conseil au <span className="text-white">déploiement</span>.
+                        <h2 id="methodology-heading" className="text-4xl font-bold font-serif text-white relative z-10">
+                            Architecture Agnostique.
                         </h2>
                     </div>
-                    <p className="text-gray-400 max-w-lg text-right hidden md:block">
-                        Un accompagnement structuré pour <strong className="text-white">réduire les risques</strong>,<br />
-                        garantir la <strong className="text-emerald-400">conformité réglementaire</strong> et livrer de la valeur rapidement.
+                    <p className="text-gray-400 max-w-lg text-right hidden md:block font-mono text-sm">
+                        Nous choisissons la meilleure technologie pour votre besoin,<br />
+                        sans dogmatisme.
                     </p>
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-4 gap-6 relative methodology__steps">
-                    {/* Connecting line for desktop */}
-                    <div className="hidden md:block absolute top-8 left-0 right-0 h-px bg-white/10 -z-10 translate-y-1/2" />
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-8 relative">
+                    {/* OPEN SOURCE FIRST */}
+                    <TechCard className="bg-emerald-950/10 border-emerald-500/20 p-8 group relative overflow-hidden">
+                        <div className="absolute top-0 right-0 p-4 opacity-10 font-mono text-6xl font-bold text-emerald-500 select-none">
+                            OPEN
+                        </div>
+                        <h3 className="text-2xl font-bold mb-6 text-emerald-400 font-mono border-b border-emerald-500/20 pb-4">
+                            OPEN SOURCE FIRST
+                        </h3>
 
-                    {steps.map((step, i) => (
-                        <TechCard key={i} className="bg-black p-6 group transition-transform duration-500 relative">
-                            <div className="flex items-center justify-between mb-8">
-                                <span className={`font-mono text-4xl font-bold opacity-30 group-hover:opacity-100 transition-opacity ${i === 0 ? 'text-orange-500' :
-                                    i === 1 ? 'text-blue-500' :
-                                        i === 2 ? 'text-purple-500' : 'text-green-500'
-                                    }`}>{step.num}</span>
-                                <span className="text-xs font-mono border border-white/10 px-2 py-1 rounded text-gray-500 group-hover:text-white transition-colors">{step.duration}</span>
+                        <div className="space-y-6">
+                            <div>
+                                <h4 className="text-white font-bold text-sm uppercase tracking-wider mb-2">Pourquoi ?</h4>
+                                <p className="text-gray-400 text-sm leading-relaxed">
+                                    Coût réduit, confidentialité totale, pérennité. Vous maîtrisez votre infrastructure.
+                                </p>
                             </div>
-                            <h3 className="text-xl font-bold mb-3 text-white">{step.title}</h3>
-                            <p className="text-sm text-gray-400 leading-relaxed">
-                                {step.desc}
-                            </p>
-                        </TechCard>
-                    ))}
+
+                            <div>
+                                <h4 className="text-white font-bold text-sm uppercase tracking-wider mb-2">Technologies</h4>
+                                <div className="flex flex-wrap gap-2">
+                                    {['Mistral', 'Llama', 'Flux', 'Whisper'].map(tech => (
+                                        <span key={tech} className="text-xs font-mono bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 px-2 py-1 rounded">
+                                            {tech}
+                                        </span>
+                                    ))}
+                                </div>
+                            </div>
+
+                            <div>
+                                <h4 className="text-white font-bold text-sm uppercase tracking-wider mb-2">Usage Privilégié</h4>
+                                <p className="text-gray-400 text-sm leading-relaxed border-l-2 border-emerald-500/50 pl-3">
+                                    Données sensibles, déploiement long terme, indépendance stratégique.
+                                </p>
+                            </div>
+                        </div>
+                    </TechCard>
+
+                    {/* PROPRIÉTAIRE */}
+                    <TechCard className="bg-purple-950/10 border-purple-500/20 p-8 group relative overflow-hidden">
+                        <div className="absolute top-0 right-0 p-4 opacity-10 font-mono text-6xl font-bold text-purple-500 select-none">
+                            PROP
+                        </div>
+                        <h3 className="text-2xl font-bold mb-6 text-purple-400 font-mono border-b border-purple-500/20 pb-4">
+                            PROPRIÉTAIRE SI REQUIS
+                        </h3>
+
+                        <div className="space-y-6">
+                            <div>
+                                <h4 className="text-white font-bold text-sm uppercase tracking-wider mb-2">Pourquoi ?</h4>
+                                <p className="text-gray-400 text-sm leading-relaxed">
+                                    Performance extrême immédiate, facilité d'intégration, capacités de raisonnement supérieures (SOTA).
+                                </p>
+                            </div>
+
+                            <div>
+                                <h4 className="text-white font-bold text-sm uppercase tracking-wider mb-2">Technologies</h4>
+                                <div className="flex flex-wrap gap-2">
+                                    {['OpenAI', 'Claude', 'Midjourney', 'DeepL'].map(tech => (
+                                        <span key={tech} className="text-xs font-mono bg-purple-500/10 text-purple-400 border border-purple-500/20 px-2 py-1 rounded">
+                                            {tech}
+                                        </span>
+                                    ))}
+                                </div>
+                            </div>
+
+                            <div>
+                                <h4 className="text-white font-bold text-sm uppercase tracking-wider mb-2">Usage Privilégié</h4>
+                                <p className="text-gray-400 text-sm leading-relaxed border-l-2 border-purple-500/50 pl-3">
+                                    Prototypage rapide, performances critiques complexe, tâches généralistes.
+                                </p>
+                            </div>
+                        </div>
+                    </TechCard>
                 </div>
             </div>
         </section>

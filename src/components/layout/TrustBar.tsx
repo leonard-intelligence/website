@@ -15,19 +15,20 @@ export function TrustBar() {
     const duplicatedLogos = [...logos, ...logos, ...logos];
 
     return (
-        <section id="section-trustbar" className="backers-bar trustbar reveal delay-100" aria-label="Technologies et modèles partenaires">
-            <div className="backers-grid trustbar__container">
-                <div className="backer-label trustbar__label" id="trustbar-label">Partenaires technologiques</div>
+        <section id="section-trustbar" className="bg-black w-full py-10 relative overflow-hidden" aria-label="Technologies et modèles partenaires">
+            <div className="flex w-full overflow-hidden">
+                <div className="relative z-10 bg-black text-white px-6 py-6 font-mono text-sm border-r border-white/10 dark:text-white flex items-center whitespace-nowrap">
+                    Partenaires technologiques
+                </div>
                 <div
-                    className="logos-scroll-container trustbar__scroll"
+                    className="flex flex-1 overflow-hidden items-center"
                     role="list"
-                    aria-labelledby="trustbar-label"
                 >
-                    <div className="logos-scroll-track trustbar__track" aria-hidden="false">
+                    <div className="flex flex-shrink-0 w-max items-center animate-[scroll-rtl_30s_linear_infinite]" aria-hidden="false">
                         {duplicatedLogos.map((logo, index) => (
                             <div
                                 key={`${logo.name}-${index}`}
-                                className="backer-item trustbar__item"
+                                className="flex-shrink-0 w-[150px] h-[80px] flex items-center justify-center hover:bg-white/5 transition-colors"
                                 title={logo.name}
                                 role="listitem"
                                 aria-label={logo.name}
@@ -35,7 +36,7 @@ export function TrustBar() {
                                 <img
                                     src={logo.src}
                                     alt={logo.name}
-                                    className="h-8 w-auto trustbar__logo"
+                                    className="h-7 w-auto opacity-70 hover:opacity-100 transition-opacity"
                                     style={{ filter: 'brightness(0) invert(1)' }}
                                 />
                             </div>

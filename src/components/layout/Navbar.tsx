@@ -2,34 +2,60 @@ import logo from '../../assets/logo.png';
 
 export function Navbar() {
     return (
-        <nav id="section-navbar" className="agency-nav navbar reveal delay-100">
-            <div className="nav-left navbar__left">
-                <div className="nav-brand navbar__brand">
-                    <div className="brand-logo navbar__logo">
-                        <img src={logo} alt="Leonard Intelligence Logo" className="navbar__logo-image" style={{ height: '32px', marginRight: '10px' }} />
-                    </div>
+        <nav
+            id="section-navbar"
+            className="fixed top-0 left-0 w-full flex justify-between items-center h-[60px] bg-black/50 backdrop-blur-md border-b border-white/10 z-[100] p-0 reveal delay-100"
+            aria-label="Navigation principale"
+        >
+            {/* Branding Area */}
+            <div className="flex items-center h-full">
+                <div className="px-6 font-mono font-bold text-lg -tracking-[0.05em] flex items-center h-full border-r border-white/10">
+                    <a href="/" className="flex items-center gap-1" aria-label="Retour à l'accueil">
+                        <img
+                            src={logo}
+                            alt="Leonard Intelligence Logo"
+                            className="h-8 mr-2.5 w-auto object-contain"
+                        />
+                    </a>
                 </div>
             </div>
 
-            <div className="nav-tabs-container navbar__tabs">
-                <a href="#section-solutions" className="nav-tab navbar__tab navbar__tab--active active">
-                    <span className="tab-label navbar__tab-label">SOLUTIONS</span>
-                    <span className="tab-number navbar__tab-number">01</span>
+            {/* Navigation Tabs */}
+            <div className="flex h-full">
+                <a
+                    href="#section-solutions"
+                    className="group flex items-center gap-3 px-6 h-full text-muted-foreground no-underline font-mono text-[0.85rem] border-r border-white/10 transition-all bg-white/[0.02] hover:bg-white/[0.08] hover:text-white"
+                >
+                    <span className="font-semibold tracking-tight">SOLUTIONS</span>
+                    <span className="opacity-40 text-xs">01</span>
                 </a>
 
-                <a href="#section-expertises" className="nav-tab navbar__tab">
-                    <span className="tab-label navbar__tab-label">EXPERTISES</span>
-                    <span className="tab-number navbar__tab-number">02</span>
+                <a
+                    href="#section-expertises"
+                    className="group flex items-center gap-3 px-6 h-full text-muted-foreground no-underline font-mono text-[0.85rem] border-r border-white/10 transition-all bg-white/[0.02] hover:bg-white/[0.08] hover:text-white"
+                >
+                    <span className="font-semibold tracking-tight">EXPERTISES</span>
+                    <span className="opacity-40 text-xs">02</span>
                 </a>
 
-                <a href="#section-methodology" className="nav-tab navbar__tab">
-                    <span className="tab-label navbar__tab-label">MÉTHODOLOGIE</span>
-                    <span className="tab-number navbar__tab-number">03</span>
+                <a
+                    href="#section-methodology"
+                    className="group flex items-center gap-3 px-6 h-full text-muted-foreground no-underline font-mono text-[0.85rem] border-r border-white/10 transition-all bg-white/[0.02] hover:bg-white/[0.08] hover:text-white"
+                >
+                    <span className="font-semibold tracking-tight">MÉTHODOLOGIE</span>
+                    <span className="opacity-40 text-xs">03</span>
                 </a>
             </div>
 
-            <div className="nav-right navbar__right">
-                <a href="#section-contact" id="navbar-cta" className="nav-cta navbar__cta">CONTACT →</a>
+            {/* Actions Area */}
+            <div className="flex items-center h-full">
+                <a
+                    href="#section-contact"
+                    id="navbar-cta"
+                    className="bg-white text-black h-full flex items-center px-6 font-semibold no-underline text-[0.9rem] uppercase transition-colors hover:bg-gray-200"
+                >
+                    CONTACT →
+                </a>
             </div>
         </nav>
     );

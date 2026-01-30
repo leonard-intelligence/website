@@ -11,6 +11,13 @@ import { useFxConfig, FxContext } from './FxContext';
 import { VERTEX_SHADER, FRAGMENT_SHADER } from './shaders/fxShaders';
 
 
+// Interface for click ripples
+export interface ClickRipple {
+    x: number;  // normalized 0-1
+    y: number;  // normalized 0-1
+    startTime: number; // performance.now() when clicked
+}
+
 interface FxImageProps {
     src: string;
     depthSrc?: string; // New: Optional depth map source
@@ -19,6 +26,7 @@ interface FxImageProps {
     config?: Partial<FxConfig>;
     style?: CSSProperties; // Container style
     imgStyle?: CSSProperties; // Inner Image style override
+    clickRipples?: ClickRipple[]; // New: Click ripples for expanding zoom effect
 }
 
 interface WebGLState {
@@ -111,7 +119,7 @@ function setupQuad(gl: WebGLRenderingContext, program: WebGLProgram) {
     gl.vertexAttribPointer(texLoc, 2, gl.FLOAT, false, 0, 0);
 }
 
-export function FxImage({ src, depthSrc, alt = '', className = '', config, style, imgStyle }: FxImageProps) {
+export function FxImage({ src, depthSrc, alt = '', className = '', config, style, imgStyle, clickRipples = [] }: FxImageProps) {
     const containerRef = useRef<HTMLDivElement>(null);
     const canvasRef = useRef<HTMLCanvasElement>(null);
 
@@ -272,6 +280,32 @@ export function FxImage({ src, depthSrc, alt = '', className = '', config, style
         gl.uniform1f(uniforms.u_rippleDecay, rain?.rippleDecay ?? 3.0);
         gl.uniform1f(uniforms.u_rippleStrength, rain?.rippleStrength ?? 0.8);
 
+        // Click Ripples - pass up to 4 ripples to shader
+        const now = performance.now();
+        const rippleTimes = [0, 0, 0, 0];
+        const ripplePos = [0, 0, 0, 0]; // x1, y1, x2, y2 for first 2 ripples
+        const ripplePos2 = [0, 0, 0, 0]; // x3, y3, x4, y4 for ripples 3-4
+
+        // Get the last 4 ripples (most recent)
+        const recentRipples = clickRipples.slice(-4);
+        recentRipples.forEach((ripple, i) => {
+            const elapsed = (now - ripple.startTime) / 1000; // seconds
+            rippleTimes[i] = elapsed;
+            if (i < 2) {
+                ripplePos[i * 2] = ripple.x;
+                ripplePos[i * 2 + 1] = ripple.y;
+            } else {
+                ripplePos2[(i - 2) * 2] = ripple.x;
+                ripplePos2[(i - 2) * 2 + 1] = ripple.y;
+            }
+        });
+
+        gl.uniform4f(uniforms.u_clickRipplePos, ripplePos[0], ripplePos[1], ripplePos[2], ripplePos[3]);
+        gl.uniform4f(uniforms.u_clickRipplePos2, ripplePos2[0], ripplePos2[1], ripplePos2[2], ripplePos2[3]);
+        gl.uniform4f(uniforms.u_clickRippleTime, rippleTimes[0], rippleTimes[1], rippleTimes[2], rippleTimes[3]);
+        gl.uniform1f(uniforms.u_clickRippleSpeed, 0.5); // Expansion speed (slower = more visible)
+        gl.uniform1f(uniforms.u_clickRippleDecay, 0.8); // Decay rate (lower = lasts longer)
+
         const autoColor = hexToRgb(auto?.modulationColor || '#60a5fa');
         gl.uniform3f(uniforms.u_autoColor, autoColor[0], autoColor[1], autoColor[2]);
 
@@ -282,6 +316,46 @@ export function FxImage({ src, depthSrc, alt = '', className = '', config, style
 
         gl.uniform1f(uniforms.u_containerAspect, containerAspect);
         gl.uniform1f(uniforms.u_imageAspect, imageAspect);
+
+        // Fit Mode: 0 = Cover, 1 = Height
+        const fitMode = currentConfig.fitMode === 'height' ? 1 : 0;
+        gl.uniform1i(uniforms.u_fitMode, fitMode);
+
+        // Calculate Object Position from imgStyle
+        let objPosX = 0.5;
+        let objPosY = 0.5;
+
+        if (imgStyle?.objectPosition) {
+            const posStr = String(imgStyle.objectPosition).toLowerCase();
+            const parts = posStr.split(' ').filter(p => p.trim() !== '');
+
+            // Helper to parse keywords
+            const parsePos = (val: string, isX: boolean) => {
+                if (val === 'center') return 0.5;
+                if (val === 'left' && isX) return 0.0;
+                if (val === 'right' && isX) return 1.0;
+                if (val === 'top' && !isX) return 0.0;
+                if (val === 'bottom' && !isX) return 1.0;
+                // Percentages could be handled but sticking to simple keywords for now
+                if (val.endsWith('%')) return parseFloat(val) / 100;
+                return 0.5; // Default fallback
+            }
+
+            if (parts.length === 1) {
+                // one value: applied to both? CSS says center if omitted.
+                // usually 'left' implies 'left center'.
+                // Let's try to detect if it's x or y keyword
+                if (['top', 'bottom'].includes(parts[0])) { objPosY = parsePos(parts[0], false); }
+                else { objPosX = parsePos(parts[0], true); }
+            } else if (parts.length >= 2) {
+                // Assume order is X Y unless keywords dictate otherwise? CSS allows swap if keywords.
+                // Simplified: First part X, second Y, unless explicit
+                objPosX = parsePos(parts[0], true);
+                objPosY = parsePos(parts[1], false);
+            }
+        }
+        gl.uniform2f(uniforms.u_objectPosition, objPosX, objPosY);
+
         gl.uniform1iv(uniforms.u_order, orderInts);
 
         gl.uniform1i(uniforms.u_beadsEnabled, currentConfig.beads.enabled ? 1 : 0);
@@ -424,6 +498,8 @@ export function FxImage({ src, depthSrc, alt = '', className = '', config, style
             u_time: gl.getUniformLocation(program, 'u_time'),
             u_containerAspect: gl.getUniformLocation(program, 'u_containerAspect'),
             u_imageAspect: gl.getUniformLocation(program, 'u_imageAspect'),
+            u_objectPosition: gl.getUniformLocation(program, 'u_objectPosition'),
+            u_fitMode: gl.getUniformLocation(program, 'u_fitMode'),
             u_order: gl.getUniformLocation(program, 'u_order'),
             // Mouse Interaction
             u_mouse: gl.getUniformLocation(program, 'u_mouse'),
@@ -461,6 +537,12 @@ export function FxImage({ src, depthSrc, alt = '', className = '', config, style
             u_colorA: gl.getUniformLocation(program, 'u_colorA'),
             u_colorB: gl.getUniformLocation(program, 'u_colorB'),
             u_duotoneStrength: gl.getUniformLocation(program, 'u_duotoneStrength'),
+            // Click Ripples
+            u_clickRipplePos: gl.getUniformLocation(program, 'u_clickRipplePos'),
+            u_clickRipplePos2: gl.getUniformLocation(program, 'u_clickRipplePos2'),
+            u_clickRippleTime: gl.getUniformLocation(program, 'u_clickRippleTime'),
+            u_clickRippleSpeed: gl.getUniformLocation(program, 'u_clickRippleSpeed'),
+            u_clickRippleDecay: gl.getUniformLocation(program, 'u_clickRippleDecay'),
         };
 
         webglRef.current = { gl, program, texture, depthTexture, uniforms };
@@ -585,6 +667,7 @@ export function FxImage({ src, depthSrc, alt = '', className = '', config, style
                     width: 'auto',
                     height: 'auto',
                     visibility: (effectsActive && imageLoaded && isVisible) ? 'hidden' : 'visible',
+                    pointerEvents: 'none', // Allow clicks to pass through to parent container
                     ...imgStyle,
                 }}
             />

@@ -26,6 +26,8 @@ uniform float u_time;
 // Aspect Ratio Uniforms
 uniform float u_containerAspect; // width / height of container
 uniform float u_imageAspect;     // width / height of image
+uniform vec2 u_objectPosition;   // (0.0=Top/Left, 0.5=Center, 1.0=Bottom/Right)
+uniform int u_fitMode;           // 0=Cover (default), 1=Fit Height (Vertical Contain)
 
 // Order: Array of 3 ints. 0=none, 1=beads, 2=duotone
 uniform int u_order[3];
@@ -78,19 +80,64 @@ uniform float u_rippleSpeed;
 uniform float u_rippleDecay;
 uniform float u_rippleStrength;
 
+// Click Ripple Uniforms (up to 4 simultaneous ripples)
+uniform vec4 u_clickRipplePos;   // (x1, y1, x2, y2) normalized 0-1
+uniform vec4 u_clickRipplePos2;  // (x3, y3, x4, y4) for ripples 3-4
+uniform vec4 u_clickRippleTime;  // (t1, t2, t3, t4) time since each click in seconds
+uniform float u_clickRippleSpeed;
+uniform float u_clickRippleDecay;
+
 // Helper: Sample texture with object-fit: cover logic
 vec4 getCoverColor(vec2 uv) {
-    vec2 ratio = vec2(
-        min((u_containerAspect / u_imageAspect), 1.0),
-        min((u_imageAspect / u_containerAspect), 1.0)
-    );
-
-    vec2 projectUV = vec2(
-        uv.x * ratio.x + (1.0 - ratio.x) * 0.5,
-        uv.y * ratio.y + (1.0 - ratio.y) * 0.5
-    );
+    vec2 ratio = vec2(1.0, 1.0);
     
-    return texture2D(u_image, projectUV);
+    // Fit Mode Logic
+    if (u_fitMode == 1) { // Fit Height
+        // Map 1.0 Height to 1.0 Image Height
+        // Aspect ratio correction applied to Width
+        // Ratio X = ImageAspect / ContainerAspect
+        // Ratio Y = 1.0
+        float rw = u_imageAspect / u_containerAspect;
+        ratio = vec2(rw, 1.0);
+        
+        // Inverse Projection for Texture Sampling
+        // textureCoord = (screenUV - AlignOffset) / Ratio
+        // AlignOffset:
+        //  Left (0.0): 0.0
+        //  Center (0.5): (1.0 - rw) * 0.5
+        //  Right (1.0): (1.0 - rw) * 1.0
+         vec2 projectUV = vec2(
+            (uv.x - (1.0 - ratio.x) * u_objectPosition.x) / ratio.x,
+            // Y is simple 1:1 map since we fit height
+            uv.y 
+        );
+        
+        // Clamp/Repeat Check? Textures might repeat if outside 0-1
+        // We generally want background to be 'empty' if outside range?
+        // GL_CLAMP_TO_EDGE is likely set.
+        // So we will just clamp (smear edge).
+        // If we want transparency for margins (contain behavior), we should check bounds.
+        if (projectUV.x < 0.0 || projectUV.x > 1.0 || projectUV.y < 0.0 || projectUV.y > 1.0) {
+            // Return transparent (or base background color?)
+            // Returning vec4(0.0) implies transparent.
+             return vec4(0.0);
+        }
+        return texture2D(u_image, projectUV);
+
+    } else { // Default Cover (0)
+        // Ratio here is "Coverage per Screen Unit"
+        ratio = vec2(
+            min((u_containerAspect / u_imageAspect), 1.0),
+            min((u_imageAspect / u_containerAspect), 1.0)
+        );
+        
+        // Apply alignment based on u_objectPosition using 'Zoom In' logic
+        vec2 projectUV = vec2(
+            uv.x * ratio.x + (1.0 - ratio.x) * u_objectPosition.x,
+            uv.y * ratio.y + (1.0 - ratio.y) * u_objectPosition.y
+        );
+        return texture2D(u_image, projectUV);
+    }
 }
 // Helper: Calculate Automated Interaction Value at a UV
 float getAutoInteractionValue(vec2 uv) {
@@ -395,31 +442,116 @@ void getInteractionParams(vec2 cellCenter, out float sizeOut, out float shapePar
     sizeOut = u_beadSize;
     shapeParamOut = float(u_beadShape);
     
-    if (u_interMode == 2) { // Shape Shift Mode
-        
-        // 1. Mouse Interaction
+    float interactionMask = 0.0;
+    
+    // 1. Mouse Interaction (only in Shape Shift Mode)
+    if (u_interMode == 2) {
         vec2 mouseGL = vec2(u_mouse.x, 1.0 - u_mouse.y);
         vec2 mDelta = cellCenter - (mouseGL * u_resolution);
         float mDist = length(mDelta);
         float radPx = u_interRadius * max(u_resolution.x, u_resolution.y);
         
         // Soft mask from 0 (far) to 1 (near)
-        float interactionMask = 1.0 - smoothstep(radPx * (1.0 - u_interSoftness), radPx, mDist);
+        interactionMask = 1.0 - smoothstep(radPx * (1.0 - u_interSoftness), radPx, mDist);
+    }
+    
+    // 2. Auto Interaction (Blend) - only if enabled AND mode is shape
+    if (u_autoEnabled && u_interMode == 2) {
+        vec2 uv = cellCenter / u_resolution;
+        float autoVal = getAutoInteractionValue(uv);
         
-        // 2. Auto Interaction (Blend)
-        if (u_autoEnabled) {
-            vec2 uv = cellCenter / u_resolution;
-            float autoVal = getAutoInteractionValue(uv);
-            
-            // Combine: Take max of mouse or auto
-            interactionMask = max(interactionMask, autoVal);
-        }
+        // Combine: Take max of mouse or auto
+        interactionMask = max(interactionMask, autoVal);
+    }
+    
+    // 3. Click Ripples - PULSE STYLE (independent of interaction mode)
+    // Creates concentric wave rings expanding from click point, like the Pulse auto-effect
+    float clickRippleMask = 0.0;
+    float waveFrequency = 15.0; // Number of rings
+    float waveSpeed = 8.0;      // Animation speed
+    
+    // Helper function to calculate pulse-style ripple at a point
+    // Ripple 1
+    if (u_clickRippleTime.x > 0.0 && u_clickRippleTime.x < 4.0) {
+        vec2 rippleCenter = vec2(u_clickRipplePos.x, 1.0 - u_clickRipplePos.y) * u_resolution;
+        vec2 distVec = cellCenter - rippleCenter;
+        // Correct for aspect ratio
+        distVec.x *= (u_resolution.y / u_resolution.x);
+        float dist = length(distVec) / max(u_resolution.x, u_resolution.y);
         
+        // Expanding pulse waves (sin creates multiple rings)
+        float expandOffset = u_clickRippleTime.x * u_clickRippleSpeed * 0.5;
+        float pulse = sin((dist - expandOffset) * waveFrequency * 3.14159 * 2.0);
+        pulse = (pulse * 0.5 + 0.5); // Normalize to 0-1
+        
+        // Decay over time and distance
+        float decay = exp(-u_clickRippleTime.x * u_clickRippleDecay);
+        float distFade = 1.0 - smoothstep(0.0, expandOffset + 0.1, dist - expandOffset);
+        
+        clickRippleMask = max(clickRippleMask, pulse * decay * distFade);
+    }
+    
+    // Ripple 2
+    if (u_clickRippleTime.y > 0.0 && u_clickRippleTime.y < 4.0) {
+        vec2 rippleCenter = vec2(u_clickRipplePos.z, 1.0 - u_clickRipplePos.w) * u_resolution;
+        vec2 distVec = cellCenter - rippleCenter;
+        distVec.x *= (u_resolution.y / u_resolution.x);
+        float dist = length(distVec) / max(u_resolution.x, u_resolution.y);
+        
+        float expandOffset = u_clickRippleTime.y * u_clickRippleSpeed * 0.5;
+        float pulse = sin((dist - expandOffset) * waveFrequency * 3.14159 * 2.0);
+        pulse = (pulse * 0.5 + 0.5);
+        
+        float decay = exp(-u_clickRippleTime.y * u_clickRippleDecay);
+        float distFade = 1.0 - smoothstep(0.0, expandOffset + 0.1, dist - expandOffset);
+        
+        clickRippleMask = max(clickRippleMask, pulse * decay * distFade);
+    }
+    
+    // Ripple 3
+    if (u_clickRippleTime.z > 0.0 && u_clickRippleTime.z < 4.0) {
+        vec2 rippleCenter = vec2(u_clickRipplePos2.x, 1.0 - u_clickRipplePos2.y) * u_resolution;
+        vec2 distVec = cellCenter - rippleCenter;
+        distVec.x *= (u_resolution.y / u_resolution.x);
+        float dist = length(distVec) / max(u_resolution.x, u_resolution.y);
+        
+        float expandOffset = u_clickRippleTime.z * u_clickRippleSpeed * 0.5;
+        float pulse = sin((dist - expandOffset) * waveFrequency * 3.14159 * 2.0);
+        pulse = (pulse * 0.5 + 0.5);
+        
+        float decay = exp(-u_clickRippleTime.z * u_clickRippleDecay);
+        float distFade = 1.0 - smoothstep(0.0, expandOffset + 0.1, dist - expandOffset);
+        
+        clickRippleMask = max(clickRippleMask, pulse * decay * distFade);
+    }
+    
+    // Ripple 4
+    if (u_clickRippleTime.w > 0.0 && u_clickRippleTime.w < 4.0) {
+        vec2 rippleCenter = vec2(u_clickRipplePos2.z, 1.0 - u_clickRipplePos2.w) * u_resolution;
+        vec2 distVec = cellCenter - rippleCenter;
+        distVec.x *= (u_resolution.y / u_resolution.x);
+        float dist = length(distVec) / max(u_resolution.x, u_resolution.y);
+        
+        float expandOffset = u_clickRippleTime.w * u_clickRippleSpeed * 0.5;
+        float pulse = sin((dist - expandOffset) * waveFrequency * 3.14159 * 2.0);
+        pulse = (pulse * 0.5 + 0.5);
+        
+        float decay = exp(-u_clickRippleTime.w * u_clickRippleDecay);
+        float distFade = 1.0 - smoothstep(0.0, expandOffset + 0.1, dist - expandOffset);
+        
+        clickRippleMask = max(clickRippleMask, pulse * decay * distFade);
+    }
+    
+    // Combine click ripples with other interactions
+    interactionMask = max(interactionMask, clickRippleMask);
+    
+    // Apply effects if there's any interaction (mouse, auto, OR click ripples)
+    if (interactionMask > 0.0) {
         // Shape Mixing
         shapeParamOut = mix(float(u_beadShape), 1.0 - float(u_beadShape), interactionMask);
         
-        // Size Mixing (If Overlap Mode)
-        if (u_interVariant == 0) {
+        // Size Mixing (If Overlap Mode OR if click ripples are active)
+        if (u_interVariant == 0 || clickRippleMask > 0.0) {
              sizeOut = mix(u_beadSize, u_interActiveSize, interactionMask);
         }
     }
@@ -655,23 +787,21 @@ void main() {
         color = mix(color, original, interMask);
     }
     
-    // Auto Duotone Modulation
-    // If enabled, we tint the effect with the specific modulation color (or duotone gradient)
+    // Auto Duotone Modulation - ONLY for auto effects, NOT mouse interaction
+    // If enabled, we tint the auto effect (e.g., Matrix) with the specific modulation color
     if (u_autoEnabled && u_autoDuotone) {
-        // Combined mask
+        // Only use auto mask, NOT mouse interaction mask
         float autoVal = getAutoInteractionValue(v_texCoord);
-        float combinedMask = max(interMask, autoVal);
         
         // Duotone Tint Logic
         // Calculate luminance of the source color
         float lum = luminance(color.rgb);
         
         // Mix between Color A (Shadow) and Color B (Highlight)
-        // If u_autoColor2 is same as u_autoColor (or similar), it's a flat tint.
         vec3 tintColor = mix(u_autoColor, u_autoColor2, lum);
         
-        // Apply opacity/strength of the tint based on the mask
-        color.rgb = mix(color.rgb, tintColor, combinedMask * 0.8);
+        // Apply opacity/strength of the tint based on auto mask ONLY
+        color.rgb = mix(color.rgb, tintColor, autoVal * 0.8);
     }
 
     gl_FragColor = color;

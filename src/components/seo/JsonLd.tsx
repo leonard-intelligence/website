@@ -4,10 +4,15 @@ export function JsonLd() {
     const organizationSchema = {
         "@context": "https://schema.org",
         "@type": "Organization",
-        "name": "MELIES.ai",
-        "url": "https://melies.ai",
-        "logo": "https://melies.ai/vite.svg",
+        "name": "Leonard Intelligence",
+        "url": "https://leonardintelligence.com",
+        "logo": "https://leonardintelligence.com/logo_black_512.png",
         "description": "Cabinet de conseil expert en IA Générative et Data pour entreprises.",
+        "inLanguage": "fr-FR",
+        "sameAs": [
+            "https://www.linkedin.com/company/leonard-intelligence",
+            "https://twitter.com/leonardintelligence"
+        ],
         "address": {
             "@type": "PostalAddress",
             "addressCountry": "FR"
@@ -15,7 +20,7 @@ export function JsonLd() {
         "contactPoint": {
             "@type": "ContactPoint",
             "contactType": "sales",
-            "email": "contact@melies.ai"
+            "email": "contact@leonardintelligence.com"
         }
     };
 

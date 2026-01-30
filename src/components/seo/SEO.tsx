@@ -10,14 +10,14 @@ interface SEOProps {
 }
 
 export function SEO({
-    title = "MELIES.ai - Solutions IA Sur-Mesure",
+    title = "Leonard Intelligence - Experts IA & Automatisation",
     description = "Automatisez vos processus internes avec une IA souveraine et sécurisée. Texte, image, audio, vidéo. Déploiement Local ou Cloud UE.",
     canonical,
     image = "/assets/hero_background.webp", // Default social share image
     type = "website",
-    twitterHandle = "@melconseil"
+    twitterHandle = "@leonardintelligence"
 }: SEOProps) {
-    const siteUrl = "https://melies.ai"; // Replace with actual domain
+    const siteUrl = "https://leonardintelligence.com"; // Replace with actual domain
     const fullUrl = canonical ? canonical : siteUrl;
     const fullImage = image.startsWith('http') ? image : `${siteUrl}${image}`;
 
@@ -33,6 +33,7 @@ export function SEO({
             <meta property="og:url" content={fullUrl} />
             <meta property="og:title" content={title} />
             <meta property="og:description" content={description} />
+            <meta property="og:locale" content="fr_FR" />
             <meta property="og:image" content={fullImage} />
 
             {/* Twitter */}
