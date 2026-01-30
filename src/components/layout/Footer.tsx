@@ -6,7 +6,11 @@ export function Footer() {
                 {/* Top Section: Brand + Tagline */}
                 <div className="flex flex-col md:flex-row justify-between items-start md:items-center pb-12 mb-12 border-b border-white/10">
                     <div>
-                        <h3 className="font-sans font-bold text-2xl text-white mb-2 tracking-tighter">LEONARD<span className="text-gray-500"> Intelligence</span></h3>
+                        <img
+                            src="/leonard-intelligence-logo-white.png"
+                            alt="Leonard Intelligence"
+                            className="h-8 mb-2"
+                        />
                         <p className="text-emerald-400 font-mono text-xs uppercase tracking-wider">
                             L'Intelligence Opérationnelle.
                         </p>

@@ -39,7 +39,7 @@ export function Hero() {
 
                             <h1 id="hero-headline" className="font-mono text-[4rem] font-medium leading-[1.1] tracking-[-0.04em] mb-8 max-w-[950px] uppercase text-white drop-shadow-xl">
                                 Prenez l'avantage.<br />
-                                <span className="text-white/70">IA souveraine. Sur-mesure.</span>
+                                <span className="text-white/70">IA souveraine.<br />Sur-mesure.</span>
                             </h1>
 
                             <h2 className="font-mono text-xl text-emerald-400 mb-6 tracking-wide">
@@ -88,10 +88,10 @@ export function Hero() {
                                     config={{
                                         fitMode: 'cover',
                                         duotone: {
-                                            enabled: false,
+                                            enabled: true,
                                             colorA: '#000000',
                                             colorB: '#ffffff',
-                                            strength: 0
+                                            strength: 1
                                         },
                                         interaction: {
                                             enabled: true,

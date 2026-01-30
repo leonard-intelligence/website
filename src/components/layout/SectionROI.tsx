@@ -1,87 +1,97 @@
-import { Clock, Mail, FileText, Workflow } from 'lucide-react';
+import { FileText, Mail, Workflow, TrendingDown, Clock, Zap } from 'lucide-react';
 
 export function SectionROI() {
-    const gains = [
-        { icon: FileText, label: 'Saisie automatisée' },
-        { icon: Mail, label: 'Emails triés' },
-        { icon: FileText, label: 'Rapports générés' },
-        { icon: Workflow, label: 'Workflows simplifiés' },
-    ];
-
     return (
         <section
             id="section-roi"
-            className="py-24 bg-black border-b border-white/10 relative overflow-hidden"
+            className="max-w-[1400px] mx-auto border-t border-x border-b border-white/10 bg-black"
             aria-labelledby="roi-heading"
         >
-            {/* Subtle gradient accent */}
-            <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[300px] bg-emerald-500/5 blur-[100px] pointer-events-none" aria-hidden="true" />
+            {/* TOP ROW: Header spanning full width */}
+            <div className="p-12 border-b border-white/10">
+                <div className="text-emerald-500 font-mono mb-2 text-lg">01 Productivité.</div>
+                <h2
+                    id="roi-heading"
+                    className="text-4xl md:text-5xl font-mono text-white max-w-2xl leading-tight uppercase tracking-[-0.02em]"
+                >
+                    Réduisez vos coûts<br />
+                    <span className="text-muted-foreground">opérationnels immédiatement.</span>
+                </h2>
+            </div>
 
-            <div className="max-w-7xl mx-auto px-6 relative z-10">
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+            {/* BENTO GRID: 4 columns on desktop */}
+            <div className="grid grid-cols-2 lg:grid-cols-4">
 
-                    {/* Left: Big Stat */}
-                    <div className="text-center lg:text-left">
-                        <span className="text-emerald-400 font-mono text-sm tracking-widest uppercase mb-4 block">
-                            Productivité
-                        </span>
-
-                        <div className="mb-6">
-                            <div className="flex items-baseline justify-center lg:justify-start gap-2">
-                                <span className="text-8xl md:text-9xl font-mono font-bold text-white tracking-tighter">
-                                    6
-                                </span>
-                                <span className="text-4xl md:text-5xl font-mono text-emerald-400">
-                                    heures
-                                </span>
-                            </div>
-                            <p className="text-2xl md:text-3xl font-mono text-white/60 mt-2">
-                                récupérées. Chaque semaine. Par personne.
-                            </p>
-                        </div>
-
-                        <h2 id="roi-heading" className="text-xl md:text-2xl font-mono text-white/80 leading-relaxed max-w-lg mx-auto lg:mx-0">
-                            L'IA absorbe le répétitif.<br />
-                            <span className="text-white">Vos équipes se concentrent sur l'essentiel.</span>
-                        </h2>
+                {/* Card 1: Big Stat */}
+                <div className="p-8 border-r border-b border-white/10 bg-emerald-500/5 flex flex-col justify-between min-h-[200px]">
+                    <div className="w-10 h-10 border border-emerald-500/30 flex items-center justify-center mb-4">
+                        <TrendingDown className="w-5 h-5 text-emerald-400" />
                     </div>
-
-                    {/* Right: Gains List */}
-                    <div className="grid grid-cols-2 gap-4">
-                        {gains.map((gain, index) => (
-                            <div
-                                key={index}
-                                className="group p-6 border border-white/10 bg-white/[0.02] hover:bg-emerald-500/5 hover:border-emerald-500/20 transition-all duration-300"
-                            >
-                                <div className="w-10 h-10 border border-emerald-500/30 flex items-center justify-center mb-4 group-hover:border-emerald-400 transition-colors">
-                                    <gain.icon className="w-5 h-5 text-emerald-400" />
-                                </div>
-                                <span className="font-mono text-sm text-white/80 group-hover:text-white transition-colors">
-                                    {gain.label}
-                                </span>
-                            </div>
-                        ))}
+                    <div>
+                        <div className="text-4xl font-mono font-bold text-emerald-400 mb-1">-40%</div>
+                        <div className="text-xs font-mono text-white/50 uppercase tracking-wider">Charge admin</div>
                     </div>
                 </div>
 
-                {/* Bottom stat bar */}
-                <div className="mt-16 pt-8 border-t border-white/5">
-                    <div className="flex flex-wrap justify-center gap-8 text-center">
-                        <div>
-                            <div className="text-3xl font-mono font-bold text-emerald-400">-40%</div>
-                            <div className="text-xs font-mono text-white/50 uppercase tracking-wider mt-1">Charge admin</div>
-                        </div>
-                        <div className="w-px h-12 bg-white/10" aria-hidden="true" />
-                        <div>
-                            <div className="text-3xl font-mono font-bold text-emerald-400">+25%</div>
-                            <div className="text-xs font-mono text-white/50 uppercase tracking-wider mt-1">Productivité</div>
-                        </div>
-                        <div className="w-px h-12 bg-white/10" aria-hidden="true" />
-                        <div>
-                            <div className="text-3xl font-mono font-bold text-emerald-400">3 mois</div>
-                            <div className="text-xs font-mono text-white/50 uppercase tracking-wider mt-1">Retour sur invest.</div>
-                        </div>
+                {/* Card 2: Big Stat */}
+                <div className="p-8 border-r border-b border-white/10 flex flex-col justify-between min-h-[200px]">
+                    <div className="w-10 h-10 border border-white/10 flex items-center justify-center mb-4">
+                        <Zap className="w-5 h-5 text-emerald-400" />
                     </div>
+                    <div>
+                        <div className="text-4xl font-mono font-bold text-emerald-400 mb-1">+25%</div>
+                        <div className="text-xs font-mono text-white/50 uppercase tracking-wider">Productivité</div>
+                    </div>
+                </div>
+
+                {/* Card 3: Big Stat */}
+                <div className="p-8 border-r border-b border-white/10 flex flex-col justify-between min-h-[200px]">
+                    <div className="w-10 h-10 border border-white/10 flex items-center justify-center mb-4">
+                        <Clock className="w-5 h-5 text-emerald-400" />
+                    </div>
+                    <div>
+                        <div className="text-4xl font-mono font-bold text-emerald-400 mb-1">3 mois</div>
+                        <div className="text-xs font-mono text-white/50 uppercase tracking-wider">ROI garanti</div>
+                    </div>
+                </div>
+
+                {/* Card 4: Description */}
+                <div className="p-8 border-b border-white/10 bg-zinc-900/30 flex flex-col justify-center min-h-[200px]">
+                    <p className="font-mono text-sm text-muted-foreground leading-relaxed">
+                        L'IA absorbe le répétitif. Vos équipes se concentrent sur l'essentiel.
+                    </p>
+                </div>
+
+                {/* Card 5: Feature */}
+                <div className="p-8 border-r border-white/10 group hover:bg-white/5 transition-colors min-h-[180px]">
+                    <div className="w-8 h-8 bg-black border border-white/10 flex items-center justify-center mb-4 text-emerald-400">
+                        <FileText className="w-4 h-4" />
+                    </div>
+                    <h3 className="text-white font-mono text-sm mb-2 uppercase tracking-[-0.02em]">Saisie Automatisée</h3>
+                    <p className="text-muted-foreground text-xs font-mono">Extraction documentaire sans intervention.</p>
+                </div>
+
+                {/* Card 6: Feature */}
+                <div className="p-8 border-r border-white/10 group hover:bg-white/5 transition-colors min-h-[180px]">
+                    <div className="w-8 h-8 bg-black border border-white/10 flex items-center justify-center mb-4 text-emerald-400">
+                        <Mail className="w-4 h-4" />
+                    </div>
+                    <h3 className="text-white font-mono text-sm mb-2 uppercase tracking-[-0.02em]">Emails Triés</h3>
+                    <p className="text-muted-foreground text-xs font-mono">Priorisation intelligente automatique.</p>
+                </div>
+
+                {/* Card 7: Feature */}
+                <div className="p-8 border-r border-white/10 group hover:bg-white/5 transition-colors min-h-[180px]">
+                    <div className="w-8 h-8 bg-black border border-white/10 flex items-center justify-center mb-4 text-emerald-400">
+                        <Workflow className="w-4 h-4" />
+                    </div>
+                    <h3 className="text-white font-mono text-sm mb-2 uppercase tracking-[-0.02em]">Workflows</h3>
+                    <p className="text-muted-foreground text-xs font-mono">Orchestration automatique.</p>
+                </div>
+
+                {/* Card 8: CTA hint */}
+                <div className="p-8 bg-emerald-500/10 group hover:bg-emerald-500/20 transition-colors flex items-center justify-center min-h-[180px]">
+                    <span className="font-mono text-xs text-emerald-400 uppercase tracking-widest">/// MODULE ROI ///</span>
                 </div>
             </div>
         </section>

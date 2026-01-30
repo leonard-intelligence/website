@@ -65,10 +65,12 @@ export function App() {
                         </section>
 
                         {/* 4. Arguments Marketing (ROI, Sécurité, Patrimoine, Stratégie) */}
-                        <SectionROI />
-                        <SectionSecurity />
-                        <SectionPatrimoine />
-                        <SectionStrategy />
+                        <div className="space-y-16 py-16">
+                            <SectionROI />
+                            <SectionSecurity />
+                            <SectionPatrimoine />
+                            <SectionStrategy />
+                        </div>
 
                         <section id="section-cta" aria-label="Commencer">
                             <CTASection />

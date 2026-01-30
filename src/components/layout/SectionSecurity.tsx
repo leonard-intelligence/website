@@ -1,83 +1,73 @@
-import { Shield, Server, Lock, Globe } from 'lucide-react';
+import { Shield, Server, Lock, Globe, CheckCircle, Building } from 'lucide-react';
 
 export function SectionSecurity() {
-    const badges = [
-        { icon: Server, label: 'SecNumCloud', color: 'text-blue-400' },
-        { icon: Shield, label: 'RGPD Compliant', color: 'text-blue-400' },
-        { icon: Globe, label: 'Hébergement UE', color: 'text-blue-400' },
-        { icon: Lock, label: 'Cloud Act Exempt', color: 'text-emerald-400' },
-    ];
-
     return (
         <section
             id="section-security"
-            className="py-24 bg-black border-b border-white/10 relative overflow-hidden"
+            className="max-w-[1400px] mx-auto border-t border-x border-b border-white/10 bg-black"
             aria-labelledby="security-heading"
         >
-            {/* Subtle gradient accent */}
-            <div className="absolute top-1/2 right-0 -translate-y-1/2 w-[400px] h-[400px] bg-blue-500/5 blur-[100px] pointer-events-none" aria-hidden="true" />
+            {/* HERO BANNER: Full width */}
+            <div className="grid grid-cols-1 lg:grid-cols-12">
+                {/* Left: Content */}
+                <div className="lg:col-span-7 p-12 border-r border-b border-white/10">
+                    <div className="text-blue-500 font-mono mb-2 text-lg">02 Souveraineté Numérique.</div>
+                    <h2
+                        id="security-heading"
+                        className="text-4xl md:text-5xl font-mono text-white max-w-xl leading-tight uppercase tracking-[-0.02em] mb-6"
+                    >
+                        Vos données ne sortent<br />
+                        <span className="text-muted-foreground">pas de chez vous.</span>
+                    </h2>
+                    <p className="font-mono text-sm text-muted-foreground leading-relaxed max-w-md">
+                        Déploiement local ou cloud privé européen. Zéro dépendance aux géants américains. Cloud Act ? Pas concerné.
+                    </p>
+                </div>
 
-            <div className="max-w-7xl mx-auto px-6 relative z-10">
-                <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-
-                    {/* Left: Shield Visual */}
-                    <div className="lg:col-span-5 flex justify-center">
-                        <div className="relative">
-                            {/* Animated rings */}
-                            <div className="absolute inset-0 flex items-center justify-center" aria-hidden="true">
-                                <div className="w-64 h-64 border border-blue-500/10 rounded-full animate-pulse" />
-                                <div className="absolute w-48 h-48 border border-blue-500/20 rounded-full" />
-                                <div className="absolute w-32 h-32 border border-blue-500/30 rounded-full" />
-                            </div>
-
-                            {/* Central icon */}
-                            <div className="relative w-64 h-64 flex items-center justify-center">
-                                <div className="w-24 h-24 bg-blue-500/10 border border-blue-500/30 flex items-center justify-center">
-                                    <Shield className="w-12 h-12 text-blue-400" />
-                                </div>
-                            </div>
+                {/* Right: Shield Visual */}
+                <div className="lg:col-span-5 p-12 border-b border-white/10 flex items-center justify-center bg-blue-500/5">
+                    <div className="relative">
+                        <div className="w-32 h-32 border-2 border-blue-500/30 flex items-center justify-center">
+                            <Shield className="w-16 h-16 text-blue-400" />
                         </div>
-                    </div>
-
-                    {/* Right: Content */}
-                    <div className="lg:col-span-7">
-                        <span className="text-blue-400 font-mono text-sm tracking-widest uppercase mb-4 block">
-                            Souveraineté Numérique
-                        </span>
-
-                        <h2 id="security-heading" className="text-4xl md:text-5xl font-mono font-bold text-white mb-6 leading-tight">
-                            Vos données restent<br />
-                            <span className="text-blue-400">les vôtres.</span>
-                        </h2>
-
-                        <p className="text-lg font-mono text-white/60 leading-relaxed mb-8 max-w-xl">
-                            Déploiement local ou cloud privé européen. Zéro dépendance aux géants américains.
-                            <span className="text-white"> Cloud Act ? Pas concerné.</span>
-                        </p>
-
-                        {/* Compliance badges */}
-                        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                            {badges.map((badge, index) => (
-                                <div
-                                    key={index}
-                                    className="flex items-center gap-3 p-4 border border-white/10 bg-white/[0.02] hover:bg-blue-500/5 hover:border-blue-500/20 transition-all"
-                                >
-                                    <badge.icon className={`w-5 h-5 ${badge.color}`} />
-                                    <span className="font-mono text-xs text-white/80 uppercase tracking-wider">
-                                        {badge.label}
-                                    </span>
-                                </div>
-                            ))}
-                        </div>
-
-                        {/* Infrastructure note */}
-                        <div className="mt-8 p-4 border-l-2 border-blue-500/50 bg-blue-500/5">
-                            <p className="font-mono text-sm text-white/70">
-                                <span className="text-blue-400 font-bold">Infrastructure dédiée</span> chez OVH, NumSpot ou Outscale (certifié SecNumCloud).
-                            </p>
-                        </div>
+                        <div className="absolute -top-2 -right-2 w-4 h-4 bg-emerald-400 rounded-full animate-pulse" />
                     </div>
                 </div>
+            </div>
+
+            {/* BADGES ROW: 6 columns */}
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6">
+                <div className="p-6 border-r border-white/10 flex flex-col items-center justify-center text-center hover:bg-white/5 transition-colors">
+                    <Server className="w-6 h-6 text-blue-400 mb-3" />
+                    <span className="font-mono text-xs text-white uppercase tracking-wider">SecNumCloud</span>
+                </div>
+                <div className="p-6 border-r border-white/10 flex flex-col items-center justify-center text-center hover:bg-white/5 transition-colors">
+                    <Shield className="w-6 h-6 text-blue-400 mb-3" />
+                    <span className="font-mono text-xs text-white uppercase tracking-wider">RGPD</span>
+                </div>
+                <div className="p-6 border-r border-white/10 flex flex-col items-center justify-center text-center hover:bg-white/5 transition-colors">
+                    <Globe className="w-6 h-6 text-blue-400 mb-3" />
+                    <span className="font-mono text-xs text-white uppercase tracking-wider">Héberg. UE</span>
+                </div>
+                <div className="p-6 border-r border-white/10 flex flex-col items-center justify-center text-center hover:bg-white/5 transition-colors">
+                    <Lock className="w-6 h-6 text-emerald-400 mb-3" />
+                    <span className="font-mono text-xs text-white uppercase tracking-wider">Cloud Act ✗</span>
+                </div>
+                <div className="p-6 border-r border-white/10 flex flex-col items-center justify-center text-center hover:bg-white/5 transition-colors">
+                    <CheckCircle className="w-6 h-6 text-emerald-400 mb-3" />
+                    <span className="font-mono text-xs text-white uppercase tracking-wider">HDS Ready</span>
+                </div>
+                <div className="p-6 flex flex-col items-center justify-center text-center hover:bg-white/5 transition-colors">
+                    <Building className="w-6 h-6 text-blue-400 mb-3" />
+                    <span className="font-mono text-xs text-white uppercase tracking-wider">On-Premise</span>
+                </div>
+            </div>
+
+            {/* BOTTOM: Infrastructure note */}
+            <div className="p-6 border-t border-white/10 bg-blue-500/5">
+                <p className="font-mono text-xs text-center text-white/60">
+                    Infrastructure dédiée chez <span className="text-blue-400">OVH</span>, <span className="text-blue-400">NumSpot</span> ou <span className="text-blue-400">Outscale</span> (certifié SecNumCloud)
+                </p>
             </div>
         </section>
     );
