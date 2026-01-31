@@ -1,4 +1,4 @@
-import { FileText, Database, MessageSquare } from 'lucide-react';
+import { DotIcon, leonardIcons } from "@/components/ui/LeonardIcons";
 import { TechIllustration } from "@/components/ui/TechIllustration";
 
 export function SectionText() {
@@ -22,7 +22,7 @@ export function SectionText() {
                     <div className="flex-1 flex flex-col">
                         <div id="expertise-text-item-1" className="flex-1 border-b border-white/10 p-8 group hover:bg-white/5 transition-colors relative reveal-left stagger-1 hover-lift">
                             <div className="w-8 h-8 bg-black border border-white/10 flex items-center justify-center mb-4 text-white bg-pattern-diagonal icon-bounce">
-                                <FileText className="w-4 h-4" />
+                                <DotIcon icon={leonardIcons.marketingAutomation} size={20} fillColor="white" />
                             </div>
                             <h3 className="text-white font-mono text-lg mb-2 uppercase tracking-[-0.02em]">Marketing Automation</h3>
                             <p className="text-gray-400 text-sm font-mono">Rédaction auto de fiches produits, SEO, personnalisation d'emails.</p>
@@ -30,7 +30,7 @@ export function SectionText() {
 
                         <div id="expertise-text-item-2" className="flex-1 border-b border-white/10 p-8 group hover:bg-white/5 transition-colors relative reveal-left stagger-2 hover-lift">
                             <div className="w-8 h-8 bg-black border border-white/10 flex items-center justify-center mb-4 text-white bg-pattern-diagonal">
-                                <Database className="w-4 h-4" />
+                                <DotIcon icon={leonardIcons.ragChatbot} size={20} fillColor="white" />
                             </div>
                             <h3 className="text-white font-mono text-lg mb-2 uppercase tracking-[-0.02em]">RAG & Chatbots</h3>
                             <p className="text-gray-400 text-sm font-mono">Assistants connectés à votre base documentaire. Support 24/7.</p>
@@ -38,7 +38,7 @@ export function SectionText() {
 
                         <div id="expertise-text-item-3" className="flex-1 p-8 group hover:bg-white/5 transition-colors relative reveal-left stagger-3 hover-lift">
                             <div className="w-8 h-8 bg-black border border-white/10 flex items-center justify-center mb-4 text-white bg-pattern-diagonal">
-                                <MessageSquare className="w-4 h-4" />
+                                <DotIcon icon={leonardIcons.fineTuning} size={20} fillColor="white" />
                             </div>
                             <h3 className="text-white font-mono text-lg mb-2 uppercase tracking-[-0.02em]">Fine-Tuning</h3>
                             <p className="text-gray-400 text-sm font-mono">Entraînement de modèles sur votre ton de marque et vocabulaire métier.</p>
@@ -104,3 +104,4 @@ export function SectionText() {
         </section>
     );
 }
+

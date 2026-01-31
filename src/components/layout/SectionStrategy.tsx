@@ -1,4 +1,4 @@
-import { TrendingUp, Zap, ArrowRight, Users, BarChart3 } from 'lucide-react';
+import { DotIcon, leonardIcons } from "@/components/ui/LeonardIcons";
 
 export function SectionStrategy() {
     return (
@@ -26,9 +26,11 @@ export function SectionStrategy() {
                     href="#section-contact"
                     className="group inline-flex items-center gap-3 bg-[#E67E22] hover:bg-[#D35400] text-[#3D2314] px-8 py-4 font-mono font-semibold uppercase text-sm transition-all hover:-translate-y-0.5 border border-[#E67E22]"
                 >
-                    <Zap className="w-4 h-4" />
+                    <DotIcon icon={leonardIcons.automatisation} size={16} fillColor="#3D2314" />
                     Prendre l'avantage
-                    <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                    <div className="group-hover:translate-x-1 transition-transform">
+                        <DotIcon icon={leonardIcons.arrowRight} size={16} fillColor="#3D2314" />
+                    </div>
                 </a>
             </div>
 
@@ -42,7 +44,7 @@ export function SectionStrategy() {
                         <div className="text-xs font-mono text-white/40 uppercase">Aujourd'hui</div>
                     </div>
                     <div className="flex-1 flex items-center justify-center">
-                        <ArrowRight className="w-8 h-8 text-[#E67E22]" />
+                        <DotIcon icon={leonardIcons.arrowRight} size={32} fillColor="#E67E22" />
                     </div>
                     <div className="text-center">
                         <div className="font-mono text-6xl font-semibold text-[#E67E22] mb-1">80%</div>
@@ -52,13 +54,17 @@ export function SectionStrategy() {
 
                 {/* Small cards */}
                 <div className="p-6 border-r border-white/10 hover:bg-white/5 transition-colors">
-                    <Users className="w-5 h-5 text-[#E67E22] mb-3" />
+                    <div className="mb-3">
+                        <DotIcon icon={leonardIcons.users} size={20} fillColor="#E67E22" />
+                    </div>
                     <div className="font-mono text-2xl font-semibold text-white mb-1">58%</div>
                     <div className="text-xs font-mono text-white/50">Dirigeants convaincus</div>
                 </div>
 
                 <div className="p-6 hover:bg-white/5 transition-colors">
-                    <BarChart3 className="w-5 h-5 text-[#E67E22] mb-3" />
+                    <div className="mb-3">
+                        <DotIcon icon={leonardIcons.performanceMonitor} size={20} fillColor="#E67E22" />
+                    </div>
                     <div className="font-mono text-2xl font-semibold text-white mb-1">2025-27</div>
                     <div className="text-xs font-mono text-white/50">Fenêtre critique</div>
                 </div>
@@ -76,7 +82,9 @@ export function SectionStrategy() {
 
                 {/* Quote card - spans 2 cols */}
                 <div className="col-span-2 p-6 border-t border-white/10 bg-zinc-900/30 flex items-center gap-4">
-                    <TrendingUp className="w-5 h-5 text-[#E67E22] flex-shrink-0" />
+                    <div className="flex-shrink-0">
+                        <DotIcon icon={leonardIcons.avantageConcurrentiel} size={20} fillColor="#E67E22" />
+                    </div>
                     <p className="font-mono text-xs text-white/70 leading-relaxed">
                         "Les premiers à s'équiper captent l'avantage concurrentiel"
                     </p>
@@ -85,3 +93,4 @@ export function SectionStrategy() {
         </section>
     );
 }
+

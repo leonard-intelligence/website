@@ -2,7 +2,7 @@ import { useRef } from "react";
 import type { CSSProperties } from "react";
 import { TechCard, TechCardImage } from "../ui/TechCard";
 import { USE_CASES } from "../../data/catalogue";
-import { TrendingUp } from "lucide-react";
+import { DotIcon, leonardIcons } from "@/components/ui/LeonardIcons";
 
 export function UseCaseGrid() {
     const sectionRef = useRef<HTMLElement>(null);
@@ -60,7 +60,7 @@ export function UseCaseGrid() {
 
                                 <div className="mt-auto border-t border-white/10 pt-4">
                                     <div className="flex items-center gap-2 mb-3 text-[#E67E22] text-xs font-mono uppercase tracking-widest">
-                                        <TrendingUp className="w-3 h-3" /> Résultats
+                                        <DotIcon icon={leonardIcons.roi} size={12} fillColor="#E67E22" /> Résultats
                                     </div>
                                     <div className="grid grid-cols-2 gap-4">
                                         {item.stats.map((stat, i) => (
@@ -79,3 +79,4 @@ export function UseCaseGrid() {
         </section>
     );
 }
+

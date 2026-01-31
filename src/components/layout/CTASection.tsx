@@ -1,4 +1,4 @@
-import { ArrowRight, Shield, Scale, Server } from "lucide-react";
+import { DotIcon, leonardIcons } from "@/components/ui/LeonardIcons";
 
 export function CTASection() {
     return (
@@ -18,7 +18,9 @@ export function CTASection() {
                     <a href="#section-contact" id="cta-btn-primary" className="group relative px-8 h-14 flex items-center justify-center bg-[#3D2314] text-[#E67E22] border border-[#8B4513] font-mono font-semibold uppercase text-lg hover:bg-[#4A2A1A] transition-all w-full md:w-auto">
                         <span className="flex items-center gap-3">
                             RÉSERVER UN CRÉNEAU
-                            <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                            <div className="group-hover:translate-x-1 transition-transform">
+                                <DotIcon icon={leonardIcons.arrowRight} size={20} fillColor="#E67E22" />
+                            </div>
                         </span>
                     </a>
                 </div>
@@ -28,23 +30,23 @@ export function CTASection() {
                     <p className="text-xs text-gray-500 font-mono mb-6 uppercase tracking-wider">Conformité & Certifications</p>
                     <div className="flex flex-wrap justify-center gap-8 items-center">
                         <div className="flex items-center gap-2 text-gray-400 hover:text-white transition-colors">
-                            <Scale className="w-4 h-4 text-[#E67E22]" />
+                            <DotIcon icon={leonardIcons.scale} size={16} fillColor="#E67E22" />
                             <span className="font-mono text-xs">AI ACT READY</span>
                         </div>
                         <div className="flex items-center gap-2 text-gray-400 hover:text-white transition-colors">
-                            <Shield className="w-4 h-4 text-[#E67E22]" />
+                            <DotIcon icon={leonardIcons.rgpdCompliant} size={16} fillColor="#E67E22" />
                             <span className="font-mono text-xs">RGPD COMPLIANT</span>
                         </div>
                         <div className="flex items-center gap-2 text-gray-400 hover:text-white transition-colors">
-                            <Server className="w-4 h-4 text-[#E67E22]" />
+                            <DotIcon icon={leonardIcons.secNumCloud} size={16} fillColor="#E67E22" />
                             <span className="font-mono text-xs">SecNumCloud</span>
                         </div>
                         <div className="flex items-center gap-2 text-gray-400 hover:text-white transition-colors">
-                            <span className="text-sm">🏥</span>
+                            <DotIcon icon={leonardIcons.hdsReady} size={16} fillColor="#E67E22" />
                             <span className="font-mono text-xs">HDS COMPATIBLE</span>
                         </div>
                         <div className="flex items-center gap-2 text-gray-400 hover:text-white transition-colors">
-                            <span className="text-sm">🇪🇺</span>
+                            <DotIcon icon={leonardIcons.hebergementUE} size={16} fillColor="#E67E22" />
                             <span className="font-mono text-xs">HÉBERGEMENT UE</span>
                         </div>
                     </div>
@@ -53,3 +55,4 @@ export function CTASection() {
         </section>
     );
 }
+

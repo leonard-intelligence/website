@@ -4,7 +4,7 @@ import { Button } from "../ui/button";
 import { Input } from "../ui/input";
 import { Textarea } from "../ui/textarea";
 import { Label } from "../ui/label";
-import { Mail, Send, CheckCircle2 } from "lucide-react";
+import { DotIcon, leonardIcons } from "@/components/ui/LeonardIcons";
 
 export function Contact() {
     const [isSubmitting, setIsSubmitting] = useState(false);
@@ -39,7 +39,7 @@ export function Contact() {
                     <div className="space-y-8">
                         <div className="flex items-start gap-4 group">
                             <div className="p-3 bg-white/5 border border-white/10 group-hover:bg-white/10 transition-colors">
-                                <Mail className="w-6 h-6 text-[#E67E22]" />
+                                <DotIcon icon={leonardIcons.emailsTries} size={24} fillColor="#E67E22" />
                             </div>
                             <div>
                                 <h3 className="text-white font-semibold mb-1 font-mono uppercase">Email</h3>
@@ -61,7 +61,7 @@ export function Contact() {
 
                     {isSent ? (
                         <div className="h-full flex flex-col items-center justify-center text-center py-12">
-                            <CheckCircle2 className="w-16 h-16 text-[#E67E22] mb-6" />
+                            <DotIcon icon={leonardIcons.check} size={64} fillColor="#E67E22" className="mb-6" />
                             <h3 className="text-2xl font-semibold font-mono text-white mb-2 uppercase">Message envoyé</h3>
                             <p className="text-gray-400 font-sans">
                                 Merci de nous avoir contactés. Nous reviendrons vers vous très rapidement.
@@ -116,7 +116,7 @@ export function Contact() {
                                     "ENVOI EN COURS..."
                                 ) : (
                                     <span className="flex items-center gap-2">
-                                        ENVOYER LE MESSAGE <Send className="w-4 h-4" />
+                                        ENVOYER LE MESSAGE <DotIcon icon={leonardIcons.arrowRight} size={16} fillColor="#3D2314" />
                                     </span>
                                 )}
                             </Button>
@@ -127,3 +127,4 @@ export function Contact() {
         </section>
     );
 }
+

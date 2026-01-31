@@ -1,4 +1,3 @@
-import { FileText, Sparkles } from 'lucide-react';
 import { DotIcon, leonardIcons } from "@/components/ui/LeonardIcons";
 
 export function SectionPatrimoine() {
@@ -33,7 +32,7 @@ export function SectionPatrimoine() {
                             {/* Chat header */}
                             <div className="flex items-center gap-3 px-5 py-3 bg-zinc-800/50 border-b border-white/10">
                                 <div className="w-8 h-8 bg-[#E67E22]/20 rounded-full flex items-center justify-center">
-                                    <Sparkles className="w-4 h-4 text-[#E67E22]" />
+                                    <DotIcon icon={leonardIcons.sparkles} size={16} fillColor="#E67E22" />
                                 </div>
                                 <div>
                                     <div className="font-mono text-xs text-white font-medium">Assistant Documentaire</div>
@@ -60,7 +59,7 @@ export function SectionPatrimoine() {
                                 <div className="flex justify-start">
                                     <div className="bg-white/5 border border-white/10 rounded-xl rounded-bl-sm px-4 py-3 max-w-sm">
                                         <div className="flex items-center gap-2 mb-2">
-                                            <FileText className="w-3 h-3 text-[#E67E22]" />
+                                            <DotIcon icon={leonardIcons.saisieAutomatisee} size={12} fillColor="#E67E22" />
                                             <span className="font-mono text-[10px] text-[#E67E22]">Manuel XR-500, p.47</span>
                                         </div>
                                         <p className="font-mono text-xs text-white/80 leading-relaxed">
@@ -123,3 +122,4 @@ export function SectionPatrimoine() {
         </section>
     );
 }
+

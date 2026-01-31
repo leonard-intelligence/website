@@ -1,4 +1,4 @@
-import { Shield, Server, Lock, Globe, CheckCircle, Building } from 'lucide-react';
+import { DotIcon, leonardIcons } from "@/components/ui/LeonardIcons";
 
 export function SectionSecurity() {
     return (
@@ -28,7 +28,7 @@ export function SectionSecurity() {
                 <div className="lg:col-span-5 p-12 border-b border-white/10 flex items-center justify-center bg-[#E67E22]/5">
                     <div className="relative">
                         <div className="w-32 h-32 border-2 border-[#E67E22]/30 flex items-center justify-center">
-                            <Shield className="w-16 h-16 text-[#E67E22]" />
+                            <DotIcon icon={leonardIcons.souveraineteNumerique} size={64} fillColor="#E67E22" />
                         </div>
                         <div className="absolute -top-2 -right-2 w-4 h-4 bg-[#E67E22] rounded-full animate-pulse" />
                     </div>
@@ -38,27 +38,39 @@ export function SectionSecurity() {
             {/* BADGES ROW: 6 columns */}
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6">
                 <div className="p-6 border-r border-white/10 flex flex-col items-center justify-center text-center hover:bg-white/5 transition-colors">
-                    <Server className="w-6 h-6 text-[#E67E22] mb-3" />
+                    <div className="mb-3">
+                        <DotIcon icon={leonardIcons.secNumCloud} size={24} fillColor="#E67E22" />
+                    </div>
                     <span className="font-mono text-xs text-white uppercase tracking-wider">SecNumCloud</span>
                 </div>
                 <div className="p-6 border-r border-white/10 flex flex-col items-center justify-center text-center hover:bg-white/5 transition-colors">
-                    <Shield className="w-6 h-6 text-[#E67E22] mb-3" />
+                    <div className="mb-3">
+                        <DotIcon icon={leonardIcons.rgpdCompliant} size={24} fillColor="#E67E22" />
+                    </div>
                     <span className="font-mono text-xs text-white uppercase tracking-wider">RGPD</span>
                 </div>
                 <div className="p-6 border-r border-white/10 flex flex-col items-center justify-center text-center hover:bg-white/5 transition-colors">
-                    <Globe className="w-6 h-6 text-[#E67E22] mb-3" />
+                    <div className="mb-3">
+                        <DotIcon icon={leonardIcons.hebergementUE} size={24} fillColor="#E67E22" />
+                    </div>
                     <span className="font-mono text-xs text-white uppercase tracking-wider">Héberg. UE</span>
                 </div>
                 <div className="p-6 border-r border-white/10 flex flex-col items-center justify-center text-center hover:bg-white/5 transition-colors">
-                    <Lock className="w-6 h-6 text-[#E67E22] mb-3" />
+                    <div className="mb-3">
+                        <DotIcon icon={leonardIcons.cloudActFree} size={24} fillColor="#E67E22" />
+                    </div>
                     <span className="font-mono text-xs text-white uppercase tracking-wider">Cloud Act ✗</span>
                 </div>
                 <div className="p-6 border-r border-white/10 flex flex-col items-center justify-center text-center hover:bg-white/5 transition-colors">
-                    <CheckCircle className="w-6 h-6 text-[#E67E22] mb-3" />
+                    <div className="mb-3">
+                        <DotIcon icon={leonardIcons.hdsReady} size={24} fillColor="#E67E22" />
+                    </div>
                     <span className="font-mono text-xs text-white uppercase tracking-wider">HDS Ready</span>
                 </div>
                 <div className="p-6 flex flex-col items-center justify-center text-center hover:bg-white/5 transition-colors">
-                    <Building className="w-6 h-6 text-[#E67E22] mb-3" />
+                    <div className="mb-3">
+                        <DotIcon icon={leonardIcons.onPremise} size={24} fillColor="#E67E22" />
+                    </div>
                     <span className="font-mono text-xs text-white uppercase tracking-wider">On-Premise</span>
                 </div>
             </div>
@@ -72,3 +84,4 @@ export function SectionSecurity() {
         </section>
     );
 }
+

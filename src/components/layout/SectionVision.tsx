@@ -1,4 +1,4 @@
-import { Image as ImageIcon, ScanFace } from 'lucide-react';
+import { DotIcon, leonardIcons } from "@/components/ui/LeonardIcons";
 import { TechIllustration } from "@/components/ui/TechIllustration";
 
 export function SectionVision() {
@@ -81,7 +81,7 @@ export function SectionVision() {
                     <div className="flex-1 flex flex-col">
                         <div id="expertise-vision-item-1" className="flex-1 border-b border-white/10 p-8 group hover:bg-white/5 transition-colors relative reveal-right stagger-1 hover-lift">
                             <div className="w-8 h-8 bg-black border border-white/10 flex items-center justify-center mb-4 text-white bg-pattern-diagonal icon-bounce">
-                                <ScanFace className="w-4 h-4" />
+                                <DotIcon icon={leonardIcons.computerVision} size={20} fillColor="white" />
                             </div>
                             <h3 className="text-white font-mono text-lg mb-2 uppercase tracking-[-0.02em]">Computer Vision</h3>
                             <p className="text-muted-foreground text-sm font-mono">Contrôle qualité, détection en temps réel, comptage automatisé et surveillance.</p>
@@ -89,7 +89,7 @@ export function SectionVision() {
 
                         <div id="expertise-vision-item-2" className="flex-1 p-8 group hover:bg-white/5 transition-colors relative reveal-right stagger-2 hover-lift">
                             <div className="w-8 h-8 bg-black border border-white/10 flex items-center justify-center mb-4 text-white bg-pattern-diagonal icon-bounce">
-                                <ImageIcon className="w-4 h-4" />
+                                <DotIcon icon={leonardIcons.imageGeneration} size={20} fillColor="white" />
                             </div>
                             <h3 className="text-white font-mono text-lg mb-2 uppercase tracking-[-0.02em]">Image Generation</h3>
                             <p className="text-muted-foreground text-sm font-mono">Création d'assets marketing, virtual staging, retouche automatisée et génération de visuels.</p>
@@ -100,3 +100,4 @@ export function SectionVision() {
         </section>
     );
 }
+
