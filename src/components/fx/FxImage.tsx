@@ -131,6 +131,7 @@ export function FxImage({ src, depthSrc, alt = '', className = '', config, style
     const [imageLoaded, setImageLoaded] = useState(false);
     const [depthLoaded, setDepthLoaded] = useState(false); // New
     const [webglSupported, setWebglSupported] = useState(true);
+    const [webglReady, setWebglReady] = useState(false); // Prevents white flash
 
     const context = useContext(FxContext);
     // We need the mouseRef from context
@@ -172,6 +173,9 @@ export function FxImage({ src, depthSrc, alt = '', className = '', config, style
 
     // Visibility tracking for animation pause (performance optimization)
     const isInViewportRef = useRef(false);
+
+    // Ref to track webglReady for closure in render callback
+    const webglReadyRef = useRef(false);
 
     /**
      * Render the effect
@@ -399,6 +403,12 @@ export function FxImage({ src, depthSrc, alt = '', className = '', config, style
 
         gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
 
+        // Mark WebGL as ready after first successful draw (prevents white flash)
+        if (!webglReadyRef.current) {
+            webglReadyRef.current = true;
+            setWebglReady(true);
+        }
+
         // Only continue loop if visible in viewport (performance optimization)
         if (isInViewportRef.current) {
             requestRef.current = requestAnimationFrame(render);
@@ -562,6 +572,8 @@ export function FxImage({ src, depthSrc, alt = '', className = '', config, style
         setImageLoaded(false);
         setDepthLoaded(false);
         setWebglSupported(true); // Retry WebGL for new image
+        setWebglReady(false); // Reset ready state for new image
+        webglReadyRef.current = false; // Reset ref too
     }, [src, depthSrc]);
 
     // Check if effects should be applied
@@ -666,7 +678,8 @@ export function FxImage({ src, depthSrc, alt = '', className = '', config, style
                     maxHeight: '100%',
                     width: 'auto',
                     height: 'auto',
-                    visibility: (effectsActive && imageLoaded && isVisible) ? 'hidden' : 'visible',
+                    // Only hide image AFTER WebGL has drawn first frame (prevents white flash)
+                    visibility: (effectsActive && imageLoaded && isVisible && webglReady) ? 'hidden' : 'visible',
                     pointerEvents: 'none', // Allow clicks to pass through to parent container
                     ...imgStyle,
                 }}

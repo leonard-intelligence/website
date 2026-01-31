@@ -24,7 +24,7 @@ export function Hero() {
         /* Replaced .hero-section with direct styles */
         <section
             id="section-hero"
-            className="relative min-h-[100dvh] w-full flex flex-col group bg-pattern-grid"
+            className="relative min-h-[100dvh] w-full flex flex-col group bg-pattern-grid overflow-hidden"
             aria-label="Introduction"
         >
 
@@ -77,27 +77,26 @@ export function Hero() {
                             </div>
                         </div>
 
-                        {/* RIGHT COLUMN: Visual (Hero Image) - Desktop layout */}
-                        <div className="hidden lg:flex lg:col-span-5 items-center justify-center relative">
-                            <div className="relative w-full max-w-md aspect-[3/4] rounded-2xl overflow-hidden shadow-2xl animate-fade-in">
-                                <FxImage
-                                    src={config.heroImage || '/assets/hero-tests/hero%2014.png'}
-                                    alt="Visualisation abstraite de l'intelligence artificielle"
-                                    className="w-full h-full"
-                                    style={{ width: '100%', height: '100%' }}
-                                    imgStyle={{
-                                        width: '100%',
-                                        height: '100%',
-                                        objectFit: 'cover',
-                                        objectPosition: 'center center'
-                                    }}
-                                    config={config.fxConfig || {
-                                        fitMode: 'cover',
-                                        duotone: { enabled: true, colorA: '#000000', colorB: '#ffffff', strength: 1 },
-                                        interaction: { enabled: true, mode: 'shape', variant: 'push', radius: 0.15, softness: 0.5, activeSize: 15 }
-                                    }}
-                                />
-                            </div>
+
+                        {/* RIGHT COLUMN: Visual (Hero Image) - Desktop layout (Licorne 3 Special Style) */}
+                        <div className="hidden lg:block absolute bottom-0 right-0 w-[55vw] h-[90vh] z-10 pointer-events-none translate-x-[10%] translate-y-[5%]">
+                            <FxImage
+                                src={'/assets/hero-concepts/licorne 3.png'}
+                                alt="Visualisation abstraite de l'intelligence artificielle"
+                                className="w-full h-full"
+                                style={{ width: '100%', height: '100%' }}
+                                imgStyle={{
+                                    width: '100%',
+                                    height: '100%',
+                                    objectFit: 'contain',
+                                    objectPosition: 'bottom right'
+                                }}
+                                config={config.fxConfig || {
+                                    fitMode: 'contain',
+                                    duotone: { enabled: true, colorA: '#000000', colorB: '#ffffff', strength: 1 },
+                                    interaction: { enabled: true, mode: 'shape', variant: 'push', radius: 0.15, softness: 0.5, activeSize: 15 }
+                                }}
+                            />
                         </div>
                     </div>
                 </div>
@@ -106,7 +105,7 @@ export function Hero() {
                 <div className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[65%] max-w-[280px] aspect-[3/4] z-10 lg:hidden rounded-2xl overflow-hidden ${animationPhase === 'intro' ? 'animate-fade-in' : 'animate-hero-exit pointer-events-none'
                     }`}>
                     <FxImage
-                        src={config.heroImage || '/assets/hero-tests/hero%2014.png'}
+                        src={'/assets/hero-concepts/licorne 3.png'}
                         alt="Visualisation mobile"
                         className="w-full h-full"
                         style={{ width: '100%', height: '100%' }}

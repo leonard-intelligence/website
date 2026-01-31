@@ -14,6 +14,8 @@ const CGV = lazy(() => import('./pages/Legal/CGV'));
 const MentionsLegales = lazy(() => import('./pages/Legal/MentionsLegales'));
 const Footer = lazy(() => import('./components/layout/Footer').then(m => ({ default: m.Footer })));
 
+// Lazy load Legal pages
+
 // Component to conditionally render layout based on route
 function AppLayout({ showContent }: { showContent: boolean }) {
     const location = useLocation();

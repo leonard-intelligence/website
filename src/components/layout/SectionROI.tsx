@@ -1,4 +1,4 @@
-import { FileText, Mail, Workflow, TrendingDown, Clock, Zap } from 'lucide-react';
+import { DotIcon, leonardIcons } from "@/components/ui/LeonardIcons";
 import { useAnimatedCounter } from '@/hooks/useAnimatedCounter';
 
 export function SectionROI() {
@@ -34,7 +34,7 @@ export function SectionROI() {
                     className="p-8 border-r border-b border-white/10 bg-[#E67E22]/5 flex flex-col justify-between min-h-[200px] reveal-up stagger-1 hover-glow"
                 >
                     <div className="w-10 h-10 border border-[#E67E22]/30 flex items-center justify-center mb-4 icon-bounce">
-                        <TrendingDown className="w-5 h-5 text-[#E67E22]" />
+                        <DotIcon icon={leonardIcons.productivite} size={24} fillColor="#E67E22" />
                     </div>
                     <div>
                         <div className="text-4xl font-mono font-semibold text-[#E67E22] mb-1 counter-animate">
@@ -50,7 +50,7 @@ export function SectionROI() {
                     className="p-8 border-r border-b border-white/10 flex flex-col justify-between min-h-[200px] reveal-up stagger-2 hover-glow"
                 >
                     <div className="w-10 h-10 border border-white/10 flex items-center justify-center mb-4 icon-bounce">
-                        <Zap className="w-5 h-5 text-[#E67E22]" />
+                        <DotIcon icon={leonardIcons.automatisation} size={24} fillColor="#E67E22" />
                     </div>
                     <div>
                         <div className="text-4xl font-mono font-semibold text-[#E67E22] mb-1 counter-animate">
@@ -66,7 +66,7 @@ export function SectionROI() {
                     className="p-8 border-r border-b border-white/10 flex flex-col justify-between min-h-[200px] reveal-up stagger-3 hover-glow"
                 >
                     <div className="w-10 h-10 border border-white/10 flex items-center justify-center mb-4 icon-bounce">
-                        <Clock className="w-5 h-5 text-[#E67E22]" />
+                        <DotIcon icon={leonardIcons.roi} size={24} fillColor="#E67E22" />
                     </div>
                     <div>
                         <div className="text-4xl font-mono font-semibold text-[#E67E22] mb-1 counter-animate">
@@ -86,7 +86,7 @@ export function SectionROI() {
                 {/* Card 5: Feature */}
                 <div className="p-8 border-r border-white/10 group hover:bg-white/5 transition-colors min-h-[180px] reveal-up stagger-1 hover-lift">
                     <div className="w-8 h-8 bg-black border border-white/10 flex items-center justify-center mb-4 text-[#E67E22] icon-bounce">
-                        <FileText className="w-4 h-4" />
+                        <DotIcon icon={leonardIcons.saisieAutomatisee} size={20} fillColor="#E67E22" />
                     </div>
                     <h3 className="text-white font-mono text-sm mb-2 uppercase tracking-[-0.02em]">Saisie Automatisée</h3>
                     <p className="text-gray-400 text-xs font-mono">Extraction documentaire sans intervention.</p>
@@ -95,7 +95,7 @@ export function SectionROI() {
                 {/* Card 6: Feature */}
                 <div className="p-8 border-r border-white/10 group hover:bg-white/5 transition-colors min-h-[180px] reveal-up stagger-2 hover-lift">
                     <div className="w-8 h-8 bg-black border border-white/10 flex items-center justify-center mb-4 text-[#E67E22] icon-bounce">
-                        <Mail className="w-4 h-4" />
+                        <DotIcon icon={leonardIcons.emailsTries} size={20} fillColor="#E67E22" />
                     </div>
                     <h3 className="text-white font-mono text-sm mb-2 uppercase tracking-[-0.02em]">Emails Triés</h3>
                     <p className="text-gray-400 text-xs font-mono">Priorisation intelligente automatique.</p>
@@ -104,14 +104,14 @@ export function SectionROI() {
                 {/* Card 7: Feature */}
                 <div className="p-8 border-r border-white/10 group hover:bg-white/5 transition-colors min-h-[180px] reveal-up stagger-3 hover-lift">
                     <div className="w-8 h-8 bg-black border border-white/10 flex items-center justify-center mb-4 text-[#E67E22] icon-bounce">
-                        <Workflow className="w-4 h-4" />
+                        <DotIcon icon={leonardIcons.workflows} size={20} fillColor="#E67E22" />
                     </div>
                     <h3 className="text-white font-mono text-sm mb-2 uppercase tracking-[-0.02em]">Workflows</h3>
                     <p className="text-gray-400 text-xs font-mono">Orchestration automatique.</p>
                 </div>
 
                 {/* Card 8: CTA hint */}
-                <div className="p-8 bg-[#E67E22]/10 group hover:bg-[#E67E22]/20 transition-colors flex items-center justify-center min-h-[180px] reveal-up stagger-4 animate-pulse-glow">
+                <div className="p-8 bg-[#E67E22]/10 bg-pattern-diagonal group hover:bg-[#E67E22]/20 transition-colors flex items-center justify-center min-h-[180px] reveal-up stagger-4 animate-pulse-glow">
                     <span className="font-mono text-xs text-[#E67E22] uppercase tracking-widest">/// MODULE ROI ///</span>
                 </div>
             </div>

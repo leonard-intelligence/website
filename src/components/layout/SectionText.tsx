@@ -8,7 +8,7 @@ export function SectionText() {
 
                 {/* LEFT COLUMN: List / Descriptions - Spans 4 cols */}
                 <div className="lg:col-span-4 flex flex-col border-r border-white/10 order-2 lg:order-1">
-                    <div className="p-6 md:p-12 border-b border-white/10 bg-zinc-900/20 relative overflow-hidden group">
+                    <div className="p-6 md:p-12 border-b border-white/10 bg-zinc-900/20 bg-pattern-diagonal relative overflow-hidden group">
                         <div className="absolute top-0 right-0 p-4 opacity-20 group-hover:opacity-40 transition-opacity pointer-events-none">
                             <div className="text-[10px] font-mono text-white tracking-widest leading-none">
                                 /// MODULE 02 ///

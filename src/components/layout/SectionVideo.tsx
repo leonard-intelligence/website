@@ -1,4 +1,4 @@
-import { Clapperboard, MonitorPlay } from 'lucide-react';
+import { DotIcon, leonardIcons } from "@/components/ui/LeonardIcons";
 import { TechIllustration } from "@/components/ui/TechIllustration";
 
 export function SectionVideo() {
@@ -65,7 +65,7 @@ export function SectionVideo() {
                 <div className="lg:col-span-4 flex flex-col">
 
                     {/* Top Description Block */}
-                    <div className="p-6 md:p-12 border-b border-white/10 bg-zinc-900/20 relative overflow-hidden group">
+                    <div className="p-6 md:p-12 border-b border-white/10 bg-zinc-900/20 bg-pattern-diagonal relative overflow-hidden group">
                         <div className="absolute top-0 right-0 p-4 opacity-20 group-hover:opacity-40 transition-opacity pointer-events-none">
                             <div className="text-[10px] font-mono text-white tracking-widest leading-none">
                                 /// MODULE 04 ///
@@ -80,7 +80,7 @@ export function SectionVideo() {
                     <div className="flex-1 flex flex-col">
                         <div id="expertise-video-item-1" className="flex-1 border-b border-white/10 p-8 group hover:bg-white/5 transition-colors relative reveal-right stagger-1 hover-lift">
                             <div className="w-8 h-8 bg-black border border-white/10 flex items-center justify-center mb-4 text-white bg-pattern-diagonal icon-bounce">
-                                <MonitorPlay className="w-4 h-4" />
+                                <DotIcon icon={leonardIcons.avatarsIA} size={20} fillColor="white" />
                             </div>
                             <h3 className="text-white font-mono text-lg mb-2 uppercase tracking-[-0.02em]">Avatars IA</h3>
                             <p className="text-muted-foreground text-sm font-mono">Présentateurs virtuels, formation à grande échelle, personnalisation vidéo par destinataire.</p>
@@ -88,7 +88,7 @@ export function SectionVideo() {
 
                         <div id="expertise-video-item-2" className="flex-1 p-8 group hover:bg-white/5 transition-colors relative reveal-right stagger-2 hover-lift">
                             <div className="w-8 h-8 bg-black border border-white/10 flex items-center justify-center mb-4 text-white bg-pattern-diagonal icon-bounce">
-                                <Clapperboard className="w-4 h-4" />
+                                <DotIcon icon={leonardIcons.productionAutomatisee} size={20} fillColor="white" />
                             </div>
                             <h3 className="text-white font-mono text-lg mb-2 uppercase tracking-[-0.02em]">Production Automatisée</h3>
                             <p className="text-muted-foreground text-sm font-mono">Génération de clips marketing, adaptation de formats, montage assisté par IA.</p>

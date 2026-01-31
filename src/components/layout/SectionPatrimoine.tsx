@@ -1,4 +1,5 @@
-import { BookOpen, MessageCircle, FileText, Sparkles } from 'lucide-react';
+import { FileText, Sparkles } from 'lucide-react';
+import { DotIcon, leonardIcons } from "@/components/ui/LeonardIcons";
 
 export function SectionPatrimoine() {
     return (
@@ -80,7 +81,7 @@ export function SectionPatrimoine() {
                 <div className="lg:col-span-4 flex flex-col">
 
                     {/* Top Description Block */}
-                    <div className="p-12 border-b border-white/10 bg-zinc-900/20 relative overflow-hidden group">
+                    <div className="p-12 border-b border-white/10 bg-zinc-900/20 bg-pattern-diagonal relative overflow-hidden group">
                         <div className="absolute top-0 right-0 p-4 opacity-20 group-hover:opacity-40 transition-opacity pointer-events-none">
                             <div className="text-[10px] font-mono text-white tracking-widest leading-none">
                                 /// MODULE DOC ///
@@ -95,7 +96,7 @@ export function SectionPatrimoine() {
                     <div className="flex-1 flex flex-col">
                         <div className="flex-1 border-b border-white/10 p-8 group hover:bg-white/5 transition-colors relative">
                             <div className="w-8 h-8 bg-black border border-white/10 flex items-center justify-center mb-4 text-[#E67E22]">
-                                <BookOpen className="w-4 h-4" />
+                                <DotIcon icon={leonardIcons.saisieAutomatisee} size={20} fillColor="#E67E22" />
                             </div>
                             <h3 className="text-white font-mono text-lg mb-2 uppercase tracking-[-0.02em]">Procédures Indexées</h3>
                             <p className="text-gray-400 text-sm font-mono">Tous vos documents internes accessibles instantanément.</p>
@@ -103,7 +104,7 @@ export function SectionPatrimoine() {
 
                         <div className="flex-1 border-b border-white/10 p-8 group hover:bg-white/5 transition-colors relative">
                             <div className="w-8 h-8 bg-black border border-white/10 flex items-center justify-center mb-4 text-[#E67E22]">
-                                <MessageCircle className="w-4 h-4" />
+                                <DotIcon icon={leonardIcons.questionsNaturelles} size={20} fillColor="#E67E22" />
                             </div>
                             <h3 className="text-white font-mono text-lg mb-2 uppercase tracking-[-0.02em]">Questions Naturelles</h3>
                             <p className="text-gray-400 text-sm font-mono">Posez vos questions comme à un collègue expert.</p>
@@ -111,7 +112,7 @@ export function SectionPatrimoine() {
 
                         <div className="flex-1 p-8 group hover:bg-white/5 transition-colors relative">
                             <div className="w-8 h-8 bg-black border border-white/10 flex items-center justify-center mb-4 text-[#E67E22]">
-                                <FileText className="w-4 h-4" />
+                                <DotIcon icon={leonardIcons.sourcesCitees} size={20} fillColor="#E67E22" />
                             </div>
                             <h3 className="text-white font-mono text-lg mb-2 uppercase tracking-[-0.02em]">Sources Citées</h3>
                             <p className="text-gray-400 text-sm font-mono">Chaque réponse avec références vérifiables.</p>
