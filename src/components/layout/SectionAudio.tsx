@@ -7,7 +7,7 @@ export function SectionAudio() {
             <div className="grid grid-cols-1 lg:grid-cols-12 min-h-[400px] lg:min-h-[600px]">
 
                 {/* LEFT COLUMN: List / Descriptions - Spans 4 cols */}
-                <div className="lg:col-span-4 flex flex-col border-r border-white/10 order-2 lg:order-1">
+                <div className="lg:col-span-4 flex flex-col order-2 lg:order-2">
                     <div className="p-6 md:p-12 border-b border-white/10 bg-zinc-900/20 bg-pattern-diagonal relative overflow-hidden group">
                         <div className="absolute top-0 right-0 p-4 opacity-20 group-hover:opacity-40 transition-opacity pointer-events-none">
                             <div className="text-[10px] font-mono text-white tracking-widest leading-none">
@@ -20,7 +20,7 @@ export function SectionAudio() {
                     </div>
 
                     <div className="flex-1 flex flex-col">
-                        <div id="expertise-audio-item-1" className="flex-1 border-b border-white/10 p-8 group hover:bg-white/5 transition-colors relative reveal-left stagger-1 hover-lift">
+                        <div id="expertise-audio-item-1" className="flex-1 border-b border-white/10 p-8 group hover:bg-white/5 transition-colors relative reveal-right stagger-1 hover-lift">
                             <div className="w-8 h-8 bg-black border border-white/10 flex items-center justify-center mb-4 text-white bg-pattern-diagonal icon-bounce">
                                 <DotIcon icon={leonardIcons.speechToText} size={20} fillColor="white" />
                             </div>
@@ -28,7 +28,7 @@ export function SectionAudio() {
                             <p className="text-gray-400 text-sm font-mono">Transcription de réunions, analyse de sentiment, extraction de données.</p>
                         </div>
 
-                        <div id="expertise-audio-item-2" className="flex-1 p-8 group hover:bg-white/5 transition-colors relative reveal-left stagger-2 hover-lift">
+                        <div id="expertise-audio-item-2" className="flex-1 p-8 group hover:bg-white/5 transition-colors relative reveal-right stagger-2 hover-lift">
                             <div className="w-8 h-8 bg-black border border-white/10 flex items-center justify-center mb-4 text-white bg-pattern-diagonal">
                                 <DotIcon icon={leonardIcons.textToSpeech} size={20} fillColor="white" />
                             </div>
@@ -39,12 +39,12 @@ export function SectionAudio() {
                 </div>
 
                 {/* RIGHT COLUMN: Main Visual - Spans 8 cols */}
-                <div className="lg:col-span-8 relative p-6 md:p-12 flex flex-col justify-between overflow-hidden order-1 lg:order-2">
+                <div className="lg:col-span-8 border-r border-white/10 relative p-6 md:p-12 flex flex-col justify-between overflow-hidden order-1 lg:order-1">
                     {/* Header Area */}
-                    <div className="relative z-10 mb-12 text-right reveal-right">
+                    <div className="relative z-10 mb-12 reveal-left">
                         <div className="text-[#E67E22] font-mono mb-2 text-lg">03 Audio & Signal.</div>
-                        <h2 id="expertise-audio-heading" className="text-4xl md:text-5xl font-mono text-white leading-tight ml-auto max-w-4xl uppercase tracking-[-0.02em]">
-                            <span className="text-white/50">Pour les centres d'appels</span><br />
+                        <h2 id="expertise-audio-heading" className="text-4xl md:text-5xl font-mono text-white leading-tight max-w-4xl uppercase tracking-[-0.02em]">
+                            <span className="text-zinc-500">Pour les centres d'appels</span><br />
                             et l'industrie.
                         </h2>
                     </div>
@@ -61,7 +61,7 @@ export function SectionAudio() {
                     </div>
 
                     {/* Bottom Right Card */}
-                    <div className="mt-auto relative z-10 ml-auto">
+                    <div className="mt-auto relative z-10">
                         <div id="expertise-audio-card" className="max-w-lg border border-white/20 bg-black/60 backdrop-blur-md rounded transition-colors p-6 group reveal-scale stagger-2 hover-glow">
                             <div className="flex justify-between items-center mb-4 border-b border-white/10 pb-3">
                                 <div className="flex items-center gap-2">

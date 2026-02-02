@@ -52,7 +52,7 @@ export function SectionText() {
                     <div className="relative z-10 mb-12 text-right reveal-right">
                         <div className="text-[#E67E22] font-mono mb-2 text-lg">02 Language & Process.</div>
                         <h2 id="expertise-text-heading" className="text-4xl md:text-5xl font-mono text-white leading-tight ml-auto max-w-4xl uppercase tracking-[-0.02em]">
-                            <span className="text-white/50">Pour le service client,</span><br />
+                            <span className="text-zinc-500">Pour le service client,</span><br />
                             les RH et l'administratif.
                         </h2>
                     </div>

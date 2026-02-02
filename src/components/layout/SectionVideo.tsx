@@ -7,12 +7,12 @@ export function SectionVideo() {
             <div className="grid grid-cols-1 lg:grid-cols-12 min-h-[400px] lg:min-h-[600px]">
 
                 {/* LEFT COLUMN: Main Visual - Spans 8 cols */}
-                <div className="lg:col-span-8 border-r border-white/10 relative p-6 md:p-12 flex flex-col justify-between overflow-hidden">
+                <div className="lg:col-span-8 relative p-6 md:p-12 flex flex-col justify-between overflow-hidden order-1 lg:order-2">
 
                     {/* Header Area */}
-                    <div className="relative z-10 mb-12 reveal-left">
+                    <div className="relative z-10 mb-12 text-right reveal-right">
                         <div className="text-[#E67E22] font-mono mb-2 text-lg">04 Video Intelligence.</div>
-                        <h2 id="expertise-video-heading" className="text-4xl md:text-5xl font-mono text-white max-w-4xl leading-tight uppercase tracking-[-0.02em]">
+                        <h2 id="expertise-video-heading" className="text-4xl md:text-5xl font-mono text-white max-w-4xl leading-tight ml-auto uppercase tracking-[-0.02em]">
                             <span className="text-muted-foreground">Contenus dynamiques,</span><br />
                             Avatars & Motion.
                         </h2>
@@ -30,7 +30,7 @@ export function SectionVideo() {
                     </div>
 
                     {/* Bottom Left Card */}
-                    <div className="mt-auto relative z-10">
+                    <div className="mt-auto relative z-10 ml-auto">
                         <div id="expertise-video-card" className="max-w-lg border border-white/20 bg-black/60 backdrop-blur-md rounded transition-colors p-6 group reveal-scale stagger-2 hover-glow">
                             <div className="flex justify-between items-center mb-4 border-b border-white/10 pb-3">
                                 <div className="flex items-center gap-2">
@@ -62,7 +62,7 @@ export function SectionVideo() {
                 </div>
 
                 {/* RIGHT COLUMN: List / Descriptions - Spans 4 cols */}
-                <div className="lg:col-span-4 flex flex-col">
+                <div className="lg:col-span-4 flex flex-col border-r border-white/10 order-2 lg:order-1">
 
                     {/* Top Description Block */}
                     <div className="p-6 md:p-12 border-b border-white/10 bg-zinc-900/20 bg-pattern-diagonal relative overflow-hidden group">
@@ -78,7 +78,7 @@ export function SectionVideo() {
 
                     {/* Research Items List */}
                     <div className="flex-1 flex flex-col">
-                        <div id="expertise-video-item-1" className="flex-1 border-b border-white/10 p-8 group hover:bg-white/5 transition-colors relative reveal-right stagger-1 hover-lift">
+                        <div id="expertise-video-item-1" className="flex-1 border-b border-white/10 p-8 group hover:bg-white/5 transition-colors relative reveal-left stagger-1 hover-lift">
                             <div className="w-8 h-8 bg-black border border-white/10 flex items-center justify-center mb-4 text-white bg-pattern-diagonal icon-bounce">
                                 <DotIcon icon={leonardIcons.avatarsIA} size={20} fillColor="white" />
                             </div>
@@ -86,7 +86,7 @@ export function SectionVideo() {
                             <p className="text-muted-foreground text-sm font-mono">Présentateurs virtuels, formation à grande échelle, personnalisation vidéo par destinataire.</p>
                         </div>
 
-                        <div id="expertise-video-item-2" className="flex-1 p-8 group hover:bg-white/5 transition-colors relative reveal-right stagger-2 hover-lift">
+                        <div id="expertise-video-item-2" className="flex-1 p-8 group hover:bg-white/5 transition-colors relative reveal-left stagger-2 hover-lift">
                             <div className="w-8 h-8 bg-black border border-white/10 flex items-center justify-center mb-4 text-white bg-pattern-diagonal icon-bounce">
                                 <DotIcon icon={leonardIcons.productionAutomatisee} size={20} fillColor="white" />
                             </div>

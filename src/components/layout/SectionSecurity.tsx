@@ -16,7 +16,7 @@ export function SectionSecurity() {
                         id="security-heading"
                         className="text-4xl md:text-5xl font-mono text-white max-w-xl leading-tight uppercase tracking-[-0.02em] mb-6"
                     >
-                        <span className="text-white/50">Vos données ne sortent</span><br />
+                        <span className="text-zinc-500">Vos données ne sortent</span><br />
                         pas de chez vous.
                     </h2>
                     <p className="font-mono text-sm text-gray-400 leading-relaxed max-w-md">

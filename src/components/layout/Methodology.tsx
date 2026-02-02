@@ -12,7 +12,7 @@ export function Methodology() {
                             Approche Technique
                         </span>
                         <h2 id="methodology-heading" className="text-4xl font-semibold font-mono text-white relative z-10">
-                            <span className="text-white/50">Architecture</span> Agnostique.
+                            <span className="text-zinc-500">Architecture</span> Agnostique.
                         </h2>
                     </div>
                     <p className="text-gray-400 max-w-lg text-right hidden md:block font-mono text-sm">

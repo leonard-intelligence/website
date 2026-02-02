@@ -47,7 +47,7 @@ export function Hero() {
                             {/* Status Badge */}
                             <div className="inline-flex items-center gap-2 bg-black/80 px-4 py-2 rounded-full text-[0.8rem] font-mono border border-white/10 mb-8 lg:mb-10 text-[#E67E22]">
                                 <span className="w-1.5 h-1.5 bg-[#E67E22] rounded-full animate-pulse"></span>
-                                <span>Expert Mistral AI · Infrastructure SecNumCloud</span>
+                                <span>Expert Mistral AI</span>
                             </div>
 
                             <h1 id="hero-headline" className="font-mono text-4xl lg:text-[4rem] font-medium leading-[1.1] tracking-[-0.04em] mb-6 lg:mb-8 max-w-[950px] uppercase text-white drop-shadow-xl">

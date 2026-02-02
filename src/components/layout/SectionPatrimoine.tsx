@@ -21,7 +21,7 @@ export function SectionPatrimoine() {
                             id="patrimoine-heading"
                             className="text-4xl md:text-5xl font-mono text-white max-w-xl leading-tight uppercase tracking-[-0.02em]"
                         >
-                            <span className="text-white/50">Ne perdez plus</span><br />
+                            <span className="text-zinc-500">Ne perdez plus</span><br />
                             le savoir-faire de vos experts.
                         </h2>
                     </div>

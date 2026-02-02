@@ -79,29 +79,29 @@ export function Contact() {
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                                 <div className="space-y-2">
                                     <Label htmlFor="firstName" className="text-gray-300 font-mono uppercase text-xs">Prénom</Label>
-                                    <Input id="firstName" placeholder="JEAN" required className="bg-white/5 border-white/10 text-white placeholder:text-gray-600 focus:border-[#E67E22] rounded-none h-12 font-mono input-animate" />
+                                    <Input id="firstName" placeholder="Thomas" required className="bg-white/5 border-white/10 text-white placeholder:text-gray-600 focus:border-[#E67E22] rounded-none h-12 font-mono input-animate" />
                                 </div>
                                 <div className="space-y-2">
                                     <Label htmlFor="name" className="text-gray-300 font-mono uppercase text-xs">Nom</Label>
-                                    <Input id="name" placeholder="DUPONT" required className="bg-white/5 border-white/10 text-white placeholder:text-gray-600 focus:border-[#E67E22] rounded-none h-12 font-mono input-animate" />
+                                    <Input id="name" placeholder="Anderson" required className="bg-white/5 border-white/10 text-white placeholder:text-gray-600 focus:border-[#E67E22] rounded-none h-12 font-mono input-animate" />
                                 </div>
                             </div>
 
                             <div className="space-y-2">
                                 <Label htmlFor="email" className="text-gray-300 font-mono uppercase text-xs">Email professionnel</Label>
-                                <Input id="email" type="email" placeholder="JEAN.DUPONT@ENTREPRISE.COM" required className="bg-white/5 border-white/10 text-white placeholder:text-gray-600 focus:border-[#E67E22] rounded-none h-12 font-mono input-animate" />
+                                <Input id="email" type="email" placeholder="t.anderson@metacortex.com" required className="bg-white/5 border-white/10 text-white placeholder:text-gray-600 focus:border-[#E67E22] rounded-none h-12 font-mono input-animate" />
                             </div>
 
                             <div className="space-y-2">
                                 <Label htmlFor="company" className="text-gray-300 font-mono uppercase text-xs">Entreprise</Label>
-                                <Input id="company" placeholder="VOTRE SOCIÉTÉ" className="bg-white/5 border-white/10 text-white placeholder:text-gray-600 focus:border-[#E67E22] rounded-none h-12 font-mono input-animate" />
+                                <Input id="company" placeholder="MetaCortex" className="bg-white/5 border-white/10 text-white placeholder:text-gray-600 focus:border-[#E67E22] rounded-none h-12 font-mono input-animate" />
                             </div>
 
                             <div className="space-y-2">
                                 <Label htmlFor="message" className="text-gray-300 font-mono uppercase text-xs">Message</Label>
                                 <Textarea
                                     id="message"
-                                    placeholder="DÉCRIVEZ VOTRE PROJET..."
+                                    placeholder="Je cherche à automatiser un flux complexe : extraction de données sur documents scannés (LLM), analyse et qualification des photos jointes (Vision), et injection propre en base de données SQL. Le volume devient ingérable manuellement..."
                                     className="min-h-[120px] bg-white/5 border-white/10 text-white placeholder:text-gray-600 focus:border-[#E67E22] rounded-none font-mono input-animate"
                                     required
                                 />

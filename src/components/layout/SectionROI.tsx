@@ -21,7 +21,7 @@ export function SectionROI() {
                     className="text-4xl md:text-5xl font-mono text-white max-w-2xl leading-tight uppercase tracking-[-0.02em]"
                 >
                     Réduisez vos coûts<br />
-                    <span className="text-white/50">opérationnels immédiatement.</span>
+                    <span className="text-zinc-500">opérationnels immédiatement.</span>
                 </h2>
             </div>
 
@@ -40,7 +40,7 @@ export function SectionROI() {
                         <div className="text-4xl font-mono font-semibold text-[#E67E22] mb-1 counter-animate">
                             {counter1.displayValue}
                         </div>
-                        <div className="text-xs font-mono text-white/50 uppercase tracking-wider">Charge admin</div>
+                        <div className="text-xs font-mono text-zinc-500 uppercase tracking-wider">Charge admin</div>
                     </div>
                 </div>
 
@@ -56,7 +56,7 @@ export function SectionROI() {
                         <div className="text-4xl font-mono font-semibold text-[#E67E22] mb-1 counter-animate">
                             {counter2.displayValue}
                         </div>
-                        <div className="text-xs font-mono text-white/50 uppercase tracking-wider">Productivité</div>
+                        <div className="text-xs font-mono text-zinc-500 uppercase tracking-wider">Productivité</div>
                     </div>
                 </div>
 
@@ -72,7 +72,7 @@ export function SectionROI() {
                         <div className="text-4xl font-mono font-semibold text-[#E67E22] mb-1 counter-animate">
                             {counter3.displayValue}
                         </div>
-                        <div className="text-xs font-mono text-white/50 uppercase tracking-wider">ROI garanti</div>
+                        <div className="text-xs font-mono text-zinc-500 uppercase tracking-wider">ROI garanti</div>
                     </div>
                 </div>
 

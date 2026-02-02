@@ -14,7 +14,7 @@ export function SectionStrategy() {
                     id="strategy-heading"
                     className="text-4xl md:text-5xl font-mono text-white leading-tight uppercase tracking-[-0.02em] mb-4"
                 >
-                    <span className="text-white/50">Vos concurrents s'équipent,</span><br />
+                    <span className="text-zinc-500">Vos concurrents s'équipent,</span><br />
                     prenez l'avantage.
                 </h2>
                 <p className="font-mono text-sm text-gray-400 max-w-lg mx-auto mb-8">
@@ -58,7 +58,7 @@ export function SectionStrategy() {
                         <DotIcon icon={leonardIcons.users} size={20} fillColor="#E67E22" />
                     </div>
                     <div className="font-mono text-2xl font-semibold text-white mb-1">58%</div>
-                    <div className="text-xs font-mono text-white/50">Dirigeants convaincus</div>
+                    <div className="text-xs font-mono text-zinc-500">Dirigeants convaincus</div>
                 </div>
 
                 <div className="p-6 hover:bg-white/5 transition-colors">
@@ -66,7 +66,7 @@ export function SectionStrategy() {
                         <DotIcon icon={leonardIcons.performanceMonitor} size={20} fillColor="#E67E22" />
                     </div>
                     <div className="font-mono text-2xl font-semibold text-white mb-1">2025-27</div>
-                    <div className="text-xs font-mono text-white/50">Fenêtre critique</div>
+                    <div className="text-xs font-mono text-zinc-500">Fenêtre critique</div>
                 </div>
 
                 {/* Progress bar card - spans 2 cols */}
