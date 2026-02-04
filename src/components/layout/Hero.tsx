@@ -2,9 +2,11 @@
 
 import { useState, useEffect } from 'react';
 import { FxImage } from '../fx/FxImage';
+import { useFxConfig } from '../fx/FxContext';
 import { TrustBar } from './TrustBar';
 
 export function Hero() {
+    const config = useFxConfig();
     const [animationPhase, setAnimationPhase] = useState<'intro' | 'content'>(() => {
         if (typeof window !== 'undefined' && sessionStorage.getItem('splash_shown') === 'true') {
             return 'content';
@@ -98,11 +100,7 @@ export function Hero() {
                             objectFit: 'contain',
                             objectPosition: 'bottom right'
                         }}
-<<<<<<< HEAD
                         config={config || {
-=======
-                        config={{
->>>>>>> b78bd236a50576ff53caffcc5f67c3ad1e8ff661
                             fitMode: 'contain',
                             duotone: { enabled: true, colorA: '#000000', colorB: '#ffffff', strength: 1 },
                             interaction: { enabled: true, mode: 'shape', variant: 'push', radius: 0.15, softness: 0.5, activeSize: 15 }
@@ -124,11 +122,7 @@ export function Hero() {
                             objectFit: 'cover',
                             objectPosition: 'center center'
                         }}
-<<<<<<< HEAD
                         config={config || {
-=======
-                        config={{
->>>>>>> b78bd236a50576ff53caffcc5f67c3ad1e8ff661
                             fitMode: 'cover',
                             duotone: { enabled: true, colorA: '#000000', colorB: '#ffffff', strength: 1 },
                             interaction: { enabled: true, mode: 'shape', variant: 'push', radius: 0.15, softness: 0.5, activeSize: 15 }

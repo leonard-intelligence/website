@@ -1,9 +1,5 @@
-<<<<<<< HEAD
 import { useLayoutEffect } from 'react';
 import type { ReactNode } from 'react';
-=======
-import { useLayoutEffect, type ReactNode } from 'react';
->>>>>>> b78bd236a50576ff53caffcc5f67c3ad1e8ff661
 import { Link } from 'react-router-dom';
 // import logo from '../../assets/images/logos/leonard-logo-white.png';
 

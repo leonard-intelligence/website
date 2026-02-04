@@ -3,6 +3,7 @@ import type { CSSProperties } from "react";
 import { TechCard, TechCardImage } from "../ui/TechCard";
 import { USE_CASES } from "../../data/catalogue";
 import { cn } from "@/lib/utils";
+import { leonardIcons, DotIcon } from "../ui/LeonardIcons";
 
 export function UseCaseGrid() {
     // Extract unique categories

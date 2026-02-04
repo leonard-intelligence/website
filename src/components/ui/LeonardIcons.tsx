@@ -585,6 +585,8 @@ export const leonardIcons: Record<string, LeonardIconDefinition> = {
             [0, 0, 0, 0, 0, 0, 0, 0],
         ]
     },
+
+
     questionsNaturelles: {
         name: "Questions Naturelles",
         category: "Mémoire Documentaire",

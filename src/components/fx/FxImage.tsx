@@ -131,11 +131,7 @@ export function FxImage({ src, depthSrc, alt = '', className = '', config, style
     const [imageLoaded, setImageLoaded] = useState(false);
     const [depthLoaded, setDepthLoaded] = useState(false); // New
     const [webglSupported, setWebglSupported] = useState(true);
-<<<<<<< HEAD
     // const [webglReady, setWebglReady] = useState(false); // Prevents white flash - Unused
-=======
-    const [, setWebglReady] = useState(false); // Prevents white flash
->>>>>>> b78bd236a50576ff53caffcc5f67c3ad1e8ff661
 
     const context = useContext(FxContext);
     // We need the mouseRef from context
