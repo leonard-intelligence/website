@@ -26,7 +26,7 @@ export function useAnimatedCounter(
     const [count, setCount] = useState(0);
     const [hasAnimated, setHasAnimated] = useState(false);
     const elementRef = useRef<HTMLDivElement>(null);
-    const frameRef = useRef<number>();
+    const frameRef = useRef<number | undefined>(undefined);
 
     useEffect(() => {
         if (!startOnView) {

@@ -43,13 +43,6 @@ export function MobileNav() {
                 >
                     <nav className="flex flex-col items-center gap-8">
                         <a
-                            href="#section-solutions"
-                            onClick={closeMenu}
-                            className="text-2xl font-mono text-white hover:text-[#E67E22] transition-colors tracking-tight"
-                        >
-                            SOLUTIONS
-                        </a>
-                        <a
                             href="#section-expertises"
                             onClick={closeMenu}
                             className="text-2xl font-mono text-white hover:text-[#E67E22] transition-colors tracking-tight"
@@ -62,6 +55,13 @@ export function MobileNav() {
                             className="text-2xl font-mono text-white hover:text-[#E67E22] transition-colors tracking-tight"
                         >
                             MÉTHODOLOGIE
+                        </a>
+                        <a
+                            href="#section-solutions"
+                            onClick={closeMenu}
+                            className="text-2xl font-mono text-white hover:text-[#E67E22] transition-colors tracking-tight"
+                        >
+                            SOLUTIONS
                         </a>
                         <div className="w-12 h-[1px] bg-white/20 my-4"></div>
                         <a

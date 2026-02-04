@@ -82,7 +82,7 @@ export function Contact() {
                 {/* Contact Info */}
                 <div>
                     <h2 id="contact-heading" className="text-4xl md:text-5xl font-medium font-mono uppercase text-white mb-6">
-                        Parlons de <span className="text-[#E67E22]">votre projet.</span>
+                        Parlons de <br /><span className="text-[#E67E22]">votre projet.</span>
                     </h2>
                     <p className="text-gray-400 text-lg mb-12 leading-relaxed font-sans">
                         Transformation IA, valorisation de vos données, déploiement souverain ?

@@ -799,6 +799,98 @@ export const leonardIcons: Record<string, LeonardIconDefinition> = {
             [0, 0, 0, 0, 0, 0, 1, 1],
         ]
     },
+
+    // SOLUTIONS TABS
+    solutionAll: {
+        name: "Solution All",
+        category: "Solutions",
+        description: "Tout voir",
+        pattern: [
+            [1, 1, 0, 1, 1, 0, 0, 0],
+            [1, 1, 0, 1, 1, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0],
+            [1, 1, 0, 1, 1, 0, 0, 0],
+            [1, 1, 0, 1, 1, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0],
+        ]
+    },
+    solutionConversation: {
+        name: "Solution Conversation",
+        category: "Solutions",
+        description: "Conversation IA",
+        pattern: [
+            [0, 1, 1, 1, 1, 1, 0, 0],
+            [1, 0, 0, 0, 0, 0, 1, 0],
+            [1, 0, 1, 1, 1, 0, 1, 0],
+            [1, 0, 0, 0, 0, 0, 1, 0],
+            [1, 1, 1, 1, 1, 1, 0, 0],
+            [0, 1, 0, 0, 0, 0, 0, 0],
+            [0, 1, 1, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0],
+        ]
+    },
+    solutionVision: {
+        name: "Solution Vision",
+        category: "Solutions",
+        description: "Vision & Industrie",
+        pattern: [
+            [0, 0, 1, 1, 1, 1, 0, 0],
+            [0, 1, 0, 0, 0, 0, 1, 0],
+            [1, 0, 0, 1, 1, 0, 0, 1],
+            [1, 0, 1, 1, 1, 1, 0, 1],
+            [1, 0, 1, 1, 1, 1, 0, 1],
+            [1, 0, 0, 1, 1, 0, 0, 1],
+            [0, 1, 0, 0, 0, 0, 1, 0],
+            [0, 0, 1, 1, 1, 1, 0, 0],
+        ]
+    },
+    solutionDoc: {
+        name: "Solution Doc",
+        category: "Solutions",
+        description: "Intelligence Documentaire",
+        pattern: [
+            [0, 1, 1, 1, 1, 1, 0, 0],
+            [0, 1, 0, 0, 0, 1, 1, 0],
+            [0, 1, 0, 0, 0, 0, 1, 0],
+            [0, 1, 1, 1, 1, 0, 1, 0],
+            [0, 1, 0, 0, 1, 0, 1, 0],
+            [0, 1, 0, 0, 1, 0, 1, 0],
+            [0, 1, 1, 1, 1, 1, 1, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0],
+        ]
+    },
+    solutionInfra: {
+        name: "Solution Infra",
+        category: "Solutions",
+        description: "Infrastructure & Sécurité",
+        pattern: [
+            [0, 1, 1, 1, 1, 1, 1, 0],
+            [0, 1, 0, 1, 1, 0, 1, 0],
+            [0, 1, 1, 1, 1, 1, 1, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 1, 1, 1, 1, 1, 1, 0],
+            [0, 1, 0, 1, 1, 0, 1, 0],
+            [0, 1, 1, 1, 1, 1, 1, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0],
+        ]
+    },
+    solutionMarketing: {
+        name: "Solution Marketing",
+        category: "Solutions",
+        description: "Marketing & Ventes",
+        pattern: [
+            [0, 0, 0, 0, 0, 1, 1, 0],
+            [0, 0, 0, 0, 1, 1, 1, 0],
+            [0, 0, 0, 1, 0, 0, 0, 0],
+            [0, 0, 1, 1, 0, 0, 0, 0],
+            [1, 1, 1, 1, 1, 1, 1, 0],
+            [0, 0, 1, 1, 0, 0, 1, 0],
+            [0, 0, 1, 1, 0, 0, 1, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0],
+        ]
+    },
 };
 
 // ══════════════════════════════════════════════════════════════════════════════

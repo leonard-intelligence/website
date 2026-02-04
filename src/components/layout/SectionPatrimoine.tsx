@@ -64,7 +64,7 @@ function ChatInterface() {
     const [step, setStep] = useState(0);
 
     useEffect(() => {
-        let timeout: NodeJS.Timeout;
+        let timeout: ReturnType<typeof setTimeout>;
 
         switch (step) {
             case 0: // Reset / Start

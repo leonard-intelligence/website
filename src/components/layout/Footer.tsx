@@ -1,3 +1,5 @@
+import logo from '../../assets/images/logos/leonard-logo-white.png';
+
 export function Footer() {
     return (
         <footer id="section-footer" className="bg-black py-20 border-t border-white/10 text-sm reveal-up">
@@ -7,7 +9,7 @@ export function Footer() {
                 <div className="flex flex-col md:flex-row justify-between items-start md:items-center pb-12 mb-12 border-b border-white/10">
                     <div>
                         <img
-                            src="/leonard-intelligence-logo-white.png"
+                            src={logo}
                             alt="Leonard Intelligence"
                             className="h-8 mb-2"
                         />

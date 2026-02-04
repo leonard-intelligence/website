@@ -3,6 +3,8 @@ import { TechIllustration } from "@/components/ui/TechIllustration";
 import { contactSignal } from "@/lib/contactSignal";
 import { Button } from "@/components/ui/button";
 
+import audioBg from '@/assets/images/illustrations/illustration-conversation-tron-01.png';
+
 export function SectionAudio() {
     return (
         <section id="section-expertise-audio" className="max-w-[1400px] mx-auto border-t border-x border-b border-white/10 bg-black" aria-labelledby="expertise-audio-heading">
@@ -65,7 +67,7 @@ export function SectionAudio() {
                     {/* Central Image Area - Waveform Visualization */}
                     <div className="absolute inset-0 z-0 flex items-center justify-center opacity-40 mix-blend-screen">
                         <TechIllustration
-                            src="/assets/audio_background.jpg"
+                            src={audioBg}
                             alt="Audio Analytics Visualization"
                             className="absolute inset-0 w-full h-full"
                             aspectRatio=""

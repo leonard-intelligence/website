@@ -12,6 +12,7 @@ const Methodology = lazy(() => import('../components/layout/Methodology').then(m
 const SectionROI = lazy(() => import('../components/layout/SectionROI').then(m => ({ default: m.SectionROI })));
 const SectionSecurity = lazy(() => import('../components/layout/SectionSecurity').then(m => ({ default: m.SectionSecurity })));
 const SectionPatrimoine = lazy(() => import('../components/layout/SectionPatrimoine').then(m => ({ default: m.SectionPatrimoine })));
+const SectionCapabilitiesBento = lazy(() => import('../components/layout/SectionCapabilitiesBento').then(m => ({ default: m.SectionCapabilitiesBento })));
 const InterimCTA = lazy(() => import('../components/layout/InterimCTA').then(m => ({ default: m.InterimCTA })));
 const SectionStrategy = lazy(() => import('../components/layout/SectionStrategy').then(m => ({ default: m.SectionStrategy })));
 const CTASection = lazy(() => import('../components/layout/CTASection').then(m => ({ default: m.CTASection })));
@@ -65,6 +66,7 @@ export function Home() {
                     <SectionROI />
                     <SectionSecurity />
                     <SectionPatrimoine />
+                    <SectionCapabilitiesBento />
                     <SectionStrategy />
                 </section>
 

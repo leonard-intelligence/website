@@ -41,7 +41,7 @@ export interface FxConfig {
     enabled: boolean;
     order: string[];
     heroImage: string;
-    fitMode?: 'cover' | 'height'; // New: Control shader fitting behavior
+    fitMode?: 'cover' | 'height' | 'contain'; // New: Control shader fitting behavior
     beads: BeadsConfig;
     glassBeads: BeadsConfig; // New: Secondary beads layer
     duotone: DuotoneConfig;
@@ -52,7 +52,7 @@ export interface FxConfig {
 export const FX_DEFAULTS: FxConfig = {
     enabled: true,
     order: ['beads', 'duotone'],
-    heroImage: '/assets/hero-concepts/hero%2014.png',
+    heroImage: '/assets/backgrounds/hero-background.png',
     fitMode: 'height',
     beads: {
         enabled: true,

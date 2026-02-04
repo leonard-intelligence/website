@@ -1,9 +1,24 @@
+import { useState } from 'react';
 import { DotIcon, leonardIcons } from "@/components/ui/LeonardIcons";
+import { TechIllustration } from "@/components/ui/TechIllustration";
+import { CalendlyWidget } from "@/components/ui/CalendlyWidget";
+import ctaBg from '@/assets/images/illustrations/illustration-conversation-night-01.png';
 
 export function CTASection() {
+    const [showCalendly, setShowCalendly] = useState(false);
+
     return (
         <section id="section-cta" className="py-32 bg-black relative overflow-hidden border-b border-white/10">
-            {/* Background Grain/Noise could go here */}
+            {/* Background Image with Overlay */}
+            <div className="absolute inset-0 z-0 flex items-center justify-center pointer-events-none">
+                <TechIllustration
+                    src={ctaBg}
+                    alt="Future City Background"
+                    className="absolute inset-0 w-full h-full opacity-40"
+                    aspectRatio=""
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black via-black/80 to-black/40" />
+            </div>
 
             <div className="max-w-4xl mx-auto px-6 text-center relative z-10">
                 {/* Sovereignty-focused headline like Onepoint */}
@@ -14,15 +29,23 @@ export function CTASection() {
                     Audit gratuit de 30 minutes. Identification des opportunités d'automatisation pour votre entreprise.
                 </p>
 
-                <div className="flex flex-col md:flex-row items-center justify-center gap-6">
-                    <a href="#section-contact" id="cta-btn-primary" className="group relative px-8 h-14 flex items-center justify-center bg-[#E67E22] text-white border border-[#E67E22] font-mono font-medium uppercase text-lg hover:bg-white hover:text-[#E67E22] transition-colors duration-300 w-full md:w-auto">
-                        <span className="flex items-center gap-3">
-                            RÉSERVER UN CRÉNEAU
-                            <div className="group-hover:translate-x-1 transition-transform">
-                                <DotIcon icon={leonardIcons.arrowRight} size={20} fillColor="currentColor" />
-                            </div>
-                        </span>
-                    </a>
+                <div className="flex flex-col items-center justify-center gap-6">
+                    {!showCalendly ? (
+                        <button
+                            onClick={() => setShowCalendly(true)}
+                            id="cta-btn-primary"
+                            className="group relative px-8 h-14 flex items-center justify-center bg-[#E67E22] text-white border border-[#E67E22] font-mono font-medium uppercase text-lg hover:bg-white hover:text-[#E67E22] transition-colors duration-300 w-full md:w-auto"
+                        >
+                            <span className="flex items-center gap-3">
+                                RÉSERVER UN CRÉNEAU
+                                <div className="group-hover:translate-x-1 transition-transform">
+                                    <DotIcon icon={leonardIcons.arrowRight} size={20} fillColor="currentColor" />
+                                </div>
+                            </span>
+                        </button>
+                    ) : (
+                        <CalendlyWidget />
+                    )}
                 </div>
 
                 {/* Enhanced compliance badges like Sia Partners */}

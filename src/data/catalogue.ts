@@ -1,3 +1,49 @@
+
+
+// --- ASSET IMPORTS ---
+
+// 1. CONVERSATION IA (Theme: Tron / Futuristic Night - Digital Signal)
+import conv1 from '../assets/images/illustrations/illustration-conversation-tron-01.png';
+import conv2 from '../assets/images/illustrations/illustration-conversation-tron-02.png';
+import conv3 from '../assets/images/illustrations/illustration-conversation-tron-01.png'; // Reusing 01
+import conv4 from '../assets/images/illustrations/illustration-conversation-night-01.png';
+import conv5 from '../assets/images/illustrations/illustration-conversation-night-02.png';
+
+// 2. VISION & INDUSTRIE (Theme: Warhammer 40k - Heavy Industry)
+import vis1 from '../assets/images/illustrations/illustration-vision-warhammer-01.png';
+import vis2 from '../assets/images/illustrations/illustration-vision-warhammer-02.png';
+import vis3 from '../assets/images/illustrations/illustration-vision-warhammer-03.png';
+import vis4 from '../assets/images/illustrations/illustration-vision-warhammer-04.png';
+
+// 3. INTELLIGENCE DOCUMENTAIRE (Theme: Matrix - Data Rain)
+import doc1 from '../assets/images/illustrations/illustration-doc-matrix-01.png';
+import doc2 from '../assets/images/illustrations/illustration-doc-matrix-02.png';
+import doc3 from '../assets/images/illustrations/illustration-doc-matrix-03.png';
+import doc4 from '../assets/images/illustrations/illustration-doc-matrix-04.png';
+import doc5 from '../assets/images/illustrations/illustration-doc-matrix-01.png'; // Reusing 01
+
+// 4. INFRASTRUCTURE & SÉCURITÉ (Theme: Dark Side Building - Fortress)
+import infra1 from '../assets/images/illustrations/illustration-infra-dark-side-01.png';
+import infra2 from '../assets/images/illustrations/illustration-infra-dark-side-02.png'; // Using _2 for variation
+
+// 5. MARKETING & VENTES (Theme: Inception - Creative Structure)
+import mark1 from '../assets/images/illustrations/illustration-marketing-inception-01.png';
+import mark2 from '../assets/images/illustrations/illustration-marketing-inception-02.png';
+import mark3 from '../assets/images/illustrations/illustration-marketing-inception-03.png';
+
+// 6. EXPERTISE TECHNIQUE (Theme: Blade Runner - High Tech)
+import tech1 from '../assets/images/illustrations/illustration-tech-blade-runner-01.png';
+import tech2 from '../assets/images/illustrations/illustration-tech-blade-runner-02.png';
+import tech3 from '../assets/images/illustrations/illustration-tech-blade-runner-03.png';
+import tech4 from '../assets/images/illustrations/illustration-tech-blade-runner-04.png';
+import tech5 from '../assets/images/illustrations/illustration-tech-blade-runner-01.png'; // Reusing 01
+import tech6 from '../assets/images/illustrations/illustration-tech-blade-runner-02.png'; // Reusing 02
+import tech7 from '../assets/images/illustrations/illustration-tech-blade-runner-03.png'; // Reusing 03
+
+// --- INFRASTRUCTURE & SÉCURITÉ (Catalogue fix, Infra2 ref) ---
+// Note: The previous image infra2 was defined but I need to ensure the ID matches.
+// infra2 usage in data below matches variable name.
+
 export interface CatalogueItem {
     id: string;
     category: string;
@@ -20,7 +66,7 @@ export const USE_CASES: CatalogueItem[] = [
             { label: 'Analyse Sentiment', icon: 'heart' },
             { label: 'Temps Réel', icon: 'lightning' }
         ],
-        image: '/assets/audio_background.jpg'
+        image: conv1
     },
     {
         id: 'contact-centers',
@@ -32,7 +78,7 @@ export const USE_CASES: CatalogueItem[] = [
             { label: 'Routage Auto', icon: 'route' },
             { label: 'Analytique', icon: 'chart' }
         ],
-        image: '/assets/callcenter_background.png'
+        image: conv2
     },
     {
         id: 'voice-agents',
@@ -44,7 +90,7 @@ export const USE_CASES: CatalogueItem[] = [
             { label: 'Latence < 500ms', icon: 'clock' },
             { label: 'Voix Naturelle', icon: 'wave' }
         ],
-        image: '/assets/voice_agent.jpg'
+        image: conv3
     },
     {
         id: 'ai-notetakers',
@@ -56,7 +102,7 @@ export const USE_CASES: CatalogueItem[] = [
             { label: 'Multi-locuteurs', icon: 'mic' },
             { label: 'Résumés', icon: 'document' }
         ],
-        image: '/assets/meeting_background.jpg'
+        image: conv4
     },
     {
         id: 'medical-transcription',
@@ -68,7 +114,7 @@ export const USE_CASES: CatalogueItem[] = [
             { label: 'Diarisation', icon: 'users' },
             { label: 'Conformité', icon: 'shield' }
         ],
-        image: '/assets/medical_background.png'
+        image: conv5
     },
 
     // --- VISION & INDUSTRIE ---
@@ -82,7 +128,7 @@ export const USE_CASES: CatalogueItem[] = [
             { label: 'Zéro Défaut', icon: 'check-circle' },
             { label: 'Temps Réel', icon: 'lightning' }
         ],
-        image: '/assets/vision_background.png'
+        image: vis1
     },
     {
         id: 'cv-safety-epi',
@@ -94,7 +140,7 @@ export const USE_CASES: CatalogueItem[] = [
             { label: 'Alertes SMS', icon: 'bell' },
             { label: 'Monitoring', icon: 'eye' }
         ],
-        image: '/assets/vision_background.png'
+        image: vis2
     },
     {
         id: 'cv-inventory',
@@ -106,7 +152,7 @@ export const USE_CASES: CatalogueItem[] = [
             { label: 'Inventaire', icon: 'box' },
             { label: 'Gain Temps', icon: 'clock' }
         ],
-        image: '/assets/vision_background.png'
+        image: vis3
     },
     {
         id: 'industry-maintenance',
@@ -118,7 +164,7 @@ export const USE_CASES: CatalogueItem[] = [
             { label: 'Mode Hors-Ligne', icon: 'wifi-off' },
             { label: 'Mobile', icon: 'tablet' }
         ],
-        image: '/assets/vision_background.png'
+        image: vis4
     },
 
     // --- INTELLIGENCE DOCUMENTAIRE ---
@@ -132,7 +178,7 @@ export const USE_CASES: CatalogueItem[] = [
             { label: 'Indexation Locale', icon: 'server' },
             { label: 'Sources', icon: 'file-text' }
         ],
-        image: '/assets/textdata_background.png'
+        image: doc1
     },
     {
         id: 'legal-compliance',
@@ -144,7 +190,7 @@ export const USE_CASES: CatalogueItem[] = [
             { label: 'Comparateur', icon: 'scales' },
             { label: 'Citations', icon: 'quote' }
         ],
-        image: '/assets/textdata_background.png'
+        image: doc2
     },
     {
         id: 'finance-idp',
@@ -156,7 +202,7 @@ export const USE_CASES: CatalogueItem[] = [
             { label: 'Export ERP', icon: 'database' },
             { label: 'Anti-Fraude', icon: 'shield-alert' }
         ],
-        image: '/assets/textdata_background.png'
+        image: doc3
     },
     {
         id: 'doc-processing',
@@ -168,7 +214,7 @@ export const USE_CASES: CatalogueItem[] = [
             { label: 'Routage Auto', icon: 'mail' },
             { label: 'Gain Admin', icon: 'check' }
         ],
-        image: '/assets/textdata_background.png'
+        image: doc4
     },
     {
         id: 'rh-recrutement',
@@ -180,7 +226,7 @@ export const USE_CASES: CatalogueItem[] = [
             { label: 'Anonymisation', icon: 'user-x' },
             { label: 'Matching', icon: 'search' }
         ],
-        image: '/assets/textdata_background.png'
+        image: doc5
     },
 
     // --- INFRASTRUCTURE & SÉCURITÉ ---
@@ -194,7 +240,7 @@ export const USE_CASES: CatalogueItem[] = [
             { label: 'Optimisation', icon: 'cpu' },
             { label: 'Contrôle Total', icon: 'lock' }
         ],
-        image: '/assets/vision_background.png'
+        image: infra1
     },
     {
         id: 'agent-workflow',
@@ -206,7 +252,7 @@ export const USE_CASES: CatalogueItem[] = [
             { label: 'Nettoyage', icon: 'trash' },
             { label: 'Efficacité', icon: 'zap' }
         ],
-        image: '/assets/vision_background.png'
+        image: infra2
     },
 
     // --- MARKETING & VENTES ---
@@ -220,7 +266,7 @@ export const USE_CASES: CatalogueItem[] = [
             { label: 'Multicanal', icon: 'share-2' },
             { label: 'SEO Friendly', icon: 'search' }
         ],
-        image: '/assets/textdata_background.png'
+        image: mark1
     },
     {
         id: 'sales-outreach',
@@ -232,7 +278,7 @@ export const USE_CASES: CatalogueItem[] = [
             { label: 'Scraping', icon: 'download' },
             { label: 'Personnalisation', icon: 'user-check' }
         ],
-        image: '/assets/meeting_background.jpg'
+        image: mark2
     },
     {
         id: 'lead-scoring',
@@ -244,7 +290,92 @@ export const USE_CASES: CatalogueItem[] = [
             { label: 'Prédiction', icon: 'trending-up' },
             { label: 'ROI', icon: 'dollar-sign' }
         ],
-        image: '/assets/textdata_background.png'
+        image: mark3
+    },
+    // --- EXPERTISE TECHNIQUE (New) ---
+    {
+        id: 'tech-codegen',
+        category: 'Expertise Technique',
+        sector: 'Génération de Code',
+        mission: 'Créez et optimisez du code avec des modèles personnalisables, de l\'auto-complétion à la génération de fonctions.',
+        tags: ['DEV', 'CODEX', 'AUTO-COMPLETION'],
+        features: [
+            { label: 'Refactoring', icon: 'code' },
+            { label: 'Clean Code', icon: 'check-circle' }
+        ],
+        image: tech1
+    },
+    {
+        id: 'tech-rag',
+        category: 'Expertise Technique',
+        sector: 'RAG Avancé',
+        mission: 'Construisez des applications de génération enrichie par récupération avec un contrôle total sur l\'implémentation.',
+        tags: ['RAG', 'VECTOR', 'SEARCH'],
+        features: [
+            { label: 'Konwledge Graph', icon: 'share-2' },
+            { label: 'Hybrid Search', icon: 'search' }
+        ],
+        image: tech2
+    },
+    {
+        id: 'tech-agents',
+        category: 'Expertise Technique',
+        sector: 'Agents Autonomes',
+        mission: 'Créez des agents spécialisés qui automatisent des flux complexes et interagissent avec divers systèmes.',
+        tags: ['AGENTS', 'TOOL USE', 'AUTO'],
+        features: [
+            { label: 'Orchestration', icon: 'git-merge' },
+            { label: 'Multi-Agent', icon: 'users' }
+        ],
+        image: tech3
+    },
+    {
+        id: 'tech-reasoning',
+        category: 'Expertise Technique',
+        sector: 'Raisonnement & Maths',
+        mission: 'Construisez des applications sophistiquées combinant un raisonnement puissant (CoT) avec un accès à l\'information.',
+        tags: ['REASONING', 'MATH', 'LOGIC'],
+        features: [
+            { label: 'Chain of Thought', icon: 'brain-circuit' },
+            { label: 'Problem Solving', icon: 'puzzle' }
+        ],
+        image: tech4
+    },
+    {
+        id: 'tech-extraction',
+        category: 'Expertise Technique',
+        sector: 'Extraction Structurée',
+        mission: 'Transformez des données non structurées en informations exploitables avec des modèles de haute précision.',
+        tags: ['EXTRACTION', 'JSON', 'DATA'],
+        features: [
+            { label: 'Schema Validation', icon: 'table' },
+            { label: 'Haute Précision', icon: 'target' }
+        ],
+        image: tech5
+    },
+    {
+        id: 'tech-embedded',
+        category: 'Expertise Technique',
+        sector: 'IA Embarquée / Edge',
+        mission: 'Déployez des capacités IA puissantes même dans des environnements à ressources limitées (Mobile, IoT).',
+        tags: ['EDGE', 'IOT', 'MOBILE'],
+        features: [
+            { label: 'Quantization', icon: 'cpu' },
+            { label: 'Low Latency', icon: 'zap' }
+        ],
+        image: tech6
+    },
+    {
+        id: 'tech-security',
+        category: 'Expertise Technique',
+        sector: 'Sécurité & Guardrails',
+        mission: 'Protégez vos applications avec des filtres de contenu et des mécanismes de sécurité robustes.',
+        tags: ['SECURITY', 'SAFETY', 'COMPLIANCE'],
+        features: [
+            { label: 'Jailbreak Check', icon: 'shield' },
+            { label: 'PII Protection', icon: 'lock' }
+        ],
+        image: tech7
     }
 ];
 

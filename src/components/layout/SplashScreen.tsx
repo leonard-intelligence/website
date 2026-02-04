@@ -52,7 +52,7 @@ export function SplashScreen({ onExitStart, onComplete }: SplashScreenProps) {
                         objectFit: 'contain',
                         objectPosition: 'center center'
                     }}
-                    config={config.fxConfig || {
+                    config={config || {
                         fitMode: 'contain',
                         duotone: { enabled: true, colorA: '#000000', colorB: '#ffffff', strength: 1 },
                         interaction: { enabled: true, mode: 'shape', variant: 'push', radius: 0.15, softness: 0.5, activeSize: 15 }

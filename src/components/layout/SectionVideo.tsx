@@ -3,6 +3,8 @@ import { TechIllustration } from "@/components/ui/TechIllustration";
 import { contactSignal } from "@/lib/contactSignal";
 import { Button } from "@/components/ui/button";
 
+import videoBg from '@/assets/images/illustrations/illustration-video-element.png';
+
 export function SectionVideo() {
     return (
         <section id="section-expertise-video" className="max-w-[1400px] mx-auto border-t border-x border-b border-white/10 bg-black" aria-labelledby="expertise-video-heading">
@@ -23,7 +25,7 @@ export function SectionVideo() {
                     {/* Central Image Area */}
                     <div className="absolute inset-0 z-0 flex items-center justify-center">
                         <TechIllustration
-                            src="/assets/video_background.png"
+                            src={videoBg}
                             alt="Video Intelligence Background"
                             className="absolute inset-0 w-full h-full"
                             aspectRatio=""

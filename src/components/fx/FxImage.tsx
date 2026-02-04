@@ -131,7 +131,7 @@ export function FxImage({ src, depthSrc, alt = '', className = '', config, style
     const [imageLoaded, setImageLoaded] = useState(false);
     const [depthLoaded, setDepthLoaded] = useState(false); // New
     const [webglSupported, setWebglSupported] = useState(true);
-    const [webglReady, setWebglReady] = useState(false); // Prevents white flash
+    // const [webglReady, setWebglReady] = useState(false); // Prevents white flash - Unused
 
     const context = useContext(FxContext);
     // We need the mouseRef from context
@@ -418,7 +418,7 @@ export function FxImage({ src, depthSrc, alt = '', className = '', config, style
         // Mark WebGL as ready after first successful draw (prevents white flash)
         if (!webglReadyRef.current) {
             webglReadyRef.current = true;
-            setWebglReady(true);
+            // setWebglReady(true);
         }
 
         // Only continue loop if visible in viewport (performance optimization)
@@ -584,7 +584,7 @@ export function FxImage({ src, depthSrc, alt = '', className = '', config, style
         setImageLoaded(false);
         setDepthLoaded(false);
         setWebglSupported(true); // Retry WebGL for new image
-        setWebglReady(false); // Reset ready state for new image
+        // setWebglReady(false); // Reset ready state for new image
         webglReadyRef.current = false; // Reset ref too
     }, [src, depthSrc]);
 

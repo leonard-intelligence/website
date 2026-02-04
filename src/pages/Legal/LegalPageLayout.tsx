@@ -1,6 +1,7 @@
-import { useLayoutEffect, ReactNode } from 'react';
+import { useLayoutEffect } from 'react';
+import type { ReactNode } from 'react';
 import { Link } from 'react-router-dom';
-import logo from '../../assets/logo.png';
+// import logo from '../../assets/images/logos/leonard-logo-white.png';
 
 interface LegalPageLayoutProps {
     title: string;
@@ -24,7 +25,7 @@ export function LegalPageLayout({ title, lastUpdate, children }: LegalPageLayout
                         aria-label="Retour à l'accueil"
                     >
                         <img
-                            src={logo}
+                            src="/assets/logos/logo.png"
                             alt="Leonard Intelligence Logo"
                             className="h-8 w-auto object-contain"
                         />

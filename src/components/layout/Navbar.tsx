@@ -1,4 +1,4 @@
-import logo from '../../assets/logo.png';
+// import logo from '../../assets/images/common/logo.png'; // Removed
 import { MobileNav } from './MobileNav';
 
 export function Navbar() {
@@ -13,7 +13,7 @@ export function Navbar() {
                 <div className="px-6 font-mono font-medium text-lg -tracking-[0.05em] flex items-center h-full border-r border-white/10">
                     <a href="/" className="flex items-center gap-1" aria-label="Retour à l'accueil">
                         <img
-                            src={logo}
+                            src="/assets/logos/leonard-logo-white.png"
                             alt="Leonard Intelligence Logo"
                             className="h-8 mr-2.5 w-auto object-contain"
                         />
@@ -24,19 +24,11 @@ export function Navbar() {
             {/* Navigation Tabs (Desktop only) */}
             <div className="hidden lg:flex h-full">
                 <a
-                    href="#section-solutions"
+                    href="#section-expertises"
                     className="group flex items-center gap-3 px-6 h-full text-muted-foreground no-underline font-mono text-[0.85rem] border-l border-r border-white/10 transition-all bg-white/[0.02] hover:bg-white/[0.08] hover:text-white "
                 >
-                    <span className="font-normal tracking-tight">SOLUTIONS</span>
-                    <span className="opacity-40 text-xs">01</span>
-                </a>
-
-                <a
-                    href="#section-expertises"
-                    className="group flex items-center gap-3 px-6 h-full text-muted-foreground no-underline font-mono text-[0.85rem] border-r border-white/10 transition-all bg-white/[0.02] hover:bg-white/[0.08] hover:text-white "
-                >
                     <span className="font-normal tracking-tight">EXPERTISES</span>
-                    <span className="opacity-40 text-xs">02</span>
+                    <span className="opacity-40 text-xs">01</span>
                 </a>
 
                 <a
@@ -44,6 +36,14 @@ export function Navbar() {
                     className="group flex items-center gap-3 px-6 h-full text-muted-foreground no-underline font-mono text-[0.85rem] border-r border-white/10 transition-all bg-white/[0.02] hover:bg-white/[0.08] hover:text-white "
                 >
                     <span className="font-normal tracking-tight">MÉTHODOLOGIE</span>
+                    <span className="opacity-40 text-xs">02</span>
+                </a>
+
+                <a
+                    href="#section-solutions"
+                    className="group flex items-center gap-3 px-6 h-full text-muted-foreground no-underline font-mono text-[0.85rem] border-r border-white/10 transition-all bg-white/[0.02] hover:bg-white/[0.08] hover:text-white "
+                >
+                    <span className="font-normal tracking-tight">SOLUTIONS</span>
                     <span className="opacity-40 text-xs">03</span>
                 </a>
             </div>

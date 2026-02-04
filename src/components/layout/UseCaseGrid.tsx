@@ -6,44 +6,61 @@ import { DotIcon, leonardIcons } from "@/components/ui/LeonardIcons";
 import { cn } from "@/lib/utils";
 
 export function UseCaseGrid() {
+    // Extract unique categories
+    const categories = Array.from(new Set(USE_CASES.map(item => item.category || 'Other')));
+
     const sectionRef = useRef<HTMLElement>(null);
-    const [activeTab, setActiveTab] = useState("All");
+    const [activeTab, setActiveTab] = useState(categories[0]);
 
-    // Extract unique categories + 'All'
-    const categories = ["All", ...Array.from(new Set(USE_CASES.map(item => item.category || 'Other')))];
+    const getIconForCategory = (cat: string) => {
+        switch (cat) {
 
-    const filteredCases = activeTab === "All"
-        ? USE_CASES
-        : USE_CASES.filter(item => item.category === activeTab);
+            case "Conversation IA": return leonardIcons.solutionConversation;
+            case "Vision & Industrie": return leonardIcons.solutionVision;
+            case "Intelligence Documentaire": return leonardIcons.solutionDoc;
+            case "Infrastructure & Sécurité": return leonardIcons.solutionInfra;
+            case "Marketing & Ventes": return leonardIcons.solutionMarketing;
+            default: return leonardIcons.sparkles;
+        }
+    };
+
+    const filteredCases = USE_CASES.filter(item => item.category === activeTab);
 
     return (
         <section ref={sectionRef} id="section-solutions" className="py-24 bg-transparent reveal delay-200 border-b border-white/10">
             <div className="max-w-7xl mx-auto px-6">
 
                 {/* Header */}
-                <div className="flex flex-col md:flex-row justify-between items-end mb-8 md:mb-16">
-                    <div>
+                <div className="flex flex-col mb-8 md:mb-16">
+                    <div className="mb-8">
                         <h2 className="text-4xl font-medium font-mono text-white mb-4">
                             Solutions AI.
                         </h2>
-                        <p className="text-gray-400 font-mono text-sm">
-                            Performance Monitor<span className="animate-pulse">_</span>
-                        </p>
+                        <div className="flex items-center gap-3 text-gray-400 font-mono text-sm">
+                            <span>Performance Monitor<span className="animate-pulse">_</span></span>
+                        </div>
                     </div>
 
                     {/* Tabs */}
-                    <div className="flex gap-4 mt-4 md:mt-0 overflow-x-auto pb-2 md:pb-0">
+                    <div className="flex flex-wrap gap-4 justify-start">
                         {categories.map((cat) => (
                             <button
                                 key={cat}
                                 onClick={() => setActiveTab(cat)}
                                 className={cn(
-                                    "px-4 py-2 text-xs font-mono uppercase tracking-wider transition-colors border border-transparent",
+                                    "px-4 py-2 text-xs font-mono uppercase tracking-wider transition-colors border border-transparent flex items-center gap-2 whitespace-nowrap",
                                     activeTab === cat
                                         ? "bg-white/10 text-white border-white/20"
                                         : "text-zinc-500 hover:text-white"
                                 )}
                             >
+                                <DotIcon
+                                    icon={getIconForCategory(cat)}
+                                    size={16}
+                                    gap={0.12}
+                                    className={activeTab === cat ? "text-[#E67E22]" : "text-zinc-600 group-hover:text-zinc-400"}
+                                    fillColor={activeTab === cat ? "#E67E22" : undefined}
+                                />
                                 {cat}
                             </button>
                         ))}

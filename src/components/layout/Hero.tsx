@@ -90,7 +90,7 @@ export function Hero() {
                 {/* RIGHT COLUMN: Visual (Hero Image) - Properly anchored to bottom-right. Managed by fixed 'contain' mode in shader */}
                 <div className="hidden lg:block absolute bottom-0 right-0 h-[90%] w-[65%] z-10 pointer-events-none">
                     <FxImage
-                        src={'/assets/hero-concepts/licorne 3.png'}
+                        src={'/assets/backgrounds/hero-background.png'}
                         alt="Visualisation abstraite de l'intelligence artificielle"
                         className="w-full h-full"
                         style={{ width: '100%', height: '100%' }}
@@ -100,7 +100,7 @@ export function Hero() {
                             objectFit: 'contain',
                             objectPosition: 'bottom right'
                         }}
-                        config={config.fxConfig || {
+                        config={config || {
                             fitMode: 'contain',
                             duotone: { enabled: true, colorA: '#000000', colorB: '#ffffff', strength: 1 },
                             interaction: { enabled: true, mode: 'shape', variant: 'push', radius: 0.15, softness: 0.5, activeSize: 15 }
@@ -112,7 +112,7 @@ export function Hero() {
                 <div className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[65%] max-w-[280px] aspect-[3/4] z-10 lg:hidden rounded-2xl overflow-hidden ${animationPhase === 'intro' ? 'animate-fade-in' : 'animate-hero-exit pointer-events-none'
                     }`}>
                     <FxImage
-                        src={'/assets/hero-concepts/licorne 3.png'}
+                        src={'/assets/backgrounds/hero-background.png'}
                         alt="Visualisation mobile"
                         className="w-full h-full"
                         style={{ width: '100%', height: '100%' }}
@@ -122,7 +122,7 @@ export function Hero() {
                             objectFit: 'cover',
                             objectPosition: 'center center'
                         }}
-                        config={config.fxConfig || {
+                        config={config || {
                             fitMode: 'cover',
                             duotone: { enabled: true, colorA: '#000000', colorB: '#ffffff', strength: 1 },
                             interaction: { enabled: true, mode: 'shape', variant: 'push', radius: 0.15, softness: 0.5, activeSize: 15 }

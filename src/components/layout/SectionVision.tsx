@@ -3,6 +3,8 @@ import { TechIllustration } from "@/components/ui/TechIllustration";
 import { contactSignal } from "@/lib/contactSignal";
 import { Button } from "@/components/ui/button";
 
+import visionBg from '@/assets/images/illustrations/illustration-tech-blade-runner-01.png';
+
 export function SectionVision() {
     return (
         <section id="section-expertise-vision" className="max-w-[1400px] mx-auto border-t border-x border-b border-white/10 bg-black" aria-labelledby="expertise-vision-heading">
@@ -24,7 +26,7 @@ export function SectionVision() {
                     {/* Central Image Area */}
                     <div className="absolute inset-0 z-0 flex items-center justify-center">
                         <TechIllustration
-                            src="/assets/vision_background.png"
+                            src={visionBg}
                             alt="Visual Intelligence Background"
                             className="absolute inset-0 w-full h-full"
                             aspectRatio=""

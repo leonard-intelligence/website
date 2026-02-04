@@ -3,6 +3,8 @@ import { TechIllustration } from "@/components/ui/TechIllustration";
 import { contactSignal } from "@/lib/contactSignal";
 import { Button } from "@/components/ui/button";
 
+import textBg from '@/assets/images/illustrations/illustration-doc-matrix-01.png';
+
 export function SectionText() {
     return (
         <section id="section-expertise-text" className="max-w-[1400px] mx-auto border-t border-x border-b border-white/10 bg-black" aria-labelledby="expertise-text-heading">
@@ -73,7 +75,7 @@ export function SectionText() {
                     {/* Central Image Area */}
                     <div className="absolute inset-0 z-0 flex items-center justify-center">
                         <TechIllustration
-                            src="/assets/textdata_background.png"
+                            src={textBg}
                             alt="Text & Data AI Background"
                             className="absolute inset-0 w-full h-full"
                             aspectRatio=""
