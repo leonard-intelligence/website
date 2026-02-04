@@ -1,4 +1,4 @@
-import symbol from '/logo_white.png';
+import symbol from '/assets/logos/leonard-logo-white.png';
 
 export const Logo = ({ className }: { className?: string }) => (
   <div className={`flex items-center gap-3 ${className}`}>
