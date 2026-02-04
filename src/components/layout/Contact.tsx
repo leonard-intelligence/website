@@ -8,9 +8,12 @@ import { Textarea } from "../ui/textarea";
 import { Label } from "../ui/label";
 import { DotIcon, leonardIcons } from "@/components/ui/LeonardIcons";
 
+const MAILERLITE_FORM_URL = "https://assets.mailerlite.com/jsonp/2086225/forms/178403057009166301/subscribe";
+
 export function Contact() {
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [isSent, setIsSent] = useState(false);
+    const [error, setError] = useState<string | null>(null);
     const [selectedInterests, setSelectedInterests] = useState<string[]>([]);
 
     // Form State
@@ -57,22 +60,49 @@ export function Contact() {
                 }
                 return prev;
             });
-
-            // 3. Optional: Highlight effect or focus?
-            // For now, selecting the tag is enough visual feedback.
         });
     }, []);
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         setIsSubmitting(true);
+        setError(null);
 
-        // Simulate network request
-        await new Promise(resolve => setTimeout(resolve, 1500));
+        try {
+            // Build form data for MailerLite
+            // Field names must match your MailerLite form fields
+            const formData = new FormData();
+            formData.append('fields[email]', email);
+            formData.append('fields[name]', firstName);
+            formData.append('fields[last_name]', lastName);
+            formData.append('fields[company]', company || '');
+            formData.append('fields[country]', selectedInterests.join(', '));
+            formData.append('fields[city]', message);
 
-        setIsSubmitting(false);
-        setIsSent(true);
-        console.log("Form submitted");
+            await fetch(MAILERLITE_FORM_URL, {
+                method: 'POST',
+                body: formData,
+                mode: 'no-cors' // MailerLite doesn't support CORS, but form will still submit
+            });
+
+            // With no-cors mode, we can't read the response, but the submission goes through
+            // We assume success if no network error
+            setIsSent(true);
+
+            // Reset form
+            setFirstName("");
+            setLastName("");
+            setEmail("");
+            setCompany("");
+            setMessage("");
+            setSelectedInterests([]);
+
+        } catch (err) {
+            console.error("Submission error:", err);
+            setError("Impossible d'envoyer le message. Veuillez réessayer.");
+        } finally {
+            setIsSubmitting(false);
+        }
     };
 
     return (
@@ -200,8 +230,6 @@ export function Contact() {
                                         </button>
                                     ))}
                                 </div>
-                                {/* Hidden input for form submission if needed */}
-                                <input type="hidden" name="interests" value={selectedInterests.join(',')} />
                             </div>
 
                             <div className="space-y-2">
@@ -215,6 +243,12 @@ export function Contact() {
                                     required
                                 />
                             </div>
+
+                            {error && (
+                                <div className="p-3 bg-red-500/10 border border-red-500/30 text-red-400 text-sm font-mono">
+                                    {error}
+                                </div>
+                            )}
 
                             <Button
                                 type="submit"
@@ -241,4 +275,3 @@ export function Contact() {
         </section>
     );
 }
-
