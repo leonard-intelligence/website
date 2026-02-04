@@ -42,7 +42,7 @@ export function SplashScreen({ onExitStart, onComplete }: SplashScreenProps) {
                     }`}
             >
                 <FxImage
-                    src="/assets/logos/leonard-logo-white.png"
+                    src="/logo_white.png"
                     alt="Leonard Intelligence"
                     className="w-full h-full"
                     style={{ width: '100%', height: '100%' }}
