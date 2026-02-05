@@ -38,7 +38,7 @@ export function Modal({ isOpen, onClose, children, fullScreen = false, persist =
         >
             {/* Backdrop */}
             <div
-                className={`absolute inset-0 bg-black/60 backdrop-blur-sm transition-opacity ${isVisible ? 'opacity-100' : 'opacity-0'}`}
+                className={`absolute inset-0 bg-black/60 backdrop-blur-sm transition-opacity cursor-pointer ${isVisible ? 'opacity-100' : 'opacity-0'}`}
                 onClick={onClose}
                 aria-hidden="true"
             />
@@ -55,7 +55,7 @@ export function Modal({ isOpen, onClose, children, fullScreen = false, persist =
                 {/* Close Button */}
                 <button
                     onClick={onClose}
-                    className="absolute top-6 right-6 text-gray-400 hover:text-white transition-colors z-50 p-2 bg-black/50 rounded-full"
+                    className="absolute top-6 right-6 text-gray-400 hover:text-white transition-colors z-50 p-2 bg-black/50 rounded-full cursor-pointer"
                     aria-label="Close modal"
                 >
                     <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">

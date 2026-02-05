@@ -24,7 +24,7 @@ export function MobileNav() {
             {/* Hamburger Button */}
             <button
                 onClick={toggleMenu}
-                className="relative z-[120] w-12 h-12 flex flex-col justify-center items-center group focus:outline-none"
+                className="relative z-[120] w-12 h-12 flex flex-col justify-center items-center group focus:outline-none cursor-pointer"
                 aria-label={isOpen ? "Fermer le menu" : "Ouvrir le menu"}
             >
                 <span className={`block w-7 h-[3px] bg-white rounded-full transition-all duration-300 ease-out ${isOpen ? 'rotate-45 translate-y-[5px]' : '-translate-y-1.5'}`} />
@@ -35,7 +35,7 @@ export function MobileNav() {
             {/* Full Screen Overlay */}
             {typeof document !== 'undefined' && createPortal(
                 <div
-                    className={`fixed inset-0 z-[100] bg-black/95 backdrop-blur-xl transition-all duration-500 flex flex-col justify-center items-center ${isOpen ? 'opacity-100 visible' : 'opacity-0 invisible pointer-events-none'
+                    className={`fixed inset-0 z-[100] bg-black/95 backdrop-blur-xl transition-all duration-500 flex flex-col justify-center items-center cursor-pointer ${isOpen ? 'opacity-100 visible' : 'opacity-0 invisible pointer-events-none'
                         }`}
                     onClick={(e) => {
                         if (e.target === e.currentTarget) closeMenu();

@@ -109,7 +109,7 @@ export function KnowledgeBaseDemo() {
 
     // Scenario Logic
     useEffect(() => {
-        let timeout: NodeJS.Timeout;
+        let timeout: ReturnType<typeof setTimeout>;
         const scenario = SCENARIOS[currentScenarioIndex];
 
         if (phase === "TYPING") {
@@ -193,8 +193,8 @@ export function KnowledgeBaseDemo() {
                     <div className="w-2 h-2 rounded-full bg-[#E67E22] animate-pulse" />
                     <span className="font-mono text-[10px] text-white/60 tracking-wider uppercase">Moteur de Recherche</span>
                 </div>
-                {/* Fake Search Bar */}
-                <div className="flex-1 max-w-[200px] ml-4 bg-black/40 border border-white/10 rounded px-2 py-1 flex items-center gap-2">
+                {/* Search Bar - Widened */}
+                <div className="flex-1 max-w-[320px] ml-4 bg-black/40 border border-white/10 rounded px-2 py-1 flex items-center gap-2">
                     <DotIcon icon={leonardIcons.search || leonardIcons.saisieAutomatisee} size={10} fillColor="#E67E22" />
                     <div className="font-mono text-[10px] text-white h-4 overflow-hidden relative w-full flex items-center">
                         {typedQuery}<span className="animate-pulse ml-0.5 w-1.5 h-3 bg-[#E67E22] block"></span>
@@ -216,42 +216,47 @@ export function KnowledgeBaseDemo() {
                     }}
                 />
 
-                {/* Central Brain (8-bit Chip) */}
+                {/* LAYER 1: Connection Lines (Deepest Z-Index) */}
+                <div className="absolute top-1/2 left-1/2 w-0 h-0 z-10">
+                    {nodes.map(node => (
+                        <div
+                            key={`line-${node.id}`}
+                            className={`absolute top-0 left-0 h-[1px] origin-left transition-all duration-500`}
+                            style={{
+                                width: node.distance,
+                                transform: `rotate(${node.angle}rad)`,
+                                background: node.isRelevant && phase === "RESULTS"
+                                    ? "linear-gradient(90deg, #E67E22 0%, rgba(230,126,34,0) 100%)" // Active: Orange fade
+                                    : "linear-gradient(90deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0) 100%)", // Inactive: Very faint grey fade
+                                opacity: node.isRelevant && phase === "RESULTS" ? 1 : 0.5
+                            }}
+                        />
+                    ))}
+                </div>
+
+                {/* LAYER 2: Central Brain (Middle Z-Index) */}
                 <div className="absolute z-20 flex flex-col items-center justify-center">
                     <div className={`w-16 h-16 bg-zinc-900 border border-[#E67E22]/50 rounded-xl flex items-center justify-center shadow-[0_0_30px_rgba(230,126,34,0.2)] transition-all duration-300 ${phase === "SCANNING" ? "scale-105 shadow-[0_0_50px_rgba(230,126,34,0.4)] border-[#E67E22]" : ""}`}>
                         <DotIcon icon={leonardIcons.memoireEntreprise} size={24} fillColor="#E67E22" />
                     </div>
                 </div>
 
-                {/* Nodes & Connections */}
+                {/* LAYER 3: Nodes (Highest Z-Index) */}
                 <div className="absolute top-1/2 left-1/2 w-0 h-0 z-30">
                     {nodes.map(node => (
-                        <div key={node.id}>
-                            {/* Connection Line (Only if relevant and in results phase) */}
-                            {node.isRelevant && phase === "RESULTS" && (
-                                <div
-                                    className="absolute top-0 left-0 h-[1px] bg-gradient-to-r from-[#E67E22] to-transparent origin-left animate-in fade-in duration-300"
-                                    style={{
-                                        width: node.distance,
-                                        transform: `rotate(${node.angle}rad)`,
-                                    }}
-                                />
-                            )}
-
-                            {/* Node Icon */}
-                            <div
-                                className="absolute -translate-x-1/2 -translate-y-1/2 transition-all duration-500"
-                                style={{
-                                    transform: `translate(${node.x}px, ${node.y}px)`,
-                                    zIndex: node.isRelevant && phase === "RESULTS" ? 50 : 10
-                                }}
-                            >
-                                <FileIcon
-                                    type={node.type}
-                                    color={node.color}
-                                    isActive={node.isRelevant && phase === "RESULTS"}
-                                />
-                            </div>
+                        <div
+                            key={`node-${node.id}`}
+                            className="absolute -translate-x-1/2 -translate-y-1/2 transition-all duration-500"
+                            style={{
+                                transform: `translate(${node.x}px, ${node.y}px)`,
+                                zIndex: node.isRelevant && phase === "RESULTS" ? 50 : 10
+                            }}
+                        >
+                            <FileIcon
+                                type={node.type}
+                                color={node.color}
+                                isActive={node.isRelevant && phase === "RESULTS"}
+                            />
                         </div>
                     ))}
                 </div>

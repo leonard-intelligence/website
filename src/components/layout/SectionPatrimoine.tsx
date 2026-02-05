@@ -1,4 +1,5 @@
 import { DotIcon, leonardIcons } from "@/components/ui/LeonardIcons";
+import docMatrixImage from "@/assets/images/illustrations/illustration-doc-matrix-01.png";
 import { useEffect, useState } from "react";
 import { KnowledgeBaseDemo } from "./KnowledgeBaseDemo";
 
@@ -197,8 +198,18 @@ export function SectionPatrimoine() {
                 {/* ROW 1: Header & Features */}
                 <div className="grid grid-cols-1 lg:grid-cols-12 border-b border-white/10">
                     {/* LEFT: Header - 8 cols */}
-                    <div className="lg:col-span-8 p-6 lg:p-12 flex flex-col justify-center border-b lg:border-b-0 lg:border-r border-white/10">
-                        <div className="mb-0">
+                    <div className="lg:col-span-8 p-6 lg:p-12 flex flex-col justify-center border-b lg:border-b-0 lg:border-r border-white/10 relative overflow-hidden">
+                        {/* Background Image */}
+                        <div className="absolute inset-0 z-0 pointer-events-none">
+                            <img
+                                src={docMatrixImage}
+                                alt=""
+                                className="w-full h-full object-cover opacity-20 mix-blend-screen"
+                            />
+                            <div className="absolute inset-0 bg-gradient-to-r from-black via-black/90 to-black/50" />
+                        </div>
+
+                        <div className="mb-0 relative z-10">
                             <div className="text-[#E67E22] font-mono mb-2 text-lg">
                                 Mémoire d'Entreprise.
                             </div>
@@ -229,7 +240,7 @@ export function SectionPatrimoine() {
                             <div className="w-8 h-8 bg-black border border-white/10 flex items-center justify-center mb-4 text-[#E67E22]">
                                 <DotIcon icon={leonardIcons.questionsNaturelles} size={20} fillColor="#E67E22" />
                             </div>
-                            <h3 className="text-white font-mono text-lg mb-2 uppercase tracking-[-0.02em]">Questions Naturelles</h3>
+                            <h3 className="text-white font-mono text-lg mb-2 uppercase tracking-[-0.02em]">Parlez avec vos documents</h3>
                             <p className="text-gray-400 text-sm font-mono">Posez vos questions comme à un collègue expert.</p>
                         </div>
 
@@ -239,6 +250,37 @@ export function SectionPatrimoine() {
                             </div>
                             <h3 className="text-white font-mono text-lg mb-2 uppercase tracking-[-0.02em]">Sources Citées</h3>
                             <p className="text-gray-400 text-sm font-mono">Chaque réponse avec références vérifiables.</p>
+                        </div>
+                    </div>
+                </div>
+
+                {/* ROW 2: Active Documentation Feature (Moved up) */}
+                <div className="border-b border-white/10 bg-zinc-900/30">
+                    <div className="p-8 lg:p-12 flex flex-col justify-center bg-zinc-900/50 relative overflow-hidden group min-h-[300px]">
+                        {/* Background decorative element */}
+                        <div className="absolute top-0 right-0 w-96 h-96 bg-[#E67E22]/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2 pointer-events-none group-hover:bg-[#E67E22]/10 transition-colors duration-700" />
+
+                        <div className="relative z-10 max-w-4xl mx-auto text-center">
+                            <h3 className="text-3xl md:text-4xl font-mono text-white mb-6 uppercase tracking-[-0.03em] leading-none">
+                                Documentation <span className="text-white/30 text-stroke-1">Passive.</span>
+                            </h3>
+                            <p className="text-gray-300 font-mono text-base md:text-lg leading-relaxed mb-8">
+                                Rédigez la documentation en temps réel pendant que vous travaillez.
+                            </p>
+
+                            <div className="flex flex-wrap items-center justify-center gap-3 opacity-60">
+                                <div className="px-3 py-2 border border-white/10 bg-white/5 text-[10px] font-mono text-gray-400 uppercase tracking-wide">
+                                    Action
+                                </div>
+                                <span className="text-white/20">→</span>
+                                <div className="px-3 py-2 border border-white/10 bg-white/5 text-[10px] font-mono text-gray-400 uppercase tracking-wide bg-pattern-tiny">
+                                    Capture
+                                </div>
+                                <span className="text-white/20">→</span>
+                                <div className="px-3 py-2 bg-[#E67E22]/10 border border-[#E67E22]/20 text-[10px] font-mono text-[#E67E22] uppercase tracking-wide">
+                                    Procédure Rédigée
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -267,6 +309,7 @@ export function SectionPatrimoine() {
                         <KnowledgeBaseDemo />
                     </div>
                 </div>
+
             </div>
         </section>
     );

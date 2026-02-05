@@ -45,7 +45,7 @@ export function CTASection() {
                     <button
                         onClick={() => setIsModalOpen(true)}
                         id="cta-btn-primary"
-                        className="group relative px-8 h-14 flex items-center justify-center bg-[#E67E22] text-white border border-[#E67E22] font-mono font-medium uppercase text-lg hover:bg-white hover:text-[#E67E22] transition-colors duration-300 w-full md:w-auto"
+                        className="group relative px-8 h-14 flex items-center justify-center bg-[#E67E22] text-white border border-[#E67E22] font-mono font-medium uppercase text-lg hover:bg-white hover:text-[#E67E22] transition-colors duration-300 w-full md:w-auto cursor-pointer"
                     >
                         <span className="flex items-center gap-3">
                             RÉSERVER UN CRÉNEAU

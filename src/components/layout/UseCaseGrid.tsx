@@ -48,7 +48,7 @@ export function UseCaseGrid() {
                                 key={cat}
                                 onClick={() => setActiveTab(cat)}
                                 className={cn(
-                                    "px-4 py-2 text-xs font-mono uppercase tracking-wider transition-colors border border-transparent flex items-center gap-2 whitespace-nowrap",
+                                    "px-4 py-2 text-xs font-mono uppercase tracking-wider transition-colors border border-transparent flex items-center gap-2 whitespace-nowrap cursor-pointer",
                                     activeTab === cat
                                         ? "bg-white/10 text-white border-white/20"
                                         : "text-zinc-500 hover:text-white"

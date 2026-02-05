@@ -49,8 +49,8 @@ export function Hero() {
                             </div>
 
                             <h1 id="hero-headline" className="font-mono text-4xl lg:text-[4rem] font-medium leading-[1.1] tracking-[-0.04em] mb-6 lg:mb-8 max-w-[950px] uppercase text-white drop-shadow-xl">
-                                Prenez l'avantage.<br />
-                                <span className="text-white/70">IA souveraine.<br />Sur-mesure.</span>
+                                Créez des systèmes dédiés,<br />
+                                <span className="text-white/70">Gardez vos Données</span>
                             </h1>
 
                             <h2 className="font-mono text-lg lg:text-xl text-[#E67E22] mb-6 tracking-wide">

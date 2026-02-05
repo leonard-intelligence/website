@@ -217,7 +217,7 @@ export function Contact() {
                                             type="button"
                                             onClick={() => toggleInterest(interest)}
                                             className={clsx(
-                                                "font-mono text-xs px-3 py-2 border transition-all duration-200 uppercase tracking-wide",
+                                                "font-mono text-xs px-3 py-2 border transition-all duration-200 uppercase tracking-wide cursor-pointer",
                                                 selectedInterests.includes(interest)
                                                     ? "bg-[#E67E22] border-[#E67E22] text-white"
                                                     : "bg-transparent border-white/10 text-gray-400 hover:border-white/30 hover:text-white"
