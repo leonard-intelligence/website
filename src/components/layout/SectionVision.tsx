@@ -31,7 +31,6 @@ export function SectionVision() {
                             className="absolute inset-0 w-full h-full"
                             aspectRatio=""
                         />
-                        <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent pointer-events-none" />
                     </div>
 
                     {/* Bottom Left Card */}
@@ -60,7 +59,7 @@ export function SectionVision() {
                                 <div className="flex justify-between"><span>TYPE</span><span className="text-white">VISION</span></div>
                                 <div className="flex justify-between"><span>MODELS</span><span className="text-[#E67E22]">SOTA</span></div>
                                 <div className="flex justify-between"><span>LATENCE</span><span className="text-[#E67E22]">REALTIME</span></div>
-                                <div className="flex justify-between"><span>STATUS</span><span className="text-[#E67E22]">ONLINE</span></div>
+
                             </div>
                         </div>
                     </div>

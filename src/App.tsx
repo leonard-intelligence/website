@@ -24,7 +24,8 @@ function AppLayout() {
     return (
         <div className="min-h-screen bg-background text-foreground font-sans">
             {/* Light Gradient Overlay */}
-            <div className="gradient-overlay"></div>
+            {/* Light Gradient Overlay - Removed as it was undefined and potentially blocking interactions */}
+            {/* <div className="gradient-overlay"></div> */}
 
             {/* Show Navbar only on non-legal pages */}
             {!isLegalPage && <Navbar />}

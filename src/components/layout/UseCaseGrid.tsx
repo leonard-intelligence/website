@@ -19,7 +19,8 @@ export function UseCaseGrid() {
             case "Vision & Industrie": return leonardIcons.solutionVision;
             case "Intelligence Documentaire": return leonardIcons.solutionDoc;
             case "Infrastructure & Sécurité": return leonardIcons.solutionInfra;
-            case "Marketing & Ventes": return leonardIcons.solutionMarketing;
+            case "Marketing & Ventes": return leonardIcons.marketingAutomation;
+            case "Expertise Technique": return leonardIcons.architectureAgnostique;
             default: return leonardIcons.sparkles;
         }
     };

@@ -229,7 +229,7 @@ export function Contact() {
                                 </div>
 
                                 <div className="mt-12 relative z-10 text-[10px] font-mono uppercase tracking-[0.4em] text-gray-500 group-hover/item1:text-[#E67E22] transition-colors flex items-center gap-2">
-                                    <span>Réserver ma Visio</span>
+                                    <span>Je prends rendez-vous</span>
                                     <DotIcon icon={leonardIcons.arrowRight} size={12} className="text-[#3D2314] group-hover/item1:text-[#E67E22]" />
                                 </div>
                             </button>
@@ -244,7 +244,7 @@ export function Contact() {
 
                                 <div className="relative z-10 w-full flex flex-col items-center space-y-8">
                                     <div className="w-24 h-24 flex items-center justify-center text-white/60 group-hover/item2:text-white transition-all duration-500">
-                                        <DotIcon icon={leonardIcons.emailsTries} size={56} className="group-hover/item2:translate-y-[-4px] transition-transform duration-500" />
+                                        <DotIcon icon={leonardIcons.solutionConversation} size={56} className="group-hover/item2:translate-y-[-4px] transition-transform duration-500" />
                                     </div>
 
                                     <div className="space-y-4">

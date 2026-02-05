@@ -82,7 +82,7 @@ export function PassiveDocumentationDemo() {
             {/* RIGHT: Animated Illustration */}
             <div className="relative overflow-hidden bg-black flex items-center justify-center p-8 lg:p-12">
                 {/* Grid Pattern Background */}
-                <div className="absolute inset-0 z-0 opacity-20 bg-pattern-grid" />
+                <div className="absolute inset-0 z-0 bg-pattern-grid" />
                 <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent z-0" />
 
                 {/* Animated Elements Container */}

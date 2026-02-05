@@ -1,4 +1,5 @@
 import { DotIcon, leonardIcons } from "@/components/ui/LeonardIcons";
+import { TechIllustration } from "@/components/ui/TechIllustration";
 import { cn } from "@/lib/utils";
 import { LocalSovereigntyDemo } from "./LocalSovereigntyDemo";
 import { GlobalTechDemo } from "./GlobalTechDemo";
@@ -34,12 +35,14 @@ export function Methodology() {
                         <div className="grid grid-cols-1 lg:grid-cols-12 overflow-hidden">
                             <div className="lg:col-span-8 relative border-r border-white/10 bg-[#121110]/20 p-12 flex flex-col justify-between group overflow-hidden">
                                 <div className="absolute inset-0 z-0">
-                                    <img
+                                    <TechIllustration
                                         src={sovereigntyBg}
                                         alt=""
-                                        className="w-full h-full object-cover opacity-10 group-hover:opacity-20 transition-opacity duration-700"
+                                        className="w-full h-full"
+                                        overlayGradient="bg-gradient-to-r from-[#121110] via-transparent to-transparent opacity-80"
+                                        imageClassName="opacity-10 group-hover:opacity-20"
+                                        aspectRatio=""
                                     />
-                                    <div className="absolute inset-0 bg-gradient-to-r from-[#121110] via-transparent to-transparent opacity-80" />
                                 </div>
                                 <div className="absolute inset-0 bg-pattern-grid opacity-[0.03]" />
                                 <div className="absolute top-0 right-0 w-80 h-80 bg-[#E67E22]/5 blur-[120px] -z-10" />
@@ -113,12 +116,14 @@ export function Methodology() {
 
                             <div className="lg:col-span-8 relative bg-[#121110]/20 p-12 flex flex-col justify-between order-1 lg:order-2 group overflow-hidden">
                                 <div className="absolute inset-0 z-0">
-                                    <img
+                                    <TechIllustration
                                         src={performanceBg}
                                         alt=""
-                                        className="w-full h-full object-cover opacity-10 group-hover:opacity-20 transition-opacity duration-700"
+                                        className="w-full h-full"
+                                        overlayGradient="bg-gradient-to-l from-[#121110] via-transparent to-transparent opacity-80"
+                                        imageClassName="opacity-10 group-hover:opacity-20"
+                                        aspectRatio=""
                                     />
-                                    <div className="absolute inset-0 bg-gradient-to-l from-[#121110] via-transparent to-transparent opacity-80" />
                                 </div>
                                 <div className="absolute inset-0 bg-pattern-grid opacity-[0.03]" />
                                 <div className="absolute bottom-0 left-0 w-80 h-80 bg-[#E67E22]/5 blur-[120px] -z-10" />
@@ -147,7 +152,7 @@ export function Methodology() {
                                 { title: "Vision", icon: leonardIcons.computerVision, models: ['Gemini 3 Pro', 'GPT-5.2', 'Kimi k2.5'] },
                                 { title: "Image Gen", icon: leonardIcons.imageGeneration, models: ['GPT Image 1.5', 'Flux 2 Max', 'Hunyuan 3'] },
                                 { title: "Image Edit", icon: leonardIcons.productionAutomatisee, models: ['ChatGPT Edit', 'Seedream 4.5', 'Hunyuan Instruct'] },
-                                { title: "Video Gen", icon: leonardIcons.videoIntelligence, models: ['Veo 3.1', 'Sora 2 Pro', 'Wan 2.5'] }
+                                { title: "Video Gen", icon: leonardIcons.videoIntelligence, models: ['Veo 3.1', 'Sora 2 Pro', 'Kling 3.0', 'Runway gen 4.5'] }
                             ].map((card, i) => (
                                 <div
                                     key={i}

@@ -189,16 +189,17 @@ export function KnowledgeBaseDemo() {
         <div className="border border-white/20 bg-zinc-900/50 rounded-lg overflow-hidden shadow-2xl relative z-10 w-full h-[450px] flex flex-col">
             {/* Context Header */}
             <div className="flex items-center justify-between px-3 lg:px-5 py-3 bg-zinc-800/50 border-b border-white/10 shrink-0">
+                {/* Search Bar - Widened & Larger */}
+                <div className="flex-1 max-w-[480px] bg-black/40 border border-white/10 rounded px-3 py-2 flex items-center gap-3">
+                    <DotIcon icon={leonardIcons.search || leonardIcons.saisieAutomatisee} size={14} fillColor="#E67E22" />
+                    <div className="text-sm text-white h-5 overflow-hidden relative w-full flex items-center">
+                        {typedQuery}<span className="animate-pulse ml-0.5 w-1.5 h-4 bg-[#E67E22] block"></span>
+                    </div>
+                </div>
+                {/* Label */}
                 <div className="flex items-center gap-2">
                     <div className="w-2 h-2 rounded-full bg-[#E67E22] animate-pulse" />
                     <span className="text-[10px] text-white/60 tracking-wider uppercase">Moteur de Recherche</span>
-                </div>
-                {/* Search Bar - Widened */}
-                <div className="flex-1 max-w-[320px] ml-4 bg-black/40 border border-white/10 rounded px-2 py-1 flex items-center gap-2">
-                    <DotIcon icon={leonardIcons.search || leonardIcons.saisieAutomatisee} size={10} fillColor="#E67E22" />
-                    <div className="text-[10px] text-white h-4 overflow-hidden relative w-full flex items-center">
-                        {typedQuery}<span className="animate-pulse ml-0.5 w-1.5 h-3 bg-[#E67E22] block"></span>
-                    </div>
                 </div>
             </div>
 

@@ -58,7 +58,7 @@ export function Navbar() {
                     id="navbar-cta"
                     className="cta-contact-btn text-white h-full flex items-center px-6 font-normal no-underline text-[0.9rem] uppercase transition-all duration-300"
                 >
-                    CONTACT <span className="cta-arrow ml-2">→</span>
+                    Parlons ensemble <span className="cta-arrow ml-2">→</span>
                 </a>
             </div>
         </nav>

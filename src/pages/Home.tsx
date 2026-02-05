@@ -1,6 +1,9 @@
 import { Suspense, lazy, useLayoutEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 import { useReveal } from '../hooks/useReveal';
 import { Hero } from '../components/layout/Hero';
+
+import { SectionLoader } from '../components/ui/SectionLoader';
 
 // Lazy load below-the-fold sections
 const UseCaseGrid = lazy(() => import('../components/layout/UseCaseGrid').then(m => ({ default: m.UseCaseGrid })));
@@ -17,24 +20,53 @@ const InterimCTA = lazy(() => import('../components/layout/InterimCTA').then(m =
 const SectionStrategy = lazy(() => import('../components/layout/SectionStrategy').then(m => ({ default: m.SectionStrategy })));
 
 const Contact = lazy(() => import('../components/layout/Contact').then(m => ({ default: m.Contact })));
-import { SectionLoader } from '../components/ui/SectionLoader';
+
 
 export function Home() {
     // Initialize reveal animations
     useReveal();
+    const location = useLocation();
 
     // Force scroll to top on mount/refresh to prevent browser scroll restoration
+    // Handle hash scrolling
     useLayoutEffect(() => {
         if ('scrollRestoration' in history) {
             history.scrollRestoration = 'manual';
         }
-        window.scrollTo(0, 0);
+
+        const handleScroll = () => {
+            // Standard scroll to top if no hash
+            if (!location.hash) {
+                window.scrollTo(0, 0);
+                return;
+            }
+
+            // If hash exists, try to scroll to it with polling
+            const hash = location.hash;
+            let attempts = 0;
+            const maxAttempts = 50; // 5 seconds max
+
+            const attemptScroll = () => {
+                const element = document.querySelector(hash);
+                if (element) {
+                    element.scrollIntoView({ behavior: 'smooth' });
+                } else if (attempts < maxAttempts) {
+                    attempts++;
+                    setTimeout(attemptScroll, 100);
+                }
+            };
+
+            attemptScroll();
+        };
+
+        handleScroll();
+
         return () => {
             if ('scrollRestoration' in history) {
                 history.scrollRestoration = 'auto';
             }
         };
-    }, []);
+    }, [location]); // Re-run when location changes (including hash)
 
     return (
         <main>

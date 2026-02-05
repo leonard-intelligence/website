@@ -1,4 +1,5 @@
 import { DotIcon, leonardIcons } from "@/components/ui/LeonardIcons";
+import { TechIllustration } from "@/components/ui/TechIllustration";
 import { useAnimatedCounter } from '@/hooks/useAnimatedCounter';
 import abstractFinance from '../../assets/images/illustrations/illustration-doc-matrix-03.png';
 import abstractNetwork from '../../assets/images/illustrations/illustration-video-element.png';
@@ -22,9 +23,15 @@ export function SectionROI() {
                     {/* Large Title Block with Image */}
                     <div className="lg:col-span-2 bg-black relative overflow-hidden group reveal-left min-h-[300px] flex flex-col justify-center p-8 md:p-12">
                         {/* Background Image with Overlay */}
-                        <div className="absolute inset-0 z-0 opacity-40 group-hover:opacity-60 transition-opacity duration-700">
-                            <img src={abstractFinance} alt="" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
-                            <div className="absolute inset-0 bg-gradient-to-r from-black via-black/80 to-transparent"></div>
+                        <div className="absolute inset-0 z-0">
+                            <TechIllustration
+                                src={abstractFinance}
+                                alt=""
+                                className="w-full h-full"
+                                overlayGradient="bg-gradient-to-r from-black via-black/80 to-transparent"
+                                imageClassName="opacity-40 group-hover:opacity-60"
+                                aspectRatio=""
+                            />
                         </div>
 
                         <div className="relative z-10 max-w-xl">
@@ -102,9 +109,15 @@ export function SectionROI() {
                 {/* Large Title Block with Image */}
                 <div className="lg:col-span-2 bg-black relative overflow-hidden group reveal-right order-1 lg:order-2 min-h-[300px] flex flex-col justify-center p-8 md:p-12">
                     {/* Background Image with Overlay */}
-                    <div className="absolute inset-0 z-0 opacity-40 group-hover:opacity-60 transition-opacity duration-700">
-                        <img src={abstractNetwork} alt="" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
-                        <div className="absolute inset-0 bg-gradient-to-l from-black via-black/80 to-transparent"></div>
+                    <div className="absolute inset-0 z-0">
+                        <TechIllustration
+                            src={abstractNetwork}
+                            alt=""
+                            className="w-full h-full"
+                            overlayGradient="bg-gradient-to-l from-black via-black/80 to-transparent"
+                            imageClassName="opacity-40 group-hover:opacity-60"
+                            aspectRatio=""
+                        />
                     </div>
 
                     <div className="relative z-10 max-w-xl lg:ml-auto lg:text-right">

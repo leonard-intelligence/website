@@ -72,7 +72,6 @@ export function SectionAudio() {
                             className="absolute inset-0 w-full h-full"
                             aspectRatio=""
                         />
-                        <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent pointer-events-none" />
                     </div>
 
                     {/* Bottom Right Card */}
@@ -101,7 +100,7 @@ export function SectionAudio() {
                                 <div className="flex justify-between"><span>PRÉCISION</span><span className="text-white">&lt;5% WER</span></div>
                                 <div className="flex justify-between"><span>MULTILINGUE</span><span className="text-[#E67E22]">OUI</span></div>
                                 <div className="flex justify-between"><span>LATENCE</span><span className="text-[#E67E22]">FAIBLE</span></div>
-                                <div className="flex justify-between"><span>STATUS</span><span className="text-[#E67E22]">ONLINE</span></div>
+
                             </div>
                         </div>
                     </div>

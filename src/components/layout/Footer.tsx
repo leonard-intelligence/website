@@ -1,8 +1,9 @@
+import { Link } from 'react-router-dom';
 import logo from '../../assets/images/logos/leonard-logo-white.png';
 
 export function Footer() {
     return (
-        <footer id="section-footer" className="bg-black py-20 border-t border-white/10 text-sm reveal-up">
+        <footer id="section-footer" className="bg-black py-20 border-t border-white/10 text-sm reveal-up relative z-10">
             <div className="max-w-7xl mx-auto px-6">
 
                 {/* Top Section: Brand + Tagline */}
@@ -33,10 +34,10 @@ export function Footer() {
                     <nav aria-label="Expertises" className="flex flex-col">
                         <h4 className="font-mono font-normal text-white mb-6 uppercase text-xs tracking-wider">Expertises</h4>
                         <ul className="space-y-3 text-gray-500 text-xs">
-                            <li className="hover:text-white transition-colors">Visual Intelligence</li>
-                            <li className="hover:text-white transition-colors">Language & Process</li>
-                            <li className="hover:text-white transition-colors">Audio & Signal</li>
-                            <li className="hover:text-white transition-colors">Architecture</li>
+                            <li><Link to="/#section-expertises" className="hover:text-white transition-colors">Visual Intelligence</Link></li>
+                            <li><Link to="/#section-expertises" className="hover:text-white transition-colors">Language & Process</Link></li>
+                            <li><Link to="/#section-expertises" className="hover:text-white transition-colors">Audio & Signal</Link></li>
+                            <li><Link to="/#section-methodology" className="hover:text-white transition-colors">Architecture</Link></li>
                         </ul>
                     </nav>
 
@@ -44,9 +45,9 @@ export function Footer() {
                     <nav aria-label="Secteurs" className="flex flex-col">
                         <h4 className="font-mono font-normal text-white mb-6 uppercase text-xs tracking-wider">Secteurs</h4>
                         <ul className="space-y-3 text-gray-500 text-xs">
-                            <li className="hover:text-white transition-colors">Retail & E-commerce</li>
-                            <li className="hover:text-white transition-colors">Industrie & Qualité</li>
-                            <li className="hover:text-white transition-colors">Service & B2B</li>
+                            <li><Link to="/#section-solutions" className="hover:text-white transition-colors">Retail & E-commerce</Link></li>
+                            <li><Link to="/#section-solutions" className="hover:text-white transition-colors">Industrie & Qualité</Link></li>
+                            <li><Link to="/#section-solutions" className="hover:text-white transition-colors">Service & B2B</Link></li>
                         </ul>
                     </nav>
 
@@ -66,10 +67,10 @@ export function Footer() {
                                 </a>
                             </li>
                             <li>
-                                <a href="/mentions-legales" className="hover:text-white transition-colors">Mentions légales</a>
+                                <Link to="/mentions-legales" className="hover:text-white transition-colors">Mentions légales</Link>
                             </li>
                             <li>
-                                <a href="/cgv" className="hover:text-white transition-colors">CGV</a>
+                                <Link to="/cgv" className="hover:text-white transition-colors">CGV</Link>
                             </li>
                         </ul>
                     </nav>

@@ -30,7 +30,6 @@ export function SectionVideo() {
                             className="absolute inset-0 w-full h-full"
                             aspectRatio=""
                         />
-                        <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent pointer-events-none" />
                     </div>
 
                     {/* Bottom Left Card */}
@@ -59,7 +58,7 @@ export function SectionVideo() {
                                 <div className="flex justify-between"><span>TYPE</span><span className="text-white">MOTION</span></div>
                                 <div className="flex justify-between"><span>QUALITY</span><span className="text-[#E67E22]">CINEMATIC</span></div>
                                 <div className="flex justify-between"><span>FPS</span><span className="text-[#E67E22]">60+</span></div>
-                                <div className="flex justify-between"><span>STATUS</span><span className="text-[#E67E22]">ONLINE</span></div>
+
                             </div>
                         </div>
                     </div>

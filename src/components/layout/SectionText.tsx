@@ -80,7 +80,6 @@ export function SectionText() {
                             className="absolute inset-0 w-full h-full"
                             aspectRatio=""
                         />
-                        <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent pointer-events-none" />
                     </div>
 
                     {/* Bottom Right Card */}
@@ -109,7 +108,7 @@ export function SectionText() {
                                 <div className="flex justify-between"><span>CONTEXTE</span><span className="text-white">jusqu'à 1M</span></div>
 
                                 <div className="flex justify-between"><span>FINE-TUNE</span><span className="text-[#E67E22]">READY</span></div>
-                                <div className="flex justify-between"><span>STATUS</span><span className="text-[#E67E22]">ONLINE</span></div>
+
                             </div>
                         </div>
                     </div>

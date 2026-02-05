@@ -1,5 +1,4 @@
 import { DotIcon, leonardIcons } from "@/components/ui/LeonardIcons";
-import docMatrixImage from "@/assets/images/illustrations/illustration-doc-matrix-01.png";
 import { useEffect, useState } from "react";
 import { KnowledgeBaseDemo } from "./KnowledgeBaseDemo";
 import { PassiveDocumentationDemo } from "./PassiveDocumentationDemo";
@@ -131,8 +130,7 @@ function ChatInterface() {
                     <div className="text-[10px] text-white/40 truncate">584 documents connectés</div>
                 </div>
                 <div className="flex-shrink-0 ml-auto flex items-center gap-2">
-                    <span className="w-2 h-2 bg-[#E67E22] rounded-full animate-pulse" />
-                    <span className="text-[10px] text-[#E67E22] hidden sm:inline">En ligne</span>
+                    {/* Status removed as per user request */}
                 </div>
             </div>
 
@@ -200,13 +198,9 @@ export function SectionPatrimoine() {
                 <div className="grid grid-cols-1 lg:grid-cols-12 border-b border-white/10">
                     {/* LEFT: Header - 8 cols */}
                     <div className="lg:col-span-8 p-6 lg:p-12 flex flex-col justify-center border-b lg:border-b-0 lg:border-r border-white/10 relative overflow-hidden">
-                        {/* Background Image */}
+                        {/* Background Grid */}
                         <div className="absolute inset-0 z-0 pointer-events-none">
-                            <img
-                                src={docMatrixImage}
-                                alt=""
-                                className="w-full h-full object-cover opacity-20 mix-blend-screen"
-                            />
+                            <div className="absolute inset-0 bg-pattern-grid opacity-[0.05]" />
                             <div className="absolute inset-0 bg-gradient-to-r from-black via-black/90 to-black/50" />
                         </div>
 
@@ -249,8 +243,8 @@ export function SectionPatrimoine() {
                             <div className="w-8 h-8 bg-black border border-white/10 flex items-center justify-center mb-4 text-[#E67E22]">
                                 <DotIcon icon={leonardIcons.sourcesCitees} size={20} fillColor="#E67E22" />
                             </div>
-                            <h3 className="text-white font-mono text-lg mb-2 uppercase tracking-[-0.02em]">Sources Citées</h3>
-                            <p className="text-gray-400 text-sm">Chaque réponse avec références vérifiables.</p>
+                            <h3 className="text-white font-mono text-lg mb-2 uppercase tracking-[-0.02em]">IA Documentaire</h3>
+                            <p className="text-gray-400 text-sm">Possibilité de batch upload, indexation et OCR.</p>
                         </div>
                     </div>
                 </div>
