@@ -15,7 +15,7 @@ export function SectionVideo() {
 
                     {/* Header Area */}
                     <div className="relative z-10 mb-12 text-right reveal-right">
-                        <div className="text-[#E67E22] font-mono mb-2 text-lg">04 Video Intelligence.</div>
+                        <div className="text-[#E67E22] mb-2 text-lg">04 Video Intelligence.</div>
                         <h2 id="expertise-video-heading" className="text-4xl md:text-5xl font-mono text-white max-w-4xl leading-tight ml-auto uppercase tracking-[-0.02em]">
                             <span className="text-muted-foreground">Contenus dynamiques,</span><br />
                             Avatars & Motion.
@@ -42,20 +42,20 @@ export function SectionVideo() {
                                         <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#E67E22] opacity-75"></span>
                                         <span className="relative inline-flex rounded-full h-2 w-2 bg-[#E67E22]"></span>
                                     </span>
-                                    <span className="font-mono text-xs text-[#E67E22] tracking-widest">STACK TECHNIQUE</span>
+                                    <span className="text-xs text-[#E67E22] tracking-widest">STACK TECHNIQUE</span>
                                 </div>
-                                <span className="font-mono text-xs text-zinc-500">GENERATIVE</span>
+                                <span className="text-xs text-zinc-500">GENERATIVE</span>
                             </div>
 
                             <div className="flex justify-between items-start mb-4">
                                 <h3 className="text-xl text-white font-mono uppercase tracking-[-0.02em]">Motion & Avatars</h3>
                             </div>
 
-                            <p className="text-zinc-400 text-sm font-mono leading-relaxed mb-6">
+                            <p className="text-zinc-400 text-sm leading-relaxed mb-6">
                                 Runway · Pika · HeyGen · Sora · Kling
                             </p>
 
-                            <div className="grid grid-cols-2 gap-2 text-[10px] font-mono text-zinc-500 bg-white/5 p-3 rounded border border-white/5">
+                            <div className="grid grid-cols-2 gap-2 text-[10px] text-zinc-500 bg-white/5 p-3 rounded border border-white/5">
                                 <div className="flex justify-between"><span>TYPE</span><span className="text-white">MOTION</span></div>
                                 <div className="flex justify-between"><span>QUALITY</span><span className="text-[#E67E22]">CINEMATIC</span></div>
                                 <div className="flex justify-between"><span>FPS</span><span className="text-[#E67E22]">60+</span></div>
@@ -71,17 +71,17 @@ export function SectionVideo() {
                     {/* Top Description Block */}
                     <div className="p-6 md:p-12 border-b border-white/10 bg-zinc-900/20 bg-pattern-diagonal relative overflow-hidden group">
                         <div className="absolute top-0 right-0 p-4 opacity-20 group-hover:opacity-40 transition-opacity pointer-events-none">
-                            <div className="text-[10px] font-mono text-white tracking-widest leading-none">
+                            <div className="text-[10px] text-white tracking-widest leading-none">
                                 /// MODULE 04 ///
                             </div>
                         </div>
-                        <p className="font-mono text-muted-foreground text-sm leading-relaxed mb-8">
+                        <p className="text-muted-foreground text-sm leading-relaxed mb-8">
                             Automatisation de la production vidéo, avatars interactifs pour la formation et le support. L'image en mouvement.
                         </p>
 
                         <Button
                             variant="outline"
-                            className="bg-black text-[#E67E22] border-[#E67E22]/50 hover:bg-[#E67E22] hover:text-black font-mono text-xs uppercase tracking-wider mb-2"
+                            className="bg-black text-[#E67E22] border-[#E67E22]/50 hover:bg-[#E67E22] hover:text-black text-xs uppercase tracking-wider mb-2"
                             onClick={() => contactSignal.trigger('Video Intelligence')}
                         >
                             <span className="flex items-center gap-2">
@@ -98,7 +98,7 @@ export function SectionVideo() {
                                 <DotIcon icon={leonardIcons.avatarsIA} size={20} fillColor="white" />
                             </div>
                             <h3 className="text-white font-mono text-lg mb-2 uppercase tracking-[-0.02em]">Avatars IA</h3>
-                            <p className="text-muted-foreground text-sm font-mono">Présentateurs virtuels, formation à grande échelle, personnalisation vidéo par destinataire.</p>
+                            <p className="text-muted-foreground text-sm">Présentateurs virtuels, formation à grande échelle, personnalisation vidéo par destinataire.</p>
                         </div>
 
                         <div id="expertise-video-item-2" className="flex-1 p-8 group hover:bg-white/5 transition-colors relative reveal-left stagger-2 hover-lift">
@@ -106,7 +106,7 @@ export function SectionVideo() {
                                 <DotIcon icon={leonardIcons.productionAutomatisee} size={20} fillColor="white" />
                             </div>
                             <h3 className="text-white font-mono text-lg mb-2 uppercase tracking-[-0.02em]">Production Automatisée</h3>
-                            <p className="text-muted-foreground text-sm font-mono">Génération de clips marketing, adaptation de formats, montage assisté par IA.</p>
+                            <p className="text-muted-foreground text-sm">Génération de clips marketing, adaptation de formats, montage assisté par IA.</p>
                         </div>
                     </div>
                 </div>

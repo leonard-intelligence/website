@@ -36,7 +36,7 @@ export function UseCaseGrid() {
                         <h2 className="text-4xl font-medium font-mono text-white mb-4">
                             Solutions AI.
                         </h2>
-                        <div className="flex items-center gap-3 text-gray-400 font-mono text-sm">
+                        <div className="flex items-center gap-3 text-gray-400 text-sm">
                             <span>Performance Monitor<span className="animate-pulse">_</span></span>
                         </div>
                     </div>
@@ -48,7 +48,7 @@ export function UseCaseGrid() {
                                 key={cat}
                                 onClick={() => setActiveTab(cat)}
                                 className={cn(
-                                    "px-4 py-2 text-xs font-mono uppercase tracking-wider transition-colors border border-transparent flex items-center gap-2 whitespace-nowrap cursor-pointer",
+                                    "px-4 py-2 text-xs uppercase tracking-wider transition-colors border border-transparent flex items-center gap-2 whitespace-nowrap cursor-pointer",
                                     activeTab === cat
                                         ? "bg-white/10 text-white border-white/20"
                                         : "text-zinc-500 hover:text-white"
@@ -86,7 +86,7 @@ export function UseCaseGrid() {
                                 />
                                 <div className="absolute top-4 left-4 flex gap-2">
                                     {item.tags?.map((tag, i) => (
-                                        <span key={i} className="font-mono text-[10px] font-medium text-white/80 bg-black/40 backdrop-blur-sm border border-white/10 px-2 py-1 uppercase tracking-wider">
+                                        <span key={i} className="text-[10px] font-medium text-white/80 bg-black/40 backdrop-blur-sm border border-white/10 px-2 py-1 uppercase tracking-wider">
                                             {tag}
                                         </span>
                                     ))}
@@ -96,7 +96,7 @@ export function UseCaseGrid() {
                             {/* Content */}
                             <div className="px-6 pb-6 pt-6 flex flex-col flex-grow">
                                 <div className="mb-6">
-                                    <h4 className="text-xs font-mono text-[#E67E22] uppercase tracking-wider mb-3">
+                                    <h4 className="text-xs text-[#E67E22] uppercase tracking-wider mb-3">
                                         {item.sector}
                                     </h4>
                                     <p className="text-zinc-300 font-normal text-base leading-relaxed">
@@ -111,7 +111,7 @@ export function UseCaseGrid() {
                                             <div key={i} className="flex items-center gap-2 text-zinc-500 group-hover:text-zinc-400 transition-colors">
                                                 {/* Simple generic icon fallback */}
                                                 <div className="w-1 h-1 rounded-full bg-[#E67E22]" />
-                                                <span className="text-[10px] font-mono uppercase tracking-wide truncate">
+                                                <span className="text-[10px] uppercase tracking-wide truncate">
                                                     {feat.label}
                                                 </span>
                                             </div>

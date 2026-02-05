@@ -45,21 +45,21 @@ export function MobileNav() {
                         <a
                             href="#section-expertises"
                             onClick={closeMenu}
-                            className="text-2xl font-mono text-white hover:text-[#E67E22] transition-colors tracking-tight"
+                            className="text-2xl text-white hover:text-[#E67E22] transition-colors tracking-tight"
                         >
                             EXPERTISES
                         </a>
                         <a
                             href="#section-methodology"
                             onClick={closeMenu}
-                            className="text-2xl font-mono text-white hover:text-[#E67E22] transition-colors tracking-tight"
+                            className="text-2xl text-white hover:text-[#E67E22] transition-colors tracking-tight"
                         >
                             MÉTHODOLOGIE
                         </a>
                         <a
                             href="#section-solutions"
                             onClick={closeMenu}
-                            className="text-2xl font-mono text-white hover:text-[#E67E22] transition-colors tracking-tight"
+                            className="text-2xl text-white hover:text-[#E67E22] transition-colors tracking-tight"
                         >
                             SOLUTIONS
                         </a>
@@ -67,7 +67,7 @@ export function MobileNav() {
                         <a
                             href="#section-contact"
                             onClick={closeMenu}
-                            className="text-xl font-mono text-[#E67E22] border border-[#E67E22] px-6 py-3 hover:bg-[#E67E22] hover:text-black transition-all"
+                            className="text-xl text-[#E67E22] border border-[#E67E22] px-6 py-3 hover:bg-[#E67E22] hover:text-black transition-all"
                         >
                             CONTACT
                         </a>

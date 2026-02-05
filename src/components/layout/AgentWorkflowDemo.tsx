@@ -98,9 +98,9 @@ export function AgentWorkflowDemo() {
             <div className="flex items-center justify-between px-3 lg:px-5 py-3 bg-zinc-800/50 border-b border-white/10 shrink-0">
                 <div className="flex items-center gap-2">
                     <div className="w-2 h-2 rounded-full bg-[#E67E22] animate-pulse" />
-                    <span className="font-mono text-[10px] text-white/60 tracking-wider uppercase">Workflow Actif</span>
+                    <span className="text-[10px] text-white/60 tracking-wider uppercase">Workflow Actif</span>
                 </div>
-                <div className="font-mono text-[10px] text-white/40">
+                <div className="text-[10px] text-white/40">
                     Mission #{2490 + currentStepIndex}
                 </div>
             </div>
@@ -136,14 +136,14 @@ export function AgentWorkflowDemo() {
 
                         {/* Label */}
                         <div className="flex justify-end mb-4">
-                            <span className="font-mono text-xs font-bold uppercase tracking-wider" style={{ color: agent.color }}>
+                            <span className="text-xs font-bold uppercase tracking-wider" style={{ color: agent.color }}>
                                 {currentStep.label}
                             </span>
                         </div>
 
                         {/* Message */}
                         <div className="min-h-[80px]">
-                            <p className="font-mono text-sm md:text-base text-white leading-relaxed animate-in fade-in slide-in-from-bottom-2 duration-300 key={currentStep.id}">
+                            <p className="text-sm md:text-base text-white leading-relaxed animate-in fade-in slide-in-from-bottom-2 duration-300 key={currentStep.id}">
                                 {(currentStep.role === "PM" || currentStep.role === "UX") ? (
                                     <>
                                         <span className="opacity-50 text-xs block mb-1 uppercase tracking-widest">{currentStep.message.split(":")[0]}</span>
@@ -163,10 +163,10 @@ export function AgentWorkflowDemo() {
                         <div
                             key={`dot-${idx}`}
                             className={`w-1.5 h-1.5 rounded-full transition-all duration-300 ${idx === currentStepIndex
-                                    ? `bg-[${AGENT_CONFIG[step.role].color}] scale-150`
-                                    : idx < currentStepIndex
-                                        ? "bg-white/40"
-                                        : "bg-white/10"
+                                ? `bg-[${AGENT_CONFIG[step.role].color}] scale-150`
+                                : idx < currentStepIndex
+                                    ? "bg-white/40"
+                                    : "bg-white/10"
                                 }`}
                             style={{ backgroundColor: idx === currentStepIndex ? AGENT_CONFIG[step.role].color : undefined }}
                         />
@@ -175,7 +175,7 @@ export function AgentWorkflowDemo() {
             </div>
 
             {/* Footer Info */}
-            <div className="px-5 py-3 bg-zinc-800/30 border-t border-white/5 flex justify-between items-center text-[10px] font-mono text-white/30">
+            <div className="px-5 py-3 bg-zinc-800/30 border-t border-white/5 flex justify-between items-center text-[10px] text-white/30">
                 <span>Mode: Séquentiel</span>
                 <span>Antigravity Engine</span>
             </div>
