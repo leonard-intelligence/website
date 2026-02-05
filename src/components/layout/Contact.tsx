@@ -207,7 +207,7 @@ export function Contact() {
                                     <div className="relative">
                                         <div className="w-24 h-24 rounded-full border border-[#3D2314]/30 overflow-hidden mb-2 group-hover/item1:border-[#3D2314]/60 transition-colors duration-500">
                                             <img
-                                                src="/assets/images/team/melvin.jpg"
+                                                src="/assets/images/team/melvin.webp"
                                                 alt="Melvin"
                                                 className="w-full h-full object-cover grayscale-[0.2] group-hover/item1:grayscale-0 transition-all duration-500 scale-110 group-hover/item1:scale-100"
                                             />

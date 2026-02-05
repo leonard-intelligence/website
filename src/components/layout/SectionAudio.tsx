@@ -3,7 +3,7 @@ import { TechIllustration } from "@/components/ui/TechIllustration";
 import { contactSignal } from "@/lib/contactSignal";
 import { Button } from "@/components/ui/button";
 
-import audioBg from '@/assets/images/illustrations/illustration-conversation-tron-01.png';
+import audioBg from '@/assets/images/illustrations/illustration-conversation-tron-01.webp';
 
 export function SectionAudio() {
     return (

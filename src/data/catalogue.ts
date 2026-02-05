@@ -3,42 +3,42 @@
 // --- ASSET IMPORTS ---
 
 // 1. CONVERSATION IA (Theme: Tron / Futuristic Night - Digital Signal)
-import conv1 from '../assets/images/illustrations/illustration-conversation-tron-01.png';
-import conv2 from '../assets/images/illustrations/illustration-conversation-tron-02.png';
-import conv3 from '../assets/images/illustrations/illustration-conversation-tron-01.png'; // Reusing 01
-import conv4 from '../assets/images/illustrations/illustration-conversation-night-01.png';
-import conv5 from '../assets/images/illustrations/illustration-conversation-night-02.png';
+import conv1 from '../assets/images/illustrations/illustration-conversation-tron-01.webp';
+import conv2 from '../assets/images/illustrations/illustration-conversation-tron-02.webp';
+import conv3 from '../assets/images/illustrations/illustration-conversation-tron-01.webp'; // Reusing 01
+import conv4 from '../assets/images/illustrations/illustration-conversation-night-01.webp';
+import conv5 from '../assets/images/illustrations/illustration-conversation-night-02.webp';
 
 // 2. VISION & INDUSTRIE (Theme: Warhammer 40k - Heavy Industry)
-import vis1 from '../assets/images/illustrations/illustration-vision-warhammer-01.png';
-import vis2 from '../assets/images/illustrations/illustration-vision-warhammer-02.png';
-import vis3 from '../assets/images/illustrations/illustration-vision-warhammer-03.png';
-import vis4 from '../assets/images/illustrations/illustration-vision-warhammer-04.png';
+import vis1 from '../assets/images/illustrations/illustration-vision-warhammer-01.webp';
+import vis2 from '../assets/images/illustrations/illustration-vision-warhammer-02.webp';
+import vis3 from '../assets/images/illustrations/illustration-vision-warhammer-03.webp';
+import vis4 from '../assets/images/illustrations/illustration-vision-warhammer-04.webp';
 
 // 3. INTELLIGENCE DOCUMENTAIRE (Theme: Matrix - Data Rain)
-import doc1 from '../assets/images/illustrations/illustration-doc-matrix-01.png';
-import doc2 from '../assets/images/illustrations/illustration-doc-matrix-02.png';
-import doc3 from '../assets/images/illustrations/illustration-doc-matrix-03.png';
-import doc4 from '../assets/images/illustrations/illustration-doc-matrix-04.png';
-import doc5 from '../assets/images/illustrations/illustration-doc-matrix-01.png'; // Reusing 01
+import doc1 from '../assets/images/illustrations/illustration-doc-matrix-01.webp';
+import doc2 from '../assets/images/illustrations/illustration-doc-matrix-02.webp';
+import doc3 from '../assets/images/illustrations/illustration-doc-matrix-03.webp';
+import doc4 from '../assets/images/illustrations/illustration-doc-matrix-04.webp';
+import doc5 from '../assets/images/illustrations/illustration-doc-matrix-01.webp'; // Reusing 01
 
 // 4. INFRASTRUCTURE & SÉCURITÉ (Theme: Dark Side Building - Fortress)
-import infra1 from '../assets/images/illustrations/illustration-infra-dark-side-01.png';
-import infra2 from '../assets/images/illustrations/illustration-infra-dark-side-02.png'; // Using _2 for variation
+import infra1 from '../assets/images/illustrations/illustration-infra-dark-side-01.webp';
+import infra2 from '../assets/images/illustrations/illustration-infra-dark-side-02.webp'; // Using _2 for variation
 
 // 5. MARKETING & VENTES (Theme: Inception - Creative Structure)
-import mark1 from '../assets/images/illustrations/illustration-marketing-inception-01.png';
-import mark2 from '../assets/images/illustrations/illustration-marketing-inception-02.png';
-import mark3 from '../assets/images/illustrations/illustration-marketing-inception-03.png';
+import mark1 from '../assets/images/illustrations/illustration-marketing-inception-01.webp';
+import mark2 from '../assets/images/illustrations/illustration-marketing-inception-02.webp';
+import mark3 from '../assets/images/illustrations/illustration-marketing-inception-03.webp';
 
 // 6. EXPERTISE TECHNIQUE (New Themes)
-import code1 from '../assets/images/illustrations/illustration-expertise-codegen-01.png';
-import rag1 from '../assets/images/illustrations/illustration-expertise-rag-01.png';
-import agents1 from '../assets/images/illustrations/illustration-expertise-agents-01.png';
-import reason1 from '../assets/images/illustrations/illustration-expertise-reasoning-01.png';
-import extract1 from '../assets/images/illustrations/illustration-expertise-extraction-01.png';
-import embedded1 from '../assets/images/illustrations/illustration-expertise-embedded-01.png';
-import sec1 from '../assets/images/illustrations/illustration-expertise-security-01.png';
+import code1 from '../assets/images/illustrations/illustration-expertise-codegen-01.webp';
+import rag1 from '../assets/images/illustrations/illustration-expertise-rag-01.webp';
+import agents1 from '../assets/images/illustrations/illustration-expertise-agents-01.webp';
+import reason1 from '../assets/images/illustrations/illustration-expertise-reasoning-01.webp';
+import extract1 from '../assets/images/illustrations/illustration-expertise-extraction-01.webp';
+import embedded1 from '../assets/images/illustrations/illustration-expertise-embedded-01.webp';
+import sec1 from '../assets/images/illustrations/illustration-expertise-security-01.webp';
 
 // --- INFRASTRUCTURE & SÉCURITÉ (Catalogue fix, Infra2 ref) ---
 // Note: The previous image infra2 was defined but I need to ensure the ID matches.

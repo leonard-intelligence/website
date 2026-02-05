@@ -3,7 +3,7 @@ import { TechIllustration } from "@/components/ui/TechIllustration";
 import { contactSignal } from "@/lib/contactSignal";
 import { Button } from "@/components/ui/button";
 
-import visionBg from '@/assets/images/illustrations/illustration-vision-massive-01.png';
+import visionBg from '@/assets/images/illustrations/illustration-vision-massive-01.webp';
 
 export function SectionVision() {
     return (

@@ -3,8 +3,8 @@ import { TechIllustration } from "@/components/ui/TechIllustration";
 import { cn } from "@/lib/utils";
 import { LocalSovereigntyDemo } from "./LocalSovereigntyDemo";
 import { GlobalTechDemo } from "./GlobalTechDemo";
-import sovereigntyBg from "@/assets/images/illustrations/illustration-infra-dark-side.png";
-import performanceBg from "@/assets/images/illustrations/illustration-tech-blade-runner.png";
+import sovereigntyBg from "@/assets/images/illustrations/illustration-infra-dark-side.webp";
+import performanceBg from "@/assets/images/illustrations/illustration-tech-blade-runner.webp";
 
 export function Methodology() {
     return (

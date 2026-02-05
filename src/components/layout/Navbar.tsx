@@ -1,5 +1,6 @@
 // import logo from '../../assets/images/common/logo.png'; // Removed
 import { MobileNav } from './MobileNav';
+import logo from '@/assets/images/logos/leonard-logo-white.webp';
 
 export function Navbar() {
     return (
@@ -13,7 +14,7 @@ export function Navbar() {
                 <div className="px-6 font-normal text-lg -tracking-[0.05em] flex items-center h-full border-r border-white/10">
                     <a href="/" className="flex items-center gap-1" aria-label="Retour à l'accueil">
                         <img
-                            src="/assets/logos/leonard-logo-white.png"
+                            src={logo}
                             alt="Leonard Intelligence Logo"
                             className="h-8 mr-2.5 w-auto object-contain"
                         />

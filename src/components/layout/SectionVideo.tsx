@@ -3,7 +3,7 @@ import { TechIllustration } from "@/components/ui/TechIllustration";
 import { contactSignal } from "@/lib/contactSignal";
 import { Button } from "@/components/ui/button";
 
-import videoBg from '@/assets/images/illustrations/illustration-video-element.png';
+import videoBg from '@/assets/images/illustrations/illustration-video-element.webp';
 
 export function SectionVideo() {
     return (

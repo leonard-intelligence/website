@@ -1,8 +1,8 @@
 import { DotIcon, leonardIcons } from "@/components/ui/LeonardIcons";
 import { TechIllustration } from "@/components/ui/TechIllustration";
 import { useAnimatedCounter } from '@/hooks/useAnimatedCounter';
-import abstractFinance from '../../assets/images/illustrations/illustration-doc-matrix-03.png';
-import abstractNetwork from '../../assets/images/illustrations/illustration-video-element.png';
+import abstractFinance from '../../assets/images/illustrations/illustration-doc-matrix-03.webp';
+import abstractNetwork from '../../assets/images/illustrations/illustration-video-element.webp';
 
 export function SectionROI() {
     // Animated counters for stats

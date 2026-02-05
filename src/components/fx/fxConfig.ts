@@ -49,7 +49,8 @@ export interface FxConfig {
     interaction: InteractionConfig;
 }
 
-import heroBg from '@/assets/images/backgrounds/hero-background.webp';
+// import heroBg from '@/assets/images/backgrounds/hero-background.webp'; // Removed
+const heroBg = '/assets/backgrounds/hero-background.webp';
 
 export const FX_DEFAULTS: FxConfig = {
     enabled: true,

@@ -3,7 +3,7 @@ import { TechIllustration } from "@/components/ui/TechIllustration";
 import { contactSignal } from "@/lib/contactSignal";
 import { Button } from "@/components/ui/button";
 
-import textBg from '@/assets/images/illustrations/illustration-doc-matrix-01.png';
+import textBg from '@/assets/images/illustrations/illustration-doc-matrix-01.webp';
 
 export function SectionText() {
     return (

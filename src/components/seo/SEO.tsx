@@ -9,7 +9,8 @@ interface SEOProps {
     twitterHandle?: string;
 }
 
-import heroBg from '@/assets/images/backgrounds/hero-background.webp';
+// import heroBg from '@/assets/images/backgrounds/hero-background.webp';
+const heroBg = '/assets/backgrounds/hero-background.webp';
 
 export function SEO({
     title = "Leonard Intelligence - Experts IA & Automatisation",
