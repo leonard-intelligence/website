@@ -21,14 +21,14 @@ export function SectionCapabilitiesBento() {
 
                 {/* Header */}
                 <div className="flex flex-col mb-16 items-center text-center">
-                    <span className="text-[#E67E22] font-mono text-sm tracking-widest uppercase mb-4 flex items-center gap-2">
+                    <span className="text-[#E67E22] text-sm tracking-widest uppercase mb-4 flex items-center gap-2">
                         <span className="w-2 h-2 bg-[#E67E22] rounded-full animate-pulse"></span>
                         Expertise Technique
                     </span>
                     <h2 className="text-4xl md:text-5xl font-medium font-mono text-white mb-6">
                         Construisez <span className="text-zinc-500">le futur.</span>
                     </h2>
-                    <p className="text-gray-400 max-w-2xl font-mono text-sm leading-relaxed">
+                    <p className="text-gray-400 max-w-2xl text-sm leading-relaxed">
                         Intégrez les dernières avancées de l'IA générative directement dans vos produits.
                         Une suite complète de modèles et d'outils pour chaque cas d'usage.
                     </p>
@@ -52,7 +52,7 @@ export function SectionCapabilitiesBento() {
                                     <div className="w-10 h-10 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center text-[#E67E22] group-hover:scale-110 transition-transform duration-300">
                                         <DotIcon icon={leonardIcons.sparkles} size={20} fillColor="#E67E22" />
                                     </div>
-                                    <span className="text-[10px] font-mono uppercase tracking-widest text-zinc-500 border border-white/5 px-2 py-1 rounded bg-black/20">
+                                    <span className="text-[10px] uppercase tracking-widest text-zinc-500 border border-white/5 px-2 py-1 rounded bg-black/20">
                                         {item.sector}
                                     </span>
                                 </div>
@@ -62,14 +62,14 @@ export function SectionCapabilitiesBento() {
                                     <h3 className="text-xl font-mono text-white mb-3 group-hover:text-[#E67E22] transition-colors">
                                         {item.id === 'tech-codegen' ? 'Assistant de Développement' : item.sector}
                                     </h3>
-                                    <p className="text-zinc-400 text-sm leading-relaxed mb-6 font-mono">
+                                    <p className="text-zinc-400 text-sm leading-relaxed mb-6">
                                         {item.mission}
                                     </p>
 
                                     {/* Features */}
                                     <div className="grid grid-cols-2 gap-4 border-t border-white/5 pt-4">
                                         {item.features?.map((feat, i) => (
-                                            <div key={i} className="flex items-center gap-2 text-zinc-500 text-[10px] font-mono uppercase tracking-wide">
+                                            <div key={i} className="flex items-center gap-2 text-zinc-500 text-[10px] uppercase tracking-wide">
                                                 <div className="w-1 h-1 bg-[#E67E22] rounded-full" />
                                                 {feat.label}
                                             </div>

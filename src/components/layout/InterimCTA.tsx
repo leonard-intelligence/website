@@ -13,9 +13,9 @@ export function InterimCTA() {
                 <div className="flex justify-center">
                     <a
                         href="#section-contact"
-                        className="group relative px-8 py-4 bg-[#E67E22] text-white font-mono font-medium uppercase text-sm tracking-wider hover:bg-white hover:text-[#E67E22] transition-colors duration-300 flex items-center gap-3"
+                        className="group relative px-8 py-4 bg-[#E67E22] text-white font-normal uppercase text-sm tracking-wider hover:bg-white hover:text-[#E67E22] transition-colors duration-300 flex items-center gap-3"
                     >
-                        <span>Demander un audit</span>
+                        <span>Parlons de votre projet</span>
                         <div className="group-hover:translate-x-1 transition-transform">
                             <DotIcon icon={leonardIcons.arrowRight} size={16} fillColor="currentColor" />
                         </div>

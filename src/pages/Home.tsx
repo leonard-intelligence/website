@@ -15,7 +15,7 @@ const SectionPatrimoine = lazy(() => import('../components/layout/SectionPatrimo
 const SectionCapabilitiesBento = lazy(() => import('../components/layout/SectionCapabilitiesBento').then(m => ({ default: m.SectionCapabilitiesBento })));
 const InterimCTA = lazy(() => import('../components/layout/InterimCTA').then(m => ({ default: m.InterimCTA })));
 const SectionStrategy = lazy(() => import('../components/layout/SectionStrategy').then(m => ({ default: m.SectionStrategy })));
-const CTASection = lazy(() => import('../components/layout/CTASection').then(m => ({ default: m.CTASection })));
+
 const Contact = lazy(() => import('../components/layout/Contact').then(m => ({ default: m.Contact })));
 import { SectionLoader } from '../components/ui/SectionLoader';
 
@@ -70,9 +70,7 @@ export function Home() {
                     <SectionStrategy />
                 </section>
 
-                <section id="section-cta" aria-label="Commencer">
-                    <CTASection />
-                </section>
+
 
                 <section id="section-contact" aria-label="Contact">
                     <Contact />

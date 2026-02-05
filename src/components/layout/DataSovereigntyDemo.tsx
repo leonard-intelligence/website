@@ -81,7 +81,7 @@ export function DataSovereigntyDemo() {
             <div className="absolute top-4 right-4 z-20 flex gap-2">
                 <div className="bg-[#E67E22]/10 border border-[#E67E22]/20 rounded-full px-3 py-1.5 flex items-center gap-2">
                     <div className="w-1.5 h-1.5 bg-[#E67E22] rounded-full animate-pulse" />
-                    <span className="font-mono text-[10px] text-[#E67E22] tracking-widest font-bold">DONNÉES PROTÉGÉES</span>
+                    <span className="text-[10px] text-[#E67E22] tracking-widest font-bold">DONNÉES PROTÉGÉES</span>
                 </div>
             </div>
 
@@ -103,7 +103,7 @@ export function DataSovereigntyDemo() {
                 >
                     <DotIcon icon={leonardIcons.onPremise} size={24} fillColor="white" />
                     <div className="absolute -bottom-6 w-32 text-center">
-                        <span className="font-mono text-[10px] text-white/60 uppercase">Infra Client</span>
+                        <span className="text-[10px] text-white/60 uppercase">Infra Client</span>
                     </div>
                 </div>
 
@@ -114,7 +114,7 @@ export function DataSovereigntyDemo() {
                 >
                     <DotIcon icon={leonardIcons.sparkles} size={24} fillColor="#E67E22" />
                     <div className="absolute -bottom-6 w-32 text-center">
-                        <span className="font-mono text-[10px] text-[#E67E22] uppercase">IA Privée</span>
+                        <span className="text-[10px] text-[#E67E22] uppercase">IA Privée</span>
                     </div>
                 </div>
 

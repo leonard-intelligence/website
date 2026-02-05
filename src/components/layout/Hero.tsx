@@ -43,21 +43,21 @@ export function Hero() {
                         <div className="lg:col-span-7 flex flex-col items-start text-left pl-6 pb-12 pt-32 lg:pt-20">
 
                             {/* Status Badge */}
-                            <div className="inline-flex items-center gap-2 bg-black/80 px-4 py-2 rounded-full text-[0.8rem] font-mono border border-white/10 mb-8 lg:mb-10 text-[#E67E22]">
+                            <div className="inline-flex items-center gap-2 bg-black/80 px-4 py-2 rounded-full text-[0.8rem] border border-white/10 mb-8 lg:mb-10 text-[#E67E22]">
                                 <span className="w-1.5 h-1.5 bg-[#E67E22] rounded-full animate-pulse"></span>
                                 <span>Expert Mistral AI</span>
                             </div>
 
                             <h1 id="hero-headline" className="font-mono text-4xl lg:text-[4rem] font-medium leading-[1.1] tracking-[-0.04em] mb-6 lg:mb-8 max-w-[950px] uppercase text-white drop-shadow-xl">
-                                Créez des systèmes dédiés,<br />
-                                <span className="text-white/70">Gardez vos Données</span>
+                                Montez dans le train de l'IA,<br />
+                                <span className="text-white/70">sans compromettre vos données</span>
                             </h1>
 
                             <h2 className="font-mono text-lg lg:text-xl text-[#E67E22] mb-6 tracking-wide">
                                 TEXTE. IMAGE. AUDIO. VIDÉO.
                             </h2>
 
-                            <p className="font-mono text-[1rem] lg:text-[1.1rem] text-white/90 leading-relaxed max-w-xl mb-10 lg:mb-12 drop-shadow-lg font-medium pr-4">
+                            <p className="text-[1rem] lg:text-[1.1rem] text-white/90 leading-relaxed max-w-xl mb-10 lg:mb-12 drop-shadow-lg font-normal pr-4">
                                 L'IA qui fonctionne chez vous, pas aux États-Unis. Vos données, votre infrastructure, vos règles.<br />
                                 Open-source prioritaire, propriétaire si nécessaire. Déploiement sur-mesure.
                             </p>
@@ -66,14 +66,14 @@ export function Hero() {
                                 <a
                                     href="#section-contact"
                                     id="hero-cta-primary"
-                                    className="bg-[#E67E22] text-white border border-[#E67E22] px-6 py-3 font-mono font-medium uppercase text-base inline-block transition-all hover:bg-white hover:text-[#E67E22] hover:-translate-y-0.5 shadow-lg shadow-orange-500/20 text-center"
+                                    className="bg-[#E67E22] text-white border border-[#E67E22] px-6 py-3 font-normal uppercase text-base inline-block transition-all hover:bg-white hover:text-[#E67E22] hover:-translate-y-0.5 shadow-lg shadow-orange-500/20 text-center"
                                 >
-                                    DEMANDER UN AUDIT
+                                    PARLONS DE VOTRE PROJET
                                 </a>
                                 <a
                                     href="#section-solutions"
                                     id="hero-cta-secondary"
-                                    className="bg-transparent text-[#E67E22] px-6 py-3 font-mono font-medium text-[0.85rem] uppercase inline-block border border-[#E67E22]/50 transition-all hover:bg-[#E67E22]/10 hover:border-[#E67E22] text-center"
+                                    className="bg-transparent text-[#E67E22] px-6 py-3 font-normal text-[0.85rem] uppercase inline-block border border-[#E67E22]/50 transition-all hover:bg-[#E67E22]/10 hover:border-[#E67E22] text-center"
                                 >
                                     EXPLORER NOS SOLUTIONS
                                 </a>

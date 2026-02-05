@@ -12,7 +12,7 @@ export function SectionSecurity() {
             <div className="grid grid-cols-1 lg:grid-cols-12">
                 {/* Left: Content */}
                 <div className="lg:col-span-7 p-12 border-r border-b border-white/10">
-                    <div className="text-[#E67E22] font-mono mb-2 text-lg">Souveraineté Numérique.</div>
+                    <div className="text-[#E67E22] mb-2 text-lg">Souveraineté Numérique.</div>
                     <h2
                         id="security-heading"
                         className="text-4xl md:text-5xl font-mono text-white max-w-xl leading-tight uppercase tracking-[-0.02em] mb-6"
@@ -20,7 +20,7 @@ export function SectionSecurity() {
                         <span className="text-zinc-400">Vos données ne sortent</span><br />
                         pas de chez vous.
                     </h2>
-                    <p className="font-mono text-sm text-gray-400 leading-relaxed max-w-md">
+                    <p className="text-sm text-gray-400 leading-relaxed max-w-md">
                         Déploiement local ou cloud privé européen. Zéro dépendance aux géants américains.
                     </p>
                 </div>
@@ -49,31 +49,31 @@ export function SectionSecurity() {
                     <div className="mb-3">
                         <DotIcon icon={leonardIcons.rgpdCompliant} size={24} fillColor="#E67E22" />
                     </div>
-                    <span className="font-mono text-xs text-white uppercase tracking-wider">RGPD</span>
+                    <span className="text-xs text-white uppercase tracking-wider">RGPD</span>
                 </div>
                 <div className="p-6 border-r border-white/10 flex flex-col items-center justify-center text-center hover:bg-white/5 transition-colors">
                     <div className="mb-3">
                         <DotIcon icon={leonardIcons.hebergementUE} size={24} fillColor="#E67E22" />
                     </div>
-                    <span className="font-mono text-xs text-white uppercase tracking-wider">Héberg. UE</span>
+                    <span className="text-xs text-white uppercase tracking-wider">Héberg. UE</span>
                 </div>
                 <div className="p-6 border-r border-white/10 flex flex-col items-center justify-center text-center hover:bg-white/5 transition-colors">
                     <div className="mb-3">
                         <DotIcon icon={leonardIcons.hdsReady} size={24} fillColor="#E67E22" />
                     </div>
-                    <span className="font-mono text-xs text-white uppercase tracking-wider">HDS Ready</span>
+                    <span className="text-xs text-white uppercase tracking-wider">HDS Ready</span>
                 </div>
                 <div className="p-6 flex flex-col items-center justify-center text-center hover:bg-white/5 transition-colors">
                     <div className="mb-3">
                         <DotIcon icon={leonardIcons.onPremise} size={24} fillColor="#E67E22" />
                     </div>
-                    <span className="font-mono text-xs text-white uppercase tracking-wider">On-Premise</span>
+                    <span className="text-xs text-white uppercase tracking-wider">On-Premise</span>
                 </div>
             </div>
 
             {/* BOTTOM: Infrastructure note */}
             <div className="p-6 border-t border-white/10 bg-[#E67E22]/5">
-                <p className="font-mono text-xs text-center text-white/60">
+                <p className="text-xs text-center text-white/60">
                     Infrastructure dédiée chez <span className="text-[#E67E22]">OVH</span>, <span className="text-[#E67E22]">NumSpot</span> ou <span className="text-[#E67E22]">Outscale</span>
                 </p>
             </div>

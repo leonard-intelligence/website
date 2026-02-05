@@ -65,7 +65,7 @@ function FileIcon({ type, color, isActive }: { type: string; color: string; isAc
 
             {/* Label inside */}
             <span
-                className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-[40%] font-mono text-[8px] font-bold tracking-tighter transition-colors duration-300`}
+                className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-[40%] text-[8px] font-bold tracking-tighter transition-colors duration-300`}
                 style={{ color: isActive ? color : "rgba(255,255,255,0.3)" }}
             >
                 {type}
@@ -191,12 +191,12 @@ export function KnowledgeBaseDemo() {
             <div className="flex items-center justify-between px-3 lg:px-5 py-3 bg-zinc-800/50 border-b border-white/10 shrink-0">
                 <div className="flex items-center gap-2">
                     <div className="w-2 h-2 rounded-full bg-[#E67E22] animate-pulse" />
-                    <span className="font-mono text-[10px] text-white/60 tracking-wider uppercase">Moteur de Recherche</span>
+                    <span className="text-[10px] text-white/60 tracking-wider uppercase">Moteur de Recherche</span>
                 </div>
                 {/* Search Bar - Widened */}
                 <div className="flex-1 max-w-[320px] ml-4 bg-black/40 border border-white/10 rounded px-2 py-1 flex items-center gap-2">
                     <DotIcon icon={leonardIcons.search || leonardIcons.saisieAutomatisee} size={10} fillColor="#E67E22" />
-                    <div className="font-mono text-[10px] text-white h-4 overflow-hidden relative w-full flex items-center">
+                    <div className="text-[10px] text-white h-4 overflow-hidden relative w-full flex items-center">
                         {typedQuery}<span className="animate-pulse ml-0.5 w-1.5 h-3 bg-[#E67E22] block"></span>
                     </div>
                 </div>
@@ -263,7 +263,7 @@ export function KnowledgeBaseDemo() {
             </div>
 
             {/* Status Footer */}
-            <div className="px-5 py-3 bg-zinc-800/30 border-t border-white/5 flex justify-between text-[10px] font-mono text-white/30">
+            <div className="px-5 py-3 bg-zinc-800/30 border-t border-white/5 flex justify-between text-[10px] text-white/30">
                 <div className="flex gap-4">
                     <span className={phase === "SCANNING" ? "text-[#E67E22] animate-pulse" : ""}>SCAN</span>
                     <span className={phase === "RESULTS" ? "text-white" : ""}>RÉSULTATS</span>

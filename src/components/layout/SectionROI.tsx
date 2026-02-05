@@ -29,12 +29,12 @@ export function SectionROI() {
 
                         <div className="relative z-10 max-w-xl">
                             <div className="bg-[#E67E22]/20 backdrop-blur-sm w-fit px-3 py-1 rounded-full mb-6 border border-[#E67E22]/30">
-                                <span className="text-[#E67E22] font-mono text-xs uppercase tracking-wider">Optimisation</span>
+                                <span className="text-[#E67E22] text-xs uppercase tracking-wider">Optimisation</span>
                             </div>
                             <h2 className="text-4xl md:text-5xl lg:text-6xl font-mono text-white leading-tight uppercase tracking-[-0.03em]">
                                 Réduisez<br />vos coûts
                             </h2>
-                            <p className="mt-4 text-zinc-400 font-mono text-sm leading-relaxed max-w-md">
+                            <p className="mt-4 text-zinc-400 text-sm leading-relaxed max-w-md">
                                 L'IA absorbe la gestion répétitive pour libérer vos équipes sur des missions à valeur ajoutée.
                             </p>
                         </div>
@@ -49,10 +49,10 @@ export function SectionROI() {
                             <div ref={counterCosts.ref} className="text-5xl md:text-6xl font-mono font-medium text-[#E67E22] mb-2 tracking-tighter">
                                 {counterCosts.displayValue}
                             </div>
-                            <div className="text-sm font-mono text-white uppercase tracking-widest mb-1">
+                            <div className="text-sm text-white uppercase tracking-widest mb-1">
                                 Par collaborateur
                             </div>
-                            <div className="text-xs font-mono text-zinc-500 uppercase tracking-widest">
+                            <div className="text-xs text-zinc-500 uppercase tracking-widest">
                                 Libérées / semaine
                             </div>
                         </div>
@@ -68,14 +68,14 @@ export function SectionROI() {
                         <DotIcon icon={leonardIcons.roi} size={24} fillColor="#000000" />
                     </div>
                     <div>
-                        <div className="text-white font-mono uppercase text-sm tracking-widest mb-1">Rentabilité</div>
-                        <div className="text-zinc-400 font-mono text-xs">Retour sur investissement rapide constaté</div>
+                        <div className="text-white uppercase text-sm tracking-widest mb-1">Rentabilité</div>
+                        <div className="text-zinc-400 text-xs">Retour sur investissement rapide constaté</div>
                     </div>
                 </div>
 
                 <div className="flex items-baseline gap-3" ref={counterROI.ref}>
                     <span className="text-4xl md:text-5xl font-mono font-medium text-white tracking-tighter">{counterROI.displayValue}</span>
-                    <span className="text-[#E67E22] font-mono text-sm uppercase tracking-widest">pour être rentable</span>
+                    <span className="text-[#E67E22] text-sm uppercase tracking-widest">pour être rentable</span>
                 </div>
             </div>
 
@@ -90,10 +90,10 @@ export function SectionROI() {
                         <div ref={counterProd.ref} className="text-5xl md:text-6xl font-mono font-medium text-white mb-2 tracking-tighter">
                             {counterProd.displayValue}
                         </div>
-                        <div className="text-sm font-mono text-white uppercase tracking-widest mb-1">
+                        <div className="text-sm text-white uppercase tracking-widest mb-1">
                             ROI Médian
                         </div>
-                        <div className="text-xs font-mono text-zinc-500 uppercase tracking-widest">
+                        <div className="text-xs text-zinc-500 uppercase tracking-widest">
                             Sur 12 mois
                         </div>
                     </div>
@@ -109,12 +109,12 @@ export function SectionROI() {
 
                     <div className="relative z-10 max-w-xl lg:ml-auto lg:text-right">
                         <div className="bg-white/10 backdrop-blur-sm w-fit px-3 py-1 rounded-full mb-6 border border-white/10 lg:ml-auto">
-                            <span className="text-zinc-300 font-mono text-xs uppercase tracking-wider">Croissance</span>
+                            <span className="text-zinc-300 text-xs uppercase tracking-wider">Croissance</span>
                         </div>
-                        <h2 className="text-4xl md:text-5xl lg:text-6xl font-mono text-white leading-tight uppercase tracking-[-0.03em]">
+                        <h2 className="text-4xl md:text-5xl lg:text-6xl text-white leading-tight uppercase tracking-[-0.03em]">
                             Augmentez votre<br /><span className="text-zinc-500">productivité</span>
                         </h2>
-                        <p className="mt-4 text-zinc-400 font-mono text-sm leading-relaxed max-w-md lg:ml-auto">
+                        <p className="mt-4 text-zinc-400 text-sm leading-relaxed max-w-md lg:ml-auto">
                             Des gains constatés sur plus de 200 déploiements. L'IA transforme vos opérations en levier de croissance.
                         </p>
                     </div>

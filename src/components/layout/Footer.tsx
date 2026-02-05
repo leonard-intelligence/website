@@ -13,16 +13,16 @@ export function Footer() {
                             alt="Leonard Intelligence"
                             className="h-8 mb-2"
                         />
-                        <p className="text-[#E67E22] font-mono text-xs uppercase tracking-wider">
+                        <p className="text-[#E67E22] text-xs uppercase tracking-wider">
                             L'Intelligence Opérationnelle.
                         </p>
                     </div>
                     {/* Sovereign positioning statement like Onepoint */}
                     <div className="mt-4 md:mt-0 text-right">
-                        <a href="mailto:hello@leonardintelligence.com" className="text-white hover:text-[#E67E22] transition-colors font-mono text-sm block mb-1 animated-underline">
+                        <a href="mailto:hello@leonardintelligence.com" className="text-white hover:text-[#E67E22] transition-colors text-sm block mb-1 animated-underline">
                             hello@leonardintelligence.com
                         </a>
-                        <p className="text-gray-500 font-mono text-[10px]">France 🇫🇷</p>
+                        <p className="text-gray-500 text-[10px]">France 🇫🇷</p>
                     </div>
                 </div>
 
@@ -31,8 +31,8 @@ export function Footer() {
 
                     {/* Expertise */}
                     <nav aria-label="Expertises" className="flex flex-col">
-                        <h4 className="font-mono font-medium text-white mb-6 uppercase text-xs tracking-wider">Expertises</h4>
-                        <ul className="space-y-3 text-gray-500 font-mono text-xs">
+                        <h4 className="font-mono font-normal text-white mb-6 uppercase text-xs tracking-wider">Expertises</h4>
+                        <ul className="space-y-3 text-gray-500 text-xs">
                             <li className="hover:text-white transition-colors">Visual Intelligence</li>
                             <li className="hover:text-white transition-colors">Language & Process</li>
                             <li className="hover:text-white transition-colors">Audio & Signal</li>
@@ -42,8 +42,8 @@ export function Footer() {
 
                     {/* Industries */}
                     <nav aria-label="Secteurs" className="flex flex-col">
-                        <h4 className="font-mono font-medium text-white mb-6 uppercase text-xs tracking-wider">Secteurs</h4>
-                        <ul className="space-y-3 text-gray-500 font-mono text-xs">
+                        <h4 className="font-mono font-normal text-white mb-6 uppercase text-xs tracking-wider">Secteurs</h4>
+                        <ul className="space-y-3 text-gray-500 text-xs">
                             <li className="hover:text-white transition-colors">Retail & E-commerce</li>
                             <li className="hover:text-white transition-colors">Industrie & Qualité</li>
                             <li className="hover:text-white transition-colors">Service & B2B</li>
@@ -52,8 +52,8 @@ export function Footer() {
 
                     {/* Resources */}
                     <nav aria-label="Liens utiles" className="flex flex-col">
-                        <h4 className="font-mono font-medium text-white mb-6 uppercase text-xs tracking-wider">Liens</h4>
-                        <ul className="space-y-3 text-gray-500 font-mono text-xs">
+                        <h4 className="font-mono font-normal text-white mb-6 uppercase text-xs tracking-wider">Liens</h4>
+                        <ul className="space-y-3 text-gray-500 text-xs">
                             <li>
                                 <a
                                     href="https://www.linkedin.com/company/leonard-intelligence"
@@ -76,23 +76,23 @@ export function Footer() {
 
                     {/* Company */}
                     <div className="flex flex-col">
-                        <h4 className="font-mono font-medium text-white mb-6 uppercase text-xs tracking-wider">Audit</h4>
-                        <p className="text-gray-500 font-mono text-xs mb-4">
+                        <h4 className="font-mono font-normal text-white mb-6 uppercase text-xs tracking-wider">Audit</h4>
+                        <p className="text-gray-500 text-xs mb-4">
                             Identification des opportunités d'automatisation pour votre entreprise.
                         </p>
-                        <a href="#contact" className="inline-block border border-white/20 hover:bg-white hover:text-black hover:border-white text-center text-white font-mono text-xs px-4 py-2 uppercase transition-all">
-                            Réserver un créneau
+                        <a href="#contact" className="inline-block border border-white/20 hover:bg-white hover:text-black hover:border-white text-center text-white text-xs px-4 py-2 uppercase transition-all">
+                            Parlons de votre projet
                         </a>
                     </div>
                 </div>
 
                 {/* Bottom Bar */}
                 <div className="pt-8 border-t border-white/10 flex flex-col md:flex-row justify-between items-center gap-4">
-                    <div className="font-mono text-xs text-gray-500">
+                    <div className="text-xs text-gray-500">
                         © 2025 Leonard Intelligence. Tous droits réservés.
                     </div>
                     <div className="flex items-center gap-6">
-                        <span id="footer-status" className="flex items-center gap-2 text-[#E67E22] font-mono text-xs">
+                        <span id="footer-status" className="flex items-center gap-2 text-[#E67E22] text-xs">
                             <span className="w-2 h-2 bg-[#E67E22] rounded-full animate-pulse"></span>
                             Systèmes opérationnels
                         </span>

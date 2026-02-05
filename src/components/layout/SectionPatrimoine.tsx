@@ -126,12 +126,12 @@ function ChatInterface() {
                     <DotIcon icon={leonardIcons.sparkles} size={16} fillColor="#E67E22" />
                 </div>
                 <div className="min-w-0 flex-1">
-                    <div className="font-mono text-xs text-white font-medium truncate">Assistant Documentaire</div>
-                    <div className="font-mono text-[10px] text-white/40 truncate">584 documents connectés</div>
+                    <div className="text-xs text-white font-medium truncate">Assistant Documentaire</div>
+                    <div className="text-[10px] text-white/40 truncate">584 documents connectés</div>
                 </div>
                 <div className="flex-shrink-0 ml-auto flex items-center gap-2">
                     <span className="w-2 h-2 bg-[#E67E22] rounded-full animate-pulse" />
-                    <span className="font-mono text-[10px] text-[#E67E22] hidden sm:inline">En ligne</span>
+                    <span className="text-[10px] text-[#E67E22] hidden sm:inline">En ligne</span>
                 </div>
             </div>
 
@@ -142,7 +142,7 @@ function ChatInterface() {
                         {msg.role === "user" ? (
                             // USER BUBBLE
                             <div className="bg-[#E67E22]/20 border border-[#E67E22]/30 rounded-xl rounded-br-sm px-3 py-2 max-w-[95%] md:max-w-xs">
-                                <p className="font-mono text-xs text-white">
+                                <p className="text-xs text-white">
                                     {msg.content}
                                 </p>
                             </div>
@@ -152,14 +152,14 @@ function ChatInterface() {
                                 {msg.source && (
                                     <div className="flex items-center gap-2 mb-2">
                                         <DotIcon icon={leonardIcons.saisieAutomatisee} size={12} fillColor="#E67E22" />
-                                        <span className="font-mono text-[10px] text-[#E67E22]">{msg.source}</span>
+                                        <span className="text-[10px] text-[#E67E22]">{msg.source}</span>
                                     </div>
                                 )}
-                                <p className="font-mono text-xs text-white/80 leading-relaxed">
+                                <p className="text-xs text-white/80 leading-relaxed">
                                     {msg.content}
                                 </p>
                                 {msg.metadata && (
-                                    <div className="mt-2 pt-2 border-t border-white/5 flex items-center gap-3 text-[10px] font-mono text-white/40">
+                                    <div className="mt-2 pt-2 border-t border-white/5 flex items-center gap-3 text-[10px] text-white/40">
                                         {msg.metadata.sourcesCount && <span>✓ {msg.metadata.sourcesCount} sources</span>}
                                         {msg.metadata.confidence && <span className="text-[#E67E22]">{msg.metadata.confidence}</span>}
                                     </div>
@@ -210,7 +210,7 @@ export function SectionPatrimoine() {
                         </div>
 
                         <div className="mb-0 relative z-10">
-                            <div className="text-[#E67E22] font-mono mb-2 text-lg">
+                            <div className="text-[#E67E22] mb-2 text-lg">
                                 Mémoire d'Entreprise.
                             </div>
                             <h2
@@ -220,7 +220,7 @@ export function SectionPatrimoine() {
                                 <span className="text-zinc-400">Ne perdez plus</span><br />
                                 le savoir-faire de vos experts.
                             </h2>
-                            <p className="mt-6 font-mono text-gray-400 text-sm leading-relaxed max-w-lg">
+                            <p className="mt-6 text-gray-400 text-sm leading-relaxed max-w-lg">
                                 Votre assistant IA indexe vos procédures, vos documents, votre expertise. Questions en langage naturel.
                             </p>
                         </div>
@@ -233,7 +233,7 @@ export function SectionPatrimoine() {
                                 <DotIcon icon={leonardIcons.saisieAutomatisee} size={20} fillColor="#E67E22" />
                             </div>
                             <h3 className="text-white font-mono text-lg mb-2 uppercase tracking-[-0.02em]">Procédures Indexées</h3>
-                            <p className="text-gray-400 text-sm font-mono">Tous vos documents internes accessibles instantanément.</p>
+                            <p className="text-gray-400 text-sm">Tous vos documents internes accessibles instantanément.</p>
                         </div>
 
                         <div className="flex-1 border-b border-white/10 p-6 lg:p-8 group hover:bg-white/5 transition-colors relative">
@@ -241,7 +241,7 @@ export function SectionPatrimoine() {
                                 <DotIcon icon={leonardIcons.questionsNaturelles} size={20} fillColor="#E67E22" />
                             </div>
                             <h3 className="text-white font-mono text-lg mb-2 uppercase tracking-[-0.02em]">Parlez avec vos documents</h3>
-                            <p className="text-gray-400 text-sm font-mono">Posez vos questions comme à un collègue expert.</p>
+                            <p className="text-gray-400 text-sm">Posez vos questions comme à un collègue expert.</p>
                         </div>
 
                         <div className="flex-1 p-6 lg:p-8 group hover:bg-white/5 transition-colors relative">
@@ -249,7 +249,7 @@ export function SectionPatrimoine() {
                                 <DotIcon icon={leonardIcons.sourcesCitees} size={20} fillColor="#E67E22" />
                             </div>
                             <h3 className="text-white font-mono text-lg mb-2 uppercase tracking-[-0.02em]">Sources Citées</h3>
-                            <p className="text-gray-400 text-sm font-mono">Chaque réponse avec références vérifiables.</p>
+                            <p className="text-gray-400 text-sm">Chaque réponse avec références vérifiables.</p>
                         </div>
                     </div>
                 </div>
@@ -264,20 +264,20 @@ export function SectionPatrimoine() {
                             <h3 className="text-3xl md:text-4xl font-mono text-white mb-6 uppercase tracking-[-0.03em] leading-none">
                                 Documentation <span className="text-white/30 text-stroke-1">Passive.</span>
                             </h3>
-                            <p className="text-gray-300 font-mono text-base md:text-lg leading-relaxed mb-8">
+                            <p className="text-gray-300 text-base md:text-lg leading-relaxed mb-8">
                                 Rédigez la documentation en temps réel pendant que vous travaillez.
                             </p>
 
                             <div className="flex flex-wrap items-center justify-center gap-3 opacity-60">
-                                <div className="px-3 py-2 border border-white/10 bg-white/5 text-[10px] font-mono text-gray-400 uppercase tracking-wide">
+                                <div className="px-3 py-2 border border-white/10 bg-white/5 text-[10px] text-gray-400 uppercase tracking-wide">
                                     Action
                                 </div>
                                 <span className="text-white/20">→</span>
-                                <div className="px-3 py-2 border border-white/10 bg-white/5 text-[10px] font-mono text-gray-400 uppercase tracking-wide bg-pattern-tiny">
+                                <div className="px-3 py-2 border border-white/10 bg-white/5 text-[10px] text-gray-400 uppercase tracking-wide bg-pattern-tiny">
                                     Capture
                                 </div>
                                 <span className="text-white/20">→</span>
-                                <div className="px-3 py-2 bg-[#E67E22]/10 border border-[#E67E22]/20 text-[10px] font-mono text-[#E67E22] uppercase tracking-wide">
+                                <div className="px-3 py-2 bg-[#E67E22]/10 border border-[#E67E22]/20 text-[10px] text-[#E67E22] uppercase tracking-wide">
                                     Procédure Rédigée
                                 </div>
                             </div>
@@ -291,7 +291,7 @@ export function SectionPatrimoine() {
                     {/* LEFT BENTO: Chat Interface */}
                     <div className="border-b lg:border-b-0 lg:border-r border-white/10 p-4 lg:p-12 bg-zinc-900/10 flex flex-col justify-center min-h-0 lg:min-h-[500px]">
                         <div className="mb-6 mt-8 lg:mt-0">
-                            <div className="text-xs font-mono text-[#E67E22] mb-2">/// INTERFACE CONVERSATIONNELLE</div>
+                            <div className="text-xs text-[#E67E22] mb-2">/// INTERFACE CONVERSATIONNELLE</div>
                             <h3 className="text-white font-mono text-xl uppercase tracking-tight">Assistant Documentaire</h3>
                         </div>
 
@@ -302,7 +302,7 @@ export function SectionPatrimoine() {
                     {/* RIGHT BENTO: Knowledge Base Demo */}
                     <div className="p-4 lg:p-12 b-zinc-900 flex flex-col justify-center relative min-h-0 lg:min-h-[500px]">
                         <div className="mb-6 w-full max-w-[450px]">
-                            <div className="text-xs font-mono text-[#E67E22] mb-2">/// INDEXATION INTELLIGENTE</div>
+                            <div className="text-xs text-[#E67E22] mb-2">/// INDEXATION INTELLIGENTE</div>
                             <h3 className="text-white font-mono text-xl uppercase tracking-tight">Base de Connaissances</h3>
                         </div>
 

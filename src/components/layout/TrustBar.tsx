@@ -26,7 +26,7 @@ export function TrustBar() {
     return (
         <section id="section-trustbar" className="bg-black w-full relative overflow-hidden" aria-label="Technologies et modèles partenaires">
             <div className="flex w-full overflow-hidden">
-                <div className="relative z-10 bg-black text-white px-6 py-6 font-mono text-sm border-r border-white/10 dark:text-white flex items-center whitespace-nowrap">
+                <div className="relative z-10 bg-black text-white px-6 py-6 text-sm border-r border-white/10 dark:text-white flex items-center whitespace-nowrap">
                     Partenaires technologiques
                 </div>
                 <div
