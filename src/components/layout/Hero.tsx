@@ -27,7 +27,7 @@ export function Hero() {
         /* Replaced .hero-section with direct styles */
         <section
             id="section-hero"
-            className="relative h-[100dvh] max-h-[850px] w-full flex flex-col group bg-pattern-grid overflow-hidden"
+            className="relative min-h-[100dvh] w-full flex flex-col group bg-pattern-grid overflow-hidden"
             aria-label="Introduction"
         >
 

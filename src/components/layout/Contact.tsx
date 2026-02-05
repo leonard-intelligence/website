@@ -285,7 +285,7 @@ export function Contact() {
                                 onClick={() => setShowForm(false)}
                                 className="flex items-center gap-2 text-gray-500 hover:text-white mb-6 text-sm uppercase tracking-wide transition-colors"
                             >
-                                ← Retour aux choix
+                                ← Retour
                             </button>
                             <form id="contact-form" onSubmit={handleSubmit} className="space-y-6">
                                 <div className="space-y-2">
