@@ -3,12 +3,19 @@
 
 <head>
   <meta charset="UTF-8" />
-  <!-- Favicon -->
-  <link rel="icon" type="image/png" href="/logo_white_192.png" />
+  <!-- Favicon - SVG with dark/light mode support -->
+  <link rel="icon" type="image/svg+xml" href="/logo_black.svg" media="(prefers-color-scheme: light)" />
+  <link rel="icon" type="image/svg+xml" href="/logo_white.svg" media="(prefers-color-scheme: dark)" />
+  <!-- PNG fallback for older browsers -->
+  <link rel="icon" type="image/png" sizes="192x192" href="/logo_black_192.png" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/logo_black_192.png" />
+  <link rel="shortcut icon" href="/logo_black_192.png" />
 
-  <!-- Apple Touch Icons -->
-  <link rel="apple-touch-icon" href="/logo_white_192.png" sizes="192x192" />
-  <link rel="apple-touch-icon" href="/logo_white_512.png" sizes="512x512" />
+  <!-- Apple Touch Icons with dark/light mode support -->
+  <link rel="apple-touch-icon" href="/logo_black_192.png" sizes="192x192" media="(prefers-color-scheme: light)" />
+  <link rel="apple-touch-icon" href="/logo_black_512.png" sizes="512x512" media="(prefers-color-scheme: light)" />
+  <link rel="apple-touch-icon" href="/logo_white_192.png" sizes="192x192" media="(prefers-color-scheme: dark)" />
+  <link rel="apple-touch-icon" href="/logo_white_512.png" sizes="512x512" media="(prefers-color-scheme: dark)" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Leonard Intelligence - Solutions IA Sur-Mesure pour Entreprises</title>
   <meta name="description"
