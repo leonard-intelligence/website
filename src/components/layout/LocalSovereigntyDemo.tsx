@@ -1,5 +1,5 @@
 import { DotIcon, leonardIcons } from "@/components/ui/LeonardIcons";
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState } from "react";
 
 export function LocalSovereigntyDemo() {
     const [rotation, setRotation] = useState(0);
