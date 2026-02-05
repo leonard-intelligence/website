@@ -12,7 +12,7 @@ export function SectionCapabilitiesBento() {
     const capabilities = USE_CASES.filter(item => item.category === "Expertise Technique");
 
     return (
-        <section ref={sectionRef} id="section-capabilities" className="py-24 bg-black border-t border-white/10 relative overflow-hidden">
+        <section ref={sectionRef} id="section-capabilities" className="py-24 bg-black border-t border-b border-white/10 -mr-px relative overflow-hidden">
             {/* Background Effects */}
             <div className="absolute inset-0 bg-pattern-grid opacity-[0.02]" />
             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-[#E67E22]/5 blur-[120px] -z-10 rounded-full" />

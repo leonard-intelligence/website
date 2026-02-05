@@ -131,7 +131,7 @@ export function Hero() {
             </div>
 
             {/* LOWER TIER: Footer Block (TrustBar) - Distinct Background */}
-            <div className="w-full z-30 bg-black border-t border-b border-white/5 relative">
+            <div className="w-full z-30 bg-black border-l border-t border-b border-white/5 relative">
                 <TrustBar />
             </div>
         </section>
