@@ -204,32 +204,39 @@ export function Contact() {
                                 <div className="absolute inset-x-0 bottom-0 h-[2px] bg-[#3D2314]/0 group-hover/item1:bg-[#3D2314]/100 transition-all duration-500" />
 
                                 <div className="relative z-10 w-full flex flex-col items-center space-y-8">
-                                    <div className="relative">
-                                        <div className="w-16 h-16 sm:w-24 sm:h-24 rounded-full border border-[#3D2314]/30 overflow-hidden mb-2 group-hover/item1:border-[#3D2314]/60 transition-colors duration-500">
-                                            <img
-                                                src="/assets/images/team/melvin.webp"
-                                                alt="Melvin"
-                                                className="w-full h-full object-cover grayscale-[0.2] group-hover/item1:grayscale-0 transition-all duration-500 scale-110 group-hover/item1:scale-100"
-                                            />
+                                    <div className="flex flex-col items-center space-y-3">
+                                        <div className="relative">
+                                            <div className="w-16 h-16 sm:w-24 sm:h-24 rounded-full border border-[#3D2314]/30 overflow-hidden mb-2 group-hover/item1:border-[#3D2314]/60 transition-colors duration-500">
+                                                <img
+                                                    src="/assets/images/team/melvin.webp"
+                                                    alt="Guillaume"
+                                                    className="w-full h-full object-cover grayscale-[0.2] group-hover/item1:grayscale-0 transition-all duration-500 scale-110 group-hover/item1:scale-100"
+                                                />
+                                            </div>
+                                            <div className="absolute bottom-1 right-1 w-6 h-6 bg-black border border-[#3D2314]/20 rounded-full flex items-center justify-center">
+                                                <div className="w-3 h-3 bg-[#22C55E] rounded-full animate-pulse shadow-[0_0_10px_rgba(34,197,94,0.8)]" />
+                                            </div>
                                         </div>
-                                        <div className="absolute bottom-1 right-1 w-6 h-6 bg-black border border-[#3D2314]/20 rounded-full flex items-center justify-center">
-                                            <div className="w-3 h-3 bg-[#22C55E] rounded-full animate-pulse shadow-[0_0_10px_rgba(34,197,94,0.8)]" />
+
+                                        <div className="text-center space-y-1">
+                                            <p className="text-white font-mono text-sm uppercase tracking-wider">Guillaume</p>
+                                            <p className="text-[#E67E22] text-[10px] font-mono uppercase tracking-widest">Consultant IA</p>
                                         </div>
                                     </div>
 
                                     <div className="space-y-4">
-                                        <h4 className="text-sm sm:text-xl font-mono uppercase font-normal tracking-[0.2em] text-white group-hover/item1:text-white transition-colors">
-                                            Parlons
+                                        <h4 className="text-sm sm:text-2xl font-mono uppercase font-normal tracking-[0.2em] text-white group-hover/item1:text-white transition-colors leading-tight">
+                                            Parlons <br /> ensemble
                                         </h4>
                                         <div className="h-[1px] w-10 mx-auto bg-[#3D2314]/30 group-hover/item1:w-14 group-hover/item1:bg-[#3D2314]/60 transition-all duration-500" />
                                         <p className="text-[10px] sm:text-xs font-mono uppercase tracking-[0.15em] text-gray-400 group-hover/item1:text-[#B1937F] transition-colors leading-relaxed">
-                                            Visio <br className="sm:hidden" /> 30 min
+                                            Visio gratuite <br /> de 30 minutes
                                         </p>
                                     </div>
                                 </div>
 
                                 <div className="mt-8 sm:mt-12 relative z-10 text-[8px] sm:text-[10px] font-mono uppercase tracking-[0.4em] text-gray-500 group-hover/item1:text-[#E67E22] transition-colors flex items-center gap-2">
-                                    <span>RDV</span>
+                                    <span>Je prends rendez-vous</span>
                                     <DotIcon icon={leonardIcons.arrowRight} size={12} className="text-[#3D2314] group-hover/item1:text-[#E67E22]" />
                                 </div>
                             </button>
@@ -248,18 +255,18 @@ export function Contact() {
                                     </div>
 
                                     <div className="space-y-4">
-                                        <h4 className="text-sm sm:text-xl font-mono uppercase font-normal tracking-[0.2em] text-white/80 group-hover/item2:text-white transition-colors">
+                                        <h4 className="text-sm sm:text-2xl font-mono uppercase font-normal tracking-[0.2em] text-white/80 group-hover/item2:text-white transition-colors">
                                             Message
                                         </h4>
                                         <div className="h-[1px] w-10 mx-auto bg-white/20 group-hover/item2:w-14 group-hover/item2:bg-white/50 transition-all duration-500" />
                                         <p className="text-[10px] sm:text-xs font-mono uppercase tracking-[0.15em] text-gray-500 group-hover/item2:text-gray-400 transition-colors">
-                                            24h
+                                            Réponse sous 24h
                                         </p>
                                     </div>
                                 </div>
 
                                 <div className="mt-8 sm:mt-12 relative z-10 text-[8px] sm:text-[10px] font-mono uppercase tracking-[0.4em] text-gray-500 group-hover/item2:text-white transition-colors flex items-center gap-2">
-                                    <span>ÉCRIRE</span>
+                                    <span>Envoyer ma demande</span>
                                     <span className="w-1.5 h-1.5 bg-white/40 rounded-full" />
                                 </div>
                             </button>

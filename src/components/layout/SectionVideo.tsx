@@ -91,21 +91,21 @@ export function SectionVideo() {
                     </div>
 
                     {/* Research Items List */}
-                    <div className="flex-1 flex flex-col">
-                        <div id="expertise-video-item-1" className="flex-1 border-b border-white/10 p-8 group hover:bg-white/5 transition-colors relative reveal-left stagger-1 hover-lift">
+                    <div className="flex-1 grid grid-cols-2 lg:flex lg:flex-col">
+                        <div id="expertise-video-item-1" className="border-b lg:border-b border-r lg:border-r-0 border-white/10 p-4 sm:p-8 group hover:bg-white/5 transition-colors relative reveal-left stagger-1 hover-lift">
                             <div className="w-8 h-8 bg-black border border-white/10 flex items-center justify-center mb-4 text-white icon-bounce">
                                 <DotIcon icon={leonardIcons.avatarsIA} size={20} fillColor="white" />
                             </div>
-                            <h3 className="text-white font-mono text-lg mb-2 uppercase tracking-[-0.02em]">Avatars IA</h3>
-                            <p className="text-muted-foreground text-sm">Présentateurs virtuels, formation à grande échelle, personnalisation vidéo par destinataire.</p>
+                            <h3 className="text-white font-mono text-sm sm:text-lg mb-2 uppercase tracking-[-0.02em]">Avatars IA</h3>
+                            <p className="text-zinc-500 text-[10px] sm:text-sm">Formation, personnalisation vidéo.</p>
                         </div>
 
-                        <div id="expertise-video-item-2" className="flex-1 p-8 group hover:bg-white/5 transition-colors relative reveal-left stagger-2 hover-lift">
+                        <div id="expertise-video-item-2" className="border-b lg:border-b-0 p-4 sm:p-8 group hover:bg-white/5 transition-colors relative reveal-left stagger-2 hover-lift">
                             <div className="w-8 h-8 bg-black border border-white/10 flex items-center justify-center mb-4 text-white icon-bounce">
                                 <DotIcon icon={leonardIcons.productionAutomatisee} size={20} fillColor="white" />
                             </div>
-                            <h3 className="text-white font-mono text-lg mb-2 uppercase tracking-[-0.02em]">Production Automatisée</h3>
-                            <p className="text-muted-foreground text-sm">Génération de clips marketing, adaptation de formats, montage assisté par IA.</p>
+                            <h3 className="text-white font-mono text-sm sm:text-lg mb-2 uppercase tracking-[-0.02em]">Vidéo Auto</h3>
+                            <p className="text-zinc-500 text-[10px] sm:text-sm">Montage assisté, clips marketing.</p>
                         </div>
                     </div>
                 </div>

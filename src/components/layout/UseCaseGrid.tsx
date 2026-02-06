@@ -49,10 +49,10 @@ export function UseCaseGrid() {
                                 key={cat}
                                 onClick={() => setActiveTab(cat)}
                                 className={cn(
-                                    "px-4 py-2 text-xs uppercase tracking-wider transition-colors border border-transparent flex items-center gap-2 whitespace-nowrap cursor-pointer",
+                                    "px-4 py-2 text-xs uppercase tracking-wider transition-all duration-300 border flex items-center gap-2 whitespace-nowrap cursor-pointer rounded-sm backdrop-blur-sm",
                                     activeTab === cat
-                                        ? "bg-white/10 text-white border-white/20"
-                                        : "text-zinc-500 hover:text-white"
+                                        ? "bg-white/10 text-white border-white/20 shadow-[0_0_15px_rgba(255,255,255,0.05)]"
+                                        : "bg-zinc-900/50 text-zinc-400 border-white/5 hover:bg-zinc-800 hover:text-white hover:border-white/20 hover:shadow-sm"
                                 )}
                             >
                                 <DotIcon
@@ -69,7 +69,7 @@ export function UseCaseGrid() {
                 </div>
 
                 {/* Grid */}
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div className="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-8">
                     {filteredCases.map((item, index) => (
                         <TechCard
                             key={index}

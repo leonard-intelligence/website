@@ -10,21 +10,62 @@ export function Methodology() {
     return (
         <section id="section-methodology" className="py-24 bg-black" aria-labelledby="methodology-heading">
             <div className="max-w-7xl mx-auto px-6">
-                <div className="flex flex-col md:flex-row justify-between items-end mb-16">
-                    <div className="reveal-up">
+                <div className="flex flex-col mb-16">
+                    <div className="reveal-up mb-12">
                         <div className="absolute -inset-4 bg-[#E67E22]/10 blur-3xl -z-10 rounded-full opacity-50" aria-hidden="true" />
                         <span className="text-[#E67E22] text-sm tracking-widest uppercase mb-4 block flex items-center gap-2">
                             <span className="w-2 h-2 bg-[#E67E22] rounded-full animate-pulse"></span>
                             Approche Sur-Mesure
                         </span>
-                        <h2 id="methodology-heading" className="text-4xl font-medium font-mono text-white relative z-10 uppercase">
-                            Vous décidez de votre <span className="text-[#E67E22]">architecture.</span>
+                        <h2 id="methodology-heading" className="text-4xl md:text-5xl font-medium font-mono text-white relative z-10 uppercase mb-4">
+                            De l'audit au déploiement. <br className="hidden md:block" />
+                            <span className="text-zinc-500">En 8 semaines.</span>
                         </h2>
+                        <p className="text-zinc-400 font-mono text-sm">
+                            Souverain par défaut. Open-source en priorité.
+                        </p>
                     </div>
-                    <p className="text-gray-400 max-w-lg text-right hidden md:block text-sm">
-                        Nous choisissons la meilleure technologie pour votre besoin,<br />
-                        sans dogmatisme.
-                    </p>
+
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-8 relative">
+                        {/* Connecting Line (Desktop) */}
+                        <div className="hidden md:block absolute top-12 left-[16%] right-[16%] h-[1px] bg-gradient-to-r from-[#E67E22]/0 via-[#E67E22]/30 to-[#E67E22]/0 z-0"></div>
+
+                        {/* STEP 1 */}
+                        <div className="group relative z-10 flex flex-col items-center text-center">
+                            <div className="w-24 h-24 bg-[#121110] border border-white/10 rounded-full flex items-center justify-center mb-6 group-hover:border-[#E67E22]/50 group-hover:bg-[#E67E22]/5 transition-all duration-500 relative">
+                                <div className="absolute inset-0 bg-[#E67E22]/20 blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-full"></div>
+                                <DotIcon icon={leonardIcons.search} size={32} fillColor="#E67E22" />
+                                <div className="absolute -top-2 -right-2 w-8 h-8 rounded-full bg-[#1A1918] border border-white/10 flex items-center justify-center text-[#E67E22] font-mono text-xs font-bold">1</div>
+                            </div>
+                            <h3 className="text-xl font-mono text-white uppercase mb-2 group-hover:text-[#E67E22] transition-colors">Audit & Quick Wins</h3>
+                            <span className="text-[#E67E22] text-xs font-mono mb-3 py-1 px-2 bg-[#E67E22]/10 rounded border border-[#E67E22]/20">Semaine 1-2</span>
+                            <p className="text-zinc-400 text-sm max-w-[240px]">On identifie vos cas d'usage à fort ROI. Vous voyez les <span className="text-white">premiers résultats</span>.</p>
+                        </div>
+
+                        {/* STEP 2 */}
+                        <div className="group relative z-10 flex flex-col items-center text-center">
+                            <div className="w-24 h-24 bg-[#121110] border border-white/10 rounded-full flex items-center justify-center mb-6 group-hover:border-[#E67E22]/50 group-hover:bg-[#E67E22]/5 transition-all duration-500 relative">
+                                <div className="absolute inset-0 bg-[#E67E22]/20 blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-full"></div>
+                                <DotIcon icon={leonardIcons.sparkles} size={32} fillColor="#E67E22" />
+                                <div className="absolute -top-2 -right-2 w-8 h-8 rounded-full bg-[#1A1918] border border-white/10 flex items-center justify-center text-[#E67E22] font-mono text-xs font-bold">2</div>
+                            </div>
+                            <h3 className="text-xl font-mono text-white uppercase mb-2 group-hover:text-[#E67E22] transition-colors">POC sur cas réel</h3>
+                            <span className="text-[#E67E22] text-xs font-mono mb-3 py-1 px-2 bg-[#E67E22]/10 rounded border border-[#E67E22]/20">Semaine 3-5</span>
+                            <p className="text-zinc-400 text-sm max-w-[240px]">Un agent fonctionnel, sur vos données, <span className="text-white">intégré à vos outils</span>.</p>
+                        </div>
+
+                        {/* STEP 3 */}
+                        <div className="group relative z-10 flex flex-col items-center text-center">
+                            <div className="w-24 h-24 bg-[#121110] border border-white/10 rounded-full flex items-center justify-center mb-6 group-hover:border-[#E67E22]/50 group-hover:bg-[#E67E22]/5 transition-all duration-500 relative">
+                                <div className="absolute inset-0 bg-[#E67E22]/20 blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-full"></div>
+                                <DotIcon icon={leonardIcons.building} size={32} fillColor="#E67E22" />
+                                <div className="absolute -top-2 -right-2 w-8 h-8 rounded-full bg-[#1A1918] border border-white/10 flex items-center justify-center text-[#E67E22] font-mono text-xs font-bold">3</div>
+                            </div>
+                            <h3 className="text-xl font-mono text-white uppercase mb-2 group-hover:text-[#E67E22] transition-colors">Production</h3>
+                            <span className="text-[#E67E22] text-xs font-mono mb-3 py-1 px-2 bg-[#E67E22]/10 rounded border border-[#E67E22]/20">Semaine 6-8</span>
+                            <p className="text-zinc-400 text-sm max-w-[240px]">Déploiement, formation des équipes, <span className="text-white">monitoring</span>.</p>
+                        </div>
+                    </div>
                 </div>
 
                 <div className="mt-16 border border-white/10 overflow-hidden">

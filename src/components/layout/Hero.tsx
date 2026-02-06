@@ -6,17 +6,21 @@ import { TrustBar } from './TrustBar';
 
 export function Hero() {
     const [animationPhase, setAnimationPhase] = useState<'intro' | 'content'>(() => {
-        if (typeof window !== 'undefined' && sessionStorage.getItem('splash_shown') === 'true') {
-            return 'content';
+        if (typeof window !== 'undefined') {
+            const params = new URLSearchParams(window.location.search);
+            if (params.get('splash') === 'force') return 'intro';
+            if (sessionStorage.getItem('splash_shown') === 'true') {
+                return 'content';
+            }
         }
         return 'intro';
     });
 
     useEffect(() => {
-        // Sequence: 1.5s of illustration with effects, then transition to content
+        // Sequence: 5s of splash, then transition contents
         const timer = setTimeout(() => {
             setAnimationPhase('content');
-        }, 1500);
+        }, 5000);
         return () => clearTimeout(timer);
     }, []);
 
@@ -49,31 +53,24 @@ export function Hero() {
                             </div>
 
                             <h1 id="hero-headline" className="font-mono text-[1.75rem] sm:text-4xl lg:text-[4rem] font-medium leading-[1.1] tracking-[-0.04em] mb-6 lg:mb-8 max-w-[950px] uppercase text-white drop-shadow-xl">
-                                Montez dans le train de l'IA,<br />
-                                <span className="text-white/70">sans compromettre vos données</span>
+                                L'IA opérationnelle pour les entreprises françaises.
                             </h1>
 
-                            <p className="font-mono text-base lg:text-xl text-[#E67E22] mb-6 tracking-wide">
-                                TEXTE. IMAGE. AUDIO. VIDÉO.
-                            </p>
-
                             <p className="text-[0.9rem] lg:text-[1.1rem] text-white/90 leading-relaxed max-w-xl mb-10 lg:mb-12 drop-shadow-lg font-normal pr-4">
-                                L'IA qui fonctionne chez vous, pas aux États-Unis. Vos données, votre infrastructure, vos règles.<br />
-                                Open-source prioritaire, propriétaire si nécessaire. Déploiement sur-mesure.
+                                Agents autonomes, automatisation, souveraineté des données. Déployé sur votre infrastructure.
                             </p>
 
-                            <div className="flex flex-row flex-wrap gap-2 mt-2 w-full sm:w-auto">
+                            <div className="flex flex-row flex-wrap gap-4 mt-2 w-full sm:w-auto">
                                 <a
                                     href="#section-contact"
                                     id="hero-cta-primary"
-                                    className="bg-[#E67E22] text-white border border-[#E67E22] px-4 py-2.5 font-normal uppercase text-[0.7rem] sm:text-base inline-block transition-all hover:bg-white hover:text-[#E67E22] hover:-translate-y-0.5 shadow-lg shadow-orange-500/20 text-center whitespace-nowrap"
+                                    className="bg-[#E67E22] text-white border border-[#E67E22] px-6 py-3 font-normal uppercase text-sm sm:text-base inline-block transition-all hover:bg-white hover:text-[#E67E22] hover:-translate-y-0.5 shadow-lg shadow-orange-500/20 text-center whitespace-nowrap backdrop-blur-sm"
                                 >
                                     PARLONS DE VOTRE PROJET
                                 </a>
                                 <a
                                     href="#section-solutions"
-                                    id="hero-cta-secondary"
-                                    className="bg-transparent text-[#E67E22] px-4 py-2.5 font-normal text-[0.7rem] sm:text-[0.85rem] uppercase inline-block border border-[#E67E22]/50 transition-all hover:bg-[#E67E22]/10 hover:border-[#E67E22] text-center whitespace-nowrap"
+                                    className="bg-white/5 text-white border border-white/20 px-6 py-3 font-normal uppercase text-sm sm:text-base inline-block transition-all hover:bg-white/10 hover:border-white/40 hover:-translate-y-0.5 text-center whitespace-nowrap backdrop-blur-sm"
                                 >
                                     EXPLORER NOS SOLUTIONS
                                 </a>

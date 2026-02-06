@@ -30,7 +30,7 @@ export function TrustBar() {
                     PARTENAIRES
                 </div>
                 <div
-                    className="flex flex-1 overflow-hidden items-center"
+                    className="flex flex-1 overflow-hidden items-center max-w-full"
                     role="list"
                 >
                     <div className="flex flex-shrink-0 w-max items-center animate-[scroll-rtl_30s_linear_infinite]" aria-hidden="false">

@@ -58,6 +58,8 @@ export default function App() {
     const [splashComplete, setSplashComplete] = useState(() => {
         // Check if splash has already been shown in this session
         if (typeof window !== 'undefined') {
+            const params = new URLSearchParams(window.location.search);
+            if (params.get('splash') === 'force') return false;
             return sessionStorage.getItem('splash_shown') === 'true';
         }
         return false;

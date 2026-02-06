@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { FxImage } from '../fx/FxImage';
 import { useFxConfig } from '../fx/FxContext';
 
+
 interface SplashScreenProps {
     onExitStart: () => void;
     onComplete: () => void;
@@ -12,17 +13,17 @@ export function SplashScreen({ onExitStart, onComplete }: SplashScreenProps) {
     const [phase, setPhase] = useState<'visible' | 'exiting' | 'done'>('visible');
 
     useEffect(() => {
-        // Phase 1: Show logo for 2.5s
+        // Phase 1: Show logo for 1s
         const showTimer = setTimeout(() => {
             setPhase('exiting');
             onExitStart(); // Reveal site now
-        }, 2500);
+        }, 1000);
 
         // Phase 2: Exit animation takes 1s, then mark done
         const exitTimer = setTimeout(() => {
             setPhase('done');
             onComplete();
-        }, 3500);
+        }, 2000);
 
         return () => {
             clearTimeout(showTimer);
@@ -38,11 +39,11 @@ export function SplashScreen({ onExitStart, onComplete }: SplashScreenProps) {
                 }`}
         >
             <div
-                className={`w-[60%] max-w-[300px] aspect-square ${phase === 'visible' ? 'animate-fade-in' : 'animate-hero-exit'
+                className={`w-[60%] max-w-[300px] aspect-square transition-opacity duration-1000 ${phase === 'visible' ? 'opacity-100 scale-100' : 'opacity-0 scale-[5]'
                     }`}
             >
                 <FxImage
-                    src="/logo_white.png"
+                    src="/logo_white_512.png"
                     alt="Leonard Intelligence"
                     className="w-full h-full"
                     style={{ width: '100%', height: '100%' }}
