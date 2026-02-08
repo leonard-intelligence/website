@@ -1,5 +1,5 @@
 import { DotIcon, leonardIcons } from "@/components/ui/LeonardIcons";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 // --- Types & Data ---
 
@@ -58,20 +58,37 @@ const AGENT_CONFIG: Record<AgentRole, { icon: any; color: string }> = {
     DEV: { icon: leonardIcons.openSourceFirst, color: "#10B981" }, // Green
 };
 
+const FRAME_INTERVAL = 1000 / 30;
+
 export function AgentWorkflowDemo() {
     const [currentStepIndex, setCurrentStepIndex] = useState(0);
     const [progress, setProgress] = useState(0);
+    const isVisibleRef = useRef(false);
+    const containerRef = useRef<HTMLDivElement>(null);
 
     const currentStep = WORKFLOW_STEPS[currentStepIndex];
     const agent = AGENT_CONFIG[currentStep.role];
 
+    // IntersectionObserver to pause when off-screen
+    useEffect(() => {
+        const el = containerRef.current;
+        if (!el) return;
+        const obs = new IntersectionObserver(([e]) => { isVisibleRef.current = e.isIntersecting; }, { threshold: 0.1 });
+        obs.observe(el);
+        return () => obs.disconnect();
+    }, []);
+
     useEffect(() => {
         let startTime = Date.now();
         let animationFrameId: number;
+        let lastFrame = 0;
 
-        const animate = () => {
-            const now = Date.now();
-            const elapsed = now - startTime;
+        const animate = (now: number) => {
+            if (!isVisibleRef.current) { animationFrameId = requestAnimationFrame(animate); return; }
+            if (now - lastFrame < FRAME_INTERVAL) { animationFrameId = requestAnimationFrame(animate); return; }
+            lastFrame = now;
+
+            const elapsed = Date.now() - startTime;
             const newProgress = Math.min((elapsed / currentStep.duration) * 100, 100);
 
             setProgress(newProgress);
@@ -79,11 +96,10 @@ export function AgentWorkflowDemo() {
             if (elapsed < currentStep.duration) {
                 animationFrameId = requestAnimationFrame(animate);
             } else {
-                // Next step
                 setTimeout(() => {
                     setCurrentStepIndex((prev) => (prev + 1) % WORKFLOW_STEPS.length);
                     setProgress(0);
-                }, 200); // Short pause between steps
+                }, 200);
             }
         };
 
@@ -93,7 +109,7 @@ export function AgentWorkflowDemo() {
     }, [currentStepIndex]);
 
     return (
-        <div className="border border-white/20 bg-zinc-900/50 rounded-lg overflow-hidden shadow-2xl relative z-10 w-full h-[450px] flex flex-col">
+        <div ref={containerRef} className="border border-white/20 bg-zinc-900/50 rounded-lg overflow-hidden shadow-2xl relative z-10 w-full h-[450px] flex flex-col">
             {/* Context Header */}
             <div className="flex items-center justify-between px-3 lg:px-5 py-3 bg-zinc-800/50 border-b border-white/10 shrink-0">
                 <div className="flex items-center gap-2">

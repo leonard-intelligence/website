@@ -1,9 +1,9 @@
-import { Suspense, lazy, useState, useCallback } from 'react';
+import { Suspense, lazy } from 'react';
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import { Navbar } from './components/layout/Navbar';
 import { FxProvider } from './components/fx';
 import { SectionLoader } from './components/ui/SectionLoader';
-import { SplashScreen } from './components/layout/SplashScreen';
+
 import { ErrorBoundary } from './components/ErrorBoundary';
 
 // Eager load Home since it's the main entry
@@ -22,7 +22,7 @@ function NotFound() {
             <p className="text-gray-400 text-lg mb-8">Cette page n'existe pas.</p>
             <a
                 href="/"
-                className="bg-[#E67E22] text-white px-6 py-3 font-normal uppercase text-sm inline-block transition-all hover:bg-white hover:text-[#E67E22]"
+                className="bg-[#D35400] text-white px-6 py-3 font-semibold uppercase text-sm inline-block transition-all hover:bg-white hover:text-[#D35400]"
             >
                 Retour a l'accueil
             </a>
@@ -40,7 +40,7 @@ function AppLayout() {
             {/* Skip to content link for accessibility */}
             <a
                 href="#main-content"
-                className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-[300] focus:bg-[#E67E22] focus:text-white focus:px-4 focus:py-2 focus:text-sm"
+                className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-[300] focus:bg-[#D35400] focus:text-white focus:px-4 focus:py-2 focus:text-sm"
             >
                 Aller au contenu principal
             </a>
@@ -80,30 +80,9 @@ function AppLayout() {
 }
 
 export default function App() {
-    const [splashComplete, setSplashComplete] = useState(() => {
-        if (typeof window !== 'undefined') {
-            const params = new URLSearchParams(window.location.search);
-            if (params.get('splash') === 'force') return false;
-            return sessionStorage.getItem('splash_shown') === 'true';
-        }
-        return false;
-    });
-
-    const handleExitStart = useCallback(() => {
-        // No-op - content is always visible behind splash
-    }, []);
-
-    const handleSplashComplete = useCallback(() => {
-        setSplashComplete(true);
-        if (typeof window !== 'undefined') {
-            sessionStorage.setItem('splash_shown', 'true');
-        }
-    }, []);
-
     return (
         <FxProvider>
             <Router>
-                {!splashComplete && <SplashScreen onExitStart={handleExitStart} onComplete={handleSplashComplete} />}
                 <AppLayout />
             </Router>
         </FxProvider>

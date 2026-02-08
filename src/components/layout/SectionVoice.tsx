@@ -39,7 +39,7 @@ export function SectionVoice() {
                             <div className="w-8 h-8 bg-black border border-white/10 flex items-center justify-center mb-4 text-white icon-bounce">
                                 <DotIcon icon={leonardIcons.reponse24h} size={20} fillColor="white" />
                             </div>
-                            <h3 className="text-white font-mono text-sm sm:text-lg mb-2 uppercase tracking-[-0.02em]">Agents Vocaux 24/7</h3>
+                            <p className="text-white font-mono text-sm sm:text-lg mb-2 uppercase tracking-[-0.02em]">Agents Vocaux 24/7</p>
                             <p className="text-zinc-400 text-[10px] sm:text-sm">Prise de commande, qualification, support niveau 1 : une voix naturelle qui ne dort jamais.</p>
                         </div>
 
@@ -47,7 +47,7 @@ export function SectionVoice() {
                             <div className="w-8 h-8 bg-black border border-white/10 flex items-center justify-center mb-4 text-white">
                                 <DotIcon icon={leonardIcons.speechToText} size={20} fillColor="white" />
                             </div>
-                            <h3 className="text-white font-mono text-sm sm:text-lg mb-2 uppercase tracking-[-0.02em]">Transcription & Analyse</h3>
+                            <p className="text-white font-mono text-sm sm:text-lg mb-2 uppercase tracking-[-0.02em]">Transcription & Analyse</p>
                             <p className="text-zinc-400 text-[10px] sm:text-sm">Réunions, appels, consultations : transcrits, résumés et transformés en actions.</p>
                         </div>
 
@@ -55,7 +55,7 @@ export function SectionVoice() {
                             <div className="w-8 h-8 bg-black border border-white/10 flex items-center justify-center mb-4 text-white">
                                 <DotIcon icon={leonardIcons.sparkles} size={20} fillColor="white" />
                             </div>
-                            <h3 className="text-white font-mono text-sm sm:text-lg mb-2 uppercase tracking-[-0.02em]">Intelligence Conversationnelle</h3>
+                            <p className="text-white font-mono text-sm sm:text-lg mb-2 uppercase tracking-[-0.02em]">Intelligence Conversationnelle</p>
                             <p className="text-zinc-400 text-[10px] sm:text-sm">Sentiment, intentions, coaching commercial : insights extraits de chaque interaction.</p>
                         </div>
                     </div>

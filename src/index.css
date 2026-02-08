@@ -363,32 +363,31 @@
   width: 100%;
 }
 
-/* PULSE GLOW FOR CTA */
-@keyframes pulse-glow {
-
-  0%,
-  100% {
-    box-shadow: 0 0 0 0 rgba(230, 126, 34, 0.4);
-  }
-
-  50% {
-    box-shadow: 0 0 20px 5px rgba(230, 126, 34, 0.2);
-  }
+/* PULSE GLOW FOR CTA — composable (opacity on pseudo-element) */
+@keyframes pulse-glow-opacity {
+  0%, 100% { opacity: 0; }
+  50% { opacity: 1; }
 }
 
 .animate-pulse-glow {
-  animation: pulse-glow 3s ease-in-out infinite;
+  position: relative;
 }
 
-/* CTA SHIMMER EFFECT */
-@keyframes cta-shimmer {
-  0% {
-    background-position: -200% 0;
-  }
+.animate-pulse-glow::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  box-shadow: 0 0 20px 5px rgba(230, 126, 34, 0.3);
+  opacity: 0;
+  animation: pulse-glow-opacity 3s ease-in-out infinite;
+  pointer-events: none;
+}
 
-  100% {
-    background-position: 200% 0;
-  }
+/* CTA SHIMMER EFFECT — composable (translateX instead of background-position) */
+@keyframes cta-shimmer-slide {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(300%); }
 }
 
 /* CTA ARROW BOUNCE */
@@ -404,17 +403,10 @@
   }
 }
 
-/* CTA GLOW PULSE */
-@keyframes cta-glow-pulse {
-
-  0%,
-  100% {
-    box-shadow: 0 0 15px rgba(230, 126, 34, 0.4);
-  }
-
-  50% {
-    box-shadow: 0 0 25px rgba(230, 126, 34, 0.6);
-  }
+/* CTA GLOW PULSE — composable (opacity on ::after pseudo-element) */
+@keyframes cta-glow-opacity {
+  0%, 100% { opacity: 0.5; }
+  50% { opacity: 1; }
 }
 
 /* CTA BUTTON STYLES */
@@ -422,33 +414,44 @@
   position: relative;
   overflow: hidden;
   background: linear-gradient(135deg, #E67E22 0%, #D35400 100%);
-  animation: cta-glow-pulse 2.5s ease-in-out infinite;
-  animation-delay: 1.5s;
 }
 
+/* Shimmer sweep via composable translateX */
 .cta-contact-btn::before {
   content: '';
   position: absolute;
   top: 0;
-  left: 0;
+  left: -100%;
   width: 100%;
   height: 100%;
   background: linear-gradient(90deg,
       transparent 0%,
       rgba(255, 255, 255, 0.3) 50%,
       transparent 100%);
-  background-size: 200% 100%;
-  animation: cta-shimmer 3s ease-in-out infinite;
+  animation: cta-shimmer-slide 3s ease-in-out infinite;
   animation-delay: 2s;
+  pointer-events: none;
+}
+
+/* Glow pulse via composable opacity */
+.cta-contact-btn::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  box-shadow: 0 0 25px rgba(230, 126, 34, 0.6);
+  opacity: 0.5;
+  animation: cta-glow-opacity 2.5s ease-in-out infinite;
+  animation-delay: 1.5s;
+  pointer-events: none;
 }
 
 .cta-contact-btn:hover {
-  animation: none;
   box-shadow: 0 0 30px rgba(230, 126, 34, 0.5);
   transform: scale(1.02);
 }
 
-.cta-contact-btn:hover::before {
+.cta-contact-btn:hover::before,
+.cta-contact-btn:hover::after {
   animation: none;
   opacity: 0;
 }
@@ -576,6 +579,12 @@
 
   .animate-pulse-glow,
   .animate-fade-in-up {
+    animation: none;
+  }
+
+  .animate-pulse-glow::after,
+  .cta-contact-btn::before,
+  .cta-contact-btn::after {
     animation: none;
   }
 

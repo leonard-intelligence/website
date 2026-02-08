@@ -16,6 +16,8 @@ export function Navbar() {
                         <img
                             src={logo}
                             alt="Leonard Intelligence Logo"
+                            width={201}
+                            height={32}
                             className="h-8 mr-2.5 w-auto object-contain"
                         />
                     </a>

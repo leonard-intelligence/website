@@ -1,5 +1,5 @@
 import { DotIcon, leonardIcons } from "@/components/ui/LeonardIcons";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 // Types
 type FileType = "PDF" | "XLS" | "DOC" | "MAIL";
@@ -74,12 +74,16 @@ function FileIcon({ type, color, isActive }: { type: string; color: string; isAc
     );
 }
 
+const KB_FRAME_INTERVAL = 1000 / 30;
+
 export function KnowledgeBaseDemo() {
     const [nodes, setNodes] = useState<FileNode[]>([]);
     const [phase, setPhase] = useState<"IDLE" | "TYPING" | "SCANNING" | "RESULTS">("IDLE");
     const [currentScenarioIndex, setCurrentScenarioIndex] = useState(0);
     const [typedQuery, setTypedQuery] = useState("");
     const [scanAngle, setScanAngle] = useState(0);
+    const isVisibleRef = useRef(false);
+    const containerRef = useRef<HTMLDivElement>(null);
 
     // Initialize Nodes
     useEffect(() => {
@@ -161,11 +165,25 @@ export function KnowledgeBaseDemo() {
     }, [phase, currentScenarioIndex]);
 
 
-    // Animation Loop (Orbit + Scan)
+    // IntersectionObserver to pause when off-screen
+    useEffect(() => {
+        const el = containerRef.current;
+        if (!el) return;
+        const obs = new IntersectionObserver(([e]) => { isVisibleRef.current = e.isIntersecting; }, { threshold: 0.1 });
+        obs.observe(el);
+        return () => obs.disconnect();
+    }, []);
+
+    // Animation Loop (Orbit + Scan) — throttled to 30fps
     useEffect(() => {
         let animationFrameId: number;
+        let lastFrame = 0;
 
-        const animate = () => {
+        const animate = (now: number) => {
+            if (!isVisibleRef.current) { animationFrameId = requestAnimationFrame(animate); return; }
+            if (now - lastFrame < KB_FRAME_INTERVAL) { animationFrameId = requestAnimationFrame(animate); return; }
+            lastFrame = now;
+
             setNodes((prev) => prev.map((node) => {
                 const newAngle = node.angle + 0.001;
                 return {
@@ -190,7 +208,7 @@ export function KnowledgeBaseDemo() {
     }, [phase]);
 
     return (
-        <div className="border border-white/20 bg-zinc-900/50 rounded-lg overflow-hidden shadow-2xl relative z-10 w-full h-[450px] flex flex-col">
+        <div ref={containerRef} className="border border-white/20 bg-zinc-900/50 rounded-lg overflow-hidden shadow-2xl relative z-10 w-full h-[450px] flex flex-col">
             {/* Context Header */}
             <div className="flex items-center justify-start px-3 lg:px-5 py-3 bg-zinc-800/50 border-b border-white/10 shrink-0">
                 {/* Search Bar - Widened & Larger */}
@@ -263,7 +281,7 @@ export function KnowledgeBaseDemo() {
             </div>
 
             {/* Status Footer */}
-            <div className="px-5 py-3 bg-zinc-800/30 border-t border-white/5 flex justify-between text-[10px] text-white/30">
+            <div className="px-5 py-3 bg-zinc-800/30 border-t border-white/5 flex justify-between text-[10px] text-white/50">
                 <div className="flex gap-4">
                     <span className={phase === "SCANNING" ? "text-[#E67E22] animate-pulse" : ""}>SCAN</span>
                     <span className={phase === "RESULTS" ? "text-white" : ""}>RÉSULTATS</span>

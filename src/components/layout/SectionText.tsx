@@ -39,7 +39,7 @@ export function SectionText() {
                             <div className="w-8 h-8 bg-black border border-white/10 flex items-center justify-center mb-4 text-white icon-bounce">
                                 <DotIcon icon={leonardIcons.marketingAutomation} size={20} fillColor="white" />
                             </div>
-                            <h3 className="text-white font-mono text-sm sm:text-lg mb-2 uppercase tracking-[-0.02em]">Automation</h3>
+                            <p className="text-white font-mono text-sm sm:text-lg mb-2 uppercase tracking-[-0.02em]">Automation</p>
                             <p className="text-zinc-400 text-[10px] sm:text-sm">Rédaction SEO, fiches produits, emails.</p>
                         </div>
 
@@ -47,7 +47,7 @@ export function SectionText() {
                             <div className="w-8 h-8 bg-black border border-white/10 flex items-center justify-center mb-4 text-white">
                                 <DotIcon icon={leonardIcons.ragChatbot} size={20} fillColor="white" />
                             </div>
-                            <h3 className="text-white font-mono text-sm sm:text-lg mb-2 uppercase tracking-[-0.02em]">RAG & Bots</h3>
+                            <p className="text-white font-mono text-sm sm:text-lg mb-2 uppercase tracking-[-0.02em]">RAG & Bots</p>
                             <p className="text-zinc-400 text-[10px] sm:text-sm">Assistants connectés 24/7.</p>
                         </div>
 
@@ -55,7 +55,7 @@ export function SectionText() {
                             <div className="w-8 h-8 bg-black border border-white/10 flex items-center justify-center mb-4 text-white">
                                 <DotIcon icon={leonardIcons.fineTuning} size={20} fillColor="white" />
                             </div>
-                            <h3 className="text-white font-mono text-sm sm:text-lg mb-2 uppercase tracking-[-0.02em]">Fine-Tuning</h3>
+                            <p className="text-white font-mono text-sm sm:text-lg mb-2 uppercase tracking-[-0.02em]">Fine-Tuning</p>
                             <p className="text-zinc-400 text-[10px] sm:text-sm">Ton de marque et vocabulaire métier.</p>
                         </div>
                     </div>

@@ -39,7 +39,7 @@ export function SectionAgents() {
                             <div className="w-8 h-8 bg-black border border-white/10 flex items-center justify-center mb-4 text-white icon-bounce">
                                 <DotIcon icon={leonardIcons.workflows} size={20} fillColor="white" />
                             </div>
-                            <h3 className="text-white font-mono text-sm sm:text-lg mb-2 uppercase tracking-[-0.02em]">Workflows Agentiques</h3>
+                            <p className="text-white font-mono text-sm sm:text-lg mb-2 uppercase tracking-[-0.02em]">Workflows Agentiques</p>
                             <p className="text-zinc-400 text-[10px] sm:text-sm">Chaînes multi-étapes : un agent reçoit un email, extrait les données, met à jour le CRM, relance le client. Sans intervention.</p>
                         </div>
 
@@ -47,7 +47,7 @@ export function SectionAgents() {
                             <div className="w-8 h-8 bg-black border border-white/10 flex items-center justify-center mb-4 text-white">
                                 <DotIcon icon={leonardIcons.saisieAutomatisee} size={20} fillColor="white" />
                             </div>
-                            <h3 className="text-white font-mono text-sm sm:text-lg mb-2 uppercase tracking-[-0.02em]">Automatisation Documentaire</h3>
+                            <p className="text-white font-mono text-sm sm:text-lg mb-2 uppercase tracking-[-0.02em]">Automatisation Documentaire</p>
                             <p className="text-zinc-400 text-[10px] sm:text-sm">Factures, contrats, bons de commande : traités, classés et routés automatiquement.</p>
                         </div>
 
@@ -55,7 +55,7 @@ export function SectionAgents() {
                             <div className="w-8 h-8 bg-black border border-white/10 flex items-center justify-center mb-4 text-white">
                                 <DotIcon icon={leonardIcons.users} size={20} fillColor="white" />
                             </div>
-                            <h3 className="text-white font-mono text-sm sm:text-lg mb-2 uppercase tracking-[-0.02em]">Orchestration Multi-Agents</h3>
+                            <p className="text-white font-mono text-sm sm:text-lg mb-2 uppercase tracking-[-0.02em]">Orchestration Multi-Agents</p>
                             <p className="text-zinc-400 text-[10px] sm:text-sm">Plusieurs agents spécialisés collaborent sur un même processus. Chacun son rôle, un seul objectif.</p>
                         </div>
                     </div>

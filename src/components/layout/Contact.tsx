@@ -188,13 +188,13 @@ export function Contact() {
                             <div>
                                 <h3 className="text-white font-normal mb-1 font-mono uppercase">Email</h3>
                                 <p className="text-gray-400 text-sm">hello@leonardintelligence.com</p>
-                                <p className="text-gray-500 text-xs mt-1">Réponse sous 24h.</p>
+                                <p className="text-gray-400 text-xs mt-1">Réponse sous 24h.</p>
                             </div>
                         </div>
 
                         {/* Compliance Badges */}
                         <div className="pt-12 border-t border-white/5 mt-12">
-                            <p className="text-xs text-gray-500 mb-6 uppercase tracking-wider">Conformité</p>
+                            <p className="text-xs text-gray-400 mb-6 uppercase tracking-wider">Conformité</p>
                             <div className="grid grid-cols-2 gap-4">
                                 <div className="flex items-center gap-2 text-gray-400 hover:text-white transition-colors">
                                     <DotIcon icon={leonardIcons.aiActReady} size={16} fillColor="#E67E22" />
@@ -236,6 +236,8 @@ export function Contact() {
                                                 <img
                                                     src="/assets/images/team/melvin.webp"
                                                     alt="Guillaume"
+                                                    width={96}
+                                                    height={96}
                                                     className="w-full h-full object-cover grayscale-[0.2] group-hover/item1:grayscale-0 transition-all duration-500 scale-110 group-hover/item1:scale-100"
                                                 />
                                             </div>
@@ -265,7 +267,7 @@ export function Contact() {
                                     </div>
                                 </div>
 
-                                <div className="mt-8 sm:mt-12 relative z-10 text-[8px] sm:text-[10px] font-mono uppercase tracking-[0.4em] text-gray-500 group-hover/item1:text-[#E67E22] transition-colors flex items-center gap-2">
+                                <div className="mt-8 sm:mt-12 relative z-10 text-[10px] font-mono uppercase tracking-[0.4em] text-gray-300 group-hover/item1:text-[#E67E22] transition-colors flex items-center gap-2">
                                     <span>Je prends rendez-vous</span>
                                     <DotIcon
                                         icon={leonardIcons.arrowRight}
@@ -297,13 +299,13 @@ export function Contact() {
                                             Message
                                         </h4>
                                         <div className="h-[1px] w-10 mx-auto bg-white/20 group-hover/item2:w-14 group-hover/item2:bg-white/50 transition-all duration-500" />
-                                        <p className="text-[10px] sm:text-xs font-mono uppercase tracking-[0.15em] text-gray-500 group-hover/item2:text-gray-400 transition-colors">
+                                        <p className="text-[10px] sm:text-xs font-mono uppercase tracking-[0.15em] text-gray-300 group-hover/item2:text-gray-200 transition-colors">
                                             Réponse sous 24h
                                         </p>
                                     </div>
                                 </div>
 
-                                <div className="mt-8 sm:mt-12 relative z-10 text-[8px] sm:text-[10px] font-mono uppercase tracking-[0.4em] text-gray-500 group-hover/item2:text-white transition-colors flex items-center gap-2">
+                                <div className="mt-8 sm:mt-12 relative z-10 text-[10px] font-mono uppercase tracking-[0.4em] text-gray-300 group-hover/item2:text-white transition-colors flex items-center gap-2">
                                     <span>Envoyer ma demande</span>
                                     <span className="w-1.5 h-1.5 bg-white/40 rounded-full" />
                                 </div>
@@ -328,7 +330,7 @@ export function Contact() {
                         <div className="animate-in fade-in slide-in-from-right-4 duration-300">
                             <button
                                 onClick={() => setShowForm(false)}
-                                className="flex items-center gap-2 text-gray-500 hover:text-white mb-6 text-sm uppercase tracking-wide transition-colors"
+                                className="flex items-center gap-2 text-gray-400 hover:text-white mb-6 text-sm uppercase tracking-wide transition-colors"
                             >
                                 ← Retour
                             </button>
@@ -400,7 +402,7 @@ export function Contact() {
                                                 className={clsx(
                                                     'text-xs px-3 py-2 border transition-all duration-200 uppercase tracking-wide cursor-pointer',
                                                     selectedInterests.includes(interest)
-                                                        ? 'bg-[#E67E22] border-[#E67E22] text-white'
+                                                        ? 'bg-[#D35400] border-[#D35400] text-white font-semibold'
                                                         : 'bg-transparent border-white/10 text-gray-400 hover:border-white/30 hover:text-white'
                                                 )}
                                             >

@@ -39,7 +39,7 @@ export function SectionAudio() {
                             <div className="w-8 h-8 bg-black border border-white/10 flex items-center justify-center mb-4 text-white icon-bounce">
                                 <DotIcon icon={leonardIcons.speechToText} size={20} fillColor="white" />
                             </div>
-                            <h3 className="text-white font-mono text-sm sm:text-lg mb-2 uppercase tracking-[-0.02em]">Speech-to-Text</h3>
+                            <p className="text-white font-mono text-sm sm:text-lg mb-2 uppercase tracking-[-0.02em]">Speech-to-Text</p>
                             <p className="text-zinc-400 text-[10px] sm:text-sm">Transcription de réunions, analyse de sentiment, extraction de données.</p>
                         </div>
 
@@ -47,7 +47,7 @@ export function SectionAudio() {
                             <div className="w-8 h-8 bg-black border border-white/10 flex items-center justify-center mb-4 text-white">
                                 <DotIcon icon={leonardIcons.textToSpeech} size={20} fillColor="white" />
                             </div>
-                            <h3 className="text-white font-mono text-sm sm:text-lg mb-2 uppercase tracking-[-0.02em]">Audio Generation (TTS)</h3>
+                            <p className="text-white font-mono text-sm sm:text-lg mb-2 uppercase tracking-[-0.02em]">Audio Generation (TTS)</p>
                             <p className="text-zinc-400 text-[10px] sm:text-sm">Voix de synthèse pour vidéos, accueil téléphonique, doublage multilingue.</p>
                         </div>
                     </div>

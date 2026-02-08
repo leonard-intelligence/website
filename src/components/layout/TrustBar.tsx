@@ -31,9 +31,8 @@ export function TrustBar() {
                 </div>
                 <div
                     className="flex flex-1 overflow-hidden items-center max-w-full"
-                    role="list"
                 >
-                    <div className="flex flex-shrink-0 w-max items-center animate-[scroll-rtl_30s_linear_infinite]" aria-hidden="false">
+                    <div className="flex flex-shrink-0 w-max items-center animate-[scroll-rtl_30s_linear_infinite]" role="list">
                         {duplicatedLogos.map((logo, index) => (
                             <div
                                 key={`${logo.name}-${index}`}
@@ -45,6 +44,8 @@ export function TrustBar() {
                                 <img
                                     src={logo.src}
                                     alt={logo.name}
+                                    width={112}
+                                    height={28}
                                     className="h-4 sm:h-7 w-auto opacity-70 hover:opacity-100 transition-opacity"
                                     style={{ filter: 'brightness(0) invert(1)' }}
                                 />

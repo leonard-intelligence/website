@@ -12,6 +12,8 @@ export function Footer() {
                         <img
                             src={logo}
                             alt="Leonard Intelligence"
+                            width={201}
+                            height={32}
                             className="h-8 mb-2"
                         />
                         <p className="text-[#E67E22] text-xs uppercase tracking-wider">
@@ -23,7 +25,7 @@ export function Footer() {
                         <a href="mailto:hello@leonardintelligence.com" className="text-white hover:text-[#E67E22] transition-colors text-sm block mb-1 animated-underline">
                             hello@leonardintelligence.com
                         </a>
-                        <p className="text-gray-500 text-[10px]">France 🇫🇷</p>
+                        <p className="text-gray-400 text-[10px]">France 🇫🇷</p>
                     </div>
                 </div>
 
@@ -33,7 +35,7 @@ export function Footer() {
                     {/* Expertise */}
                     <nav aria-label="Expertises" className="flex flex-col">
                         <h4 className="font-mono font-normal text-white mb-6 uppercase text-xs tracking-wider">Expertises</h4>
-                        <ul className="space-y-3 text-gray-500 text-xs">
+                        <ul className="space-y-3 text-gray-400 text-xs">
                             <li><Link to="/#section-expertises" className="hover:text-white transition-colors">Agents & Automatisation</Link></li>
                             <li><Link to="/#section-expertises" className="hover:text-white transition-colors">Mémoire & Connaissance</Link></li>
                             <li><Link to="/#section-expertises" className="hover:text-white transition-colors">Voix & Relation Client</Link></li>
@@ -44,7 +46,7 @@ export function Footer() {
                     {/* Industries */}
                     <nav aria-label="Secteurs" className="flex flex-col">
                         <h4 className="font-mono font-normal text-white mb-6 uppercase text-xs tracking-wider">Secteurs</h4>
-                        <ul className="space-y-3 text-gray-500 text-xs">
+                        <ul className="space-y-3 text-gray-400 text-xs">
                             <li><Link to="/#section-solutions" className="hover:text-white transition-colors">Retail & E-commerce</Link></li>
                             <li><Link to="/#section-solutions" className="hover:text-white transition-colors">Industrie & Qualité</Link></li>
                             <li><Link to="/#section-solutions" className="hover:text-white transition-colors">Service & B2B</Link></li>
@@ -54,7 +56,7 @@ export function Footer() {
                     {/* Resources */}
                     <nav aria-label="Liens utiles" className="flex flex-col">
                         <h4 className="font-mono font-normal text-white mb-6 uppercase text-xs tracking-wider">Liens</h4>
-                        <ul className="space-y-3 text-gray-500 text-xs">
+                        <ul className="space-y-3 text-gray-400 text-xs">
                             <li>
                                 <a
                                     href="https://www.linkedin.com/company/leonard-intelligence"
@@ -78,7 +80,7 @@ export function Footer() {
                     {/* Company */}
                     <div className="flex flex-col">
                         <h4 className="font-mono font-normal text-white mb-6 uppercase text-xs tracking-wider">Audit</h4>
-                        <p className="text-gray-500 text-xs mb-4">
+                        <p className="text-gray-400 text-xs mb-4">
                             Identification des opportunités d'automatisation pour votre entreprise.
                         </p>
                         <a href="#contact" className="inline-block border border-white/20 hover:bg-white hover:text-black hover:border-white text-center text-white text-xs px-4 py-2 uppercase transition-all">
@@ -89,7 +91,7 @@ export function Footer() {
 
                 {/* Bottom Bar */}
                 <div className="pt-8 border-t border-white/10 flex flex-col md:flex-row justify-between items-center gap-4">
-                    <div className="text-xs text-gray-500">
+                    <div className="text-xs text-gray-400">
                         © 2026 Leonard Intelligence. Tous droits réservés.
                     </div>
                     <div className="flex items-center gap-6">

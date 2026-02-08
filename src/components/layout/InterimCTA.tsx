@@ -13,7 +13,7 @@ export function InterimCTA() {
                 <div className="flex justify-center">
                     <a
                         href="#section-contact"
-                        className="group relative px-8 py-4 bg-[#E67E22] text-white font-normal uppercase text-sm tracking-wider hover:bg-white hover:text-[#E67E22] transition-colors duration-300 flex items-center gap-3"
+                        className="group relative px-8 py-4 bg-[#D35400] text-white font-semibold uppercase text-sm tracking-wider hover:bg-white hover:text-[#D35400] transition-colors duration-300 flex items-center gap-3"
                     >
                         <span>Réserver un créneau</span>
                         <div className="group-hover:translate-x-1 transition-transform">

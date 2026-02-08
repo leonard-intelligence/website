@@ -148,7 +148,7 @@ export function FxImage({
     const [imageLoaded, setImageLoaded] = useState(false);
     const [depthLoaded, setDepthLoaded] = useState(false); // New
     const [webglSupported, setWebglSupported] = useState(true);
-    // const [webglReady, setWebglReady] = useState(false); // Prevents white flash - Unused
+    const [webglReady, setWebglReady] = useState(false); // Prevents white flash during shader compilation
 
     const context = useContext(FxContext);
     // We need the mouseRef from context
@@ -451,7 +451,7 @@ export function FxImage({
         // Mark WebGL as ready after first successful draw (prevents white flash)
         if (!webglReadyRef.current) {
             webglReadyRef.current = true;
-            // setWebglReady(true);
+            setWebglReady(true);
         }
 
         // Only continue loop if visible in viewport (performance optimization)
@@ -613,7 +613,7 @@ export function FxImage({
         setImageLoaded(false);
         setDepthLoaded(false);
         setWebglSupported(true); // Retry WebGL for new image
-        // setWebglReady(false); // Reset ready state for new image
+        setWebglReady(false); // Reset ready state for new image
         webglReadyRef.current = false; // Reset ref too
     }, [src, depthSrc]);
 
@@ -655,15 +655,26 @@ export function FxImage({
      */
     useEffect(() => {
         if (imageLoaded && effectsActive && isVisible) {
-            initWebGL();
+            // Defer WebGL init (shader compilation) to idle time to avoid blocking main thread TBT
+            const rIC = typeof requestIdleCallback === 'function'
+                ? requestIdleCallback
+                : (cb: IdleRequestCallback, _opts?: IdleRequestOptions) => setTimeout(cb as unknown as () => void, 1) as unknown as number;
+            const id = rIC(() => initWebGL(), { timeout: 3000 });
+            const cancel = typeof cancelIdleCallback === 'function' ? cancelIdleCallback : clearTimeout;
+            return () => {
+                cancel(id);
+                const gl = webglRef.current?.gl;
+                if (gl) {
+                    gl.bindTexture(gl.TEXTURE_2D, null);
+                    gl.useProgram(null);
+                }
+                webglRef.current = null;
+            };
         }
 
         // Cleanup
         return () => {
-            // We rely on Garbage Collection for the context.
-            // Explicitly losing context can cause issues if the canvas is reused or rapidly remounted.
             const gl = webglRef.current?.gl;
-            // Unbind textures to help GC
             if (gl) {
                 gl.bindTexture(gl.TEXTURE_2D, null);
                 gl.useProgram(null);
@@ -725,8 +736,8 @@ export function FxImage({
                     maxHeight: '100%',
                     width: 'auto',
                     height: 'auto',
-                    // Hide image immediately if effects are active to prevent FOUC (Flash of Unstyled Content)
-                    visibility: effectsActive ? 'hidden' : 'visible',
+                    // Hide image only after WebGL canvas has rendered first frame (prevents white flash during shader compilation)
+                    visibility: (effectsActive && webglReady) ? 'hidden' : 'visible',
                     // On mobile, simulate duotone with CSS grayscale when WebGL is disabled
                     filter: isMobileDevice && mergedConfig.duotone?.enabled ? 'grayscale(1)' : undefined,
                     pointerEvents: 'none', // Allow clicks to pass through to parent container

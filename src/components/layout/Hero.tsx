@@ -1,25 +1,9 @@
-import { useState, useEffect } from 'react';
+
 import { FxImage } from '../fx/FxImage';
 import { TrustBar } from './TrustBar';
 
 export function Hero() {
-    const [animationPhase, setAnimationPhase] = useState<'intro' | 'content'>(() => {
-        if (typeof window !== 'undefined') {
-            const params = new URLSearchParams(window.location.search);
-            if (params.get('splash') === 'force') return 'intro';
-            if (sessionStorage.getItem('splash_shown') === 'true') {
-                return 'content';
-            }
-        }
-        return 'intro';
-    });
 
-    useEffect(() => {
-        const timer = setTimeout(() => {
-            setAnimationPhase('content');
-        }, 150);
-        return () => clearTimeout(timer);
-    }, []);
 
     return (
         <section
@@ -31,9 +15,7 @@ export function Hero() {
             <div className="relative flex-grow flex items-end w-full">
                 {/* Content Layer - Constrained by Container */}
                 <div
-                    className={`container mx-auto z-20 relative w-full transition-all duration-1000 ${
-                        animationPhase === 'intro' ? 'opacity-0 translate-y-4' : 'opacity-100 translate-y-0'
-                    }`}
+                    className="container mx-auto z-20 relative w-full transition-all duration-1000 opacity-100 translate-y-0"
                 >
                     <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 w-full">
                         {/* LEFT COLUMN: Content */}
@@ -60,7 +42,7 @@ export function Hero() {
                                 <a
                                     href="#section-contact"
                                     id="hero-cta-primary"
-                                    className="bg-[#E67E22] text-white border border-[#E67E22] px-6 py-3 font-normal uppercase text-sm sm:text-base inline-block transition-all hover:bg-white hover:text-[#E67E22] hover:-translate-y-0.5 shadow-lg shadow-orange-500/20 text-center whitespace-nowrap backdrop-blur-sm"
+                                    className="bg-[#D35400] text-white border border-[#D35400] px-6 py-3 font-semibold uppercase text-sm sm:text-base inline-block transition-all hover:bg-white hover:text-[#D35400] hover:-translate-y-0.5 shadow-lg shadow-orange-500/20 text-center whitespace-nowrap backdrop-blur-sm"
                                 >
                                     PARLONS DE VOTRE PROJET
                                 </a>
@@ -111,22 +93,7 @@ export function Hero() {
                     />
                 </div>
 
-                {/* MOBILE OVERLAY - Plain image with grayscale (no WebGL for performance) */}
-                <div
-                    className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[65%] max-w-[280px] aspect-[3/4] z-10 lg:hidden rounded-2xl overflow-hidden ${
-                        animationPhase === 'intro' ? 'animate-fade-in' : 'animate-hero-exit pointer-events-none'
-                    }`}
-                >
-                    <img
-                        src="/assets/hero-concepts/licorne-3-sm.webp"
-                        alt="Une licorne stylisée représentant la créativité de l'IA générative (version mobile)"
-                        loading="eager"
-                        fetchPriority="high"
-                        width={400}
-                        height={400}
-                        className="w-full h-full object-cover grayscale"
-                    />
-                </div>
+
             </div>
 
             {/* LOWER TIER: Footer Block (TrustBar) - Distinct Background */}

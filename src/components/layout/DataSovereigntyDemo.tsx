@@ -1,5 +1,5 @@
 import { DotIcon, leonardIcons } from "@/components/ui/LeonardIcons";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 // Types
 type Particle = {
@@ -15,8 +15,12 @@ const SERVER_POS = { x: -60, y: 0 };
 const AI_POS = { x: 60, y: 0 };
 const PARTICLE_COUNT = 16;
 
+const DS_FRAME_INTERVAL = 1000 / 30;
+
 export function DataSovereigntyDemo() {
     const [particles, setParticles] = useState<Particle[]>([]);
+    const isVisibleRef = useRef(false);
+    const containerRef = useRef<HTMLDivElement>(null);
 
     // Initialize
     useEffect(() => {
@@ -25,17 +29,31 @@ export function DataSovereigntyDemo() {
             x: SERVER_POS.x,
             y: SERVER_POS.y,
             target: "AI" as const,
-            progress: Math.random(), // Random start progress
+            progress: Math.random(),
             speed: 0.005 + Math.random() * 0.005,
         }));
         setParticles(initParticles);
     }, []);
 
-    // Animation Loop
+    // IntersectionObserver
+    useEffect(() => {
+        const el = containerRef.current;
+        if (!el) return;
+        const obs = new IntersectionObserver(([e]) => { isVisibleRef.current = e.isIntersecting; }, { threshold: 0.1 });
+        obs.observe(el);
+        return () => obs.disconnect();
+    }, []);
+
+    // Animation Loop — throttled to 30fps
     useEffect(() => {
         let animationFrameId: number;
+        let lastFrame = 0;
 
-        const animate = () => {
+        const animate = (now: number) => {
+            if (!isVisibleRef.current) { animationFrameId = requestAnimationFrame(animate); return; }
+            if (now - lastFrame < DS_FRAME_INTERVAL) { animationFrameId = requestAnimationFrame(animate); return; }
+            lastFrame = now;
+
             setParticles((prev) => prev.map((p) => {
                 let newProgress = p.progress + p.speed;
                 let newTarget = p.target;
@@ -45,11 +63,9 @@ export function DataSovereigntyDemo() {
                     newTarget = p.target === "SERVER" ? "AI" : "SERVER";
                 }
 
-                // Interpolate position
                 const start = p.target === "AI" ? SERVER_POS : AI_POS;
                 const end = p.target === "AI" ? AI_POS : SERVER_POS;
 
-                // Add some curve/noise
                 const arcHeight = 40;
                 const arc = Math.sin(newProgress * Math.PI) * (p.target === "AI" ? -arcHeight : arcHeight);
 

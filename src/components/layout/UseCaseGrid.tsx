@@ -97,9 +97,9 @@ export function UseCaseGrid() {
                             {/* Content */}
                             <div className="px-6 pb-6 pt-6 flex flex-col flex-grow">
                                 <div className="mb-6">
-                                    <h4 className="text-xs text-[#E67E22] uppercase tracking-wider mb-3">
+                                    <h3 className="text-xs text-[#E67E22] uppercase tracking-wider mb-3">
                                         {item.sector}
-                                    </h4>
+                                    </h3>
                                     <p className="text-zinc-300 font-normal text-base leading-relaxed">
                                         {item.mission}
                                     </p>

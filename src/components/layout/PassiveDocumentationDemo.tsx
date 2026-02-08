@@ -40,9 +40,9 @@ export function PassiveDocumentationDemo() {
             {/* LEFT: Text & Steps */}
             <div className="p-8 lg:p-12 flex flex-col justify-center border-b lg:border-b-0 lg:border-r border-white/10 bg-zinc-900/10">
                 <div className="mb-12">
-                    <h3 className="text-3xl md:text-4xl font-mono text-white mb-6 uppercase tracking-[-0.03em] leading-none">
+                    <h2 className="text-3xl md:text-4xl font-mono text-white mb-6 uppercase tracking-[-0.03em] leading-none">
                         Documentation <span className="text-white/30 text-stroke-1">Passive.</span>
-                    </h3>
+                    </h2>
                     <p className="text-gray-400 text-base leading-relaxed max-w-md">
                         Rédigez la documentation en temps réel pendant que vous travaillez. Plus de temps perdu à expliquer.
                     </p>
@@ -65,10 +65,10 @@ export function PassiveDocumentationDemo() {
                                 <DotIcon icon={step.icon} size={20} fillColor={activeStep === idx ? "#E67E22" : "#444"} />
                             </div>
                             <div className="flex-1 pt-1">
-                                <h4 className={`font-mono text-lg uppercase tracking-tight mb-1 transition-colors duration-500 ${activeStep === idx ? 'text-white' : 'text-zinc-500'
+                                <h3 className={`font-mono text-lg uppercase tracking-tight mb-1 transition-colors duration-500 ${activeStep === idx ? 'text-white' : 'text-zinc-500'
                                     }`}>
                                     {step.title}
-                                </h4>
+                                </h3>
                                 <p className={`text-sm transition-colors duration-500 ${activeStep === idx ? 'text-gray-300' : 'text-zinc-600'
                                     }`}>
                                     {step.desc}
