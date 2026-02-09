@@ -52,7 +52,7 @@ const WORKFLOW_STEPS: AgentStep[] = [
 ];
 
 const AGENT_CONFIG: Record<AgentRole, { icon: any; color: string }> = {
-    PM: { icon: leonardIcons.sparkles, color: "#E67E22" }, // Orange Antigravity
+    PM: { icon: leonardIcons.sparkles, color: "#e67d23" }, // Orange Antigravity
     UX: { icon: leonardIcons.visualIntelligence, color: "#A855F7" }, // Purple
     SEO: { icon: leonardIcons.globe, color: "#3B82F6" }, // Blue
     DEV: { icon: leonardIcons.openSourceFirst, color: "#10B981" }, // Green

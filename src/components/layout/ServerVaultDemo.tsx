@@ -58,6 +58,8 @@ export function ServerVaultDemo() {
         if (now - lastFrameRef.current < FRAME_INTERVAL) {
             if (isVisibleRef.current) {
                 rafRef.current = requestAnimationFrame(animate);
+            } else {
+                rafRef.current = 0;
             }
             return;
         }
@@ -104,6 +106,8 @@ export function ServerVaultDemo() {
 
         if (isVisibleRef.current) {
             rafRef.current = requestAnimationFrame(animate);
+        } else {
+            rafRef.current = 0;
         }
     }, []);
 
@@ -181,8 +185,8 @@ export function ServerVaultDemo() {
                         <g key={`lock-${i}`}>
                             <circle cx={x} cy={y} r="6" fill="#121110" stroke="rgba(230,126,34,0.4)" strokeWidth="1" />
                             {/* Lock icon simplified */}
-                            <rect x={x - 2.5} y={y - 1} width="5" height="4" rx="0.5" fill="none" stroke="#E67E22" strokeWidth="0.8" />
-                            <path d={`M${x - 1.5},${y - 1} L${x - 1.5},${y - 2.5} A1.5,1.5 0 0 1 ${x + 1.5},${y - 2.5} L${x + 1.5},${y - 1}`} fill="none" stroke="#E67E22" strokeWidth="0.7" />
+                            <rect x={x - 2.5} y={y - 1} width="5" height="4" rx="0.5" fill="none" stroke="#e67d23" strokeWidth="0.8" />
+                            <path d={`M${x - 1.5},${y - 1} L${x - 1.5},${y - 2.5} A1.5,1.5 0 0 1 ${x + 1.5},${y - 2.5} L${x + 1.5},${y - 1}`} fill="none" stroke="#e67d23" strokeWidth="0.7" />
                         </g>
                     );
                 })}
@@ -193,7 +197,7 @@ export function ServerVaultDemo() {
                     {[0, 1, 2, 3, 4].map(j => (
                         <g key={`rack1-${j}`}>
                             <rect x="3" y={4 + j * 7} width="14" height="4" rx="0.5" fill="#0F0F0F" stroke="rgba(255,255,255,0.05)" strokeWidth="0.3" />
-                            <circle cx="15" cy={6 + j * 7} r="1" fill="#E67E22" opacity={0.4 + Math.sin(j) * 0.3}>
+                            <circle cx="15" cy={6 + j * 7} r="1" fill="#e67d23" opacity={0.4 + Math.sin(j) * 0.3}>
                                 <animate attributeName="opacity" values={`${0.3 + j * 0.1};${0.7 + j * 0.05};${0.3 + j * 0.1}`} dur={`${2 + j * 0.3}s`} repeatCount="indefinite" />
                             </circle>
                         </g>
@@ -206,7 +210,7 @@ export function ServerVaultDemo() {
                     {[0, 1, 2, 3, 4].map(j => (
                         <g key={`rack2-${j}`}>
                             <rect x="3" y={4 + j * 7} width="14" height="4" rx="0.5" fill="#0F0F0F" stroke="rgba(255,255,255,0.05)" strokeWidth="0.3" />
-                            <circle cx="15" cy={6 + j * 7} r="1" fill="#E67E22" opacity={0.5}>
+                            <circle cx="15" cy={6 + j * 7} r="1" fill="#e67d23" opacity={0.5}>
                                 <animate attributeName="opacity" values={`${0.4 + j * 0.08};${0.8};${0.4 + j * 0.08}`} dur={`${2.5 + j * 0.2}s`} repeatCount="indefinite" />
                             </circle>
                         </g>
@@ -219,7 +223,7 @@ export function ServerVaultDemo() {
                     {[0, 1, 2, 3].map(j => (
                         <g key={`rack3-${j}`}>
                             <rect x="3" y={3 + j * 6} width="14" height="4" rx="0.5" fill="#0F0F0F" stroke="rgba(255,255,255,0.05)" strokeWidth="0.3" />
-                            <circle cx="15" cy={5 + j * 6} r="1" fill="#E67E22" opacity={0.5}>
+                            <circle cx="15" cy={5 + j * 6} r="1" fill="#e67d23" opacity={0.5}>
                                 <animate attributeName="opacity" values="0.3;0.9;0.3" dur={`${1.8 + j * 0.4}s`} repeatCount="indefinite" />
                             </circle>
                         </g>
@@ -257,7 +261,7 @@ export function ServerVaultDemo() {
                                 cx={x}
                                 cy={y}
                                 r="2"
-                                fill="#E67E22"
+                                fill="#e67d23"
                                 opacity={0.6 + Math.sin(p.progress * Math.PI * 2) * 0.3}
                             />
                             <circle
@@ -294,7 +298,7 @@ export function ServerVaultDemo() {
                                     cy={CENTER_Y + Math.sin(t.angle) * PERIMETER_RADIUS}
                                     r="8"
                                     fill="none"
-                                    stroke="#E67E22"
+                                    stroke="#e67d23"
                                     strokeWidth="1.5"
                                     opacity={t.flashOpacity * 0.6}
                                     style={{ filter: 'blur(2px)' }}
@@ -312,8 +316,8 @@ export function ServerVaultDemo() {
             </div>
             <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1">
                 <div className="flex items-center gap-1.5">
-                    <div className="w-1 h-1 bg-[#E67E22] rounded-full animate-pulse" />
-                    <span className="text-[7px] text-[#E67E22] uppercase tracking-widest font-bold font-mono">Périmètre chiffré // AES-256</span>
+                    <div className="w-1 h-1 bg-[#e67d23] rounded-full animate-pulse" />
+                    <span className="text-[7px] text-[#e67d23] uppercase tracking-widest font-bold font-mono">Périmètre chiffré // AES-256</span>
                 </div>
                 <span className="text-[7px] text-white/30 uppercase tracking-[0.2em] font-mono">100% on-premise · vos serveurs</span>
             </div>

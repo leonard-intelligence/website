@@ -213,9 +213,9 @@ export function KnowledgeBaseDemo() {
             <div className="flex items-center justify-start px-3 lg:px-5 py-3 bg-zinc-800/50 border-b border-white/10 shrink-0">
                 {/* Search Bar - Widened & Larger */}
                 <div className="flex-1 max-w-[480px] bg-black/40 border border-white/10 rounded px-3 py-2 flex items-center gap-3">
-                    <DotIcon icon={leonardIcons.search || leonardIcons.saisieAutomatisee} size={14} fillColor="#E67E22" />
+                    <DotIcon icon={leonardIcons.search || leonardIcons.saisieAutomatisee} size={14} fillColor="#e67d23" />
                     <div className="text-sm text-white h-5 overflow-hidden relative w-full flex items-center">
-                        {typedQuery}<span className="animate-pulse ml-0.5 w-1.5 h-4 bg-[#E67E22] block"></span>
+                        {typedQuery}<span className="animate-pulse ml-0.5 w-1.5 h-4 bg-[#e67d23] block"></span>
                     </div>
                 </div>
             </div>
@@ -244,7 +244,7 @@ export function KnowledgeBaseDemo() {
                                 width: node.distance,
                                 transform: `rotate(${node.angle}rad)`,
                                 background: node.isRelevant && phase === "RESULTS"
-                                    ? "linear-gradient(90deg, #E67E22 0%, rgba(230,126,34,0) 100%)" // Active: Orange fade
+                                    ? "linear-gradient(90deg, #e67d23 0%, rgba(230,126,34,0) 100%)" // Active: Orange fade
                                     : "linear-gradient(90deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0) 100%)", // Inactive: Very faint grey fade
                                 opacity: node.isRelevant && phase === "RESULTS" ? 1 : 0.5
                             }}

@@ -13,9 +13,21 @@ export function CalendlyWidget({ className, style, url = "https://calendly.com/l
         // Only load the Calendly script when the widget is active (modal is open)
         if (!active) return;
 
+        // Inject preconnect hints just-in-time (instead of static <link> in index.html)
+        const origins = ['https://assets.calendly.com', 'https://calendly.com'];
+        origins.forEach(origin => {
+            if (!document.querySelector(`link[rel="preconnect"][href="${origin}"]`)) {
+                const link = document.createElement('link');
+                link.rel = 'preconnect';
+                link.href = origin;
+                link.crossOrigin = 'anonymous';
+                document.head.appendChild(link);
+            }
+        });
+
+        // Load Calendly script
         const SCRIPT_SRC = 'https://assets.calendly.com/assets/external/widget.js';
-        const existingScript = document.querySelector(`script[src="${SCRIPT_SRC}"]`);
-        if (existingScript) return;
+        if (document.querySelector(`script[src="${SCRIPT_SRC}"]`)) return;
 
         const script = document.createElement('script');
         script.type = 'text/javascript';

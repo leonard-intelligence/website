@@ -8,7 +8,7 @@ export function InterimCTA() {
 
             <div className="container relative z-10 mx-auto px-6 text-center">
                 <h3 className="text-2xl md:text-3xl font-mono text-white mb-8">
-                    Vos données ont du potentiel. On le prouve en 30 minutes.
+                    Vous avez 30 minutes ? <br /> On vous montre exactement ce que l'IA peut changer dans votre entreprise.
                 </h3>
                 <div className="flex justify-center">
                     <a

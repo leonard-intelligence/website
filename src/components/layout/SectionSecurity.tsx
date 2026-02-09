@@ -12,13 +12,13 @@ export function SectionSecurity() {
             <div className="grid grid-cols-1 lg:grid-cols-12">
                 {/* Left: Content */}
                 <div className="lg:col-span-7 p-12 border-r border-b border-white/10">
-                    <div className="text-[#e67d23] mb-2 text-lg">Souveraineté Numérique.</div>
+                    <div className="text-[#e67d23] mb-2 text-lg">Open-source chez vous ou Hébergé en Europe.</div>
                     <h2
                         id="security-heading"
                         className="text-4xl md:text-5xl font-mono text-white max-w-xl leading-tight uppercase tracking-[-0.02em] mb-6"
                     >
-                        <span className="text-zinc-400">Vos données ne sortent</span><br />
-                        pas de chez vous.
+                        <span className="text-zinc-400">Vos données restent</span><br />
+                        chez vous. Point.
                     </h2>
                     <p className="text-sm text-gray-400 leading-relaxed max-w-md">
                         Déploiement local ou cloud privé européen. Zéro dépendance aux géants américains.

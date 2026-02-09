@@ -1,7 +1,6 @@
 import { DotIcon, leonardIcons } from "@/components/ui/LeonardIcons";
 import { TechIllustration } from "@/components/ui/TechIllustration";
 import { contactSignal } from "@/lib/contactSignal";
-import { Button } from "@/components/ui/button";
 
 import visionBg from '@/assets/images/illustrations/illustration-expertise-codegen-04.webp';
 
@@ -14,7 +13,7 @@ export function SectionCreation() {
                 <div className="lg:col-span-8 border-r border-white/10 relative p-6 md:p-12 flex flex-col justify-between overflow-hidden">
                     {/* Header Area */}
                     <div className="relative z-10 mb-12 reveal-left">
-                        <div className="text-[#E67E22] mb-2 text-lg">4 Création & Production.</div>
+                        <div className="text-[#e67d23] mb-2 text-lg">4 Création & Production.</div>
                         <h2 id="expertise-creation-heading" className="text-4xl md:text-5xl font-mono text-white max-w-4xl leading-tight uppercase tracking-[-0.02em]">
                             <span className="text-muted-foreground">Du brief au livrable.</span><br />
                             Avec une équipe réduite.
@@ -37,10 +36,10 @@ export function SectionCreation() {
                             <div className="flex justify-between items-center mb-4 border-b border-white/10 pb-3">
                                 <div className="flex items-center gap-2">
                                     <span className="relative flex h-2 w-2">
-                                        <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#E67E22] opacity-75"></span>
-                                        <span className="relative inline-flex rounded-full h-2 w-2 bg-[#E67E22]"></span>
+                                        <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#e67d23] opacity-75"></span>
+                                        <span className="relative inline-flex rounded-full h-2 w-2 bg-[#e67d23]"></span>
                                     </span>
-                                    <span className="text-xs text-[#E67E22] tracking-widest">STACK TECHNIQUE</span>
+                                    <span className="text-xs text-[#e67d23] tracking-widest">STACK TECHNIQUE</span>
                                 </div>
                                 <span className="text-xs text-zinc-400">CREATIVE</span>
                             </div>
@@ -54,8 +53,8 @@ export function SectionCreation() {
                             </p>
 
                             <div className="grid grid-cols-3 gap-2 text-[10px] text-zinc-400 bg-white/5 p-3 rounded border border-white/5">
-                                <div className="flex justify-between items-center"><span>TYPE</span><span className="text-white">HYBRID</span></div>
-                                <div className="flex justify-between items-center"><span>QUALITY</span><span className="text-[#E67E22]">CINEMATIC</span></div>
+                                <div className="flex justify-between items-center"><span>DÉLAIS</span><span className="text-white">-90%</span></div>
+                                <div className="flex justify-between items-center"><span>QUALITY</span><span className="text-[#e67d23]">CINEMATIC</span></div>
                                 {/* Empty 3rd column */}
                             </div>
                         </div>
@@ -73,19 +72,16 @@ export function SectionCreation() {
                             </div>
                         </div>
                         <p className="text-muted-foreground text-sm leading-relaxed mb-6">
-                            Visuels marketing, vidéos produit, avatars de formation : l'IA produit en heures ce qui prenait des semaines. Contrôle qualité, détection de défauts : elle voit aussi ce que vous ne voyez plus.
+                            Produisez en heures ce qui prenait des semaines. Visuels marketing, vidéos produit, avatars de formation : l'IA devient votre bras armé de production.
                         </p>
 
-                        <Button
-                            variant="outline"
-                            className="bg-black text-[#E67E22] border-[#E67E22]/50 hover:bg-[#E67E22] hover:text-black text-xs uppercase tracking-wider mb-2"
+                        <button
                             onClick={() => contactSignal.trigger('Création & Production')}
+                            className="text-[#e67d23] hover:text-[#cc6d1e] text-xs font-medium uppercase tracking-wider flex items-center gap-2 transition-colors w-fit border-none bg-transparent p-0 mb-2"
                         >
-                            <span className="flex items-center gap-2">
-                                PRODUIRE AVEC L'IA
-                                <DotIcon icon={leonardIcons.arrowRight} size={14} fillColor="currentColor" />
-                            </span>
-                        </Button>
+                            En savoir plus
+                            <DotIcon icon={leonardIcons.arrowRight} size={14} fillColor="currentColor" />
+                        </button>
                     </div>
 
                     {/* Research Items List */}

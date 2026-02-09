@@ -17,21 +17,21 @@ export function PassiveDocumentationDemo() {
             title: "Action",
             desc: "Réalisez vos tâches habituelles sans changer vos outils.",
             icon: leonardIcons.avantageConcurrentiel,
-            color: "#E67E22"
+            color: "#e67d23"
         },
         {
             id: 'capture',
             title: "Capture",
             desc: "L'IA détecte les étapes clés et documente le flux métier.",
             icon: leonardIcons.saisieAutomatisee,
-            color: "#E67E22"
+            color: "#e67d23"
         },
         {
             id: 'result',
             title: "Procédure Rédigée",
             desc: "Un guide complet et structuré est généré instantanément.",
             icon: leonardIcons.rgpdCompliant,
-            color: "#E67E22"
+            color: "#e67d23"
         }
     ];
 
@@ -59,10 +59,10 @@ export function PassiveDocumentationDemo() {
                                 }`}
                         >
                             <div className={`w-12 h-12 rounded-full border flex items-center justify-center shrink-0 transition-all duration-500 ${activeStep === idx
-                                ? 'bg-[#E67E22]/20 border-[#E67E22] shadow-[0_0_15px_rgba(230,126,34,0.3)]'
+                                ? 'bg-[#e67d23]/20 border-[#e67d23] shadow-[0_0_15px_rgba(230,126,34,0.3)]'
                                 : 'bg-black border-white/10'
                                 }`}>
-                                <DotIcon icon={step.icon} size={20} fillColor={activeStep === idx ? "#E67E22" : "#444"} />
+                                <DotIcon icon={step.icon} size={20} fillColor={activeStep === idx ? "#e67d23" : "#444"} />
                             </div>
                             <div className="flex-1 pt-1">
                                 <h3 className={`font-mono text-lg uppercase tracking-tight mb-1 transition-colors duration-500 ${activeStep === idx ? 'text-white' : 'text-zinc-500'
@@ -94,7 +94,7 @@ export function PassiveDocumentationDemo() {
                             <div className="w-1/2 h-2 bg-white/10 rounded mb-2" />
                             <div className="w-1/3 h-2 bg-white/10 rounded mb-4" />
                             <div className="mt-auto flex gap-2">
-                                <div className="w-8 h-8 rounded bg-[#E67E22]/20 border border-[#E67E22]/40" />
+                                <div className="w-8 h-8 rounded bg-[#e67d23]/20 border border-[#e67d23]/40" />
                                 <div className="flex-1 flex flex-col gap-1 justify-center">
                                     <div className="w-full h-1.5 bg-white/10 rounded" />
                                     <div className="w-2/3 h-1.5 bg-white/10 rounded" />
@@ -109,18 +109,18 @@ export function PassiveDocumentationDemo() {
                     <div className={`absolute inset-0 flex items-center justify-center transition-opacity duration-700 ${activeStep === 1 ? 'opacity-100 scale-100' : 'opacity-0 scale-95'}`}>
                         <div className="relative">
                             {/* Circular Radar pulses */}
-                            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-40 h-40 border border-[#E67E22]/30 rounded-full animate-ping" />
-                            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-24 h-24 border border-[#E67E22]/50 rounded-full" />
+                            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-40 h-40 border border-[#e67d23]/30 rounded-full animate-ping" />
+                            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-24 h-24 border border-[#e67d23]/50 rounded-full" />
 
                             {/* Central Icon */}
-                            <div className="relative w-16 h-16 bg-[#E67E22]/20 border border-[#E67E22] rounded-full flex items-center justify-center z-10 shadow-[0_0_30px_rgba(230,126,34,0.4)]">
-                                <DotIcon icon={leonardIcons.search} size={24} fillColor="#E67E22" />
+                            <div className="relative w-16 h-16 bg-[#e67d23]/20 border border-[#e67d23] rounded-full flex items-center justify-center z-10 shadow-[0_0_30px_rgba(230,126,34,0.4)]">
+                                <DotIcon icon={leonardIcons.search} size={24} fillColor="#e67d23" />
                             </div>
 
                             {/* Floating "bits" of data */}
-                            <div className="absolute -top-12 -left-8 w-12 h-1 bg-[#E67E22] opacity-40 animate-[bounce_2s_infinite]" />
-                            <div className="absolute top-4 -right-16 w-8 h-1 bg-[#E67E22] opacity-40 animate-[bounce_2.5s_infinite]" />
-                            <div className="absolute -bottom-8 right-2 w-10 h-1 bg-[#E67E22] opacity-40 animate-[bounce_1.8s_infinite]" />
+                            <div className="absolute -top-12 -left-8 w-12 h-1 bg-[#e67d23] opacity-40 animate-[bounce_2s_infinite]" />
+                            <div className="absolute top-4 -right-16 w-8 h-1 bg-[#e67d23] opacity-40 animate-[bounce_2.5s_infinite]" />
+                            <div className="absolute -bottom-8 right-2 w-10 h-1 bg-[#e67d23] opacity-40 animate-[bounce_1.8s_infinite]" />
                         </div>
                     </div>
 
@@ -129,8 +129,8 @@ export function PassiveDocumentationDemo() {
                         <div className="relative w-56 h-72 bg-zinc-800 border border-white/20 rounded shadow-2xl overflow-hidden flex flex-col p-6 animate-in slide-in-from-bottom-8">
                             {/* Doc Header */}
                             <div className="flex items-center gap-3 mb-6">
-                                <div className="w-8 h-8 bg-[#E67E22]/20 rounded flex items-center justify-center">
-                                    <DotIcon icon={leonardIcons.rgpdCompliant} size={16} fillColor="#E67E22" />
+                                <div className="w-8 h-8 bg-[#e67d23]/20 rounded flex items-center justify-center">
+                                    <DotIcon icon={leonardIcons.rgpdCompliant} size={16} fillColor="#e67d23" />
                                 </div>
                                 <div className="flex-1">
                                     <div className="w-24 h-2 bg-white/20 rounded mb-1" />
@@ -146,7 +146,7 @@ export function PassiveDocumentationDemo() {
                                     <div className="w-4/5 h-1.5 bg-white/10 rounded" />
                                 </div>
 
-                                <div className="p-3 bg-white/5 border-l-2 border-[#E67E22] space-y-2">
+                                <div className="p-3 bg-white/5 border-l-2 border-[#e67d23] space-y-2">
                                     <div className="w-full h-1.5 bg-white/20 rounded" />
                                     <div className="w-2/3 h-1.5 bg-white/20 rounded" />
                                 </div>

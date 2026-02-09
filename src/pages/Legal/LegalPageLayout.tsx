@@ -117,7 +117,7 @@ export function LegalPageLayout({ title, lastUpdate, children, path }: LegalPage
                         </Link>
                         <a
                             href="mailto:hello@leonardintelligence.com"
-                            className="text-[#E67E22] hover:text-[#F39C12] transition-colors"
+                            className="text-[#e67d23] hover:text-[#F39C12] transition-colors"
                         >
                             Contact
                         </a>

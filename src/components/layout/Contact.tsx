@@ -267,13 +267,18 @@ export function Contact() {
                                     </div>
                                 </div>
 
-                                <div className="mt-8 sm:mt-12 relative z-10 text-[10px] font-mono uppercase tracking-[0.4em] text-gray-300 group-hover/item1:text-[#e67d23] transition-colors flex items-center gap-2">
-                                    <span>Je prends rendez-vous</span>
-                                    <DotIcon
-                                        icon={leonardIcons.arrowRight}
-                                        size={12}
-                                        className="text-[#3D2314] group-hover/item1:text-[#e67d23]"
-                                    />
+                                <div className="mt-8 sm:mt-12 relative z-10 text-[10px] font-mono uppercase tracking-[0.4em] text-gray-300 group-hover/item1:text-[#e67d23] transition-colors flex flex-col items-center gap-4">
+                                    <div className="flex items-center gap-2">
+                                        <span>Réserver mon créneau — c'est gratuit</span>
+                                        <DotIcon
+                                            icon={leonardIcons.arrowRight}
+                                            size={12}
+                                            className="text-[#3D2314] group-hover/item1:text-[#e67d23]"
+                                        />
+                                    </div>
+                                    <span className="text-[9px] tracking-[0.1em] text-gray-400 group-hover/item1:text-[#e67d23]/80 lowercase normal-case">
+                                        30 min de visio. Pas de commercial. Un vrai expert IA.
+                                    </span>
                                 </div>
                             </button>
 
@@ -306,7 +311,7 @@ export function Contact() {
                                 </div>
 
                                 <div className="mt-8 sm:mt-12 relative z-10 text-[10px] font-mono uppercase tracking-[0.4em] text-gray-300 group-hover/item2:text-white transition-colors flex items-center gap-2">
-                                    <span>Envoyer ma demande</span>
+                                    <span>Envoyer un message</span>
                                     <span className="w-1.5 h-1.5 bg-white/40 rounded-full" />
                                 </div>
                             </button>

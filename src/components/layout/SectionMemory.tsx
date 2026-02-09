@@ -3,9 +3,6 @@ import { TechIllustration } from "@/components/ui/TechIllustration";
 import { contactSignal } from "@/lib/contactSignal";
 
 
-import { Button } from "@/components/ui/button";
-
-
 import { useEffect, useState } from "react";
 import { KnowledgeBaseDemo } from "./KnowledgeBaseDemo";
 
@@ -130,8 +127,8 @@ function ChatInterface() {
         <div className="border border-white/20 bg-zinc-900/50 rounded-lg overflow-hidden shadow-2xl relative z-10 w-full h-[450px] flex flex-col">
             {/* Chat header */}
             <div className="flex items-center gap-2 px-3 lg:px-5 py-3 bg-zinc-800/50 border-b border-white/10 shrink-0">
-                <div className="w-8 h-8 bg-[#E67E22]/20 rounded-full flex-shrink-0 flex items-center justify-center">
-                    <DotIcon icon={leonardIcons.sparkles} size={16} fillColor="#E67E22" />
+                <div className="w-8 h-8 bg-[#e67d23]/20 rounded-full flex-shrink-0 flex items-center justify-center">
+                    <DotIcon icon={leonardIcons.sparkles} size={16} fillColor="#e67d23" />
                 </div>
                 <div className="min-w-0 flex-1">
                     <div className="text-xs text-white font-medium truncate">Assistant Documentaire</div>
@@ -148,7 +145,7 @@ function ChatInterface() {
                     <div key={msg.id} className={`flex ${msg.role === "user" ? "justify-end" : "justify-start"} animate-in fade-in slide-in-from-bottom-2 duration-300`}>
                         {msg.role === "user" ? (
                             // USER BUBBLE
-                            <div className="bg-[#E67E22]/20 border border-[#E67E22]/30 rounded-xl rounded-br-sm px-3 py-2 max-w-[95%] md:max-w-xs">
+                            <div className="bg-[#e67d23]/20 border border-[#e67d23]/30 rounded-xl rounded-br-sm px-3 py-2 max-w-[95%] md:max-w-xs">
                                 <p className="text-xs text-white">
                                     {msg.content}
                                 </p>
@@ -158,8 +155,8 @@ function ChatInterface() {
                             <div className="bg-white/5 border border-white/10 rounded-xl rounded-bl-sm px-3 py-3 max-w-[95%] md:max-w-sm">
                                 {msg.source && (
                                     <div className="flex items-center gap-2 mb-2">
-                                        <DotIcon icon={leonardIcons.saisieAutomatisee} size={12} fillColor="#E67E22" />
-                                        <span className="text-[10px] text-[#E67E22]">{msg.source}</span>
+                                        <DotIcon icon={leonardIcons.saisieAutomatisee} size={12} fillColor="#e67d23" />
+                                        <span className="text-[10px] text-[#e67d23]">{msg.source}</span>
                                     </div>
                                 )}
                                 <p className="text-xs text-white/80 leading-relaxed">
@@ -168,7 +165,7 @@ function ChatInterface() {
                                 {msg.metadata && (
                                     <div className="mt-2 pt-2 border-t border-white/5 flex items-center gap-3 text-[10px] text-white/60">
                                         {msg.metadata.sourcesCount && <span>✓ {msg.metadata.sourcesCount} sources</span>}
-                                        {msg.metadata.confidence && <span className="text-[#E67E22]">{msg.metadata.confidence}</span>}
+                                        {msg.metadata.confidence && <span className="text-[#e67d23]">{msg.metadata.confidence}</span>}
                                     </div>
                                 )}
                             </div>
@@ -203,7 +200,7 @@ export function SectionMemory() {
                     <div className="lg:col-span-8 border-r border-white/10 relative p-6 md:p-12 flex flex-col justify-between overflow-hidden">
                         {/* Header Area */}
                         <div className="relative z-10 mb-12 reveal-left">
-                            <div className="text-[#E67E22] mb-2 text-lg">02 Mémoire & Connaissance.</div>
+                            <div className="text-[#e67d23] mb-2 text-lg">02 Mémoire & Connaissance.</div>
                             <h2 id="expertise-memory-heading" className="text-4xl md:text-5xl font-mono text-white max-w-4xl leading-tight uppercase tracking-[-0.02em]">
                                 <span className="text-muted-foreground">Ne perdez plus</span><br />
                                 Ce que vos experts savent.
@@ -226,10 +223,10 @@ export function SectionMemory() {
                                 <div className="flex justify-between items-center mb-4 border-b border-white/10 pb-3">
                                     <div className="flex items-center gap-2">
                                         <span className="relative flex h-2 w-2">
-                                            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#E67E22] opacity-75"></span>
-                                            <span className="relative inline-flex rounded-full h-2 w-2 bg-[#E67E22]"></span>
+                                            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#e67d23] opacity-75"></span>
+                                            <span className="relative inline-flex rounded-full h-2 w-2 bg-[#e67d23]"></span>
                                         </span>
-                                        <span className="text-xs text-[#E67E22] tracking-widest">STACK TECHNIQUE</span>
+                                        <span className="text-xs text-[#e67d23] tracking-widest">STACK TECHNIQUE</span>
                                     </div>
                                     <span className="text-xs text-zinc-400">RAG</span>
                                 </div>
@@ -244,7 +241,7 @@ export function SectionMemory() {
 
                                 <div className="grid grid-cols-3 gap-2 text-[10px] text-zinc-400 bg-white/5 p-3 rounded border border-white/5">
                                     <div className="flex justify-between items-center"><span>CONTEXTE</span><span className="text-white">1M</span></div>
-                                    <div className="flex justify-between items-center"><span>HYBRID SEARCH</span><span className="text-[#E67E22]">ENABLED</span></div>
+                                    <div className="flex justify-between items-center"><span>HYBRID SEARCH</span><span className="text-[#e67d23]">ENABLED</span></div>
                                     {/* Empty 3rd column */}
                                 </div>
                             </div>
@@ -262,19 +259,16 @@ export function SectionMemory() {
                                 </div>
                             </div>
                             <p className="text-zinc-400 text-sm leading-relaxed mb-8 relative z-10">
-                                Votre IA indexe vos procédures, vos documents, votre expertise métier. Vos équipes posent leurs questions en langage naturel et obtiennent des réponses sourcées en secondes.
+                                Quand votre expert est absent, personne ne retrouve les procédures. On change ça. Votre IA connaît tous vos documents et répond à sa place avec les bonnes sources.
                             </p>
 
-                            <Button
-                                variant="outline"
-                                className="bg-black text-[#E67E22] border-[#E67E22]/50 hover:bg-[#E67E22] hover:text-black text-xs uppercase tracking-wider mb-2"
+                            <button
                                 onClick={() => contactSignal.trigger('Mémoire & Connaissance')}
+                                className="text-[#e67d23] hover:text-[#cc6d1e] text-xs font-medium uppercase tracking-wider flex items-center gap-2 transition-colors w-fit border-none bg-transparent p-0 mb-2"
                             >
-                                <span className="flex items-center gap-2">
-                                    ACTIVER LA MÉMOIRE
-                                    <DotIcon icon={leonardIcons.arrowRight} size={14} fillColor="currentColor" />
-                                </span>
-                            </Button>
+                                En savoir plus
+                                <DotIcon icon={leonardIcons.arrowRight} size={14} fillColor="currentColor" />
+                            </button>
                         </div>
 
                         {/* Research Items List */}
@@ -288,7 +282,7 @@ export function SectionMemory() {
                             </div>
 
                             <div id="expertise-memory-item-2" className="border-b lg:border-b border-white/10 p-4 sm:p-8 group hover:bg-white/5 transition-colors relative reveal-right stagger-2 hover-lift">
-                                <div className="w-8 h-8 bg-black border border-white/10 flex items-center justify-center mb-4 text-white hover:text-[#E67E22] transition-colors">
+                                <div className="w-8 h-8 bg-black border border-white/10 flex items-center justify-center mb-4 text-white hover:text-[#e67d23] transition-colors">
                                     <DotIcon icon={leonardIcons.memoireEntreprise} size={20} fillColor="white" />
                                 </div>
                                 <h3 className="text-white font-mono text-sm sm:text-lg mb-2 uppercase tracking-[-0.02em]">Documentation Automatique</h3>
@@ -315,7 +309,7 @@ export function SectionMemory() {
                 {/* LEFT BENTO: Chat Interface */}
                 <div className="border-b lg:border-b-0 lg:border-r border-white/10 p-4 lg:p-12 bg-zinc-900/10 flex flex-col justify-center min-h-0 lg:min-h-[500px]">
                     <div className="mb-6 mt-8 lg:mt-0">
-                        <div className="text-xs text-[#E67E22] mb-2">/// INTERFACE CONVERSATIONNELLE</div>
+                        <div className="text-xs text-[#e67d23] mb-2">/// INTERFACE CONVERSATIONNELLE</div>
                         <h3 className="text-white font-mono text-xl uppercase tracking-tight">Assistant Documentaire</h3>
                     </div>
 
@@ -326,7 +320,7 @@ export function SectionMemory() {
                 {/* RIGHT BENTO: Knowledge Base Demo */}
                 <div className="p-4 lg:p-12 b-zinc-900 flex flex-col justify-center relative min-h-0 lg:min-h-[500px]">
                     <div className="mb-6 w-full max-w-[450px]">
-                        <div className="text-xs text-[#E67E22] mb-2">/// INDEXATION INTELLIGENTE</div>
+                        <div className="text-xs text-[#e67d23] mb-2">/// INDEXATION INTELLIGENTE</div>
                         <h3 className="text-white font-mono text-xl uppercase tracking-tight">Base de Connaissances</h3>
                     </div>
 

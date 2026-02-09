@@ -16,13 +16,13 @@ export function Footer() {
                             height={32}
                             className="h-8 mb-2"
                         />
-                        <p className="text-[#E67E22] text-xs uppercase tracking-wider">
+                        <p className="text-[#e67d23] text-xs uppercase tracking-wider">
                             L'Intelligence Opérationnelle.
                         </p>
                     </div>
                     {/* Sovereign positioning statement like Onepoint */}
                     <div className="mt-4 md:mt-0 text-right">
-                        <a href="mailto:hello@leonardintelligence.com" className="text-white hover:text-[#E67E22] transition-colors text-sm block mb-1 animated-underline">
+                        <a href="mailto:hello@leonardintelligence.com" className="text-white hover:text-[#e67d23] transition-colors text-sm block mb-1 animated-underline">
                             hello@leonardintelligence.com
                         </a>
                         <p className="text-gray-400 text-[10px]">France 🇫🇷</p>
@@ -95,8 +95,8 @@ export function Footer() {
                         © 2026 Leonard Intelligence. Tous droits réservés.
                     </div>
                     <div className="flex items-center gap-6">
-                        <span id="footer-status" className="flex items-center gap-2 text-[#E67E22] text-xs">
-                            <span className="w-2 h-2 bg-[#E67E22] rounded-full animate-pulse"></span>
+                        <span id="footer-status" className="flex items-center gap-2 text-[#e67d23] text-xs">
+                            <span className="w-2 h-2 bg-[#e67d23] rounded-full animate-pulse"></span>
                             Systèmes opérationnels
                         </span>
                     </div>

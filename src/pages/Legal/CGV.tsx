@@ -9,7 +9,7 @@ function Section({ title, children }: SectionProps) {
     return (
         <section className="group">
             <h2 className="text-lg md:text-xl font-medium text-white mb-4 flex items-center gap-3">
-                <span className="w-1 h-6 bg-[#E67E22] rounded-full opacity-80 group-hover:opacity-100 transition-opacity"></span>
+                <span className="w-1 h-6 bg-[#e67d23] rounded-full opacity-80 group-hover:opacity-100 transition-opacity"></span>
                 {title}
             </h2>
             <div className="pl-4 border-l border-white/5 text-sm md:text-base">

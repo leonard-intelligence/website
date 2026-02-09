@@ -9,7 +9,7 @@ function Section({ title, children }: SectionProps) {
     return (
         <section className="group">
             <h2 className="text-lg md:text-xl font-medium text-white mb-4 flex items-center gap-3">
-                <span className="w-1 h-6 bg-[#E67E22] rounded-full opacity-80 group-hover:opacity-100 transition-opacity"></span>
+                <span className="w-1 h-6 bg-[#e67d23] rounded-full opacity-80 group-hover:opacity-100 transition-opacity"></span>
                 {title}
             </h2>
             <div className="pl-4 border-l border-white/5 text-sm md:text-base">
@@ -54,7 +54,7 @@ export function MentionsLegales() {
                         value={
                             <a
                                 href="mailto:hello@leonardintelligence.com"
-                                className="text-[#E67E22] hover:text-[#F39C12] transition-colors"
+                                className="text-[#e67d23] hover:text-[#F39C12] transition-colors"
                             >
                                 hello@leonardintelligence.com
                             </a>
@@ -97,7 +97,7 @@ export function MentionsLegales() {
                     exclusivement aux services de Leonard Intelligence.
                 </p>
 
-                <div className="mt-6 p-4 bg-[#E67E22]/10 rounded-lg border border-[#E67E22]/30">
+                <div className="mt-6 p-4 bg-[#e67d23]/10 rounded-lg border border-[#e67d23]/30">
                     <p className="text-sm">
                         <span className="text-white font-medium">Vos droits :</span> Conformément à
                         la loi « informatique et libertés » et au RGPD, vous pouvez exercer
@@ -105,7 +105,7 @@ export function MentionsLegales() {
                         vous concernant en contactant :{' '}
                         <a
                             href="mailto:hello@leonardintelligence.com"
-                            className="text-[#E67E22] hover:text-[#F39C12] transition-colors"
+                            className="text-[#e67d23] hover:text-[#F39C12] transition-colors"
                         >
                             hello@leonardintelligence.com
                         </a>

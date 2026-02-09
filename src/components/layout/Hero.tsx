@@ -25,19 +25,18 @@ export function Hero() {
                             {/* Status Badge */}
                             <div className="inline-flex items-center gap-2 bg-black/80 px-4 py-2 rounded-full text-[0.8rem] border border-white/10 mb-6 lg:mb-10 text-[#e67d23]">
                                 <span className="w-1.5 h-1.5 bg-[#e67d23] rounded-full animate-pulse"></span>
-                                <span>Expert Mistral AI</span>
+                                <span>Expert Mistral AI 🇫🇷</span>
                             </div>
 
                             <h1
                                 id="hero-headline"
                                 className="font-mono text-3xl sm:text-4xl lg:text-[4rem] font-medium leading-[1.1] tracking-[-0.04em] mb-6 lg:mb-8 max-w-[950px] uppercase text-white drop-shadow-xl"
                             >
-                                L'IA opérationnelle pour les entreprises françaises.
+                                VOS DONNÉES VALENT DE L'OR. ON VA VOUS AIDER À LES EXPLOITER.
                             </h1>
 
                             <p className="text-base lg:text-[1.1rem] text-white/90 leading-relaxed max-w-xl mb-10 lg:mb-12 drop-shadow-lg font-normal pr-4">
-                                Agents autonomes, automatisation, souveraineté des données. Déployé sur votre
-                                infrastructure.
+                                On construit des agents IA qui travaillent pour vous. Sur vos serveurs. Sans dépendre des Américains.
                             </p>
 
                             <div className="flex flex-row flex-wrap gap-4 mt-2 w-full sm:w-auto">
@@ -52,7 +51,7 @@ export function Hero() {
                                     href="#section-solutions"
                                     className="bg-white/5 text-white border border-white/20 px-6 py-3 font-normal uppercase text-sm sm:text-base inline-block transition-all hover:bg-white/10 hover:border-white/40 hover:-translate-y-0.5 text-center whitespace-nowrap backdrop-blur-sm"
                                 >
-                                    EXPLORER NOS SOLUTIONS
+                                    Voir comment ça marche
                                 </a>
                             </div>
                         </div>

@@ -48,6 +48,8 @@ export function ModelNetworkDemo() {
         if (now - lastFrameRef.current < FRAME_INTERVAL) {
             if (isVisibleRef.current) {
                 rafRef.current = requestAnimationFrame(animate);
+            } else {
+                rafRef.current = 0;
             }
             return;
         }
@@ -95,6 +97,8 @@ export function ModelNetworkDemo() {
 
         if (isVisibleRef.current) {
             rafRef.current = requestAnimationFrame(animate);
+        } else {
+            rafRef.current = 0;
         }
     }, []);
 

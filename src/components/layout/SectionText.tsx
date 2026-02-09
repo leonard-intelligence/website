@@ -1,7 +1,6 @@
 import { DotIcon, leonardIcons } from "@/components/ui/LeonardIcons";
 import { TechIllustration } from "@/components/ui/TechIllustration";
 import { contactSignal } from "@/lib/contactSignal";
-import { Button } from "@/components/ui/button";
 
 import textBg from '@/assets/images/illustrations/illustration-expertise-extraction-03.webp';
 
@@ -22,16 +21,13 @@ export function SectionText() {
                             Pour le service client, les RH et l'administratif. Automatisez la rédaction et le traitement de vos flux documentaires.
                         </p>
 
-                        <Button
-                            variant="outline"
-                            className="bg-black text-[#E67E22] border-[#E67E22]/50 hover:bg-[#E67E22] hover:text-black text-xs uppercase tracking-wider mb-2"
+                        <button
                             onClick={() => contactSignal.trigger('Language & Process')}
+                            className="text-[#e67d23] hover:text-[#cc6d1e] text-xs font-medium uppercase tracking-wider flex items-center gap-2 transition-colors w-fit border-none bg-transparent p-0 mb-2"
                         >
-                            <span className="flex items-center gap-2">
-                                Discuter de ce sujet
-                                <DotIcon icon={leonardIcons.arrowRight} size={14} fillColor="currentColor" />
-                            </span>
-                        </Button>
+                            En savoir plus
+                            <DotIcon icon={leonardIcons.arrowRight} size={14} fillColor="currentColor" />
+                        </button>
                     </div>
 
                     <div className="flex-1 grid grid-cols-2 lg:flex lg:flex-col">
@@ -65,7 +61,7 @@ export function SectionText() {
                 <div className="lg:col-span-8 relative p-6 md:p-12 flex flex-col justify-between overflow-hidden order-1 lg:order-2">
                     {/* Header Area */}
                     <div className="relative z-10 mb-12 text-right reveal-right">
-                        <div className="text-[#E67E22] mb-2 text-lg">02 Language & Process.</div>
+                        <div className="text-[#e67d23] mb-2 text-lg">02 Language & Process.</div>
                         <h2 id="expertise-text-heading" className="text-4xl md:text-5xl font-mono text-white leading-tight ml-auto max-w-4xl uppercase tracking-[-0.02em]">
                             <span className="text-zinc-400">Pour le service client,</span><br />
                             les RH et l'administratif.
@@ -88,10 +84,10 @@ export function SectionText() {
                             <div className="flex justify-between items-center mb-4 border-b border-white/10 pb-3">
                                 <div className="flex items-center gap-2">
                                     <span className="relative flex h-2 w-2">
-                                        <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#E67E22] opacity-75"></span>
-                                        <span className="relative inline-flex rounded-full h-2 w-2 bg-[#E67E22]"></span>
+                                        <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#e67d23] opacity-75"></span>
+                                        <span className="relative inline-flex rounded-full h-2 w-2 bg-[#e67d23]"></span>
                                     </span>
-                                    <span className="text-xs text-[#E67E22] tracking-widest">STACK TECHNIQUE</span>
+                                    <span className="text-xs text-[#e67d23] tracking-widest">STACK TECHNIQUE</span>
                                 </div>
                                 <span className="text-xs text-zinc-400">LLM</span>
                             </div>

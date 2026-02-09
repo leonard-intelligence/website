@@ -95,20 +95,20 @@ export function DataSovereigntyDemo() {
 
             {/* Security Badge (Top Right) */}
             <div className="absolute top-4 right-4 z-20 flex gap-2">
-                <div className="bg-[#E67E22]/10 border border-[#E67E22]/20 rounded-full px-3 py-1.5 flex items-center gap-2">
-                    <div className="w-1.5 h-1.5 bg-[#E67E22] rounded-full animate-pulse" />
-                    <span className="text-[10px] text-[#E67E22] tracking-widest font-bold">DONNÉES PROTÉGÉES</span>
+                <div className="bg-[#e67d23]/10 border border-[#e67d23]/20 rounded-full px-3 py-1.5 flex items-center gap-2">
+                    <div className="w-1.5 h-1.5 bg-[#e67d23] rounded-full animate-pulse" />
+                    <span className="text-[10px] text-[#e67d23] tracking-widest font-bold">DONNÉES PROTÉGÉES</span>
                 </div>
             </div>
 
             <div className="relative w-[300px] h-[300px] flex items-center justify-center">
 
                 {/* 1. SECURE PERIMETER (The Firewall) */}
-                <div className="absolute w-[260px] h-[260px] rounded-full border-2 border-dashed border-[#E67E22]/20 animate-[spin_120s_linear_infinite]" />
-                <div className="absolute w-[260px] h-[260px] rounded-full border border-[#E67E22]/10" />
+                <div className="absolute w-[260px] h-[260px] rounded-full border-2 border-dashed border-[#e67d23]/20 animate-[spin_120s_linear_infinite]" />
+                <div className="absolute w-[260px] h-[260px] rounded-full border border-[#e67d23]/10" />
 
                 {/* Perimeter Glow */}
-                <div className="absolute w-[260px] h-[260px] rounded-full bg-[#E67E22]/5 blur-xl" />
+                <div className="absolute w-[260px] h-[260px] rounded-full bg-[#e67d23]/5 blur-xl" />
 
                 {/* 2. NODES */}
 
@@ -125,12 +125,12 @@ export function DataSovereigntyDemo() {
 
                 {/* Node B: Private AI (Right) */}
                 <div
-                    className="absolute w-16 h-16 bg-zinc-900 border border-[#E67E22]/30 rounded-2xl flex flex-col items-center justify-center z-10 shadow-[0_0_15px_rgba(230,126,34,0.1)]"
+                    className="absolute w-16 h-16 bg-zinc-900 border border-[#e67d23]/30 rounded-2xl flex flex-col items-center justify-center z-10 shadow-[0_0_15px_rgba(230,126,34,0.1)]"
                     style={{ transform: `translate(${AI_POS.x}px, ${AI_POS.y}px)` }}
                 >
-                    <DotIcon icon={leonardIcons.sparkles} size={24} fillColor="#E67E22" />
+                    <DotIcon icon={leonardIcons.sparkles} size={24} fillColor="#e67d23" />
                     <div className="absolute -bottom-6 w-32 text-center">
-                        <span className="text-[10px] text-[#E67E22] uppercase">IA Privée</span>
+                        <span className="text-[10px] text-[#e67d23] uppercase">IA Privée</span>
                     </div>
                 </div>
 
@@ -143,8 +143,8 @@ export function DataSovereigntyDemo() {
                             width: 3,
                             height: 3,
                             transform: `translate(${p.x}px, ${p.y}px)`,
-                            backgroundColor: p.target === "SERVER" ? "#E67E22" : "white", // Orange returning from AI, White going to AI
-                            boxShadow: p.target === "SERVER" ? "0 0 5px #E67E22" : "0 0 2px white",
+                            backgroundColor: p.target === "SERVER" ? "#e67d23" : "white", // Orange returning from AI, White going to AI
+                            boxShadow: p.target === "SERVER" ? "0 0 5px #e67d23" : "0 0 2px white",
                         }}
                     />
                 ))}
