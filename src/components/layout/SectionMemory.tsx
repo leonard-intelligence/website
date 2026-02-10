@@ -162,9 +162,9 @@ function ChatInterface() {
                 {isTyping && (
                     <div className="flex justify-start animate-in fade-in zoom-in duration-200">
                         <div className="bg-white/5 border border-white/10 rounded-xl rounded-bl-sm px-3 py-3 w-12 flex items-center justify-center gap-1">
-                            <span className="w-1.5 h-1.5 bg-white/40 rounded-full animate-[bounce_1s_infinite_100ms]"></span>
-                            <span className="w-1.5 h-1.5 bg-white/40 rounded-full animate-[bounce_1s_infinite_200ms]"></span>
-                            <span className="w-1.5 h-1.5 bg-white/40 rounded-full animate-[bounce_1s_infinite_300ms]"></span>
+                            <span className="w-1.5 h-1.5 bg-white/40 rounded-full animate-[bounce_1s_infinite_100ms] will-change-transform"></span>
+                            <span className="w-1.5 h-1.5 bg-white/40 rounded-full animate-[bounce_1s_infinite_200ms] will-change-transform"></span>
+                            <span className="w-1.5 h-1.5 bg-white/40 rounded-full animate-[bounce_1s_infinite_300ms] will-change-transform"></span>
                         </div>
                     </div>
                 )}

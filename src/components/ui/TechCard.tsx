@@ -94,10 +94,11 @@ export const TechCardImage = ({ src, alt, className, useFx = true, layout = 'con
         // Local handlers removed, rely on parent context
         >
             {useFx ? (
-                <Suspense fallback={<img src={src} alt={alt} className={styles.image} sizes="(max-width: 640px) 45vw, (max-width: 1024px) 30vw, 250px" />}>
+                <Suspense fallback={<img src={src} alt={alt} className={styles.image} loading="lazy" sizes="(max-width: 640px) 45vw, (max-width: 1024px) 30vw, 250px" />}>
                     <FxImage
                         src={src}
                         alt={alt}
+                        loading="lazy"
                         className={styles.image} // Using module class
                         imgStyle={layout === 'full' ? { objectFit: 'cover', width: '100%', height: '100%' } : undefined}
                         config={configOverrides}
@@ -108,6 +109,7 @@ export const TechCardImage = ({ src, alt, className, useFx = true, layout = 'con
                     src={src}
                     alt={alt}
                     className={styles.image}
+                    loading="lazy"
                     sizes="(max-width: 640px) 45vw, (max-width: 1024px) 30vw, 250px"
                 />
             )}

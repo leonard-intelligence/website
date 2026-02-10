@@ -109,7 +109,7 @@ export function PassiveDocumentationDemo() {
                     <div className={`absolute inset-0 flex items-center justify-center transition-opacity duration-700 ${activeStep === 1 ? 'opacity-100 scale-100' : 'opacity-0 scale-95'}`}>
                         <div className="relative">
                             {/* Circular Radar pulses */}
-                            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-40 h-40 border border-[#e67d23]/30 rounded-full animate-ping" />
+                            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-40 h-40 border border-[#e67d23]/30 rounded-full animate-ping will-change-transform" />
                             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-24 h-24 border border-[#e67d23]/50 rounded-full" />
 
                             {/* Central Icon */}
@@ -118,9 +118,9 @@ export function PassiveDocumentationDemo() {
                             </div>
 
                             {/* Floating "bits" of data */}
-                            <div className="absolute -top-12 -left-8 w-12 h-1 bg-[#e67d23] opacity-40 animate-[bounce_2s_infinite]" />
-                            <div className="absolute top-4 -right-16 w-8 h-1 bg-[#e67d23] opacity-40 animate-[bounce_2.5s_infinite]" />
-                            <div className="absolute -bottom-8 right-2 w-10 h-1 bg-[#e67d23] opacity-40 animate-[bounce_1.8s_infinite]" />
+                            <div className="absolute -top-12 -left-8 w-12 h-1 bg-[#e67d23] opacity-40 animate-[bounce_2s_infinite] will-change-transform" />
+                            <div className="absolute top-4 -right-16 w-8 h-1 bg-[#e67d23] opacity-40 animate-[bounce_2.5s_infinite] will-change-transform" />
+                            <div className="absolute -bottom-8 right-2 w-10 h-1 bg-[#e67d23] opacity-40 animate-[bounce_1.8s_infinite] will-change-transform" />
                         </div>
                     </div>
 
