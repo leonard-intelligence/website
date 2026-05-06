@@ -1,3 +1,3 @@
-# React + TypeScript + Vite + shadcn/ui
+# Leonard Intelligence Website
 
-This is a template for a new Vite project with React, TypeScript, and shadcn/ui.
+Test commit — n'importe quoi.
