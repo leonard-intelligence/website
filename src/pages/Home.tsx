@@ -1,6 +1,6 @@
 import { Hero } from '../components/layout/Hero';
 import { ConstruitSur } from '../components/layout/ConstruitSur';
-import { SectionIntro, SectionMethod, SectionCapabilities, SectionServices, SectionCTA, SectionFontSpecimen, FooterV2 } from '../components/layout/Sections';
+import { SectionIntro, SectionMethod, SectionCapabilities, SectionServices, SectionCTA, FooterV2 } from '../components/layout/Sections';
 import { SEO } from '../components/seo/SEO';
 import { JsonLd } from '../components/seo/JsonLd';
 import { BeadPxProvider } from '../components/pixels/BeadPxContext';
@@ -20,7 +20,6 @@ export function Home() {
                 <SectionCapabilities />
                 <SectionServices />
                 <SectionCTA />
-                {import.meta.env.DEV && <SectionFontSpecimen />}
                 <FooterV2 />
             </main>
         </BeadPxProvider>
