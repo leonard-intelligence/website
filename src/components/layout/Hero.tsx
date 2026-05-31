@@ -1,8 +1,6 @@
 import { useEffect, useState } from 'react';
 import { ArrowRight } from 'lucide-react';
 import { SAMPLE_W, SAMPLE_H, SOURCE_URL } from '../pixels/BeadPxContext';
-import { PixelLayer } from '../pixels/PixelLayer';
-import { Pixel } from '../pixels/Pixel';
 import { ReliefButton } from '../ui/ReliefButton';
 
 type Sz = {
