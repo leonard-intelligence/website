@@ -8,6 +8,24 @@ import { useVitruveParams } from '../dev/vitruveParamsStore';
 import { QrBadge } from './QrBadge';
 import { ReliefButton } from '../ui/ReliefButton';
 import { useState } from 'react';
+import { useInViewReveal } from '../../hooks/useInViewReveal';
+
+function Reveal({ children, className }: { children: React.ReactNode; className?: string }) {
+    const { ref, shown } = useInViewReveal<HTMLDivElement>();
+    return (
+        <div
+            ref={ref}
+            className={className}
+            style={{
+                opacity: shown ? 1 : 0,
+                transform: shown ? 'none' : 'translateY(12px)',
+                transition: 'opacity 600ms cubic-bezier(0.25,0,0.15,1), transform 600ms cubic-bezier(0.25,0,0.15,1)',
+            }}
+        >
+            {children}
+        </div>
+    );
+}
 
 const TOKENS = {
     paper: '#F7F7F5',
@@ -307,6 +325,7 @@ export function SectionIntro() {
                 </div>
             </div>
 
+            <Reveal>
             <div className="max-w-[1200px] mx-auto">
                 <div className="flex flex-col items-center mb-10" aria-hidden="true">
                     <span
@@ -352,6 +371,7 @@ export function SectionIntro() {
                     />
                 </div>
             </div>
+            </Reveal>
         </section>
     );
 }
@@ -535,6 +555,7 @@ export function SectionServices() {
             style={{ backgroundColor: TOKENS.surface, paddingBlock: '76px', paddingInline: '32px' }}
             aria-label="Nos services"
         >
+            <Reveal>
             <div className="max-w-[1280px] mx-auto">
                 <header className="mb-12">
                     <div className="font-mono" style={{ fontSize: 13, letterSpacing: '0.22em', ...EMBOSS_MUTED }}>
@@ -596,6 +617,7 @@ export function SectionServices() {
                     ))}
                 </div>
             </div>
+            </Reveal>
         </section>
     );
 }
@@ -608,6 +630,7 @@ export function SectionMethod() {
             style={{ backgroundColor: TOKENS.white, paddingBlock: '76px', paddingInline: '32px' }}
             aria-label="Notre méthode"
         >
+            <Reveal>
             <div className="max-w-[1200px] mx-auto">
                 <header className="text-center mb-16">
                     <h2
@@ -680,6 +703,7 @@ export function SectionMethod() {
                     ))}
                 </div>
             </div>
+            </Reveal>
         </section>
     );
 }
@@ -696,6 +720,7 @@ export function SectionCapabilities() {
             style={{ backgroundColor: TOKENS.surface, paddingBlock: '76px', paddingInline: '32px' }}
             aria-label="Capacités"
         >
+            <Reveal>
             <div className="max-w-[1100px] mx-auto">
                 <header className="text-center mb-14">
                     <div className="font-mono" style={{ fontSize: 13, letterSpacing: '0.22em', ...EMBOSS_MUTED }}>
@@ -758,6 +783,7 @@ export function SectionCapabilities() {
                     </span>
                 </div>
             </div>
+            </Reveal>
         </section>
     );
 }
@@ -1559,6 +1585,7 @@ export function SectionCTA() {
             style={{ backgroundColor: TOKENS.white, paddingBlock: '76px', paddingInline: '32px' }}
             aria-label="Démarrer un projet"
         >
+            <Reveal>
             <div className="max-w-[800px] mx-auto text-center">
                 <h2
                     className="font-sans"
@@ -1594,6 +1621,7 @@ export function SectionCTA() {
                     </ReliefButton>
                 </div>
             </div>
+            </Reveal>
         </section>
     );
 }
