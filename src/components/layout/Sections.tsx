@@ -1871,13 +1871,17 @@ export function FooterV2() {
             </div>
 
             <div
-                className="max-w-[1200px] mx-auto mt-16 pt-6 flex flex-wrap justify-between items-center gap-3"
+                className="max-w-[1200px] mx-auto mt-16 pt-6 relative flex flex-wrap justify-between items-center gap-3"
                 style={{ borderTop: `1px solid ${TOKENS.border}` }}
             >
-                <span style={{ fontSize: '13px', color: TOKENS.mutedText, fontWeight: 460 }}>
-                    © {new Date().getFullYear()} Leonard Intelligence. Tous droits réservés.
+                {/* repères de coin */}
+                <span aria-hidden="true" style={{ position: 'absolute', left: 0, bottom: -4, width: 10, height: 10, borderLeft: `1px solid ${TOKENS.border}`, borderBottom: `1px solid ${TOKENS.border}` }} />
+                <span aria-hidden="true" style={{ position: 'absolute', right: 0, bottom: -4, width: 10, height: 10, borderRight: `1px solid ${TOKENS.border}`, borderBottom: `1px solid ${TOKENS.border}` }} />
+
+                <span className="font-mono" style={{ fontSize: 11, letterSpacing: '0.08em', color: TOKENS.mutedText }}>
+                    © {new Date().getFullYear()} LEONARD INTELLIGENCE · BUILD v2 · PARIS, FRANCE
                 </span>
-                <span style={{ fontSize: '13px', color: TOKENS.mutedText, fontWeight: 460 }}>
+                <span className="font-mono" style={{ fontSize: 11, letterSpacing: '0.04em', color: TOKENS.mutedText }}>
                     Construit en France 🇫🇷
                 </span>
             </div>
