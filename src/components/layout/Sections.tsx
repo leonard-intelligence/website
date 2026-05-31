@@ -686,57 +686,6 @@ export function SectionMethod() {
 // ============================================================================
 // SECTION 3 — Capabilities (alternating text + visual)
 // ============================================================================
-const CAPABILITIES = [
-    {
-        title: 'Concevez des agents adaptés à vos métiers',
-        body: 'Vente, support, finance, ops, RH. Chaque agent est conçu pour les workflows spécifiques de votre équipe — pas un wrapper LLM générique.',
-        link: 'Voir les use cases',
-        tone: 'forest',
-        visual: (
-            <Schematic
-                items={['Vente', 'Support', 'Ops', 'Finance', 'RH', 'Marketing']}
-                centerLabel="Agent core"
-            />
-        ),
-    },
-    {
-        title: 'Intégrez à votre stack existant',
-        body: 'Slack, Notion, Salesforce, vos APIs internes, vos bases de données. Les agents s\'intègrent à ce que vous utilisez déjà via MCP, webhooks et SDK custom.',
-        link: 'Voir les intégrations',
-        tone: 'lime',
-        visual: <StackArchitecture />,
-    },
-    {
-        title: 'Observez et pilotez en production',
-        body: 'Chaque agent est instrumenté : statut des exécutions, escalades vers l\'humain, latence, erreurs. Vous gardez la main, l\'agent reste traçable.',
-        link: 'Voir le pilotage',
-        tone: 'gold',
-        visual: <ActivityFeed />,
-    },
-    {
-        title: 'Concevez l\'agent à votre image',
-        body: 'Custom instructions, subagents, triggers. Vous définissez le comportement, la voix, les outils. On l\'orchestre.',
-        link: 'Voir le template',
-        tone: 'lime',
-        bare: true,
-        visual: <AgentCardStack />,
-    },
-    {
-        title: 'Du déclencheur au résultat',
-        body: 'Chaque agent suit un cycle de vie clair : trigger, exécution, validation humaine si critique, output. Tout est tracé.',
-        link: 'Voir le pipeline',
-        tone: 'forest',
-        visual: <Pipeline />,
-    },
-    {
-        title: 'Une signature visuelle commune',
-        body: 'Tous nos agents partagent un langage : pattern, couleurs, identité. C\'est l\'orchestration Leonard.',
-        link: 'Voir la charte',
-        tone: 'gold',
-        visual: <BeadNetwork />,
-    },
-];
-
 export function SectionCapabilities() {
     return (
         <section
@@ -745,269 +694,38 @@ export function SectionCapabilities() {
             style={{ backgroundColor: TOKENS.surface, paddingBlock: '76px', paddingInline: '32px' }}
             aria-label="Capacités"
         >
-            <div className="max-w-[1200px] mx-auto flex flex-col gap-20">
-                {CAPABILITIES.map((c, i) => (
-                    <article
-                        key={c.title}
-                        className={`grid grid-cols-1 md:grid-cols-2 gap-12 items-center ${i % 2 === 1 ? 'md:[&>*:first-child]:order-2' : ''}`}
+            <div className="max-w-[1100px] mx-auto">
+                <header className="text-center mb-14">
+                    <div className="font-mono" style={{ fontSize: 13, letterSpacing: '0.22em', ...EMBOSS_MUTED }}>
+                        CAPACITÉS
+                    </div>
+                    <h2
+                        className="font-sans mt-3 mx-auto"
+                        style={{ fontSize: 'clamp(1.75rem, 3.4vw, 2.75rem)', lineHeight: 1.1, fontWeight: 500, letterSpacing: '-0.02em', maxWidth: '20ch', ...EMBOSS_DARK }}
                     >
-                        <div className="flex flex-col gap-4">
-                            <div
-                                className="inline-flex items-center justify-center w-10 h-10 rounded-lg"
-                                style={{
-                                    backgroundColor:
-                                        c.tone === 'lime' ? TOKENS.lime : c.tone === 'gold' ? TOKENS.gold : TOKENS.forest,
-                                }}
-                                aria-hidden="true"
-                            />
-                            <h3
-                                className="font-mono"
-                                style={{ fontSize: 'clamp(1.3rem, 2.1vw, 1.7rem)', lineHeight: 1.2, fontWeight: 500, letterSpacing: '-0.01em', ...EMBOSS_DARK }}
-                            >
-                                {c.title}
-                            </h3>
-                            <p
-                                className="font-sans"
-                                style={{ fontSize: '16px', lineHeight: '22.4px', fontWeight: 460, color: TOKENS.mutedText, maxWidth: '52ch' }}
-                            >
-                                {c.body}
-                            </p>
-                            <a
-                                href="#"
-                                className="font-sans inline-flex items-center mt-2 hover:underline"
-                                style={{ fontSize: '14px', color: TOKENS.ink, fontWeight: 460 }}
-                            >
-                                {c.link} <span className="ml-1">→</span>
-                            </a>
-                        </div>
+                        Voici à quoi ressemble un agent de production.
+                    </h2>
+                    <p
+                        className="font-sans mt-4 mx-auto"
+                        style={{ fontSize: '17px', lineHeight: '24px', fontWeight: 460, color: TOKENS.mutedText, maxWidth: '52ch' }}
+                    >
+                        Instructions, sous-agents, outils branchés, garde-fous, latence : chaque agent est une fiche technique, pas une boîte noire.
+                    </p>
+                </header>
 
-                        <div
-                            className="relative w-full"
-                            style={{
-                                backgroundColor: c.bare ? 'transparent' : TOKENS.pale,
-                                borderRadius: '7.142px',
-                                boxShadow: c.bare ? 'none' : CARD_SHADOW,
-                                aspectRatio: '4 / 3',
-                                overflow: c.bare ? 'visible' : 'hidden',
-                            }}
-                        >
-                            {c.visual}
-                        </div>
-                    </article>
-                ))}
+                <div className="flex flex-col items-center gap-5">
+                    <div className="relative w-full" style={{ maxWidth: 520, aspectRatio: '4 / 3' }}>
+                        <AgentCardStack />
+                    </div>
+                    <span
+                        className="font-mono"
+                        style={{ fontSize: 10, letterSpacing: '0.18em', color: TOKENS.mutedText, opacity: 0.7 }}
+                    >
+                        SPÉCIMEN · DÉMONSTRATION DE SAVOIR-FAIRE
+                    </span>
+                </div>
             </div>
         </section>
-    );
-}
-
-// ----- Visual mocks -----
-function Schematic({ items, centerLabel }: { items: string[]; centerLabel: string }) {
-    // Cofounder-style wheel: dashed lines + relief nodes + occasional task-count badge
-    const taskCounts: Record<number, { warn: number; running: number; done: number }> = {
-        0: { warn: 3, running: 2, done: 2 },
-        4: { warn: 4, running: 4, done: 3 },
-        6: { warn: 4, running: 3, done: 2 },
-    };
-    return (
-        <div className="absolute inset-0 flex items-center justify-center">
-            <div className="relative w-[88%] aspect-square">
-                {/* Dashed connecting lines from center to each node */}
-                <svg
-                    viewBox="0 0 100 100"
-                    preserveAspectRatio="xMidYMid meet"
-                    className="absolute inset-0 w-full h-full"
-                    aria-hidden="true"
-                >
-                    {items.map((_, i) => {
-                        const angle = (i / items.length) * Math.PI * 2 - Math.PI / 2;
-                        const r = 44;
-                        const cx = 50 + r * Math.cos(angle);
-                        const cy = 50 + r * Math.sin(angle);
-                        return (
-                            <line
-                                key={i}
-                                x1={50}
-                                y1={50}
-                                x2={cx}
-                                y2={cy}
-                                stroke="rgba(32, 32, 32, 0.15)"
-                                strokeWidth="0.3"
-                                strokeDasharray="0.8 0.8"
-                            />
-                        );
-                    })}
-                    {/* Outer ring */}
-                    <circle cx="50" cy="50" r="44" fill="none" stroke="rgba(32, 32, 32, 0.08)" strokeWidth="0.3" strokeDasharray="0.8 0.8" />
-                </svg>
-
-                {/* Central node — Leonard mark on a soft pill */}
-                <div
-                    className="absolute inset-0 m-auto inline-flex items-center justify-center font-sans"
-                    style={{
-                        width: 92,
-                        height: 92,
-                        borderRadius: 999,
-                        backgroundColor: TOKENS.pale,
-                        boxShadow: RELIEF_LIGHT,
-                        color: TOKENS.ink,
-                        fontSize: 12,
-                        fontWeight: 460,
-                        letterSpacing: '0.02em',
-                    }}
-                >
-                    {centerLabel}
-                </div>
-
-                {/* Surrounding nodes */}
-                {items.map((label, i) => {
-                    const angle = (i / items.length) * Math.PI * 2 - Math.PI / 2;
-                    const r = 44;
-                    const cx = 50 + r * Math.cos(angle);
-                    const cy = 50 + r * Math.sin(angle);
-                    const badge = taskCounts[i];
-                    return (
-                        <div
-                            key={label}
-                            className="absolute -translate-x-1/2 -translate-y-1/2 flex flex-col items-center gap-1"
-                            style={{ left: `${cx}%`, top: `${cy}%` }}
-                        >
-                            {badge && (
-                                <div
-                                    className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full"
-                                    style={{
-                                        backgroundColor: TOKENS.pale,
-                                        boxShadow: RELIEF_LIGHT,
-                                        fontSize: 9,
-                                        color: TOKENS.mutedText,
-                                        fontWeight: 460,
-                                    }}
-                                >
-                                    <span style={{ width: 5, height: 5, borderRadius: 999, background: TOKENS.gold, display: 'inline-block' }} />
-                                    {badge.warn}
-                                    <span style={{ width: 5, height: 5, borderRadius: 999, background: TOKENS.lime, display: 'inline-block' }} />
-                                    {badge.running}
-                                    <span style={{ width: 5, height: 5, borderRadius: 999, background: TOKENS.forest, display: 'inline-block' }} />
-                                    {badge.done}
-                                </div>
-                            )}
-                            <div
-                                className="px-3 py-1.5 rounded-md font-sans"
-                                style={{
-                                    backgroundColor: TOKENS.pale,
-                                    boxShadow: RELIEF_LIGHT,
-                                    fontSize: 12,
-                                    color: TOKENS.ink,
-                                    fontWeight: 460,
-                                }}
-                            >
-                                {label}
-                            </div>
-                        </div>
-                    );
-                })}
-            </div>
-        </div>
-    );
-}
-
-// ============================================================================
-// Stack Architecture — layered cake showing data → MCP → Agent → outputs
-// ============================================================================
-function StackArchitecture() {
-    const layers = [
-        { label: 'Vos outils', chips: ['Slack', 'Notion', 'Gmail'], tone: TOKENS.pale },
-        { label: 'Agent core', chips: ['Leonard'], tone: TOKENS.ink, dark: true },
-        { label: 'MCP · APIs · Webhooks', chips: ['GitHub', 'HubSpot', 'Linear', 'Custom'], tone: TOKENS.pale },
-        { label: 'Vos données', chips: ['DB', 'Drive', 'Salesforce'], tone: TOKENS.pale },
-    ];
-    return (
-        <div className="absolute inset-0 p-6 flex flex-col justify-center gap-2">
-            {layers.map((layer) => (
-                <div
-                    key={layer.label}
-                    className="flex items-center justify-between px-4 py-3 rounded-md font-sans"
-                    style={{
-                        backgroundColor: layer.tone,
-                        color: layer.dark ? TOKENS.pale : TOKENS.ink,
-                        boxShadow: layer.dark ? BTN_DARK_SHADOW : RELIEF_LIGHT,
-                    }}
-                >
-                    <span style={{ fontSize: 11, opacity: 0.7, letterSpacing: '0.04em', textTransform: 'uppercase' }}>
-                        {layer.label}
-                    </span>
-                    <div className="flex gap-1.5">
-                        {layer.chips.map((chip) => (
-                            <span
-                                key={chip}
-                                className="px-2 py-0.5 rounded-full"
-                                style={{
-                                    backgroundColor: layer.dark ? 'rgba(255,255,255,0.12)' : TOKENS.surface,
-                                    fontSize: 11,
-                                    fontWeight: 460,
-                                    color: layer.dark ? TOKENS.pale : TOKENS.ink,
-                                    boxShadow: layer.dark ? 'none' : 'rgba(0,0,0,0.06) 0px 1px 2px',
-                                }}
-                            >
-                                {chip}
-                            </span>
-                        ))}
-                    </div>
-                </div>
-            ))}
-        </div>
-    );
-}
-
-// ============================================================================
-// Activity Feed — Cofounder-style task notifications stream
-// ============================================================================
-function ActivityFeed() {
-    const items = [
-        { agent: 'Agent vente', action: '3 RDV qualifiés envoyés', status: 'done', ts: 'il y a 2 min' },
-        { agent: 'Agent support', action: 'Ticket #4129 résolu', status: 'done', ts: 'il y a 8 min' },
-        { agent: 'Agent ops', action: 'Rapport hebdo généré', status: 'running', ts: 'il y a 12 min' },
-        { agent: 'Agent marketing', action: 'Campagne LinkedIn préparée', status: 'queued', ts: 'il y a 21 min' },
-        { agent: 'Agent finance', action: 'Réconciliation Stripe ↔ Notion', status: 'done', ts: 'il y a 34 min' },
-    ];
-    const statusColor = (s: string) =>
-        s === 'done' ? TOKENS.lime : s === 'running' ? TOKENS.gold : TOKENS.mutedText;
-    return (
-        <div className="absolute inset-0 p-4 flex flex-col gap-2 overflow-hidden">
-            {items.map((it) => (
-                <div
-                    key={it.agent + it.action}
-                    className="flex items-center gap-3 px-3 py-2.5 rounded-md font-sans"
-                    style={{ backgroundColor: TOKENS.pale, boxShadow: RELIEF_LIGHT }}
-                >
-                    <span
-                        style={{
-                            width: 8,
-                            height: 8,
-                            borderRadius: 999,
-                            background: statusColor(it.status),
-                            flexShrink: 0,
-                        }}
-                        aria-hidden="true"
-                    />
-                    <span style={{ fontSize: 12, color: TOKENS.mutedText, fontWeight: 460, minWidth: 100 }}>
-                        {it.agent}
-                    </span>
-                    <span style={{ fontSize: 13, color: TOKENS.ink, fontWeight: 460, flex: 1 }}>
-                        {it.action}
-                    </span>
-                    <span style={{ fontSize: 11, color: TOKENS.mutedText, fontWeight: 460 }}>{it.ts}</span>
-                </div>
-            ))}
-            {/* Fade out at the bottom */}
-            <div
-                className="absolute bottom-0 left-0 right-0 pointer-events-none"
-                style={{
-                    height: 40,
-                    backgroundImage: `linear-gradient(180deg, rgba(251,251,248,0) 0%, ${TOKENS.pale} 100%)`,
-                }}
-                aria-hidden="true"
-            />
-        </div>
     );
 }
 
@@ -1042,7 +760,7 @@ const AGENT_CARDS: AgentCardData[] = [
             { label: 'LATENCE', value: '<2s' },
             { label: 'VALIDATION', value: '01' },
         ],
-        action: 'EXÉCUTE 1 284 ACTIONS / JOUR EN PRODUCTION',
+        action: 'QUALIFIE ET RELANCE LES LEADS ENTRANTS',
     },
     {
         bg: '#71CE45',
@@ -1057,7 +775,7 @@ const AGENT_CARDS: AgentCardData[] = [
             { label: 'LATENCE', value: '<1s' },
             { label: 'VALIDATION', value: '00' },
         ],
-        action: 'RÉSOUT 89% DES TICKETS L1 SANS ESCALADE',
+        action: 'ROUTE ET RÉSOUT LES TICKETS DE NIVEAU 1',
     },
     {
         bg: '#FBFBF8',
@@ -1072,7 +790,7 @@ const AGENT_CARDS: AgentCardData[] = [
             { label: 'MODE', value: 'BATCH' },
             { label: 'VALIDATION', value: '01' },
         ],
-        action: 'GÉNÈRE LE RAPPORT HEBDO EN 4 MIN',
+        action: 'GÉNÈRE LE RAPPORT OPS HEBDOMADAIRE',
     },
 ];
 
@@ -1784,123 +1502,6 @@ export function AgentTemplate() {
                             {s}
                         </span>
                     ))}
-                </div>
-            </div>
-        </div>
-    );
-}
-
-// ============================================================================
-// Pipeline — horizontal flow Trigger → Agent → Tool → Validation → Output
-// ============================================================================
-function Pipeline() {
-    const steps = [
-        { label: 'Trigger', tone: TOKENS.gold },
-        { label: 'Agent', tone: TOKENS.ink, dark: true },
-        { label: 'Outils', tone: TOKENS.pale },
-        { label: 'Validation H', tone: TOKENS.pale },
-        { label: 'Output', tone: TOKENS.lime },
-    ];
-    return (
-        <div className="absolute inset-0 p-6 flex flex-col items-center justify-center gap-6">
-            {/* Horizontal flow on wide, wraps on narrow */}
-            <div className="flex flex-wrap items-center justify-center gap-2 max-w-full">
-                {steps.map((step, i) => (
-                    <div key={step.label} className="flex items-center gap-2">
-                        <div
-                            className="inline-flex items-center justify-center px-3 py-2 rounded-md font-sans"
-                            style={{
-                                backgroundColor: step.tone,
-                                color: step.dark ? TOKENS.pale : TOKENS.ink,
-                                boxShadow: step.dark ? BTN_DARK_SHADOW : RELIEF_LIGHT,
-                                fontSize: 12,
-                                fontWeight: 460,
-                            }}
-                        >
-                            {step.label}
-                        </div>
-                        {i < steps.length - 1 && (
-                            <span
-                                aria-hidden="true"
-                                style={{
-                                    width: 16,
-                                    height: 1,
-                                    background: 'repeating-linear-gradient(90deg, rgba(32,32,32,0.3) 0 2px, transparent 2px 4px)',
-                                }}
-                            />
-                        )}
-                    </div>
-                ))}
-            </div>
-            <div className="flex items-center gap-2 mt-2" style={{ fontSize: 11, color: TOKENS.mutedText }}>
-                <span style={{ width: 6, height: 6, borderRadius: 999, background: TOKENS.lime }} aria-hidden="true" />
-                <span>Tracé bout-en-bout · validation au besoin · retry automatique</span>
-            </div>
-        </div>
-    );
-}
-
-// ============================================================================
-// Bead Network Mini — reuses bead aesthetic as nodes of a small graph
-// ============================================================================
-function BeadNetwork() {
-    // 7 nodes: 1 center + 6 around. Positions in % within the layer.
-    const nodes = [
-        { id: 'core', x: 50, y: 50, size: 28, color: '#171717' },
-        { id: 'n1', x: 18, y: 22, size: 18, color: '#c87b3a' },
-        { id: 'n2', x: 78, y: 18, size: 18, color: '#7a4630' },
-        { id: 'n3', x: 88, y: 58, size: 18, color: '#cf5a2e' },
-        { id: 'n4', x: 65, y: 86, size: 18, color: '#b1b1a2' },
-        { id: 'n5', x: 22, y: 80, size: 18, color: '#dba968' },
-        { id: 'n6', x: 8, y: 52, size: 18, color: '#6a6a5e' },
-    ];
-    return (
-        <div className="absolute inset-0 flex items-center justify-center">
-            <div className="relative w-full h-full">
-                {/* Connecting lines */}
-                <svg viewBox="0 0 100 100" preserveAspectRatio="none" className="absolute inset-0 w-full h-full" aria-hidden="true">
-                    {nodes.slice(1).map((n) => (
-                        <line
-                            key={n.id}
-                            x1={50}
-                            y1={50}
-                            x2={n.x}
-                            y2={n.y}
-                            stroke="rgba(32, 32, 32, 0.15)"
-                            strokeWidth="0.3"
-                            strokeDasharray="0.6 0.6"
-                        />
-                    ))}
-                </svg>
-                {/* Bead nodes */}
-                {nodes.map((n) => (
-                    <div
-                        key={n.id}
-                        className="absolute -translate-x-1/2 -translate-y-1/2 rounded-full"
-                        style={{
-                            left: `${n.x}%`,
-                            top: `${n.y}%`,
-                            width: n.size,
-                            height: n.size,
-                            background: n.color,
-                            boxShadow: `inset 0 ${n.size * 0.18}px 0 rgba(255,255,255,0.18), inset 0 -${n.size * 0.18}px 0 rgba(0,0,0,0.25), 0 2px 4px rgba(0,0,0,0.15)`,
-                        }}
-                        aria-hidden="true"
-                    />
-                ))}
-                {/* Central label */}
-                <div
-                    className="absolute left-1/2 -translate-x-1/2 font-sans"
-                    style={{
-                        top: 'calc(50% + 24px)',
-                        fontSize: 11,
-                        color: TOKENS.mutedText,
-                        fontWeight: 460,
-                        letterSpacing: '0.08em',
-                        textTransform: 'uppercase',
-                    }}
-                >
-                    Orchestration Leonard
                 </div>
             </div>
         </div>
