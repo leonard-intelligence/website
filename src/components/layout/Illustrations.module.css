@@ -1,0 +1,47 @@
+/* Motion layer for the section illustrations.
+   Self-contained + reduced-motion-safe. Strokes that "flow" use a fixed
+   dash period of 8 (strokeDasharray="3 5") so the loop is seamless. */
+
+.flow {
+    animation: illu-flow 1.8s linear infinite;
+}
+
+@keyframes illu-flow {
+    to {
+        stroke-dashoffset: -8;
+    }
+}
+
+.pulse {
+    animation: illu-pulse 2.6s ease-in-out infinite;
+}
+
+@keyframes illu-pulse {
+    0%,
+    100% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.3;
+    }
+}
+
+.spin {
+    transform-box: fill-box;
+    transform-origin: center;
+    animation: illu-spin 0.9s linear infinite;
+}
+
+@keyframes illu-spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .flow,
+    .pulse,
+    .spin {
+        animation: none;
+    }
+}
