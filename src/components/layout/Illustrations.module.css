@@ -32,6 +32,12 @@
     animation: illu-spin 0.9s linear infinite;
 }
 
+/* HTML spinner ring (cofounder-style product mockups) */
+.spinner {
+    transform-origin: center;
+    animation: illu-spin 0.8s linear infinite;
+}
+
 @keyframes illu-spin {
     to {
         transform: rotate(360deg);
@@ -41,7 +47,8 @@
 @media (prefers-reduced-motion: reduce) {
     .flow,
     .pulse,
-    .spin {
+    .spin,
+    .spinner {
         animation: none;
     }
 }

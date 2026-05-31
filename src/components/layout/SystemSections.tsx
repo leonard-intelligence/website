@@ -353,75 +353,95 @@ function IlluCompound({ accent }: { accent: string }) {
     );
 }
 
-// ── 06 · Produits & interfaces — supervision dashboard + stacked surfaces ────
+// ── 06 · Produits & interfaces — supervision dashboard (product-UI mockup) ───
+type AgentState = 'run' | 'prog' | 'queue' | 'done';
 function IlluSurfaces({ accent }: { accent: string }) {
-    const stroke = TOKENS.ink;
-    const fx = 90, fy = 56, fw = 250, fh = 188;
-    const rows = ['actif', 'prog', 'file'];
+    const { ink, mutedText, border, white, pale, gold, forest } = TOKENS;
+    const agents: { id: string; name: string; task: string; state: AgentState; pct?: number }[] = [
+        { id: 'SUP', name: 'Agent · Support', task: 'Triage des tickets', state: 'run' },
+        { id: 'REL', name: 'Agent · Relance', task: 'Séquence email J+3', state: 'prog', pct: 64 },
+        { id: 'VEI', name: 'Agent · Veille', task: 'Synthèse hebdomadaire', state: 'queue' },
+        { id: 'CNF', name: 'Agent · Conformité', task: 'Contrôle des accès', state: 'done' },
+    ];
+    const bars = [5, 8, 6, 11, 7, 13, 9, 15, 10, 14, 8, 16, 12, 18, 11, 9];
     return (
-        <svg viewBox="0 0 360 280" aria-hidden="true" style={svgBox}>
-            {/* surfaces stacked behind */}
-            <rect x="46" y="24" width="246" height="184" rx="10" fill={TOKENS.white} stroke={stroke} strokeWidth="1.1" opacity="0.28" />
-            <text x="280" y="38" textAnchor="end" className="font-mono" style={{ fontSize: 8, fill: stroke, opacity: 0.4 }}>ADD-IN</text>
-            <rect x="68" y="40" width="246" height="184" rx="10" fill={TOKENS.white} stroke={stroke} strokeWidth="1.1" opacity="0.42" />
-            <text x="302" y="52" textAnchor="end" className="font-mono" style={{ fontSize: 8, fill: stroke, opacity: 0.45 }}>API</text>
+        <div
+            className="w-full font-sans"
+            style={{
+                maxWidth: 360,
+                borderRadius: 16,
+                border: `1px solid ${border}`,
+                background: `linear-gradient(180deg, ${white}, ${pale})`,
+                boxShadow: CARD_SHADOW,
+                overflow: 'hidden',
+            }}
+            aria-hidden="true"
+        >
+            {/* window header */}
+            <div className="flex items-center" style={{ gap: 8, padding: '11px 14px', borderBottom: `1px solid ${border}` }}>
+                <div className="flex" style={{ gap: 5 }}>
+                    {['#E6675A', '#E8B53D', '#5BB85B'].map((c) => (
+                        <span key={c} style={{ width: 8, height: 8, borderRadius: 999, background: c, opacity: 0.5 }} />
+                    ))}
+                </div>
+                <span className="font-mono" style={{ fontSize: 11, letterSpacing: '0.16em', color: mutedText, marginLeft: 4 }}>SUPERVISION</span>
+                <span className="ml-auto inline-flex items-center font-mono" style={{ gap: 6, fontSize: 10, color: ink, padding: '3px 9px', borderRadius: 999, border: `1px solid ${border}`, background: white }}>
+                    <span className={styles.pulse} style={{ width: 6, height: 6, borderRadius: 999, background: forest }} />
+                    En ligne
+                </span>
+            </div>
 
-            {/* front supervision dashboard */}
-            <rect x={fx} y={fy} width={fw} height={fh} rx="10" fill={TOKENS.white} stroke={accent} strokeWidth="1.75" />
-            <line x1={fx} y1={fy + 28} x2={fx + fw} y2={fy + 28} stroke={stroke} strokeWidth="1" opacity="0.25" />
-            {[0, 1, 2].map((d) => (
-                <circle key={d} cx={fx + 16 + d * 11} cy={fy + 14} r="3" fill="none" stroke={stroke} strokeWidth="1" opacity="0.5" />
-            ))}
-            <text x={fx + 60} y={fy + 18} className="font-mono" style={{ fontSize: 9, fill: stroke, opacity: 0.7 }}>SUPERVISION</text>
-            <rect x={fx + fw - 74} y={fy + 7} width="62" height="15" rx="7.5" fill="none" stroke={accent} strokeWidth="1.1" />
-            <circle cx={fx + fw - 64} cy={fy + 14.5} r="2.5" fill={accent} className={styles.pulse} />
-            <text x={fx + fw - 56} y={fy + 18} className="font-mono" style={{ fontSize: 7.5, fill: stroke, opacity: 0.7 }}>EN LIGNE</text>
+            {/* agent activity rows */}
+            <div style={{ padding: 12, display: 'flex', flexDirection: 'column', gap: 8 }}>
+                {agents.map((a) => (
+                    <div key={a.id} className="flex items-center" style={{ gap: 11, padding: '9px 11px', borderRadius: 11, border: `1px solid ${border}`, background: white }}>
+                        <span className="font-mono inline-flex items-center justify-center" style={{ width: 26, height: 26, borderRadius: 8, background: pale, border: `1px solid ${border}`, fontSize: 8.5, color: mutedText, flex: '0 0 auto' }}>{a.id}</span>
+                        <div style={{ flex: '1 1 auto', minWidth: 0 }}>
+                            <div className="font-mono" style={{ fontSize: 11.5, color: ink, lineHeight: '15px' }}>{a.name}</div>
+                            <div className="truncate" style={{ fontSize: 11, color: mutedText, lineHeight: '15px' }}>{a.task}</div>
+                        </div>
+                        <div className="inline-flex items-center" style={{ flex: '0 0 auto' }}>
+                            {a.state === 'run' && (
+                                <span className="inline-flex items-center font-mono" style={{ gap: 6, fontSize: 10, color: ink }}>
+                                    <span className={styles.spinner} style={{ width: 12, height: 12, borderRadius: 999, border: `2px solid ${accent}55`, borderTopColor: accent, display: 'inline-block' }} />
+                                    En cours
+                                </span>
+                            )}
+                            {a.state === 'prog' && (
+                                <span className="inline-flex items-center font-mono" style={{ gap: 8, fontSize: 10, color: mutedText }}>
+                                    <span style={{ width: 54, height: 5, borderRadius: 999, background: '#ECECE6', overflow: 'hidden', display: 'inline-block' }}>
+                                        <span style={{ width: `${a.pct}%`, height: '100%', background: accent, display: 'block' }} />
+                                    </span>
+                                    {a.pct}%
+                                </span>
+                            )}
+                            {a.state === 'queue' && (
+                                <span className="inline-flex items-center font-mono" style={{ gap: 6, fontSize: 10, color: mutedText, padding: '3px 9px', borderRadius: 999, border: `1px solid ${border}` }}>
+                                    <span style={{ width: 6, height: 6, borderRadius: 999, background: gold, display: 'inline-block' }} />
+                                    En file
+                                </span>
+                            )}
+                            {a.state === 'done' && (
+                                <span className="inline-flex items-center font-mono" style={{ gap: 5, fontSize: 10, color: forest }}>
+                                    <svg viewBox="0 0 10 10" width="11" height="11" aria-hidden="true"><path d="M1 5 l3 3 l5 -7" fill="none" stroke={forest} strokeWidth="1.6" /></svg>
+                                    Terminé
+                                </span>
+                            )}
+                        </div>
+                    </div>
+                ))}
+            </div>
 
-            {/* sidebar */}
-            <line x1={fx + 46} y1={fy + 28} x2={fx + 46} y2={fy + fh} stroke={stroke} strokeWidth="1" opacity="0.2" />
-            {[0, 1, 2, 3].map((n) => (
-                <g key={n}>
-                    <rect x={fx + 12} y={fy + 44 + n * 30} width="12" height="12" rx="3" fill={n === 0 ? accent : 'none'} stroke={stroke} strokeWidth="0.9" opacity={n === 0 ? 0.9 : 0.45} />
-                    <line x1={fx + 30} y1={fy + 50 + n * 30} x2={fx + 40} y2={fy + 50 + n * 30} stroke={stroke} strokeWidth="1" opacity="0.3" />
-                </g>
-            ))}
-
-            {/* agent rows */}
-            <text x={fx + 58} y={fy + 46} className="font-mono" style={{ fontSize: 8, fill: stroke, opacity: 0.55 }}>AGENTS ACTIFS</text>
-            {rows.map((st, n) => {
-                const ry = fy + 60 + n * 34;
-                return (
-                    <g key={n}>
-                        <circle cx={fx + 66} cy={ry + 6} r="6" fill="none" stroke={stroke} strokeWidth="1" opacity="0.5" />
-                        <line x1={fx + 80} y1={ry + 2} x2={fx + 150} y2={ry + 2} stroke={stroke} strokeWidth="2" opacity="0.28" strokeLinecap="round" />
-                        <line x1={fx + 80} y1={ry + 11} x2={fx + 124} y2={ry + 11} stroke={stroke} strokeWidth="1.5" opacity="0.16" strokeLinecap="round" />
-                        {st === 'actif' && (
-                            <>
-                                <circle cx={fx + 165} cy={ry + 6.5} r="4" fill="none" stroke={accent} strokeWidth="1.4" strokeDasharray="14 8" className={styles.spin} />
-                                <rect x={fx + 176} y={ry - 1} width="46" height="15" rx="7.5" fill={accent} opacity="0.18" />
-                                <text x={fx + 199} y={ry + 9.5} textAnchor="middle" className="font-mono" style={{ fontSize: 7, fill: stroke, opacity: 0.75 }}>ACTIF</text>
-                            </>
-                        )}
-                        {st === 'prog' && (
-                            <>
-                                <rect x={fx + 176} y={ry + 4} width="46" height="5" rx="2.5" fill="none" stroke={stroke} strokeWidth="0.8" opacity="0.3" />
-                                <rect x={fx + 176} y={ry + 4} width="28" height="5" rx="2.5" fill={accent} opacity="0.8" />
-                            </>
-                        )}
-                        {st === 'file' && (
-                            <>
-                                <rect x={fx + 176} y={ry - 1} width="46" height="15" rx="7.5" fill="none" stroke={stroke} strokeWidth="0.9" opacity="0.4" />
-                                <text x={fx + 199} y={ry + 9.5} textAnchor="middle" className="font-mono" style={{ fontSize: 7, fill: stroke, opacity: 0.5 }}>EN FILE</text>
-                            </>
-                        )}
-                    </g>
-                );
-            })}
-
-            {/* actions */}
-            <rect x={fx + 58} y={fy + fh - 30} width="96" height="22" rx="7" fill={accent} opacity="0.9" />
-            <rect x={fx + 166} y={fy + fh - 30} width="56" height="22" rx="7" fill="none" stroke={stroke} strokeWidth="1" opacity="0.4" />
-        </svg>
+            {/* activity footer (decorative sparkline — no claim) */}
+            <div className="flex items-center" style={{ gap: 10, padding: '10px 14px', borderTop: `1px solid ${border}` }}>
+                <span className="font-mono" style={{ fontSize: 9, letterSpacing: '0.14em', color: mutedText }}>ACTIVITÉ · 24H</span>
+                <span className="ml-auto inline-flex items-end" style={{ gap: 3, height: 22 }}>
+                    {bars.map((h, i) => (
+                        <span key={i} style={{ width: 4, height: h + 4, borderRadius: 2, background: i >= bars.length - 4 ? accent : '#D8D8D2', display: 'inline-block' }} />
+                    ))}
+                </span>
+            </div>
+        </div>
     );
 }
 
