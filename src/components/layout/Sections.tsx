@@ -623,6 +623,28 @@ export function SectionMethod() {
                     </p>
                 </header>
 
+                <div className="hidden lg:block relative mb-8" aria-hidden="true" style={{ height: 2 }}>
+                    <div style={{ position: 'absolute', top: 0, left: '6%', right: '6%', height: 1, backgroundColor: TOKENS.border }} />
+                    {[0, 1, 2, 3].map((i) => (
+                        <span
+                            key={i}
+                            className="font-mono"
+                            style={{
+                                position: 'absolute',
+                                top: -9,
+                                left: `calc(12% + ${i} * 25%)`,
+                                transform: 'translateX(-50%)',
+                                width: 20, height: 20, lineHeight: '20px', textAlign: 'center',
+                                fontSize: 11, color: TOKENS.mutedText,
+                                backgroundColor: TOKENS.white, borderRadius: '50%',
+                                border: `1px solid ${TOKENS.border}`,
+                            }}
+                        >
+                            {i + 1}
+                        </span>
+                    ))}
+                </div>
+
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
                     {STEPS.map((s) => (
                         <article
