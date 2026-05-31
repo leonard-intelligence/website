@@ -545,6 +545,16 @@
   animation: fade-in 0.8s cubic-bezier(0.22, 1, 0.36, 1) forwards;
 }
 
+/* AGENT CARD CROSSFADE (Capacités archetype selector) */
+@keyframes agent-card-fade {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.agent-card-fade {
+  animation: agent-card-fade 220ms ease;
+}
+
 /* HERO IMAGE EXIT - Combined scale + fade */
 @keyframes hero-exit {
   0% {
@@ -615,7 +625,8 @@
   }
 
   .animate-pulse-glow,
-  .animate-fade-in-up {
+  .animate-fade-in-up,
+  .agent-card-fade {
     animation: none;
   }
 

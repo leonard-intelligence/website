@@ -7,6 +7,7 @@ import { useNotchParams } from '../dev/notchParamsStore';
 import { useVitruveParams } from '../dev/vitruveParamsStore';
 import { QrBadge } from './QrBadge';
 import { ReliefButton } from '../ui/ReliefButton';
+import { useState } from 'react';
 
 const TOKENS = {
     paper: '#F7F7F5',
@@ -687,6 +688,7 @@ export function SectionMethod() {
 // SECTION 3 — Capabilities (alternating text + visual)
 // ============================================================================
 export function SectionCapabilities() {
+    const [sel, setSel] = useState(0);
     return (
         <section
             id="section-capabilities"
@@ -715,7 +717,38 @@ export function SectionCapabilities() {
 
                 <div className="flex flex-col items-center gap-5">
                     <div className="relative w-full" style={{ maxWidth: 520, aspectRatio: '4 / 3' }}>
-                        <AgentCardStack />
+                        <AgentCardStack sel={sel} />
+                    </div>
+                    <div
+                        role="group"
+                        aria-label="Sélection de l'archétype d'agent"
+                        className="flex flex-wrap items-center justify-center gap-2"
+                    >
+                        {AGENT_CARDS.map((c, i) => {
+                            const active = sel === i;
+                            return (
+                                <button
+                                    key={c.id}
+                                    type="button"
+                                    onClick={() => setSel(i)}
+                                    aria-pressed={active}
+                                    className="font-mono transition-colors"
+                                    style={{
+                                        fontSize: 11,
+                                        letterSpacing: '0.14em',
+                                        fontWeight: 500,
+                                        padding: '7px 12px',
+                                        borderRadius: 999,
+                                        cursor: 'pointer',
+                                        color: active ? TOKENS.paper : TOKENS.mutedText,
+                                        backgroundColor: active ? TOKENS.ink : 'transparent',
+                                        border: `1px solid ${active ? TOKENS.ink : TOKENS.border}`,
+                                    }}
+                                >
+                                    {c.id} {c.codename}
+                                </button>
+                            );
+                        })}
                     </div>
                     <span
                         className="font-mono"
@@ -737,6 +770,7 @@ export function SectionCapabilities() {
 // ============================================================================
 type AgentSpec = { label: string; value: string };
 type AgentCardData = {
+    id: string;
     bg: string;
     ink: string;
     name: string;
@@ -748,6 +782,7 @@ type AgentCardData = {
 
 const AGENT_CARDS: AgentCardData[] = [
     {
+        id: 'GTM-001',
         bg: '#d8d8d3',
         ink: '#171717',
         name: 'Leonard',
@@ -763,6 +798,7 @@ const AGENT_CARDS: AgentCardData[] = [
         action: 'QUALIFIE ET RELANCE LES LEADS ENTRANTS',
     },
     {
+        id: 'SUP-002',
         bg: '#71CE45',
         ink: '#0a0a0a',
         name: 'Leonard',
@@ -778,6 +814,7 @@ const AGENT_CARDS: AgentCardData[] = [
         action: 'ROUTE ET RÉSOUT LES TICKETS DE NIVEAU 1',
     },
     {
+        id: 'OPS-003',
         bg: '#FBFBF8',
         ink: '#171717',
         name: 'Leonard',
@@ -905,7 +942,7 @@ function AgentCard({ data, rotate, offsetX, offsetY, z }: { data: AgentCardData;
     // and produces rim highlights/shadows along the notch boundaries too.
     return (
         <div
-            className="absolute"
+            className="absolute agent-card-fade"
             style={{
                 width: '58%',
                 aspectRatio: '0.7',
@@ -1124,6 +1161,9 @@ function AgentCard({ data, rotate, offsetX, offsetY, z }: { data: AgentCardData;
                     >
                         AGENT
                     </div>
+                    <div style={{ fontSize: 8, letterSpacing: '0.2em', fontWeight: 500, opacity: 0.85, lineHeight: 1 }}>
+                        {data.codename}
+                    </div>
                 </div>
 
                 {/* RIGHT: Citizen eye — lighter-gray tint (keeps the emboss filter
@@ -1293,7 +1333,7 @@ function AgentCard({ data, rotate, offsetX, offsetY, z }: { data: AgentCardData;
     );
 }
 
-function AgentCardStack() {
+function AgentCardStack({ sel }: { sel: number }) {
     // Notches with BOTH inner AND outer corners rounded, built as a single
     // SVG <path> per notch+side. All geometry params live in the shared store
     // so the DevTools "Notch" panel can drive them live.
@@ -1429,7 +1469,7 @@ function AgentCardStack() {
                     </filter>
                 </defs>
             </svg>
-            <AgentCard data={AGENT_CARDS[0]} rotate={0} offsetX={21} offsetY={5} z={1} />
+            <AgentCard key={sel} data={AGENT_CARDS[sel]} rotate={0} offsetX={21} offsetY={5} z={1} />
         </div>
     );
 }
