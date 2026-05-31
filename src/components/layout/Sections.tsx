@@ -307,6 +307,20 @@ export function SectionIntro() {
             </div>
 
             <div className="max-w-[1200px] mx-auto">
+                <div className="flex flex-col items-center mb-10" aria-hidden="true">
+                    <span
+                        className="font-mono"
+                        style={{ fontSize: 'clamp(2rem, 6vw, 4rem)', fontWeight: 600, color: 'rgba(23,23,23,0.25)', textDecoration: 'line-through', textDecorationThickness: '2px' }}
+                    >
+                        DÉMO
+                    </span>
+                    <span
+                        className="font-mono"
+                        style={{ fontSize: 'clamp(2.5rem, 7vw, 5rem)', fontWeight: 700, color: TOKENS.ink, letterSpacing: '-0.02em', marginTop: 4 }}
+                    >
+                        PRODUCTION
+                    </span>
+                </div>
                 <h2
                     className="font-sans text-center mx-auto"
                     style={{
