@@ -1,6 +1,6 @@
 // 03 · DONNÉES & INTÉGRATIONS — dense layered illustration (cofounder idiom).
-// BASE: WindowCard with 5 connector rows + unified-context bar.
-// OVERLAY: FloatPanel with a hub-and-spoke convergence SVG + sync status.
+// BASE: WindowCard with 6 connector rows + dashed SVG convergence lines → "Contexte unifié" node.
+// OVERLAY: FloatPanel with live ingestion log + status.
 import { TOKENS } from '../Sections';
 import {
     WindowCard,
@@ -9,182 +9,277 @@ import {
     IconTile,
     StatusPill,
     PulseDot,
+    Check,
 } from './kit';
 
-// ── Overlay: hub-and-spoke convergence graph ─────────────────────────────────
-function ConvergenceGraph({ accent }: { accent: string }) {
-    // 120×120 viewBox, 4 source nodes at corners, 1 center "Agent" node.
-    const cx = 60;
-    const cy = 58;
-    const nodes: { x: number; y: number; label: string }[] = [
-        { x: 14, y: 18, label: 'CRM' },
-        { x: 106, y: 18, label: 'ERP' },
-        { x: 14, y: 98, label: 'DMS' },
-        { x: 106, y: 98, label: 'MCP' },
-    ];
+// ── Local helper: tiny mono eyebrow tag ─────────────────────────────────────
+function Tag({ label }: { label: string }) {
+    return (
+        <span
+            className="font-mono"
+            style={{
+                fontSize: 8.5,
+                letterSpacing: '0.08em',
+                color: TOKENS.mutedText,
+                background: TOKENS.pale,
+                border: `1px solid ${TOKENS.border}`,
+                borderRadius: 4,
+                padding: '1px 5px',
+            }}
+        >
+            {label}
+        </span>
+    );
+}
+
+// ── Local helper: dashed SVG convergence lines ───────────────────────────────
+// Draws lines from each connector row midpoint toward a central "Contexte unifié" node.
+// rowCount = number of rows; containerWidth rendered width reference.
+function ConvergenceLines({
+    rowCount,
+    rowHeight,
+    rowGap,
+    accent,
+}: {
+    rowCount: number;
+    rowHeight: number;
+    rowGap: number;
+    accent: string;
+}) {
+    const W = 52; // narrow strip on right side
+    const totalH = rowCount * rowHeight + (rowCount - 1) * rowGap;
+    // Target node center (right edge center)
+    const tx = W - 6;
+    const ty = totalH / 2;
+
     return (
         <svg
-            viewBox="0 0 120 120"
-            width="100%"
-            style={{ display: 'block', height: 120 }}
+            viewBox={`0 0 ${W} ${totalH}`}
+            width={W}
+            height={totalH}
             aria-hidden="true"
+            style={{ display: 'block', flexShrink: 0 }}
         >
-            {/* Spoke lines from each source to center */}
-            {nodes.map((n) => (
-                <line
-                    key={n.label}
-                    x1={n.x}
-                    y1={n.y}
-                    x2={cx}
-                    y2={cy}
-                    stroke={accent}
-                    strokeWidth="1.2"
-                    strokeDasharray="3 3"
-                    opacity="0.55"
-                />
-            ))}
-            {/* Center "Agent" node */}
-            <circle cx={cx} cy={cy} r={14} fill={accent} opacity="0.15" />
-            <circle cx={cx} cy={cy} r={9} fill={accent} />
-            <text
-                x={cx}
-                y={cy + 3.5}
-                textAnchor="middle"
-                style={{ fontFamily: 'monospace', fontSize: 6.5, fill: TOKENS.ink, fontWeight: 600 }}
-            >
-                Agent
-            </text>
-            {/* Source nodes */}
-            {nodes.map((n) => (
-                <g key={n.label}>
-                    <rect
-                        x={n.x - 14}
-                        y={n.y - 9}
-                        width={28}
-                        height={18}
-                        rx={5}
-                        fill={TOKENS.pale}
-                        stroke={TOKENS.border}
-                        strokeWidth="1"
+            {Array.from({ length: rowCount }).map((_, i) => {
+                const y = i * (rowHeight + rowGap) + rowHeight / 2;
+                return (
+                    <line
+                        key={i}
+                        x1={0}
+                        y1={y}
+                        x2={tx}
+                        y2={ty}
+                        stroke={accent}
+                        strokeWidth="1.1"
+                        strokeDasharray="3 2.5"
+                        opacity={0.38 + i * 0.04}
                     />
-                    <text
-                        x={n.x}
-                        y={n.y + 3.5}
-                        textAnchor="middle"
-                        style={{ fontFamily: 'monospace', fontSize: 7.5, fill: TOKENS.mutedText }}
-                    >
-                        {n.label}
-                    </text>
-                </g>
-            ))}
+                );
+            })}
+            {/* Convergence node */}
+            <circle cx={tx} cy={ty} r={6} fill={accent} opacity="0.18" />
+            <circle cx={tx} cy={ty} r={3.5} fill={accent} opacity="0.9" />
         </svg>
     );
 }
 
+// ── Connector row definition ─────────────────────────────────────────────────
+interface Connector {
+    code: string;
+    name: string;
+    sub: string;
+    online: boolean;
+}
+
 // ── Main export ───────────────────────────────────────────────────────────────
 export function IlluConnect({ accent }: { accent: string }) {
-    const connectors: { code: string; name: string; online: boolean }[] = [
-        { code: 'CRM', name: 'Connecteur CRM', online: true },
-        { code: 'ERP', name: 'Connecteur ERP', online: true },
-        { code: 'DMS', name: 'Connecteur DMS', online: true },
-        { code: 'MCP', name: 'Connecteur MCP', online: true },
-        { code: 'API', name: 'API externe',     online: false },
+    const connectors: Connector[] = [
+        { code: 'CRM', name: 'CRM',      sub: 'lecture · écriture', online: true  },
+        { code: 'ERP', name: 'ERP',      sub: 'lecture seule',       online: true  },
+        { code: 'DMS', name: 'DMS',      sub: 'documents · index',   online: true  },
+        { code: 'MCP', name: 'MCP',      sub: 'outils · contexte',   online: true  },
+        { code: 'API', name: 'API REST',  sub: 'webhooks sortants',   online: true  },
+        { code: 'WH',  name: 'Webhooks', sub: 'événements entrants',  online: false },
     ];
+
     const onCount = connectors.filter((c) => c.online).length;
     const total   = connectors.length;
+
+    // Row geometry (must match ConvergenceLines props)
+    const ROW_H  = 42;
+    const ROW_GAP = 5;
 
     const base = (
         <WindowCard
             title="INTÉGRATIONS"
-            maxWidth={360}
+            maxWidth={380}
             right={
-                <span className="font-mono" style={{ fontSize: 10, color: TOKENS.mutedText }}>
-                    {onCount}/{total}
-                </span>
+                <StatusPill
+                    color={TOKENS.forest}
+                    label={`${onCount} / ${total} connectés`}
+                />
             }
         >
-            {/* Connector rows */}
-            <div style={{ display: 'flex', flexDirection: 'column', gap: 5, marginBottom: 10 }}>
-                {connectors.map((c) => (
-                    <div
-                        key={c.code}
-                        className="flex items-center"
-                        style={{
-                            gap: 10,
-                            padding: '7px 11px',
-                            borderRadius: 10,
-                            border: `1px solid ${TOKENS.border}`,
-                            background: c.online ? TOKENS.white : TOKENS.pale,
-                            opacity: c.online ? 1 : 0.68,
-                        }}
-                    >
-                        <IconTile size={28}>{c.code}</IconTile>
-                        <span
-                            className="font-mono"
-                            style={{ fontSize: 11, color: TOKENS.ink, flex: '1 1 auto' }}
-                        >
-                            {c.name}
-                        </span>
-                        {c.online ? (
-                            <StatusPill color={TOKENS.forest} label="Connecté" />
-                        ) : (
-                            <StatusPill color={TOKENS.mutedText} label="Hors ligne" muted />
-                        )}
-                    </div>
-                ))}
+            {/* Section eyebrow */}
+            <div
+                className="font-mono"
+                style={{ fontSize: 9, letterSpacing: '0.14em', color: TOKENS.mutedText, marginBottom: 8, paddingLeft: 2 }}
+            >
+                SOURCES · CONNECTEURS
             </div>
 
-            {/* Unified-context summary bar */}
+            {/* Connector rows + convergence lines side-by-side */}
+            <div className="flex" style={{ gap: 0, alignItems: 'flex-start' }}>
+                {/* Left: connector rows */}
+                <div style={{ flex: '1 1 auto', display: 'flex', flexDirection: 'column', gap: ROW_GAP }}>
+                    {connectors.map((c) => (
+                        <div
+                            key={c.code}
+                            className="flex items-center"
+                            style={{
+                                height: ROW_H,
+                                gap: 9,
+                                padding: '0 10px',
+                                borderRadius: 10,
+                                border: `1px solid ${c.online ? TOKENS.border : 'rgba(32,32,32,0.06)'}`,
+                                background: c.online ? TOKENS.white : TOKENS.pale,
+                                opacity: c.online ? 1 : 0.62,
+                                boxSizing: 'border-box',
+                            }}
+                        >
+                            <IconTile size={26}>{c.code}</IconTile>
+                            <div style={{ flex: '1 1 auto', minWidth: 0, display: 'flex', flexDirection: 'column', gap: 2 }}>
+                                <span
+                                    className="font-sans"
+                                    style={{ fontSize: 11.5, fontWeight: 600, color: TOKENS.ink, lineHeight: 1.1, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}
+                                >
+                                    {c.name}
+                                </span>
+                                <span
+                                    className="font-mono"
+                                    style={{ fontSize: 9, color: TOKENS.mutedText, lineHeight: 1 }}
+                                >
+                                    {c.sub}
+                                </span>
+                            </div>
+                            {c.online ? (
+                                <StatusPill color={TOKENS.forest} label="Connecté" />
+                            ) : (
+                                <StatusPill color="rgba(23,23,23,0.28)" label="Hors ligne" muted />
+                            )}
+                        </div>
+                    ))}
+                </div>
+
+                {/* Right: dashed SVG convergence lines (visual connector) */}
+                <div style={{ paddingTop: 0, alignSelf: 'stretch', display: 'flex', alignItems: 'center' }}>
+                    <ConvergenceLines
+                        rowCount={connectors.length}
+                        rowHeight={ROW_H}
+                        rowGap={ROW_GAP}
+                        accent={accent}
+                    />
+                </div>
+            </div>
+
+            {/* Unified context bar at bottom */}
             <div
                 className="flex items-center"
                 style={{
                     gap: 10,
-                    padding: '10px 12px',
+                    marginTop: 10,
+                    padding: '10px 13px',
                     borderRadius: 11,
-                    border: `1px solid ${accent}`,
-                    background: TOKENS.white,
-                    boxShadow: `0 0 0 1px ${accent}`,
+                    border: `1.5px solid ${accent}`,
+                    background: `linear-gradient(90deg, ${accent}12, ${TOKENS.white})`,
                 }}
             >
                 <PulseDot color={accent} size={9} />
-                <span
-                    className="font-mono"
-                    style={{ fontSize: 11, color: TOKENS.ink, flex: '1 1 auto' }}
-                >
-                    Contexte unifié
-                </span>
-                <span className="font-mono" style={{ fontSize: 9.5, color: TOKENS.mutedText }}>
-                    1 agent · 0 silo
-                </span>
+                <div style={{ flex: '1 1 auto' }}>
+                    <span className="font-sans" style={{ fontSize: 12, fontWeight: 700, color: TOKENS.ink }}>
+                        Contexte unifié
+                    </span>
+                    <span className="font-mono" style={{ fontSize: 9, color: TOKENS.mutedText, marginLeft: 8 }}>
+                        1 agent · 0 silo · temps réel
+                    </span>
+                </div>
+                <Tag label={`${onCount} actifs`} />
             </div>
         </WindowCard>
     );
 
+    // ── Ingestion log entries ────────────────────────────────────────────────
+    const logs: { msg: string; time: string; ok: boolean }[] = [
+        { msg: 'Sync CRM terminée',    time: 'il y a 2s',  ok: true  },
+        { msg: 'Document ingéré (DMS)', time: 'il y a 8s',  ok: true  },
+        { msg: 'Webhook reçu · API',   time: 'il y a 14s', ok: true  },
+        { msg: 'Index MCP mis à jour', time: 'il y a 31s', ok: true  },
+    ];
+
     const overlay = (
         <FloatPanel title="CONTEXTE UNIFIÉ" accent={accent}>
-            {/* Hub-and-spoke SVG */}
-            <div style={{ marginBottom: 10 }}>
-                <ConvergenceGraph accent={accent} />
-            </div>
-
-            {/* Sync status row */}
+            {/* Core status */}
             <div
                 className="flex items-center"
                 style={{
-                    gap: 7,
-                    padding: '7px 10px',
-                    borderRadius: 8,
+                    gap: 8,
+                    padding: '8px 10px',
+                    borderRadius: 9,
                     background: TOKENS.pale,
                     border: `1px solid ${TOKENS.border}`,
+                    marginBottom: 9,
                 }}
             >
-                <PulseDot color={accent} size={7} />
-                <span className="font-mono" style={{ fontSize: 9.5, color: TOKENS.ink }}>
-                    Synchronisé · temps réel
-                </span>
+                <PulseDot color={accent} size={8} />
+                <div style={{ flex: '1 1 auto' }}>
+                    <div className="font-sans" style={{ fontSize: 11, fontWeight: 700, color: TOKENS.ink, lineHeight: 1.2 }}>
+                        1 agent · 0 silo
+                    </div>
+                    <div className="font-mono" style={{ fontSize: 8.5, color: TOKENS.mutedText, marginTop: 2 }}>
+                        synchronisation active
+                    </div>
+                </div>
+                <Tag label="LIVE" />
+            </div>
+
+            {/* Live ingestion log */}
+            <div
+                className="font-mono"
+                style={{ fontSize: 8.5, letterSpacing: '0.08em', color: TOKENS.mutedText, marginBottom: 5 }}
+            >
+                JOURNAL D'INGESTION
+            </div>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
+                {logs.map((l, i) => (
+                    <div
+                        key={i}
+                        className="flex items-center"
+                        style={{
+                            gap: 7,
+                            padding: '5px 8px',
+                            borderRadius: 7,
+                            background: i === 0 ? `${accent}10` : TOKENS.pale,
+                            border: `1px solid ${i === 0 ? `${accent}35` : TOKENS.border}`,
+                        }}
+                    >
+                        <Check color={TOKENS.forest} size={10} />
+                        <span
+                            className="font-mono"
+                            style={{ fontSize: 9.5, color: TOKENS.ink, flex: '1 1 auto', lineHeight: 1.2 }}
+                        >
+                            {l.msg}
+                        </span>
+                        <span
+                            className="font-mono"
+                            style={{ fontSize: 8, color: TOKENS.mutedText, whiteSpace: 'nowrap' }}
+                        >
+                            {l.time}
+                        </span>
+                    </div>
+                ))}
             </div>
         </FloatPanel>
     );
 
-    return <Layered base={base} overlay={overlay} baseWidth="80%" overlayWidth="56%" />;
+    return <Layered base={base} overlay={overlay} baseWidth="82%" overlayWidth="60%" />;
 }
