@@ -27,7 +27,7 @@ function Reveal({ children, className }: { children: React.ReactNode; className?
     );
 }
 
-const TOKENS = {
+export const TOKENS = {
     paper: '#F7F7F5',
     surface: '#F5F5F2',
     pale: '#FBFBF8',
@@ -40,7 +40,7 @@ const TOKENS = {
     border: 'rgba(32, 32, 32, 0.1)',
 };
 
-const CARD_SHADOW =
+export const CARD_SHADOW =
     'rgb(255, 255, 255) 0px 0px 0px 0.714px inset, rgba(0, 0, 0, 0.08) 0px 0px 0px 0.714px, rgba(0, 0, 0, 0.04) 0px 0px 14.284px 0px, rgba(0, 0, 0, 0.01) 0px 16.427px 19.998px 0px, rgba(0, 0, 0, 0.02) 0px 7.142px 14.284px 0px, rgba(0, 0, 0, 0.03) 0px 2.143px 7.856px 0px';
 
 // Subtle relief for CTAs & pills (light bg) — top white highlight + soft drop shadow + 0.5px hairline border.
@@ -58,11 +58,11 @@ export const BTN_DARK_SHADOW =
 
 // Two text tones, both with true SVG inner shadow (filter defined once below).
 // Colors driven by CSS variables so the debug panel can update them live.
-const EMBOSS_DARK: React.CSSProperties = {
+export const EMBOSS_DARK: React.CSSProperties = {
     color: 'var(--emboss-color-dark, #555555)',
     filter: 'url(#inset-shadow-dark)',
 };
-const EMBOSS_MUTED: React.CSSProperties = {
+export const EMBOSS_MUTED: React.CSSProperties = {
     color: 'var(--emboss-color-muted, #9a9a9a)',
     filter: 'url(#inset-shadow-dark)',
 };
@@ -547,140 +547,6 @@ function CornerMarks({ color }: { color: string }) {
     );
 }
 
-// ============================================================================
-// SECTION — Système connecté (la pile agentique, en couches)
-// Each layer = index + name + one-line tagline + description, stacked as
-// contiguous strata to read as "un seul système connecté".
-// ============================================================================
-type SystemLayer = { index: string; name: string; tagline: string; body: string };
-
-const SYSTEM_LAYERS: SystemLayer[] = [
-    {
-        index: '01',
-        name: 'Modèles',
-        tagline: 'Le socle.',
-        body: "Claude, GPT, Mistral ou un modèle open-weight hébergé chez vous. On choisit le modèle par tâche — précision, coût, latence, confidentialité — jamais l'inverse.",
-    },
-    {
-        index: '02',
-        name: 'Harnais agentique',
-        tagline: "Ce qui transforme un LLM en agent.",
-        body: "La couche d'orchestration : routage d'outils, contrôle de flux, mémoire, sélection de modèle et garde-fous. Des sous-agents spécialisés s'exécutent en parallèle pour mener un workflow de bout en bout.",
-    },
-    {
-        index: '03',
-        name: 'Données & intégrations',
-        tagline: "Ce à quoi l'agent se branche.",
-        body: "APIs internes, CRM, ERP, bases documentaires, connecteurs MCP. Tout converge sous un même toit pour alimenter le contexte de l'agent.",
-    },
-    {
-        index: '04',
-        name: 'Contexte & connaissance',
-        tagline: "Un contexte qui prend de la valeur avec le temps.",
-        body: "Playbooks, historique des dossiers, règles et positions de l'entreprise s'intègrent à chaque action. L'agent reprend là où le tour précédent s'est arrêté.",
-    },
-    {
-        index: '05',
-        name: 'Capacités métier',
-        tagline: "Les compétences qui font l'expert.",
-        body: "Compréhension documentaire, recherche sourcée, revue à grande échelle, raisonnement propre à votre domaine. Ce qui sépare un agent générique d'un agent de production.",
-    },
-    {
-        index: '06',
-        name: 'Produits & interfaces',
-        tagline: 'Là où vos équipes travaillent.',
-        body: "Les surfaces où humains et agents collaborent : add-ins, tableaux de bord, API. L'agent vit dans vos outils, pas à côté.",
-    },
-    {
-        index: '07',
-        name: 'Sécurité & gouvernance',
-        tagline: "Prêt pour l'entreprise, par construction.",
-        body: "Cloisonnement, traçabilité complète de chaque appel d'outil, contrôle d'accès, souveraineté des données. Intégré à chaque couche — pas ajouté après coup.",
-    },
-];
-
-export function SectionSystem() {
-    return (
-        <section
-            id="section-system"
-            className="relative"
-            style={{ backgroundColor: TOKENS.white, paddingBlock: '76px', paddingInline: '32px' }}
-            aria-label="Architecture du système"
-        >
-            <Reveal>
-            <div className="max-w-[1100px] mx-auto">
-                <header className="mb-12 max-w-[680px]">
-                    <div className="font-mono" style={{ fontSize: 13, letterSpacing: '0.22em', ...EMBOSS_MUTED }}>
-                        ARCHITECTURE
-                    </div>
-                    <h2
-                        className="font-sans mt-3"
-                        style={{ fontSize: 'clamp(2rem, 4vw, 3.25rem)', lineHeight: 1.05, fontWeight: 500, letterSpacing: '-0.025em', ...EMBOSS_DARK }}
-                    >
-                        Un seul système connecté
-                    </h2>
-                    <p
-                        className="font-sans mt-5"
-                        style={{ fontSize: '17px', lineHeight: '26px', fontWeight: 460, color: TOKENS.mutedText }}
-                    >
-                        Un agent de production n'est pas un prompt. C'est une pile — du modèle jusqu'à la gouvernance. Leonard conçoit et opère chaque couche, branchée à vos systèmes, sur vos modèles et vos données.
-                    </p>
-                </header>
-
-                <div
-                    style={{
-                        borderRadius: 16,
-                        border: `1px solid ${TOKENS.border}`,
-                        backgroundColor: TOKENS.surface,
-                        boxShadow: CARD_SHADOW,
-                        overflow: 'hidden',
-                    }}
-                >
-                    {SYSTEM_LAYERS.map((l, i) => (
-                        <div
-                            key={l.index}
-                            className="md:grid md:grid-cols-12 md:items-baseline"
-                            style={{
-                                columnGap: 24,
-                                padding: '26px 28px',
-                                borderTop: i === 0 ? 'none' : `1px solid ${TOKENS.border}`,
-                            }}
-                        >
-                            <div
-                                className="font-mono md:col-span-1"
-                                style={{ fontSize: 13, letterSpacing: '0.1em', color: TOKENS.mutedText, opacity: 0.7 }}
-                            >
-                                {l.index}
-                            </div>
-                            <div className="md:col-span-4 mt-1 md:mt-0">
-                                <h3
-                                    className="font-sans"
-                                    style={{ fontSize: 20, lineHeight: '24px', fontWeight: 500, letterSpacing: '-0.01em', ...EMBOSS_DARK }}
-                                >
-                                    {l.name}
-                                </h3>
-                                <div
-                                    className="font-mono"
-                                    style={{ fontSize: 12.5, lineHeight: '18px', color: TOKENS.mutedText, marginTop: 6 }}
-                                >
-                                    {l.tagline}
-                                </div>
-                            </div>
-                            <p
-                                className="font-sans md:col-span-7 mt-2 md:mt-0"
-                                style={{ fontSize: 16, lineHeight: '23px', fontWeight: 460, color: TOKENS.mutedText }}
-                            >
-                                {l.body}
-                            </p>
-                        </div>
-                    ))}
-                </div>
-            </div>
-            </Reveal>
-        </section>
-    );
-}
-
 export function SectionServices() {
     return (
         <section
@@ -858,7 +724,7 @@ export function SectionCapabilities() {
             <div className="max-w-[1100px] mx-auto">
                 <header className="text-center mb-14">
                     <div className="font-mono" style={{ fontSize: 13, letterSpacing: '0.22em', ...EMBOSS_MUTED }}>
-                        CAPACITÉS
+                        05 — CAPACITÉS MÉTIER
                     </div>
                     <h2
                         className="font-sans mt-3 mx-auto"
