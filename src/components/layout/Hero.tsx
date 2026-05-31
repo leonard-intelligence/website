@@ -14,6 +14,14 @@ type Sz = {
 export function Hero() {
     const [sz, setSz] = useState<Sz>({ beadPx: 0, beadW: 0, beadH: 0, leftPx: 0, topPx: 0 });
 
+    const [revealed, setRevealed] = useState(false);
+    useEffect(() => {
+        const reduce = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
+        if (reduce) { setRevealed(true); return; }
+        const t = requestAnimationFrame(() => setRevealed(true));
+        return () => cancelAnimationFrame(t);
+    }, []);
+
     useEffect(() => {
         const update = () => {
             const vw = window.innerWidth;
@@ -67,6 +75,26 @@ export function Hero() {
                 }}
                 aria-hidden="true"
             >
+                {/* Reveal "grain par grain" — un voile papier qui s'efface par bandes au montage */}
+                <div
+                    aria-hidden="true"
+                    style={{
+                        position: 'absolute',
+                        inset: 0,
+                        backgroundColor: '#F7F7F5',
+                        opacity: revealed ? 0 : 1,
+                        transition: 'opacity 800ms cubic-bezier(0.25,0,0.15,1)',
+                        maskImage: revealed
+                            ? 'none'
+                            : `repeating-linear-gradient(90deg, #000 0, #000 ${sz.beadPx}px, transparent ${sz.beadPx}px, transparent ${2 * sz.beadPx}px)`,
+                        WebkitMaskImage: revealed
+                            ? 'none'
+                            : `repeating-linear-gradient(90deg, #000 0, #000 ${sz.beadPx}px, transparent ${sz.beadPx}px, transparent ${2 * sz.beadPx}px)`,
+                        pointerEvents: 'none',
+                        zIndex: 10,
+                    }}
+                />
+
                 {/* Navbar — inside the bead image, inset by 1 bead on top + L + R */}
                 <nav
                     className="absolute z-20 flex justify-between items-start"
