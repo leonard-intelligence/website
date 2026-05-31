@@ -671,9 +671,9 @@ const CAPABILITIES = [
         visual: <StackArchitecture />,
     },
     {
-        title: 'Mesurez l\'impact en temps réel',
-        body: 'Dashboard de monitoring : actions exécutées, temps économisé, taux de validation humaine, latence, coût par tâche. Tout est traçable.',
-        link: 'Voir les métriques',
+        title: 'Observez et pilotez en production',
+        body: 'Chaque agent est instrumenté : statut des exécutions, escalades vers l\'humain, latence, erreurs. Vous gardez la main, l\'agent reste traçable.',
+        link: 'Voir le pilotage',
         tone: 'gold',
         visual: <ActivityFeed />,
     },
