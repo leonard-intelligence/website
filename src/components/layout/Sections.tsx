@@ -1562,21 +1562,35 @@ export function SectionCTA() {
             <div className="max-w-[800px] mx-auto text-center">
                 <h2
                     className="font-sans"
-                    style={{ fontSize: 'clamp(1.75rem, 3.4vw, 2.75rem)', lineHeight: 1.1, fontWeight: 400, letterSpacing: '-0.015em' }}
+                    style={{ fontSize: 'clamp(1.75rem, 3.4vw, 2.75rem)', lineHeight: 1.1, fontWeight: 500, letterSpacing: '-0.02em', ...EMBOSS_DARK }}
                 >
-                    <span style={EMBOSS_MUTED}>Vos opérations méritent</span>
-                    <br />
-                    <span style={EMBOSS_DARK}>d'être automatisées.</span>
+                    30 minutes pour savoir où un agent vous fait gagner du temps.
                 </h2>
                 <p
                     className="font-sans mt-5 mx-auto"
                     style={{ fontSize: '17px', lineHeight: '24px', fontWeight: 460, color: TOKENS.mutedText, maxWidth: '48ch' }}
                 >
-                    Parlons de vos workflows. On vous propose une cartographie en 30 minutes, sans engagement.
+                    On cartographie vos workflows à fort levier. À l'issue : un diagnostic écrit des 2-3 processus où un agent de production aurait le plus d'impact, et une estimation de faisabilité. Sans engagement.
                 </p>
+                <dl
+                    className="font-mono mx-auto mt-8 text-left"
+                    style={{ maxWidth: 360, padding: '20px 24px', borderRadius: 12, backgroundColor: TOKENS.pale, boxShadow: CARD_SHADOW, fontSize: 13, lineHeight: 1.9 }}
+                >
+                    {[
+                        ['DURÉE', '30:00'],
+                        ['FORMAT', 'APPEL VISIO'],
+                        ['LIVRABLE', 'DIAGNOSTIC_WORKFLOWS.PDF'],
+                        ['ENGAGEMENT', 'AUCUN'],
+                    ].map(([k, v]) => (
+                        <div key={k} className="flex justify-between gap-4">
+                            <dt style={{ color: TOKENS.mutedText, letterSpacing: '0.08em' }}>{k}</dt>
+                            <dd style={{ color: TOKENS.ink }}>{v}</dd>
+                        </div>
+                    ))}
+                </dl>
                 <div className="mt-10 flex flex-wrap justify-center items-center gap-3">
-                    <ReliefButton tone="dark" size="md" href="#contact" id="contact" iconRight={<ArrowRight />}>
-                        Discutons de votre projet
+                    <ReliefButton tone="lime" size="md" href="#contact" id="contact" iconRight={<ArrowRight />}>
+                        Réserver la cartographie
                     </ReliefButton>
                 </div>
             </div>
