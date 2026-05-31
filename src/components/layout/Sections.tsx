@@ -317,23 +317,23 @@ export function SectionIntro() {
                         maxWidth: '28ch',
                     }}
                 >
-                    <span style={EMBOSS_DARK}>Leonard Intelligence est une agence agentique</span>{' '}
-                    <span style={EMBOSS_MUTED}>qui conçoit et déploie les agents IA de votre entreprise.</span>
+                    <span style={EMBOSS_DARK}>Tout le monde sait faire une démo.</span>{' '}
+                    <span style={EMBOSS_MUTED}>Presque personne ne sait livrer un système qui tient en production. C'est notre métier.</span>
                 </h2>
 
                 {/* 3-col features */}
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-16">
                     <FeatureCol
                         title="Sur-mesure"
-                        body="Chaque agent est conçu pour vos workflows, votre métier et vos systèmes existants. Pas de SaaS générique."
+                        body="Branché à vos APIs, votre stack, vos modèles. Pas une solution générique déployée telle quelle."
                     />
                     <FeatureCol
                         title="Human in the loop"
-                        body="Vos équipes valident chaque action critique. L'agent exécute ce qui est réversible, demande pour le reste."
+                        body="Validation humaine aux points critiques. La fiabilité par construction, pas par promesse."
                     />
                     <FeatureCol
                         title="Souverain"
-                        body="Déploiement on-premises ou cloud UE. Vos données restent chez vous, vos modèles aussi."
+                        body="Vos données ne quittent pas votre périmètre. Vos modèles, vos règles, votre contrôle."
                     />
                 </div>
             </div>
