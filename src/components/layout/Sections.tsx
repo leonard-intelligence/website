@@ -470,24 +470,24 @@ const SERVICE_BLOCKS: ServiceBlock[] = [
         bg: '#A3E635', // lime
         fg: '#171717',
         index: '01',
-        title: 'Agents sur mesure',
-        body: 'Des agents IA conçus pour vos workflows réels, intégrés à vos systèmes — pas des solutions génériques.',
+        title: 'Conception d\'agents',
+        body: 'Architecture multi-agents, sélection et fine-tuning du modèle (ouvert ou privé, hébergeable chez vous), outils et connecteurs métier. Livrable : un agent de production testé et documenté.',
         visual: <IlluOrbital />,
     },
     {
         bg: '#171717', // dark contrast block
         fg: '#F5F5F2',
         index: '02',
-        title: 'Automatisation',
-        body: 'Vos processus répétitifs exécutés en continu, avec la validation humaine là où elle compte.',
+        title: 'Automatisation de workflows',
+        body: 'Orchestration d\'agents sur vos flux — documents, qualification, reporting, relances — intégrée à vos outils (CRM, ERP, API internes). Les étapes critiques restent sous validation humaine.',
         visual: <IlluPipeline />,
     },
     {
         bg: '#EEC75D', // gold
         fg: '#171717',
         index: '03',
-        title: 'Intégration & pilotage',
-        body: 'Connectés à vos outils existants, mesurables, et pilotés par vos équipes au quotidien.',
+        title: 'Déploiement & pilotage',
+        body: 'Mise en production sur votre infra (cloud souverain, on-prem, hybride), monitoring continu, SLA, itérations après go-live. Livrable : agents en production et tableau de bord de supervision.',
         visual: <IlluLink />,
     },
 ];
