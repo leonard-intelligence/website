@@ -1,165 +1,29 @@
-import { Suspense, lazy, useLayoutEffect } from 'react';
-import { useLocation } from 'react-router-dom';
-import { useReveal } from '../hooks/useReveal';
 import { Hero } from '../components/layout/Hero';
+import { ConstruitSur } from '../components/layout/ConstruitSur';
+import { SectionIntro, SectionMethod, SectionCapabilities, SectionServices, SectionCTA, SectionFontSpecimen, FooterV2 } from '../components/layout/Sections';
 import { SEO } from '../components/seo/SEO';
 import { JsonLd } from '../components/seo/JsonLd';
-import { ErrorBoundary } from '../components/ErrorBoundary';
-
-import { SectionLoader } from '../components/ui/SectionLoader';
-
-// Lazy load below-the-fold sections
-const UseCaseGrid = lazy(() => import('../components/layout/UseCaseGrid').then((m) => ({ default: m.UseCaseGrid })));
-const SectionAgents = lazy(() =>
-    import('../components/layout/SectionAgents').then((m) => ({ default: m.SectionAgents }))
-);
-
-const SectionMemory = lazy(() =>
-    import('../components/layout/SectionMemory').then((m) => ({ default: m.SectionMemory }))
-);
-const SectionVoice = lazy(() => import('../components/layout/SectionVoice').then((m) => ({ default: m.SectionVoice })));
-const SectionCreation = lazy(() =>
-    import('../components/layout/SectionCreation').then((m) => ({ default: m.SectionCreation }))
-);
-const Methodology = lazy(() => import('../components/layout/Methodology').then((m) => ({ default: m.Methodology })));
-const SectionROI = lazy(() => import('../components/layout/SectionROI').then((m) => ({ default: m.SectionROI })));
-const SectionSecurity = lazy(() =>
-    import('../components/layout/SectionSecurity').then((m) => ({ default: m.SectionSecurity }))
-);
-
-
-const InterimCTA = lazy(() => import('../components/layout/InterimCTA').then((m) => ({ default: m.InterimCTA })));
-const SectionStrategy = lazy(() =>
-    import('../components/layout/SectionStrategy').then((m) => ({ default: m.SectionStrategy }))
-);
-
-const Contact = lazy(() => import('../components/layout/Contact').then((m) => ({ default: m.Contact })));
+import { BeadPxProvider } from '../components/pixels/BeadPxContext';
+import { DevTools } from '../components/dev/DevTools';
 
 export function Home() {
-    // Initialize reveal animations
-    useReveal();
-    const location = useLocation();
-
-    // Force scroll to top on mount/refresh to prevent browser scroll restoration
-    // Handle hash scrolling
-    useLayoutEffect(() => {
-        if ('scrollRestoration' in history) {
-            history.scrollRestoration = 'manual';
-        }
-
-        const handleScroll = () => {
-            // Standard scroll to top if no hash
-            if (!location.hash) {
-                window.scrollTo(0, 0);
-                return;
-            }
-
-            // If hash exists, try to scroll to it with polling
-            const hash = location.hash;
-            let attempts = 0;
-            const maxAttempts = 50; // 5 seconds max
-
-            const attemptScroll = () => {
-                const element = document.querySelector(hash);
-                if (element) {
-                    element.scrollIntoView({ behavior: 'smooth' });
-                } else if (attempts < maxAttempts) {
-                    attempts++;
-                    setTimeout(attemptScroll, 100);
-                }
-            };
-
-            attemptScroll();
-        };
-
-        handleScroll();
-
-        return () => {
-            if ('scrollRestoration' in history) {
-                history.scrollRestoration = 'auto';
-            }
-        };
-    }, [location]);
-
     return (
-        <main id="main-content">
-            <SEO />
-            <JsonLd />
-            <Hero />
-
-            {/* Expertises - isolated Suspense boundary */}
-            <ErrorBoundary>
-                <Suspense fallback={<SectionLoader />}>
-                    <section
-                        id="section-expertises"
-                        className="flex flex-col gap-24 py-24 expertises"
-                        aria-label="Nos Expertises"
-                    >
-
-                        <SectionAgents />
-                        <SectionMemory />
-                        <SectionVoice />
-                        <SectionCreation />
-
-
-                    </section>
-
-                    <InterimCTA />
-                </Suspense>
-            </ErrorBoundary>
-
-            {/* SPACER */}
-            <div className="h-24" />
-
-            {/* PROOFS / ROI - Moved here as requested */}
-            <ErrorBoundary>
-                <Suspense fallback={<SectionLoader />}>
-                    <SectionROI />
-                </Suspense>
-            </ErrorBoundary>
-
-            {/* Methodology - Moved here as requested */}
-            <ErrorBoundary>
-                <Suspense fallback={<SectionLoader />}>
-                    <section id="section-methodology" aria-label="Notre Méthodologie">
-                        <Methodology />
-                    </section>
-                </Suspense>
-            </ErrorBoundary>
-
-            {/* Use Cases */}
-            <ErrorBoundary>
-                <Suspense fallback={<SectionLoader />}>
-                    <section id="section-solutions" aria-label="Cas d'usage et Solutions">
-                        <UseCaseGrid />
-                    </section>
-                </Suspense>
-            </ErrorBoundary>
-
-            {/* Strategic Impact */}
-            <ErrorBoundary>
-                <Suspense fallback={<SectionLoader />}>
-                    <section
-                        id="section-strategic-impact"
-                        className="space-y-16 py-16 bg-pattern-grid"
-                        aria-label="Impact Stratégique"
-                    >
-                        <SectionSecurity />
-
-                        <SectionStrategy />
-                    </section>
-                </Suspense>
-            </ErrorBoundary>
-
-            {/* Contact */}
-            <ErrorBoundary>
-                <Suspense fallback={<SectionLoader />}>
-                    <section aria-label="Contact">
-                        <Contact />
-                    </section>
-                </Suspense>
-            </ErrorBoundary>
-        </main>
+        <BeadPxProvider>
+            <main id="main-content">
+                <SEO />
+                <JsonLd />
+                {import.meta.env.DEV && <DevTools />}
+                <Hero />
+                <ConstruitSur />
+                <SectionIntro />
+                <SectionMethod />
+                <SectionCapabilities />
+                <SectionServices />
+                <SectionCTA />
+                {import.meta.env.DEV && <SectionFontSpecimen />}
+                <FooterV2 />
+            </main>
+        </BeadPxProvider>
     );
 }
 
