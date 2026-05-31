@@ -2131,11 +2131,11 @@ export function FooterV2() {
                         className="font-sans"
                         style={{ fontSize: '15px', lineHeight: '22px', fontWeight: 460, color: TOKENS.mutedText, maxWidth: '40ch' }}
                     >
-                        Agence agentique. Nous concevons et déployons les agents IA des entreprises.
+                        Agence agentique. Nous concevons, déployons et pilotons les agents IA de production — sur-mesure, branchés à vos systèmes.
                     </p>
 
                     <nav className="flex flex-wrap gap-x-6 gap-y-2 mt-2">
-                        {['Méthode', 'Cas clients', 'Mentions légales', 'CGV', 'Contact'].map((l) => (
+                        {['Méthode', 'Services', 'Mentions légales', 'Contact'].map((l) => (
                             <a
                                 key={l}
                                 href="#"
@@ -2146,6 +2146,14 @@ export function FooterV2() {
                             </a>
                         ))}
                     </nav>
+
+                    <a
+                        href="mailto:guillaume3301@proton.me"
+                        className="font-mono hover:underline"
+                        style={{ fontSize: '13px', color: TOKENS.mutedText, letterSpacing: '0.02em' }}
+                    >
+                        guillaume3301@proton.me
+                    </a>
                 </div>
 
                 <div className="flex justify-end">
