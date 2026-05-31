@@ -373,23 +373,23 @@ function FeatureCol({ title, body }: { title: string; body: string }) {
 const STEPS = [
     {
         n: 'I',
-        title: 'Cartographie',
-        body: 'On cartographie vos opérations et identifie les workflows à fort levier.',
+        title: 'Cartographier',
+        body: 'On identifie les workflows à fort levier : volumes, fréquence, coût du goulot. On classe les agents candidats par effort et retour.',
     },
     {
         n: 'II',
-        title: 'Conception',
-        body: 'On dessine l\'architecture des agents et leurs intégrations à votre stack.',
+        title: 'Spécifier',
+        body: 'On conçoit l\'agent au niveau plan d\'architecte : périmètre d\'autonomie, outils, données, garde-fous. Zéro code avant validation.',
     },
     {
         n: 'III',
-        title: 'Build',
-        body: 'On développe, teste et calibre en conditions réelles avec vos équipes.',
+        title: 'Construire & brancher',
+        body: 'On assemble l\'agent et on le connecte à votre stack via MCP, API ou webhook. Tests sur cas limites avant la production.',
     },
     {
         n: 'IV',
-        title: 'Déploiement',
-        body: 'Mise en production, formation, et boucle d\'amélioration continue.',
+        title: 'Piloter',
+        body: 'L\'agent tourne en production avec des métriques de décision : réussite, escalades, dérives. On itère sur la spec.',
     },
 ];
 
@@ -605,7 +605,7 @@ export function SectionMethod() {
                         className="font-sans mt-3 max-w-[52ch] mx-auto"
                         style={{ fontSize: '17px', lineHeight: '24px', fontWeight: 460, color: TOKENS.mutedText }}
                     >
-                        De l'idée à la production. Comment nous construisons les agents IA qui font tourner votre entreprise.
+                        De l'idée à la production. Comment nous fabriquons des agents qui tiennent — avec vous, dans votre réalité.
                     </p>
                 </header>
 
