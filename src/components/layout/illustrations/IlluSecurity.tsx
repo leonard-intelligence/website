@@ -7,6 +7,12 @@ import {
     Check,
     Cross,
     PulseDot,
+    EMBOSS,
+    EMBOSS_SOFT,
+    ROW_BG,
+    ROW_SHADOW,
+    PILL_EMBOSS,
+    DIVIDER,
 } from './kit';
 
 // ── Local helpers ──────────────────────────────────────────────────────────────
@@ -32,7 +38,7 @@ function SectionLabel({ label }: { label: string }) {
             >
                 {label}
             </span>
-            <span style={{ flex: 1, height: 1, background: TOKENS.border }} />
+            <span style={{ flex: 1, height: 1, background: DIVIDER }} />
         </div>
     );
 }
@@ -54,8 +60,8 @@ function CompartmentTile({
             style={{
                 padding: '10px 9px',
                 borderRadius: 10,
-                border: `1px solid ${TOKENS.border}`,
                 background: TOKENS.pale,
+                boxShadow: EMBOSS,
                 display: 'flex',
                 flexDirection: 'column',
                 alignItems: 'center',
@@ -88,8 +94,8 @@ function CompartmentTile({
                     color: levelColor,
                     padding: '2px 6px',
                     borderRadius: 999,
-                    border: `1px solid ${levelColor}55`,
                     background: `${levelColor}12`,
+                    boxShadow: PILL_EMBOSS,
                 }}
             >
                 {level}
@@ -117,8 +123,8 @@ function AuditRow({
                 gap: 8,
                 padding: '6px 9px',
                 borderRadius: 8,
-                background: ok ? `${TOKENS.forest}08` : `${TOKENS.gold}10`,
-                border: `1px solid ${ok ? TOKENS.forest : TOKENS.gold}22`,
+                background: ok ? ROW_BG : `linear-gradient(180deg, ${TOKENS.gold}14 0%, ${TOKENS.gold}08 100%)`,
+                boxShadow: ok ? ROW_SHADOW : `${ROW_SHADOW}, 0 0 0 0.8px ${TOKENS.gold}30`,
             }}
         >
             {ok ? <Check color={TOKENS.forest} size={11} /> : <Cross color={TOKENS.gold} size={11} />}
@@ -174,9 +180,9 @@ export function IlluSecurity({ accent }: { accent: string }) {
                         color: TOKENS.ink,
                         padding: '3px 8px',
                         borderRadius: 999,
-                        border: `1px solid ${TOKENS.border}`,
                         background: TOKENS.white,
                         letterSpacing: '0.1em',
+                        boxShadow: PILL_EMBOSS,
                     }}
                 >
                     <span
@@ -222,12 +228,12 @@ export function IlluSecurity({ accent }: { accent: string }) {
                     fontSize: 10,
                     color: TOKENS.ink,
                     background: `${TOKENS.gold}14`,
-                    border: `1px solid ${TOKENS.gold}44`,
                     borderRadius: 7,
                     padding: '5px 9px',
                     marginBottom: 10,
                     letterSpacing: '0.04em',
                     lineHeight: '15px',
+                    boxShadow: `${EMBOSS_SOFT}, 0 0 0 0.8px ${TOKENS.gold}40`,
                 }}
             >
                 Export externe · Dossier C
@@ -266,10 +272,10 @@ export function IlluSecurity({ accent }: { accent: string }) {
                         color: TOKENS.mutedText,
                         padding: '5px 0',
                         borderRadius: 8,
-                        border: `1px solid ${TOKENS.border}`,
                         background: TOKENS.white,
                         letterSpacing: '0.06em',
                         cursor: 'default',
+                        boxShadow: PILL_EMBOSS,
                     }}
                 >
                     Refuser
@@ -283,9 +289,10 @@ export function IlluSecurity({ accent }: { accent: string }) {
                         color: TOKENS.white,
                         padding: '5px 0',
                         borderRadius: 8,
-                        background: `${TOKENS.forest}`,
+                        background: TOKENS.forest,
                         letterSpacing: '0.06em',
                         cursor: 'default',
+                        boxShadow: PILL_EMBOSS,
                     }}
                 >
                     Approuver

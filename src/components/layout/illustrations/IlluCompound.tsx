@@ -13,6 +13,12 @@ import {
     LineChart,
     StatusPill,
     LivePill,
+    EMBOSS,
+    EMBOSS_SOFT,
+    PILL_EMBOSS,
+    DIVIDER,
+    ROW_BG,
+    ROW_SHADOW,
 } from './kit';
 
 // ── Local helpers ────────────────────────────────────────────────────────────
@@ -23,7 +29,7 @@ function Divider() {
         <div
             style={{
                 height: 1,
-                background: TOKENS.border,
+                background: DIVIDER,
                 margin: '8px 0',
             }}
         />
@@ -49,8 +55,11 @@ function LogRow({ label, sub, accent }: { label: string; sub?: string; accent: s
             className="flex items-start"
             style={{
                 gap: 7,
-                padding: '5px 0',
-                borderBottom: `1px solid ${TOKENS.border}`,
+                padding: '5px 8px',
+                borderRadius: 6,
+                background: ROW_BG,
+                boxShadow: ROW_SHADOW,
+                marginBottom: 4,
             }}
         >
             <Check color={accent} size={11} />
@@ -76,8 +85,8 @@ function StatTile({ value, label }: { value: string; label: string }) {
                 flex: '1 1 0',
                 padding: '7px 8px',
                 borderRadius: 8,
-                border: `1px solid ${TOKENS.border}`,
                 background: TOKENS.pale,
+                boxShadow: EMBOSS_SOFT,
                 display: 'flex',
                 flexDirection: 'column',
                 gap: 2,
@@ -119,8 +128,8 @@ export function IlluCompound({ accent }: { accent: string }) {
                         color: TOKENS.mutedText,
                         padding: '2px 8px',
                         borderRadius: 999,
-                        border: `1px solid ${TOKENS.border}`,
                         background: TOKENS.pale,
+                        boxShadow: PILL_EMBOSS,
                     }}
                 >
                     T0 → T+n
@@ -131,8 +140,8 @@ export function IlluCompound({ accent }: { accent: string }) {
             <div
                 style={{
                     borderRadius: 10,
-                    border: `1px solid ${TOKENS.border}`,
                     background: TOKENS.white,
+                    boxShadow: EMBOSS,
                     padding: '10px 10px 4px',
                     marginBottom: 8,
                 }}
@@ -202,8 +211,8 @@ export function IlluCompound({ accent }: { accent: string }) {
                                 color: TOKENS.ink,
                                 padding: '4px 9px',
                                 borderRadius: 999,
-                                border: `1px solid ${TOKENS.border}`,
                                 background: TOKENS.white,
+                                boxShadow: PILL_EMBOSS,
                             }}
                         >
                             <span
@@ -252,7 +261,13 @@ export function IlluCompound({ accent }: { accent: string }) {
             />
             <div
                 className="flex items-start"
-                style={{ gap: 7, padding: '5px 0 2px' }}
+                style={{
+                    gap: 7,
+                    padding: '5px 8px',
+                    borderRadius: 6,
+                    background: ROW_BG,
+                    boxShadow: ROW_SHADOW,
+                }}
             >
                 <Check color={accent} size={11} />
                 <div style={{ display: 'flex', flexDirection: 'column', gap: 1 }}>

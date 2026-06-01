@@ -10,6 +10,10 @@ import {
     StatusPill,
     PulseDot,
     Check,
+    EMBOSS,
+    EMBOSS_SOFT,
+    ROW_BG,
+    ROW_SHADOW,
 } from './kit';
 
 // ── Local helper: tiny mono eyebrow tag ─────────────────────────────────────
@@ -22,7 +26,7 @@ function Tag({ label }: { label: string }) {
                 letterSpacing: '0.08em',
                 color: TOKENS.mutedText,
                 background: TOKENS.pale,
-                border: `1px solid ${TOKENS.border}`,
+                boxShadow: EMBOSS_SOFT,
                 borderRadius: 4,
                 padding: '1px 5px',
             }}
@@ -141,8 +145,8 @@ export function IlluConnect({ accent }: { accent: string }) {
                                 gap: 9,
                                 padding: '0 10px',
                                 borderRadius: 10,
-                                border: `1px solid ${c.online ? TOKENS.border : 'rgba(32,32,32,0.06)'}`,
-                                background: c.online ? TOKENS.white : TOKENS.pale,
+                                background: c.online ? ROW_BG : TOKENS.pale,
+                                boxShadow: c.online ? ROW_SHADOW : EMBOSS_SOFT,
                                 opacity: c.online ? 1 : 0.62,
                                 boxSizing: 'border-box',
                             }}
@@ -190,8 +194,8 @@ export function IlluConnect({ accent }: { accent: string }) {
                     marginTop: 10,
                     padding: '10px 13px',
                     borderRadius: 11,
-                    border: `1.5px solid ${accent}`,
                     background: `linear-gradient(90deg, ${accent}12, ${TOKENS.white})`,
+                    boxShadow: `0 0 0 1px ${accent}, ${EMBOSS}`,
                 }}
             >
                 <PulseDot color={accent} size={9} />
@@ -226,7 +230,7 @@ export function IlluConnect({ accent }: { accent: string }) {
                     padding: '8px 10px',
                     borderRadius: 9,
                     background: TOKENS.pale,
-                    border: `1px solid ${TOKENS.border}`,
+                    boxShadow: EMBOSS_SOFT,
                     marginBottom: 9,
                 }}
             >
@@ -259,7 +263,7 @@ export function IlluConnect({ accent }: { accent: string }) {
                             padding: '5px 8px',
                             borderRadius: 7,
                             background: i === 0 ? `${accent}10` : TOKENS.pale,
-                            border: `1px solid ${i === 0 ? `${accent}35` : TOKENS.border}`,
+                            boxShadow: i === 0 ? `0 0 0 1px ${accent}55, ${EMBOSS}` : EMBOSS_SOFT,
                         }}
                     >
                         <Check color={TOKENS.forest} size={10} />

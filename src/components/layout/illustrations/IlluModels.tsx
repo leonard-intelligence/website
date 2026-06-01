@@ -11,6 +11,9 @@ import {
     ProgressBar,
     Squares,
     Sparkbars,
+    EMBOSS,
+    EMBOSS_SOFT,
+    DIVIDER,
 } from './kit';
 
 // ── Local helper: section divider with mono label ────────────────────────────
@@ -23,7 +26,7 @@ function SectionLabel({ label }: { label: string }) {
             <span style={{ fontSize: 9, letterSpacing: '0.18em', color: TOKENS.mutedText, textTransform: 'uppercase' as const }}>
                 {label}
             </span>
-            <span style={{ flex: 1, height: 1, background: TOKENS.border }} />
+            <span style={{ flex: 1, height: 1, background: DIVIDER }} />
         </div>
     );
 }
@@ -37,7 +40,7 @@ function KV({ k, v, accent }: { k: string; v: string; accent?: boolean }) {
                 style={{
                     flex: 1,
                     height: 1,
-                    borderBottom: `1px dashed ${TOKENS.border}`,
+                    borderBottom: `1px dashed ${DIVIDER}`,
                 }}
             />
             <span
@@ -64,7 +67,7 @@ function TaskChip({ label }: { label: string }) {
                 color: TOKENS.mutedText,
                 padding: '2px 7px',
                 borderRadius: 5,
-                border: `1px solid ${TOKENS.border}`,
+                boxShadow: EMBOSS_SOFT,
                 background: TOKENS.pale,
                 letterSpacing: '0.06em',
                 whiteSpace: 'nowrap' as const,
@@ -77,7 +80,7 @@ function TaskChip({ label }: { label: string }) {
 
 // ── Main illustration ────────────────────────────────────────────────────────
 export function IlluModels({ accent }: { accent: string }) {
-    const { ink, mutedText, border, white, pale, surface } = TOKENS;
+    const { ink, mutedText, white, pale, surface } = TOKENS;
 
     // Current task being routed
     const task = {
@@ -114,7 +117,7 @@ export function IlluModels({ accent }: { accent: string }) {
             <div
                 style={{
                     borderRadius: 10,
-                    border: `1px solid ${border}`,
+                    boxShadow: EMBOSS,
                     background: white,
                     padding: '9px 11px',
                     marginBottom: 9,
@@ -127,7 +130,7 @@ export function IlluModels({ accent }: { accent: string }) {
                             fontSize: 9,
                             color: mutedText,
                             background: pale,
-                            border: `1px solid ${border}`,
+                            boxShadow: EMBOSS_SOFT,
                             borderRadius: 5,
                             padding: '1px 6px',
                             letterSpacing: '0.1em',
@@ -180,9 +183,8 @@ export function IlluModels({ accent }: { accent: string }) {
                             gap: 8,
                             padding: '7px 10px',
                             borderRadius: 9,
-                            border: `1px solid ${m.sel ? accent : border}`,
                             background: m.sel ? white : surface,
-                            boxShadow: m.sel ? `0 0 0 1.5px ${accent}40` : undefined,
+                            boxShadow: m.sel ? `0 0 0 1px ${accent}, ${EMBOSS}` : EMBOSS,
                         }}
                     >
                         {/* Name + sub */}
@@ -248,13 +250,13 @@ export function IlluModels({ accent }: { accent: string }) {
                     padding: '6px 8px',
                     borderRadius: 8,
                     background: pale,
-                    border: `1px solid ${border}`,
+                    boxShadow: EMBOSS_SOFT,
                 }}
             >
                 <StatusPill color={accent} label="routé" muted />
                 <span style={{ flex: 1 }} />
                 <span style={{ fontSize: 8.5, color: mutedText }}>4 modèles évalués</span>
-                <span style={{ width: 1, height: 10, background: border, flex: '0 0 auto' }} />
+                <span style={{ width: 1, height: 10, background: DIVIDER, flex: '0 0 auto' }} />
                 <span style={{ fontSize: 8.5, color: mutedText }}>∅ 12 ms</span>
             </div>
         </WindowCard>
@@ -272,7 +274,7 @@ export function IlluModels({ accent }: { accent: string }) {
                         color: ink,
                         padding: '4px 11px',
                         borderRadius: 8,
-                        border: `1.5px solid ${accent}`,
+                        boxShadow: `0 0 0 1.5px ${accent}, ${EMBOSS}`,
                         background: white,
                         letterSpacing: '0.01em',
                         lineHeight: 1.2,
@@ -304,7 +306,7 @@ export function IlluModels({ accent }: { accent: string }) {
                     padding: '6px 9px',
                     borderRadius: 7,
                     background: pale,
-                    border: `1px solid ${border}`,
+                    boxShadow: EMBOSS_SOFT,
                     marginBottom: 8,
                     letterSpacing: '0.01em',
                     lineHeight: 1.55,
