@@ -1,330 +1,61 @@
-// 01 · MODÈLES — routage par tâche (section illustration, decorative).
-// Composition: WindowCard (model router console) + FloatPanel (verdict DÉCISION).
+// 01 · MODÈLES — "On choisit le modèle. Par tâche." (decorative).
+// Minimalist + explicit (cofounder philosophy): one task → one retained model
+// (dominant, accent ring), with the criteria that decided it and two discreet
+// discarded alternatives. Lots of air, big labels, one clear idea.
 import { TOKENS } from '../Sections';
-import {
-    WindowCard,
-    FloatPanel,
-    Layered,
-    StatusPill,
-    LivePill,
-    Check,
-    ProgressBar,
-    Squares,
-    Sparkbars,
-    EMBOSS,
-    EMBOSS_SOFT,
-    DIVIDER,
-} from './kit';
+import { EMBOSS, EMBOSS_SOFT, PILL_EMBOSS } from './kit';
 
-// ── Local helper: section divider with mono label ────────────────────────────
-function SectionLabel({ label }: { label: string }) {
-    return (
-        <div
-            className="flex items-center font-mono"
-            style={{ gap: 8, marginBottom: 7 }}
-        >
-            <span style={{ fontSize: 9, letterSpacing: '0.18em', color: TOKENS.mutedText, textTransform: 'uppercase' as const }}>
-                {label}
-            </span>
-            <span style={{ flex: 1, height: 1, background: DIVIDER }} />
-        </div>
-    );
-}
-
-// ── Local helper: mono key → value one-liner ─────────────────────────────────
-function KV({ k, v, accent }: { k: string; v: string; accent?: boolean }) {
-    return (
-        <div className="flex items-center font-mono" style={{ gap: 6 }}>
-            <span style={{ fontSize: 9, color: TOKENS.mutedText, flex: '0 0 auto' }}>{k}</span>
-            <span
-                style={{
-                    flex: 1,
-                    height: 1,
-                    borderBottom: `1px dashed ${DIVIDER}`,
-                }}
-            />
-            <span
-                style={{
-                    fontSize: 9,
-                    color: accent ? TOKENS.ink : TOKENS.mutedText,
-                    fontWeight: accent ? 600 : 400,
-                    flex: '0 0 auto',
-                }}
-            >
-                {v}
-            </span>
-        </div>
-    );
-}
-
-// ── Local helper: task tag chip ──────────────────────────────────────────────
-function TaskChip({ label }: { label: string }) {
-    return (
-        <span
-            className="font-mono"
-            style={{
-                fontSize: 8.5,
-                color: TOKENS.mutedText,
-                padding: '2px 7px',
-                borderRadius: 5,
-                boxShadow: EMBOSS_SOFT,
-                background: TOKENS.pale,
-                letterSpacing: '0.06em',
-                whiteSpace: 'nowrap' as const,
-            }}
-        >
-            {label}
-        </span>
-    );
-}
-
-// ── Main illustration ────────────────────────────────────────────────────────
 export function IlluModels({ accent }: { accent: string }) {
     const { ink, mutedText, white, pale, surface } = TOKENS;
-
-    // Current task being routed
-    const task = {
-        id: 'TSK-0041',
-        label: 'Analyse contrat NDA',
-        type: 'juridique',
-    };
-
-    // 4 constraint criteria with intensity (1–5)
-    const criteria: { l: string; n: number; hint: string }[] = [
-        { l: 'Précision',       n: 5, hint: 'critique' },
-        { l: 'Coût / token',    n: 2, hint: 'faible' },
-        { l: 'Latence',         n: 3, hint: 'modérée' },
-        { l: 'Confidentialité', n: 5, hint: 'élevée' },
+    const criteria = ['Précision', 'Confidentialité', 'Coût'];
+    const alts = [
+        { name: 'GPT-4o', vendor: 'OpenAI' },
+        { name: 'Mistral Large', vendor: 'Mistral AI' },
     ];
+    return (
+        <div className="w-full font-sans mx-auto" style={{ maxWidth: 420 }} aria-hidden="true">
+            {/* Task */}
+            <div className="flex items-center" style={{ gap: 10 }}>
+                <span className="font-mono" style={{ fontSize: 9, letterSpacing: '0.16em', color: mutedText, padding: '3px 9px', borderRadius: 999, background: surface, boxShadow: PILL_EMBOSS, flex: '0 0 auto' }}>TÂCHE</span>
+                <span className="font-sans" style={{ fontSize: 15, fontWeight: 500, color: ink }}>Analyse de contrat</span>
+            </div>
 
-    // Candidate models with fit scores
-    const models: { name: string; sub: string; fit: number; sel: boolean; spark: number[] }[] = [
-        { name: 'Claude 3.7',      sub: 'Anthropic',   fit: 88, sel: false, spark: [52,61,70,75,82,88] },
-        { name: 'GPT-4o',          sub: 'OpenAI',      fit: 71, sel: false, spark: [60,65,68,70,71,71] },
-        { name: 'Mistral Large',   sub: 'Mistral AI',  fit: 64, sel: false, spark: [40,48,55,60,62,64] },
-        { name: 'Llama 3.1 héb.', sub: 'Open-weight', fit: 94, sel: true,  spark: [68,75,80,87,91,94] },
-    ];
+            {/* Connector */}
+            <div className="flex items-center" style={{ gap: 9, margin: '12px 0', paddingLeft: 7 }}>
+                <span style={{ width: 0, height: 16, borderLeft: '1px dashed rgba(23,23,23,0.28)' }} />
+                <span className="font-mono" style={{ fontSize: 9.5, letterSpacing: '0.16em', color: mutedText }}>MODÈLE RETENU</span>
+            </div>
 
-    const base = (
-        <WindowCard
-            title="ROUTAGE · PAR TÂCHE"
-            right={
-                <LivePill color={accent} label="actif" />
-            }
-            maxWidth={400}
-        >
-            {/* ── Task header ── */}
-            <div
-                style={{
-                    borderRadius: 10,
-                    boxShadow: EMBOSS,
-                    background: white,
-                    padding: '9px 11px',
-                    marginBottom: 9,
-                }}
-            >
-                <div className="flex items-center" style={{ gap: 7, marginBottom: 8 }}>
-                    <span
-                        className="font-mono"
-                        style={{
-                            fontSize: 9,
-                            color: mutedText,
-                            background: pale,
-                            boxShadow: EMBOSS_SOFT,
-                            borderRadius: 5,
-                            padding: '1px 6px',
-                            letterSpacing: '0.1em',
-                        }}
-                    >
-                        {task.id}
-                    </span>
-                    <span className="font-sans" style={{ fontSize: 11.5, fontWeight: 600, color: ink, flex: 1 }}>
-                        {task.label}
-                    </span>
-                    <TaskChip label={task.type} />
+            {/* Retained model — dominant */}
+            <div style={{ borderRadius: 14, background: `linear-gradient(180deg, ${white}, ${pale})`, boxShadow: `0 0 0 1.5px ${accent}, ${EMBOSS}`, padding: '16px 18px' }}>
+                <div className="flex items-center" style={{ gap: 10 }}>
+                    <div style={{ flex: '1 1 auto', minWidth: 0 }}>
+                        <div className="font-sans" style={{ fontSize: 19, fontWeight: 600, color: ink, lineHeight: 1.1 }}>Claude</div>
+                        <div className="font-mono" style={{ fontSize: 10.5, color: mutedText, marginTop: 4 }}>Anthropic · propriétaire</div>
+                    </div>
+                    <span className="font-mono" style={{ fontSize: 9.5, letterSpacing: '0.12em', color: ink, padding: '4px 11px', borderRadius: 999, background: surface, boxShadow: PILL_EMBOSS, flex: '0 0 auto' }}>RETENU</span>
                 </div>
-
-                {/* ── Constraint grid: 2 columns ── */}
-                <SectionLabel label="Profil de contraintes" />
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '7px 14px' }}>
+                <div className="flex items-center" style={{ gap: 16, marginTop: 15 }}>
                     {criteria.map((c) => (
-                        <div key={c.l} style={{ display: 'flex', flexDirection: 'column', gap: 3 }}>
-                            <div className="flex items-center" style={{ gap: 5, justifyContent: 'space-between' }}>
-                                <span className="font-mono" style={{ fontSize: 9, color: mutedText }}>
-                                    {c.l}
-                                </span>
-                                <span
-                                    className="font-mono"
-                                    style={{
-                                        fontSize: 8,
-                                        color: c.n >= 4 ? ink : mutedText,
-                                        fontWeight: c.n >= 4 ? 600 : 400,
-                                    }}
-                                >
-                                    {c.hint}
-                                </span>
-                            </div>
-                            <Squares n={c.n} color={accent} />
-                        </div>
+                        <span key={c} className="inline-flex items-center font-mono" style={{ gap: 6, fontSize: 10.5, color: mutedText }}>
+                            <span style={{ width: 6, height: 6, borderRadius: 999, background: accent, flex: '0 0 auto' }} />
+                            {c}
+                        </span>
                     ))}
                 </div>
             </div>
 
-            {/* ── Model ranking ── */}
-            <SectionLabel label="Candidats — score d'adéquation" />
-            <div style={{ display: 'flex', flexDirection: 'column', gap: 5 }}>
-                {models.map((m) => (
-                    <div
-                        key={m.name}
-                        style={{
-                            display: 'grid',
-                            gridTemplateColumns: '130px 1fr 32px 22px 18px',
-                            alignItems: 'center',
-                            gap: 8,
-                            padding: '7px 10px',
-                            borderRadius: 9,
-                            background: m.sel ? white : surface,
-                            boxShadow: m.sel ? `0 0 0 1px ${accent}, ${EMBOSS}` : EMBOSS,
-                        }}
-                    >
-                        {/* Name + sub */}
-                        <div style={{ display: 'flex', flexDirection: 'column', gap: 1.5, minWidth: 0 }}>
-                            <span
-                                className="font-mono"
-                                style={{
-                                    fontSize: 10.5,
-                                    color: m.sel ? ink : mutedText,
-                                    fontWeight: m.sel ? 600 : 400,
-                                    whiteSpace: 'nowrap' as const,
-                                    overflow: 'hidden',
-                                    textOverflow: 'ellipsis',
-                                }}
-                            >
-                                {m.name}
-                            </span>
-                            <span className="font-mono" style={{ fontSize: 8, color: mutedText, opacity: 0.7 }}>
-                                {m.sub}
-                            </span>
-                        </div>
-
-                        {/* Progress bar */}
-                        <ProgressBar pct={m.fit} color={m.sel ? accent : '#C8C8C0'} />
-
-                        {/* Sparkbars */}
-                        <Sparkbars
-                            data={m.spark}
-                            color={m.sel ? accent : '#C4C4BC'}
-                            accentCount={m.sel ? 3 : 0}
-                            height={18}
-                        />
-
-                        {/* Score */}
-                        <span
-                            className="font-mono"
-                            style={{
-                                fontSize: 10,
-                                color: m.sel ? ink : mutedText,
-                                textAlign: 'right' as const,
-                                fontWeight: m.sel ? 700 : 400,
-                            }}
-                        >
-                            {m.fit}
-                        </span>
-
-                        {/* Check or empty */}
-                        {m.sel ? (
-                            <Check color={accent} size={12} />
-                        ) : (
-                            <span style={{ width: 12 }} />
-                        )}
+            {/* Alternatives */}
+            <div className="font-mono" style={{ fontSize: 9, letterSpacing: '0.18em', color: mutedText, margin: '18px 0 9px' }}>AUTRES CANDIDATS</div>
+            <div className="flex flex-col" style={{ gap: 8 }}>
+                {alts.map((a) => (
+                    <div key={a.name} className="flex items-center" style={{ gap: 10, padding: '11px 15px', borderRadius: 11, background: surface, boxShadow: EMBOSS_SOFT, opacity: 0.7 }}>
+                        <span className="font-sans" style={{ fontSize: 13, fontWeight: 500, color: ink }}>{a.name}</span>
+                        <span className="font-mono" style={{ fontSize: 10, color: mutedText }}>{a.vendor}</span>
+                        <span className="ml-auto font-mono" style={{ fontSize: 9, letterSpacing: '0.1em', color: mutedText }}>écarté</span>
                     </div>
                 ))}
             </div>
-
-            {/* ── Footer status bar ── */}
-            <div
-                className="flex items-center font-mono"
-                style={{
-                    marginTop: 10,
-                    gap: 8,
-                    padding: '6px 8px',
-                    borderRadius: 8,
-                    background: pale,
-                    boxShadow: EMBOSS_SOFT,
-                }}
-            >
-                <StatusPill color={accent} label="routé" muted />
-                <span style={{ flex: 1 }} />
-                <span style={{ fontSize: 8.5, color: mutedText }}>4 modèles évalués</span>
-                <span style={{ width: 1, height: 10, background: DIVIDER, flex: '0 0 auto' }} />
-                <span style={{ fontSize: 8.5, color: mutedText }}>∅ 12 ms</span>
-            </div>
-        </WindowCard>
+        </div>
     );
-
-    const overlay = (
-        <FloatPanel title="DÉCISION" accent={accent}>
-            {/* Chosen model chip + score badge */}
-            <div className="flex items-center" style={{ gap: 7, marginBottom: 9 }}>
-                <span
-                    className="font-sans"
-                    style={{
-                        fontSize: 13,
-                        fontWeight: 700,
-                        color: ink,
-                        padding: '4px 11px',
-                        borderRadius: 8,
-                        boxShadow: `0 0 0 1.5px ${accent}, ${EMBOSS}`,
-                        background: white,
-                        letterSpacing: '0.01em',
-                        lineHeight: 1.2,
-                    }}
-                >
-                    Llama 3.1 hébergé
-                </span>
-                <span
-                    className="font-mono"
-                    style={{
-                        fontSize: 9,
-                        color: white,
-                        background: accent,
-                        padding: '2px 6px',
-                        borderRadius: 5,
-                        fontWeight: 700,
-                    }}
-                >
-                    94
-                </span>
-            </div>
-
-            {/* Mono rationale */}
-            <div
-                className="font-mono"
-                style={{
-                    fontSize: 9,
-                    color: ink,
-                    padding: '6px 9px',
-                    borderRadius: 7,
-                    background: pale,
-                    boxShadow: EMBOSS_SOFT,
-                    marginBottom: 8,
-                    letterSpacing: '0.01em',
-                    lineHeight: 1.55,
-                }}
-            >
-                Confidentialité max → open-weight hébergé chez vous. Précision 5/5 satisfaite.
-            </div>
-
-            {/* Par-tâche mapping list */}
-            <SectionLabel label="Par tâche · routage" />
-            <div style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
-                <KV k="Rédaction"     v="Claude 3.7"      accent />
-                <KV k="Extraction"    v="Mistral Large"   />
-                <KV k="Analyse NDA"   v="Llama 3.1 héb."  accent />
-                <KV k="Résumé court"  v="GPT-4o"          />
-            </div>
-        </FloatPanel>
-    );
-
-    return <Layered base={base} overlay={overlay} baseWidth="80%" overlayWidth="60%" />;
 }
