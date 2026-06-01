@@ -3,12 +3,23 @@
 // Motion is encapsulated here (Spinner / PulseDot) so section files never touch the CSS module.
 // IMPORTANT: this file is typechecked under noUnusedLocals/noUnusedParameters — exports are
 // always "used", but local consts/params are not. Reference TOKENS.* inline to stay safe.
-import { TOKENS, CARD_SHADOW } from '../Sections';
+import { TOKENS } from '../Sections';
 import styles from '../Illustrations.module.css';
 
 // Elevated shadow for floating overlay panels (the layered "cofounder" look).
 export const FLOAT_SHADOW =
     '0 22px 48px -16px rgba(20,20,20,0.26), 0 6px 16px -6px rgba(20,20,20,0.12)';
+
+// ── "Ultra-clean" finish recipes (cofounder technique): hairline edges via layered
+//    box-shadows instead of flat 1px borders. Shared so every illustration matches.
+export const HAIRLINE = 'inset 0 0 0 0.8px #FFFFFF, 0 0 0 0.8px rgba(0,0,0,0.08)';
+export const EMBOSS = `${HAIRLINE}, 0 1px 2px rgba(0,0,0,0.04), 0 8px 20px -6px rgba(0,0,0,0.06)`;
+export const EMBOSS_SOFT = `${HAIRLINE}, 0 1px 2px rgba(0,0,0,0.04)`;
+export const ROW_BG = 'linear-gradient(180deg, #F5F5F2 0%, rgba(245,245,242,0.5) 100%)';
+export const ROW_SHADOW = '0 0 0 1px rgba(0,0,0,0.04), inset 0 1.4px 0 #FFFFFF, 0 0 1.4px rgba(0,0,0,0.05)';
+export const PILL_EMBOSS = '0 0.2px 0 rgba(0,0,0,0.2), 0 0 0 1px rgba(0,0,0,0.10), inset 0 1px 1px rgba(255,255,255,0.6), inset 0 -1px 1px rgba(0,0,0,0.05)';
+// Faint inner divider (replaces hard 1px borders inside cards).
+export const DIVIDER = 'rgba(0,0,0,0.06)';
 
 // Inner track color for bars/meters and the "empty" pixel color.
 const TRACK = '#ECECE6';
@@ -36,15 +47,14 @@ export function WindowCard({
                 width: '100%',
                 maxWidth,
                 borderRadius: 16,
-                border: `1px solid ${TOKENS.border}`,
                 background: `linear-gradient(180deg, ${TOKENS.white}, ${TOKENS.pale})`,
-                boxShadow: CARD_SHADOW,
+                boxShadow: EMBOSS,
                 overflow: 'hidden',
             }}
         >
             <div
                 className="flex items-center"
-                style={{ gap: 8, padding: '11px 14px', borderBottom: `1px solid ${TOKENS.border}` }}
+                style={{ gap: 8, padding: '11px 14px', borderBottom: `1px solid ${DIVIDER}` }}
             >
                 <div className="flex" style={{ gap: 5 }}>
                     {['#E6675A', '#E8B53D', '#5BB85B'].map((c) => (
@@ -57,7 +67,7 @@ export function WindowCard({
                 {right && <div className="ml-auto">{right}</div>}
             </div>
             <div style={{ padding: 12 }}>{children}</div>
-            {footer && <div style={{ borderTop: `1px solid ${TOKENS.border}` }}>{footer}</div>}
+            {footer && <div style={{ borderTop: `1px solid ${DIVIDER}` }}>{footer}</div>}
         </div>
     );
 }
@@ -82,15 +92,14 @@ export function FloatPanel({
             className="font-sans"
             style={{
                 borderRadius: 14,
-                border: `1px solid ${TOKENS.border}`,
                 background: TOKENS.white,
-                boxShadow: FLOAT_SHADOW,
+                boxShadow: `${HAIRLINE}, ${FLOAT_SHADOW}`,
                 overflow: 'hidden',
             }}
         >
             <div
                 className="flex items-center"
-                style={{ gap: 8, padding: '9px 12px', borderBottom: `1px solid ${TOKENS.border}` }}
+                style={{ gap: 8, padding: '9px 12px', borderBottom: `1px solid ${DIVIDER}` }}
             >
                 {accent && <span style={{ width: 7, height: 7, borderRadius: 999, background: accent, flex: '0 0 auto' }} />}
                 <span className="font-mono" style={{ fontSize: 10, letterSpacing: '0.12em', color: TOKENS.ink }}>{title}</span>
@@ -149,8 +158,8 @@ export function StatusPill({ color, label, muted }: { color: string; label: stri
                 color: muted ? TOKENS.mutedText : TOKENS.ink,
                 padding: '3px 9px',
                 borderRadius: 999,
-                border: `1px solid ${TOKENS.border}`,
-                background: TOKENS.white,
+                background: TOKENS.surface,
+                boxShadow: PILL_EMBOSS,
             }}
         >
             <span style={{ width: 6, height: 6, borderRadius: 999, background: color, display: 'inline-block' }} />
@@ -163,7 +172,7 @@ export function LivePill({ color, label }: { color: string; label: string }) {
     return (
         <span
             className="inline-flex items-center font-mono"
-            style={{ gap: 6, fontSize: 10, color: TOKENS.ink, padding: '3px 9px', borderRadius: 999, border: `1px solid ${TOKENS.border}`, background: TOKENS.white }}
+            style={{ gap: 6, fontSize: 10, color: TOKENS.ink, padding: '3px 9px', borderRadius: 999, background: TOKENS.surface, boxShadow: PILL_EMBOSS }}
         >
             <span className={styles.pulse} style={{ width: 6, height: 6, borderRadius: 999, background: color }} />
             {label}
@@ -205,7 +214,7 @@ export function IconTile({ children, size = 26 }: { children: React.ReactNode; s
     return (
         <span
             className="inline-flex items-center justify-center font-mono"
-            style={{ width: size, height: size, borderRadius: 8, background: TOKENS.pale, border: `1px solid ${TOKENS.border}`, fontSize: 8.5, color: TOKENS.mutedText, flex: '0 0 auto' }}
+            style={{ width: size, height: size, borderRadius: 8, background: 'linear-gradient(180deg, #FFFFFF 0%, #F5F5F2 100%)', boxShadow: EMBOSS_SOFT, fontSize: 8.5, color: TOKENS.mutedText, flex: '0 0 auto' }}
         >
             {children}
         </span>
