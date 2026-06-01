@@ -1,5 +1,5 @@
 // Sections V2 — Leonard Intelligence (design.md: warm neutrals, soft shadows, rounded corners)
-import { ArrowRight } from 'lucide-react';
+import { ArrowRight, Users, Map as MapIcon, Ruler, ShieldCheck, Boxes, Plug, Rocket, Gauge, type LucideIcon } from 'lucide-react';
 import { PixelLayer } from '../pixels/PixelLayer';
 import { Pixel } from '../pixels/Pixel';
 import { useBeadCtx } from '../pixels/BeadPxContext';
@@ -7,7 +7,7 @@ import { useNotchParams } from '../dev/notchParamsStore';
 import { useVitruveParams } from '../dev/vitruveParamsStore';
 import { QrBadge } from './QrBadge';
 import { ReliefButton } from '../ui/ReliefButton';
-import { useState } from 'react';
+import { useState, Fragment } from 'react';
 import { useInViewReveal } from '../../hooks/useInViewReveal';
 
 function Reveal({ children, className }: { children: React.ReactNode; className?: string }) {
@@ -405,28 +405,153 @@ function FeatureCol({ title, body }: { title: string; body: string }) {
 // ============================================================================
 // SECTION 2 — Method (4 steps, like Cofounder chapters)
 // ============================================================================
-const STEPS = [
+// ── Roadmap board (méthode) — staged flow of agent/human tasks (cofounder idiom) ─
+const RM_CARD_SHADOW =
+    '0 0 0 0.67px rgba(0,0,0,0.08), 0 13.4px 13.4px rgba(0,0,0,0.01), 0 4px 6px rgba(0,0,0,0.02), 0 2px 5.4px rgba(0,0,0,0.03), inset 0 0 0 0.67px #FFFFFF';
+const RM_TILE_SHADOW =
+    'inset 0 0.33px 0.67px rgba(255,255,255,0.4), 0 0.33px 0.4px rgba(0,0,0,0.22), 0 0 1.34px rgba(0,0,0,0.18)';
+const RM_PILL_SHADOW =
+    '0 0.15px 0 rgba(0,0,0,0.2), 0 0.3px 0.3px #FFFFFF, 0 0 0.6px rgba(0,0,0,0.3), inset 0 0.3px 0.3px rgba(255,255,255,0.6), inset 0 -0.3px 0.3px rgba(0,0,0,0.05)';
+
+type RoadType = 'client' | 'agent' | 'approval';
+type RoadTask = { label: string; type: RoadType; icon: LucideIcon };
+type RoadStage = { stage: string; sub: string; tasks: RoadTask[] };
+
+const ROADMAP: RoadStage[] = [
     {
-        n: 'I',
-        title: 'Cartographier',
-        body: 'On identifie les workflows à fort levier : volumes, fréquence, coût du goulot. On classe les agents candidats par effort et retour.',
+        stage: 'I · Cartographier',
+        sub: 'Workflows à fort levier',
+        tasks: [
+            { label: 'Atelier de cadrage', type: 'client', icon: Users },
+            { label: 'Cartographie des flux', type: 'agent', icon: MapIcon },
+        ],
     },
     {
-        n: 'II',
-        title: 'Spécifier',
-        body: 'On conçoit l\'agent au niveau plan d\'architecte : périmètre d\'autonomie, outils, données, garde-fous. Zéro code avant validation.',
+        stage: 'II · Spécifier',
+        sub: "Plan d'architecte · zéro code avant validation",
+        tasks: [
+            { label: "Plan d'architecte", type: 'agent', icon: Ruler },
+            { label: 'Périmètre & garde-fous', type: 'approval', icon: ShieldCheck },
+        ],
     },
     {
-        n: 'III',
-        title: 'Construire & brancher',
-        body: 'On assemble l\'agent et on le connecte à votre stack via MCP, API ou webhook. Tests sur cas limites avant la production.',
+        stage: 'III · Construire & brancher',
+        sub: 'Assemblage + connexion à votre stack',
+        tasks: [
+            { label: "Assemblage de l'agent", type: 'agent', icon: Boxes },
+            { label: 'Connexion MCP · API', type: 'agent', icon: Plug },
+        ],
     },
     {
-        n: 'IV',
-        title: 'Piloter',
-        body: 'L\'agent tourne en production avec des métriques de décision : réussite, escalades, dérives. On itère sur la spec.',
+        stage: 'IV · Piloter',
+        sub: 'Production + métriques de décision',
+        tasks: [
+            { label: 'Mise en production', type: 'approval', icon: Rocket },
+            { label: 'Métriques de décision', type: 'agent', icon: Gauge },
+        ],
     },
 ];
+
+const ROAD_LABEL: Record<RoadType, string> = {
+    client: 'Tâche client',
+    agent: 'Tâche agent',
+    approval: 'Validation requise',
+};
+
+function RoadTaskCard({ task }: { task: RoadTask }) {
+    const Icon = task.icon;
+    const approval = task.type === 'approval';
+    return (
+        <div
+            className="flex items-center justify-between"
+            style={{ height: 44, paddingLeft: 6, paddingRight: 8, borderRadius: 8, background: TOKENS.white, boxShadow: RM_CARD_SHADOW }}
+        >
+            <div className="flex items-center" style={{ gap: 8, minWidth: 0 }}>
+                <span
+                    className="inline-flex items-center justify-center shrink-0"
+                    style={{ width: 28, height: 28, borderRadius: 6, background: 'linear-gradient(180deg, #FFFFFF 0%, #F5F5F2 100%)', boxShadow: RM_TILE_SHADOW }}
+                >
+                    <Icon size={14} strokeWidth={1.6} color={TOKENS.ink} style={{ opacity: 0.66 }} />
+                </span>
+                <div className="flex flex-col" style={{ gap: 3, minWidth: 0 }}>
+                    <span className="font-sans truncate" style={{ fontSize: 11, fontWeight: 500, color: TOKENS.ink, lineHeight: 1 }}>{task.label}</span>
+                    <span className="font-mono inline-flex items-center" style={{ gap: 5, fontSize: 8.5, color: TOKENS.mutedText, lineHeight: 1 }}>
+                        {approval && <span style={{ width: 5, height: 5, borderRadius: 999, background: TOKENS.gold, display: 'inline-block' }} />}
+                        {ROAD_LABEL[task.type]}
+                    </span>
+                </div>
+            </div>
+            <span
+                className="inline-flex items-center justify-center shrink-0"
+                style={{ width: 16, height: 17, borderRadius: 4, background: 'linear-gradient(180deg, #EBEBE8, #F5F5F2)', boxShadow: 'inset 0 -0.5px 0 rgba(0,0,0,0.12), inset 0 1px 1px rgba(255,255,255,0.24)' }}
+            >
+                <ArrowRight size={9} color="rgba(32,32,32,0.4)" />
+            </span>
+        </div>
+    );
+}
+
+function RoadFlow() {
+    return (
+        <div className="hidden min-[768px]:flex items-center justify-center" style={{ width: 30, flex: '0 0 auto', alignSelf: 'center' }} aria-hidden="true">
+            <svg width="30" height="10" viewBox="0 0 30 10" fill="none">
+                <circle cx="2" cy="5" r="1.6" fill={TOKENS.surface} stroke="rgba(0,0,0,0.18)" strokeWidth="0.6" />
+                <path d="M5 5 H23" stroke="rgba(23,23,23,0.35)" strokeWidth="0.9" strokeDasharray="2 2" strokeLinecap="round" />
+                <path d="M22 2.5 L25.5 5 L22 7.5" stroke="rgba(23,23,23,0.35)" strokeWidth="0.9" strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
+        </div>
+    );
+}
+
+function RoadStageCol({ st }: { st: RoadStage }) {
+    return (
+        <div
+            className="flex-1 min-w-0 flex flex-col"
+            style={{
+                padding: '14px 12px',
+                borderRadius: 10,
+                backgroundColor: 'rgba(255,255,255,0.35)',
+                backgroundImage: 'radial-gradient(rgba(23,23,23,0.06) 0.5px, transparent 0.5px)',
+                backgroundSize: '11px 11px',
+            }}
+        >
+            <div className="flex items-center justify-between" style={{ marginBottom: 8 }}>
+                <span
+                    className="inline-flex items-center font-mono"
+                    style={{ fontSize: 9, color: TOKENS.mutedText, padding: '3px 9px', borderRadius: 999, background: TOKENS.surface, boxShadow: RM_PILL_SHADOW, whiteSpace: 'nowrap' }}
+                >
+                    {st.stage}
+                </span>
+                <span className="font-mono" style={{ fontSize: 8, color: TOKENS.mutedText }}>{st.tasks.length}</span>
+            </div>
+            <span className="font-sans" style={{ fontSize: 10.5, color: TOKENS.mutedText, lineHeight: 1.3, marginBottom: 12, minHeight: 28 }}>{st.sub}</span>
+            <div className="flex flex-col" style={{ gap: 10 }}>
+                {st.tasks.map((t) => (
+                    <RoadTaskCard key={t.label} task={t} />
+                ))}
+            </div>
+        </div>
+    );
+}
+
+function RoadmapBoard() {
+    return (
+        <div
+            className="relative w-full mx-auto"
+            style={{ maxWidth: 1040, borderRadius: 14, background: '#EAEAE6', boxShadow: '1px 2px 2px #FFFFFF, 1px 4px 5px #FFFFFF', padding: 10 }}
+        >
+            <div className="flex flex-col min-[768px]:flex-row min-[768px]:items-stretch" style={{ gap: 8 }}>
+                {ROADMAP.map((st, i) => (
+                    <Fragment key={st.stage}>
+                        <RoadStageCol st={st} />
+                        {i < ROADMAP.length - 1 && <RoadFlow />}
+                    </Fragment>
+                ))}
+            </div>
+            <div className="pointer-events-none absolute inset-0" style={{ borderRadius: 14, boxShadow: 'inset 2px 3px 4px rgba(152,146,140,0.16)' }} aria-hidden="true" />
+        </div>
+    );
+}
 
 // ============================================================================
 // SECTION — Services (full-bleed color blocks, crop marks, line-art)
@@ -647,61 +772,7 @@ export function SectionMethod() {
                     </p>
                 </header>
 
-                <div className="hidden lg:block relative mb-8" aria-hidden="true" style={{ height: 2 }}>
-                    <div style={{ position: 'absolute', top: 0, left: '6%', right: '6%', height: 1, backgroundColor: TOKENS.border }} />
-                    {[0, 1, 2, 3].map((i) => (
-                        <span
-                            key={i}
-                            className="font-mono"
-                            style={{
-                                position: 'absolute',
-                                top: -9,
-                                left: `calc(12% + ${i} * 25%)`,
-                                transform: 'translateX(-50%)',
-                                width: 20, height: 20, lineHeight: '20px', textAlign: 'center',
-                                fontSize: 11, color: TOKENS.mutedText,
-                                backgroundColor: TOKENS.white, borderRadius: '50%',
-                                border: `1px solid ${TOKENS.border}`,
-                            }}
-                        >
-                            {i + 1}
-                        </span>
-                    ))}
-                </div>
-
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-                    {STEPS.map((s) => (
-                        <article
-                            key={s.n}
-                            className="relative p-6 transition-shadow hover:shadow-lg"
-                            style={{
-                                backgroundColor: TOKENS.surface,
-                                borderRadius: '7.142px',
-                                boxShadow: CARD_SHADOW,
-                                minHeight: '240px',
-                            }}
-                        >
-                            <span
-                                className="absolute top-4 right-5 font-mono"
-                                style={{ fontSize: '12px', color: TOKENS.mutedText, letterSpacing: '0.1em' }}
-                            >
-                                {s.n}
-                            </span>
-                            <h3
-                                className="font-mono text-[#171717] mt-4"
-                                style={{ fontSize: '21px', lineHeight: '26px', fontWeight: 500, letterSpacing: '-0.01em' }}
-                            >
-                                {s.title}
-                            </h3>
-                            <p
-                                className="font-sans mt-3"
-                                style={{ fontSize: '16px', lineHeight: '22.4px', fontWeight: 460, color: TOKENS.mutedText }}
-                            >
-                                {s.body}
-                            </p>
-                        </article>
-                    ))}
-                </div>
+                <RoadmapBoard />
             </div>
             </Reveal>
         </section>
