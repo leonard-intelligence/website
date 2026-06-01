@@ -505,16 +505,7 @@ function RoadFlow() {
 
 function RoadStageCol({ st }: { st: RoadStage }) {
     return (
-        <div
-            className="flex-1 min-w-0 flex flex-col"
-            style={{
-                padding: '14px 12px',
-                borderRadius: 10,
-                backgroundColor: 'rgba(255,255,255,0.35)',
-                backgroundImage: 'radial-gradient(rgba(23,23,23,0.06) 0.5px, transparent 0.5px)',
-                backgroundSize: '11px 11px',
-            }}
-        >
+        <div className="flex-1 min-w-0 flex flex-col" style={{ padding: '14px 12px' }}>
             <div className="flex items-center justify-between" style={{ marginBottom: 8 }}>
                 <span
                     className="inline-flex items-center font-mono"
@@ -538,7 +529,15 @@ function RoadmapBoard() {
     return (
         <div
             className="relative w-full mx-auto"
-            style={{ maxWidth: 1040, borderRadius: 14, background: '#EAEAE6', boxShadow: '1px 2px 2px #FFFFFF, 1px 4px 5px #FFFFFF', padding: 10 }}
+            style={{
+                maxWidth: 1040,
+                borderRadius: 14,
+                backgroundColor: '#EAEAE6',
+                backgroundImage: 'radial-gradient(rgba(23,23,23,0.08) 0.6px, transparent 0.6px)',
+                backgroundSize: '12px 12px',
+                boxShadow: '1px 2px 2px #FFFFFF, 1px 4px 5px #FFFFFF',
+                padding: 10,
+            }}
         >
             <div className="flex flex-col min-[768px]:flex-row min-[768px]:items-stretch" style={{ gap: 8 }}>
                 {ROADMAP.map((st, i) => (
