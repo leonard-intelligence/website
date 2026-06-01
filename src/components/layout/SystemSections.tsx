@@ -212,6 +212,7 @@ export function LayerProduits() {
             points={['Add-ins dans vos outils', 'Tableau de bord de supervision', 'API & intégration sur-mesure']}
             accent={TOKENS.lime}
             bg={TOKENS.white}
+            wide
             visual={<IlluSurfaces accent={TOKENS.lime} />}
         />
     );
