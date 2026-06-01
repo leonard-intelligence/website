@@ -37,11 +37,73 @@ type LayerProps = {
     accent: string;
     bg: string;
     flip?: boolean;
+    wide?: boolean;
     visual: React.ReactNode;
 };
 
-function LayerSection({ id, index, eyebrow, title, lead, points, accent, bg, flip, visual }: LayerProps) {
+function LayerSection({ id, index, eyebrow, title, lead, points, accent, bg, flip, wide, visual }: LayerProps) {
     const panelBg = bg === TOKENS.white ? TOKENS.surface : TOKENS.white;
+
+    const heading = (
+        <>
+            <div className="font-mono" style={{ fontSize: 13, letterSpacing: '0.22em', ...EMBOSS_MUTED }}>
+                {index} — {eyebrow}
+            </div>
+            <h2
+                className="font-sans mt-4"
+                style={{
+                    fontSize: 'clamp(1.6rem, 2.7vw, 2.25rem)',
+                    lineHeight: 1.12,
+                    fontWeight: 500,
+                    letterSpacing: '-0.02em',
+                    maxWidth: '18ch',
+                    ...EMBOSS_DARK,
+                }}
+            >
+                {title}
+            </h2>
+        </>
+    );
+
+    const body = (
+        <>
+            <p
+                className="font-sans"
+                style={{ fontSize: 17, lineHeight: '26px', fontWeight: 460, color: TOKENS.mutedText, maxWidth: '46ch' }}
+            >
+                {lead}
+            </p>
+            <ul className="mt-7 flex flex-col gap-2.5">
+                {points.map((p) => (
+                    <li
+                        key={p}
+                        className="font-mono flex items-start gap-3"
+                        style={{ fontSize: 13, lineHeight: '18px', color: TOKENS.mutedText }}
+                    >
+                        <span aria-hidden="true" style={{ color: accent === TOKENS.ink ? TOKENS.ink : accent, opacity: 0.9 }}>→</span>
+                        <span>{p}</span>
+                    </li>
+                ))}
+            </ul>
+        </>
+    );
+
+    const visualPanel = (
+        <div
+            className="flex items-center justify-center"
+            style={{
+                borderRadius: 16,
+                border: `1px solid ${TOKENS.border}`,
+                backgroundColor: panelBg,
+                boxShadow: CARD_SHADOW,
+                minHeight: wide ? 440 : 360,
+                padding: wide ? 32 : 28,
+            }}
+        >
+            {visual}
+        </div>
+    );
+
     return (
         <section
             id={id}
@@ -50,62 +112,23 @@ function LayerSection({ id, index, eyebrow, title, lead, points, accent, bg, fli
             aria-label={eyebrow}
         >
             <Reveal>
-                <div className="max-w-[1100px] mx-auto grid grid-cols-1 md:grid-cols-2 gap-10 lg:gap-16 items-center">
-                    {/* Text */}
-                    <div className={flip ? 'md:order-2' : ''}>
-                        <div className="font-mono" style={{ fontSize: 13, letterSpacing: '0.22em', ...EMBOSS_MUTED }}>
-                            {index} — {eyebrow}
+                {wide ? (
+                    <div className="max-w-[1240px] mx-auto">
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-14 items-end mb-10">
+                            <div>{heading}</div>
+                            <div>{body}</div>
                         </div>
-                        <h2
-                            className="font-sans mt-4"
-                            style={{
-                                fontSize: 'clamp(1.6rem, 2.7vw, 2.25rem)',
-                                lineHeight: 1.12,
-                                fontWeight: 500,
-                                letterSpacing: '-0.02em',
-                                maxWidth: '18ch',
-                                ...EMBOSS_DARK,
-                            }}
-                        >
-                            {title}
-                        </h2>
-                        <p
-                            className="font-sans mt-5"
-                            style={{ fontSize: 17, lineHeight: '26px', fontWeight: 460, color: TOKENS.mutedText, maxWidth: '46ch' }}
-                        >
-                            {lead}
-                        </p>
-                        <ul className="mt-7 flex flex-col gap-2.5">
-                            {points.map((p) => (
-                                <li
-                                    key={p}
-                                    className="font-mono flex items-start gap-3"
-                                    style={{ fontSize: 13, lineHeight: '18px', color: TOKENS.mutedText }}
-                                >
-                                    <span aria-hidden="true" style={{ color: accent === TOKENS.ink ? TOKENS.ink : accent, opacity: 0.9 }}>→</span>
-                                    <span>{p}</span>
-                                </li>
-                            ))}
-                        </ul>
+                        {visualPanel}
                     </div>
-
-                    {/* Visual */}
-                    <div className={flip ? 'md:order-1' : ''}>
-                        <div
-                            className="flex items-center justify-center"
-                            style={{
-                                borderRadius: 16,
-                                border: `1px solid ${TOKENS.border}`,
-                                backgroundColor: panelBg,
-                                boxShadow: CARD_SHADOW,
-                                minHeight: 360,
-                                padding: 28,
-                            }}
-                        >
-                            {visual}
+                ) : (
+                    <div className="max-w-[1100px] mx-auto grid grid-cols-1 md:grid-cols-2 gap-10 lg:gap-16 items-center">
+                        <div className={flip ? 'md:order-2' : ''}>
+                            {heading}
+                            <div className="mt-5">{body}</div>
                         </div>
+                        <div className={flip ? 'md:order-1' : ''}>{visualPanel}</div>
                     </div>
-                </div>
+                )}
             </Reveal>
         </section>
     );
@@ -139,7 +162,7 @@ export function LayerHarnais() {
             points={["Routage d'outils & contrôle de flux", 'Mémoire et garde-fous intégrés', 'Sous-agents en parallèle']}
             accent={TOKENS.ink}
             bg={TOKENS.white}
-            flip
+            wide
             visual={<IlluHarness accent={TOKENS.ink} />}
         />
     );
