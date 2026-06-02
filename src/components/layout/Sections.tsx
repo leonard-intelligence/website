@@ -351,23 +351,23 @@ export function SectionIntro() {
                         maxWidth: '28ch',
                     }}
                 >
-                    <span style={EMBOSS_DARK}>Tout le monde sait faire une démo.</span>{' '}
-                    <span style={EMBOSS_MUTED}>Presque personne ne sait livrer un système qui tient en production. C'est notre métier.</span>
+                    <span style={EMBOSS_DARK}>La démo séduit en cinq minutes.</span>{' '}
+                    <span style={EMBOSS_MUTED}>La production se gagne dans la durée — sous charge, sous contrôle, dans votre environnement. C'est notre métier.</span>
                 </h2>
 
                 {/* 3-col features */}
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-16">
                     <FeatureCol
                         title="Sur-mesure"
-                        body="Branché à vos APIs, votre stack, vos modèles. Pas une solution générique déployée telle quelle."
+                        body="Conçu pour vos workflows, branché à vos outils, vos modèles, vos données. Jamais du générique posé par-dessus."
                     />
                     <FeatureCol
-                        title="Human in the loop"
-                        body="Validation humaine aux points critiques. La fiabilité par construction, pas par promesse."
+                        title="Sous contrôle"
+                        body="Validation humaine aux points critiques. La fiabilité par conception, pas par promesse."
                     />
                     <FeatureCol
                         title="Souverain"
-                        body="Vos données ne quittent pas votre périmètre. Vos modèles, vos règles, votre contrôle."
+                        body="Vos données restent dans votre périmètre. Vos modèles, vos règles, votre contrôle."
                     />
                 </div>
             </div>
@@ -1366,7 +1366,7 @@ function AgentCard({ data, rotate, offsetX, offsetY, z }: { data: AgentCardData;
                 <LeonardSymbol size={21} />
                 <span>
                     LEONARD INTELLIGENCE<br />
-                    READ MORE ON OUR BLOG
+                    AGENT DE PRODUCTION
                 </span>
             </div>
             {/* RIGHT footer block: Oasis icon (left) + tagline (right) — same
@@ -1388,8 +1388,8 @@ function AgentCard({ data, rotate, offsetX, offsetY, z }: { data: AgentCardData;
             >
                 <OasisIcon size={20} />
                 <span>
-                    OASIS PLATFORM<br />
-                    OPEN THE DOCS
+                    FICHE TECHNIQUE<br />
+                    SPÉCIMEN · GTM-001
                 </span>
             </div>
         </div>
