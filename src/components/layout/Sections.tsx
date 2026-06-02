@@ -801,7 +801,7 @@ export function SectionCapabilities() {
                 </header>
 
                 <div className="flex flex-col items-center gap-5">
-                    <div className="relative w-full" style={{ maxWidth: 520, aspectRatio: '4 / 3' }}>
+                    <div className="relative w-full" style={{ maxWidth: 560, aspectRatio: '4 / 3' }}>
                         <AgentCardStack sel={0} />
                     </div>
                     <span
@@ -1228,63 +1228,50 @@ function AgentCard({ data, rotate, offsetX, offsetY, z }: { data: AgentCardData;
                 </span>
             </div>
 
-            {/* ────── QR badge (gooey-stylized), center zone, left-aligned.
-                Square, vertically centered between the two notches. Inlined as
-                <QrBadge> so it inherits the embossed tint (currentColor) + the
-                card-text-emboss filter, exactly like the text. */}
+            {/* ────── QR badge + technical spec rows on ONE flex row, vertically
+                centered between the two notches. The QR is square; the spec column
+                stretches to the QR's height (alignSelf: stretch) and distributes its
+                rows with space-between, so the stats span exactly the QR — no clip. */}
             <div
                 aria-hidden="true"
+                className="absolute"
                 style={{
-                    position: 'absolute',
                     top: `${((notchP.topCy + notchP.bottomCy) / 2) * 100}%`,
                     left: '8%',
-                    transform: 'translateY(-50%)',
-                    width: '22%',
-                    aspectRatio: '1 / 1',
-                    ...CARD_TEXT_EMBOSS,
-                    // Lighter tint than the text — keeps the emboss filter but
-                    // overrides the color to a softer gray so the QR reads as
-                    // a subtle background-ish graphic. Same gray as the icons.
-                    color: ICON_LIGHT,
-                }}
-            >
-                <QrBadge />
-            </div>
-
-            {/* ────── Center-right: technical spec rows (Geist Mono).
-                Key/value with dotted leaders, vertically centered in the middle
-                zone, to the right of the QR badge. Bounded to the inter-notch
-                area so it never overflows past the block. */}
-            <div
-                className="font-mono absolute flex flex-col justify-center"
-                style={{
-                    top: `calc(${(notchP.topCy + notchP.topHeight / 2) * 100}% + 4%)`,
-                    bottom: `calc(${(1 - (notchP.bottomCy - notchP.bottomHeight / 2)) * 100}% + 4%)`,
-                    left: '38%',
                     right: '8%',
-                    fontSize: 7.5,
-                    fontWeight: 450,
-                    gap: 3,
-                    overflow: 'hidden',
+                    transform: 'translateY(-50%)',
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '7%',
                     ...CARD_TEXT_EMBOSS,
                 }}
             >
-                {data.specs.map((s) => (
-                    <div key={s.label} className="flex items-baseline" style={{ letterSpacing: '0.04em' }}>
-                        <span style={{ opacity: 0.85 }}>{s.label}</span>
-                        <span
-                            aria-hidden="true"
-                            style={{
-                                flex: 1,
-                                margin: '0 5px',
-                                borderBottom: '1px dotted currentColor',
-                                opacity: 0.4,
-                                transform: 'translateY(-2px)',
-                            }}
-                        />
-                        <span style={{ fontWeight: 550 }}>{s.value}</span>
-                    </div>
-                ))}
+                <div style={{ width: '27%', aspectRatio: '1 / 1', flexShrink: 0, color: ICON_LIGHT }}>
+                    <QrBadge />
+                </div>
+                <div
+                    className="font-mono"
+                    style={{
+                        flex: 1,
+                        alignSelf: 'stretch',
+                        display: 'flex',
+                        flexDirection: 'column',
+                        justifyContent: 'space-between',
+                        fontSize: 9,
+                        fontWeight: 450,
+                    }}
+                >
+                    {data.specs.map((s) => (
+                        <div key={s.label} className="flex items-baseline" style={{ letterSpacing: '0.04em' }}>
+                            <span style={{ opacity: 0.85 }}>{s.label}</span>
+                            <span
+                                aria-hidden="true"
+                                style={{ flex: 1, margin: '0 6px', borderBottom: '1px dotted currentColor', opacity: 0.4, transform: 'translateY(-2px)' }}
+                            />
+                            <span style={{ fontWeight: 550 }}>{s.value}</span>
+                        </div>
+                    ))}
+                </div>
             </div>
 
             {/* ────── Framed Vitruvian illustration — occupies the whole lower
@@ -1336,52 +1323,39 @@ function AgentCard({ data, rotate, offsetX, offsetY, z }: { data: AgentCardData;
                 />
             </div>
 
-            {/* ────── BOTTOM FOOTER — 2 symmetric blocks (logo + 2-line text)
-                with identical icon size, fontSize, lineHeight → same height. ────── */}
-            {/* LEFT footer block: Leonard symbol + tagline (1.5× scale) */}
+            {/* ────── BOTTOM FOOTER — two blocks in ONE flex row (justify-between)
+                so they can never overlap regardless of label length. ────── */}
             <div
                 className="absolute"
                 style={{
                     left: '8%',
-                    bottom: '4%',
-                    fontSize: 9,
-                    fontWeight: 500,
-                    lineHeight: 1.4,
-                    letterSpacing: '0.04em',
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: 9,
-                    ...CARD_TEXT_EMBOSS,
-                }}
-            >
-                <LeonardSymbol size={21} />
-                <span>
-                    LEONARD INTELLIGENCE<br />
-                    AGENT DE PRODUCTION
-                </span>
-            </div>
-            {/* RIGHT footer block: Oasis icon (left) + tagline (right) — same
-                column structure as the left block (icon-first, text-after). */}
-            <div
-                className="absolute"
-                style={{
                     right: '8%',
-                    bottom: '4%',
-                    fontSize: 9,
-                    fontWeight: 500,
-                    lineHeight: 1.4,
-                    letterSpacing: '0.04em',
+                    bottom: '4.5%',
                     display: 'flex',
                     alignItems: 'center',
-                    gap: 9,
+                    justifyContent: 'space-between',
+                    gap: '6%',
+                    fontSize: 10,
+                    fontWeight: 500,
+                    lineHeight: 1.45,
+                    letterSpacing: '0.04em',
                     ...CARD_TEXT_EMBOSS,
                 }}
             >
-                <OasisIcon size={20} />
-                <span>
-                    FICHE TECHNIQUE<br />
-                    SPÉCIMEN · GTM-001
-                </span>
+                <div className="flex items-center" style={{ gap: 9 }}>
+                    <LeonardSymbol size={24} />
+                    <span style={{ whiteSpace: 'nowrap' }}>
+                        LEONARD INTELLIGENCE<br />
+                        AGENT DE PRODUCTION
+                    </span>
+                </div>
+                <div className="flex items-center" style={{ gap: 9 }}>
+                    <OasisIcon size={24} />
+                    <span style={{ whiteSpace: 'nowrap' }}>
+                        FICHE TECHNIQUE<br />
+                        SPÉCIMEN · GTM-001
+                    </span>
+                </div>
             </div>
         </div>
         </div>
