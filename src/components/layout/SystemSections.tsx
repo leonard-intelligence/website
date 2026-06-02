@@ -157,7 +157,7 @@ export function LayerHarnais() {
             id="section-harnais"
             index="02"
             eyebrow="HARNAIS AGENTIQUE"
-            title="Ce qui transforme un LLM en agent."
+            title="La couche d'orchestration."
             lead="La couche d'orchestration : routage d'outils, contrôle de flux, mémoire, sélection de modèle et garde-fous. Des sous-agents spécialisés s'exécutent en parallèle pour mener un workflow de bout en bout."
             points={["Routage d'outils & contrôle de flux", 'Mémoire et garde-fous intégrés', 'Sous-agents en parallèle']}
             accent={TOKENS.ink}
@@ -174,7 +174,7 @@ export function LayerDonnees() {
             id="section-donnees"
             index="03"
             eyebrow="DONNÉES & INTÉGRATIONS"
-            title="Ce à quoi l'agent se branche."
+            title="Branché à toute votre stack."
             lead="APIs internes, CRM, ERP, bases documentaires, connecteurs MCP. Tout converge sous un même toit pour alimenter le contexte de l'agent — sans recopie, sans silo."
             points={['Connecteurs MCP, API, webhooks', 'CRM · ERP · DMS · bases internes', 'Ingestion documentaire']}
             accent={TOKENS.gold}
@@ -190,7 +190,7 @@ export function LayerContexte() {
             id="section-contexte"
             index="04"
             eyebrow="CONTEXTE & CONNAISSANCE"
-            title="Un contexte qui prend de la valeur."
+            title="Une mémoire qui se capitalise."
             lead="Playbooks, historique des dossiers, règles et positions métier s'intègrent à chaque action de l'agent. Il reprend là où le tour précédent s'est arrêté — la connaissance s'accumule au lieu de se perdre."
             points={['Playbooks & règles métier', 'Historique et mémoire des dossiers', 'La connaissance se capitalise']}
             accent={TOKENS.forest}
@@ -207,7 +207,7 @@ export function LayerProduits() {
             id="section-produits"
             index="06"
             eyebrow="PRODUITS & INTERFACES"
-            title="Là où humains et agents travaillent."
+            title="Dans votre flux, pas dans un onglet."
             lead="Les surfaces où humains et agents collaborent : add-in dans vos outils, tableau de bord de supervision, API. L'agent travaille là où vous travaillez déjà — pas dans un onglet à côté."
             points={['Add-ins dans vos outils', 'Tableau de bord de supervision', 'API & intégration sur-mesure']}
             accent={TOKENS.lime}

@@ -2,7 +2,7 @@
 import { ArrowRight, Users, Map as MapIcon, Ruler, ShieldCheck, Boxes, Plug, Rocket, Gauge, Cpu, Workflow, Database, Layers, LayoutDashboard, Sparkles, type LucideIcon } from 'lucide-react';
 import { PixelLayer } from '../pixels/PixelLayer';
 import { Pixel } from '../pixels/Pixel';
-import { useBeadCtx } from '../pixels/BeadPxContext';
+import { useBeadCtx, SOURCE_URL } from '../pixels/BeadPxContext';
 import { useNotchParams } from '../dev/notchParamsStore';
 import { useVitruveParams } from '../dev/vitruveParamsStore';
 import { QrBadge } from './QrBadge';
@@ -738,6 +738,86 @@ export function SectionServices() {
     );
 }
 
+// ============================================================================
+// BEAD SECTION — full-bleed bead image (reused from Hero) + overlaid illustration
+// + frosted-glass text panel. A reusable "vision/manifesto" break band.
+// ============================================================================
+export function BeadSection({
+    eyebrow,
+    title,
+    body,
+    illustration = '/assets/illustrations/hand-sync.svg',
+}: {
+    eyebrow: string;
+    title: string;
+    body?: string;
+    illustration?: string;
+}) {
+    return (
+        <section
+            className="relative overflow-hidden"
+            style={{ minHeight: 560, paddingBlock: '96px', paddingInline: '32px' }}
+            aria-label={eyebrow}
+        >
+            {/* Bead image (same source as the Hero) */}
+            <div
+                aria-hidden="true"
+                className="absolute inset-0"
+                style={{ backgroundImage: `url(${SOURCE_URL})`, backgroundSize: 'cover', backgroundPosition: 'center 65%' }}
+            />
+            {/* Legibility scrim */}
+            <div
+                aria-hidden="true"
+                className="absolute inset-0"
+                style={{ background: 'linear-gradient(105deg, rgba(16,16,16,0.66) 0%, rgba(16,16,16,0.34) 52%, rgba(16,16,16,0.10) 100%)' }}
+            />
+            {/* Overlaid illustration (white line-art) */}
+            <img
+                aria-hidden="true"
+                src={illustration}
+                alt=""
+                className="absolute pointer-events-none hidden md:block"
+                style={{ right: '-3%', top: '50%', transform: 'translateY(-50%)', width: '44%', maxWidth: 540, opacity: 0.3, filter: 'brightness(0) invert(1)' }}
+            />
+            {/* Frosted-glass text panel */}
+            <Reveal>
+                <div className="relative max-w-[1100px] mx-auto flex items-center" style={{ minHeight: 368 }}>
+                    <div
+                        style={{
+                            maxWidth: 540,
+                            padding: '34px 36px',
+                            borderRadius: 18,
+                            background: 'rgba(255,255,255,0.10)',
+                            backdropFilter: 'blur(20px) saturate(1.3)',
+                            WebkitBackdropFilter: 'blur(20px) saturate(1.3)',
+                            border: '1px solid rgba(255,255,255,0.22)',
+                            boxShadow: '0 10px 44px rgba(0,0,0,0.24), inset 0 1px 0 rgba(255,255,255,0.32)',
+                        }}
+                    >
+                        <div className="font-mono" style={{ fontSize: 12, letterSpacing: '0.22em', color: 'rgba(255,255,255,0.72)' }}>
+                            {eyebrow}
+                        </div>
+                        <h2
+                            className="font-sans mt-4"
+                            style={{ fontSize: 'clamp(1.85rem, 3.4vw, 2.75rem)', lineHeight: 1.1, fontWeight: 500, letterSpacing: '-0.02em', color: '#FFFFFF', textShadow: '0 2px 16px rgba(0,0,0,0.32)' }}
+                        >
+                            {title}
+                        </h2>
+                        {body && (
+                            <p
+                                className="font-sans mt-5"
+                                style={{ fontSize: 17, lineHeight: '26px', fontWeight: 460, color: 'rgba(255,255,255,0.9)', maxWidth: '42ch', textShadow: '0 1px 10px rgba(0,0,0,0.28)' }}
+                            >
+                                {body}
+                            </p>
+                        )}
+                    </div>
+                </div>
+            </Reveal>
+        </section>
+    );
+}
+
 export function SectionMethod() {
     return (
         <section
@@ -791,13 +871,13 @@ export function SectionCapabilities() {
                         className="font-sans mt-3 mx-auto"
                         style={{ fontSize: 'clamp(1.75rem, 3.4vw, 2.75rem)', lineHeight: 1.1, fontWeight: 500, letterSpacing: '-0.02em', maxWidth: '20ch', ...EMBOSS_DARK }}
                     >
-                        Voici à quoi ressemble un agent de production.
+                        Chaque agent, une fiche technique.
                     </h2>
                     <p
                         className="font-sans mt-4 mx-auto"
                         style={{ fontSize: '17px', lineHeight: '24px', fontWeight: 460, color: TOKENS.mutedText, maxWidth: '52ch' }}
                     >
-                        Instructions, sous-agents, outils branchés, garde-fous, latence : chaque agent est une fiche technique, pas une boîte noire.
+                        Instructions, sous-agents, outils branchés, garde-fous, latence — tout est spécifié, mesurable, auditable. Pas de boîte noire.
                     </p>
                 </header>
 

@@ -1,5 +1,5 @@
 import { Hero } from '../components/layout/Hero';
-import { SectionIntro, SectionMethod, SectionCapabilities, SectionCTA, FooterV2 } from '../components/layout/Sections';
+import { SectionIntro, SectionMethod, SectionCapabilities, SectionCTA, BeadSection, FooterV2 } from '../components/layout/Sections';
 import { LayerModeles, LayerHarnais, LayerDonnees, LayerContexte, LayerProduits, LayerSecurite } from '../components/layout/SystemSections';
 import { SEO } from '../components/seo/SEO';
 import { JsonLd } from '../components/seo/JsonLd';
@@ -22,6 +22,11 @@ export function Home() {
                 <SectionCapabilities />
                 <LayerProduits />
                 <LayerSecurite />
+                <BeadSection
+                    eyebrow="INTELLIGENCE CULTIVÉE"
+                    title="Organique × machine."
+                    body="Nous cultivons des systèmes agentiques pour votre métier — précis, gouvernés, branchés à votre réalité."
+                />
                 <SectionMethod />
                 <SectionCTA />
                 <FooterV2 />
