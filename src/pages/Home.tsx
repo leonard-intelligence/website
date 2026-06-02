@@ -15,8 +15,8 @@ export function Home() {
                 <JsonLd />
                 {import.meta.env.DEV && <DevTools />}
                 <Hero />
-                <ConstruitSur />
                 <SectionIntro />
+                <ConstruitSur />
                 <LayerModeles />
                 <LayerHarnais />
                 <LayerDonnees />
