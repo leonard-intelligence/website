@@ -1,5 +1,5 @@
 // Sections V2 — Leonard Intelligence (design.md: warm neutrals, soft shadows, rounded corners)
-import { ArrowRight, Users, Map as MapIcon, Ruler, ShieldCheck, Boxes, Plug, Rocket, Gauge, type LucideIcon } from 'lucide-react';
+import { ArrowRight, Users, Map as MapIcon, Ruler, ShieldCheck, Boxes, Plug, Rocket, Gauge, Cpu, Workflow, Database, Layers, LayoutDashboard, type LucideIcon } from 'lucide-react';
 import { PixelLayer } from '../pixels/PixelLayer';
 import { Pixel } from '../pixels/Pixel';
 import { useBeadCtx } from '../pixels/BeadPxContext';
@@ -75,6 +75,42 @@ export const EMBOSS_MUTED: React.CSSProperties = {
 // ============================================================================
 // SECTION 1 — Tagline + 3-col features
 // ============================================================================
+// ── Capabilities overview grid (intro) — "Do it all" style, links to each layer ─
+const CAPS: { n: string; title: string; desc: string; href: string; icon: LucideIcon }[] = [
+    { n: '01', title: 'Modèles', desc: 'Le bon modèle pour chaque tâche — propriétaire ou open-weight, hébergeable chez vous.', href: '#section-modeles', icon: Cpu },
+    { n: '02', title: 'Harnais agentique', desc: 'Orchestration, outils, mémoire, garde-fous. Des sous-agents en parallèle.', href: '#section-harnais', icon: Workflow },
+    { n: '03', title: 'Données & intégrations', desc: 'Branché à vos APIs, CRM, ERP et bases documentaires — sans silo.', href: '#section-donnees', icon: Database },
+    { n: '04', title: 'Contexte & connaissance', desc: 'Une mémoire qui se capitalise au fil des tours.', href: '#section-contexte', icon: Layers },
+    { n: '05', title: 'Produits & interfaces', desc: 'Les surfaces où vos équipes et vos agents collaborent.', href: '#section-produits', icon: LayoutDashboard },
+    { n: '06', title: 'Sécurité & gouvernance', desc: 'Validation humaine, accès par rôle, données souveraines.', href: '#section-securite', icon: ShieldCheck },
+];
+
+function CapCard({ cap }: { cap: (typeof CAPS)[number] }) {
+    const Icon = cap.icon;
+    return (
+        <a
+            href={cap.href}
+            className="flex flex-col"
+            style={{ padding: '22px 22px 20px', borderRadius: 14, background: TOKENS.white, boxShadow: RM_CARD_SHADOW, textDecoration: 'none' }}
+        >
+            <div className="flex items-start justify-between" style={{ marginBottom: 18 }}>
+                <span
+                    className="inline-flex items-center justify-center"
+                    style={{ width: 38, height: 38, borderRadius: 10, background: 'linear-gradient(180deg, #FFFFFF 0%, #F5F5F2 100%)', boxShadow: RM_TILE_SHADOW }}
+                >
+                    <Icon size={18} strokeWidth={1.6} color={TOKENS.ink} style={{ opacity: 0.7 }} />
+                </span>
+                <span className="font-mono" style={{ fontSize: 11, letterSpacing: '0.12em', color: TOKENS.mutedText }}>{cap.n}</span>
+            </div>
+            <h3 className="font-sans" style={{ fontSize: 18, fontWeight: 600, color: TOKENS.ink, lineHeight: 1.2 }}>{cap.title}</h3>
+            <p className="font-sans" style={{ fontSize: 14, lineHeight: '20px', fontWeight: 440, color: TOKENS.mutedText, marginTop: 8, flex: '1 1 auto' }}>{cap.desc}</p>
+            <span className="inline-flex items-center font-mono" style={{ gap: 6, marginTop: 18, fontSize: 11, letterSpacing: '0.08em', color: TOKENS.ink }}>
+                Découvrir <ArrowRight size={12} />
+            </span>
+        </a>
+    );
+}
+
 export function SectionIntro() {
     const { beadW, leftPx, heroBottomGap } = useBeadCtx();
     return (
@@ -327,78 +363,31 @@ export function SectionIntro() {
 
             <Reveal>
             <div className="max-w-[1200px] mx-auto">
-                <div className="flex flex-col items-center mb-10" aria-hidden="true">
-                    <span
-                        className="font-mono"
-                        style={{ fontSize: 'clamp(2rem, 6vw, 4rem)', fontWeight: 600, color: 'rgba(23,23,23,0.25)', textDecoration: 'line-through', textDecorationThickness: '2px' }}
+                <header className="text-center mb-14">
+                    <div className="font-mono" style={{ fontSize: 12, letterSpacing: '0.22em', color: 'rgba(23,23,23,0.5)' }}>
+                        LE SYSTÈME
+                    </div>
+                    <h2
+                        className="font-sans mt-4 mx-auto"
+                        style={{ fontSize: 'clamp(1.9rem, 3.6vw, 2.9rem)', lineHeight: 1.1, fontWeight: 500, letterSpacing: '-0.02em', maxWidth: '20ch', ...EMBOSS_DARK }}
                     >
-                        DÉMO
-                    </span>
-                    <span
-                        className="font-mono"
-                        style={{ fontSize: 'clamp(2.5rem, 7vw, 5rem)', fontWeight: 700, color: TOKENS.ink, letterSpacing: '-0.02em', marginTop: 4 }}
+                        Un seul système, de bout en bout.
+                    </h2>
+                    <p
+                        className="font-sans mt-4 mx-auto"
+                        style={{ fontSize: 17, lineHeight: '24px', fontWeight: 460, color: TOKENS.mutedText, maxWidth: '54ch' }}
                     >
-                        PRODUCTION
-                    </span>
-                </div>
-                <h2
-                    className="font-sans text-center mx-auto"
-                    style={{
-                        fontSize: 'clamp(1.75rem, 3.2vw, 2.5rem)',
-                        lineHeight: 1.15,
-                        fontWeight: 400,
-                        letterSpacing: '-0.01em',
-                        maxWidth: '28ch',
-                    }}
-                >
-                    <span style={EMBOSS_DARK}>La démo séduit en cinq minutes.</span>{' '}
-                    <span style={EMBOSS_MUTED}>La production se gagne dans la durée — sous charge, sous contrôle, dans votre environnement. C'est notre métier.</span>
-                </h2>
-
-                {/* 3-col features */}
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-16">
-                    <FeatureCol
-                        title="Sur-mesure"
-                        body="Conçu pour vos workflows, branché à vos outils, vos modèles, vos données. Jamais du générique posé par-dessus."
-                    />
-                    <FeatureCol
-                        title="Sous contrôle"
-                        body="Validation humaine aux points critiques. La fiabilité par conception, pas par promesse."
-                    />
-                    <FeatureCol
-                        title="Souverain"
-                        body="Vos données restent dans votre périmètre. Vos modèles, vos règles, votre contrôle."
-                    />
+                        Du choix du modèle au pilotage en production — chaque couche est maîtrisée, branchée à votre entreprise.
+                    </p>
+                </header>
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3" style={{ gap: 18 }}>
+                    {CAPS.map((c) => (
+                        <CapCard key={c.n} cap={c} />
+                    ))}
                 </div>
             </div>
             </Reveal>
         </section>
-    );
-}
-
-function FeatureCol({ title, body }: { title: string; body: string }) {
-    return (
-        <div className="flex flex-col gap-3">
-            <div
-                className="inline-flex items-center justify-center w-9 h-9 rounded-full"
-                style={{ backgroundColor: TOKENS.ink, color: TOKENS.pale, fontSize: '14px' }}
-                aria-hidden="true"
-            >
-                ✓
-            </div>
-            <h3
-                className="font-mono text-[#171717]"
-                style={{ fontSize: '18px', lineHeight: '22px', fontWeight: 500, letterSpacing: '-0.01em', marginTop: '8px' }}
-            >
-                {title}
-            </h3>
-            <p
-                className="font-sans"
-                style={{ fontSize: '16px', lineHeight: '22.4px', fontWeight: 460, color: TOKENS.mutedText }}
-            >
-                {body}
-            </p>
-        </div>
     );
 }
 
