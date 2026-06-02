@@ -46,12 +46,6 @@ export function ConstruitSur() {
                     ))}
                 </ul>
 
-                <p
-                    className="font-mono text-center mx-auto"
-                    style={{ marginTop: 28, fontSize: 11, lineHeight: 1.5, color: 'rgba(23,23,23,0.35)', maxWidth: '60ch' }}
-                >
-                    Les marques sont la propriété de leurs titulaires respectifs. Leonard Intelligence n'est ni partenaire officiel ni revendeur agréé.
-                </p>
             </div>
         </section>
     );
