@@ -987,8 +987,8 @@ function AgentCard({ data, rotate, offsetX, offsetY, z }: { data: AgentCardData;
     const vitruveP = useVitruveParams();
     // 4 corner registration marks ("+" crosses, like the Services section).
     const cornerMarks = [
-        { x: '5%', y: '3.5%' }, { x: '95%', y: '3.5%' },
-        { x: '5%', y: '96.5%' }, { x: '95%', y: '96.5%' },
+        { x: '6.5%', y: '4.5%' }, { x: '93.5%', y: '4.5%' },
+        { x: '6.5%', y: '95.5%' }, { x: '93.5%', y: '95.5%' },
     ];
     // NOTE: split into two nested divs because in CSS the rendering order is
     // filter → mask. If both were on the same element, the filter would only
@@ -1104,7 +1104,7 @@ function AgentCard({ data, rotate, offsetX, offsetY, z }: { data: AgentCardData;
                 // 'cross' = "+" glyph
                 if (style === 'cross') {
                     return (
-                        <span key={i} style={{ ...common, fontSize: 13, lineHeight: 1, fontWeight: 300, ...CARD_TEXT_EMBOSS }} aria-hidden="true">
+                        <span key={i} style={{ ...common, fontSize: 16, lineHeight: 1, fontWeight: 300, ...CARD_TEXT_EMBOSS }} aria-hidden="true">
                             +
                         </span>
                     );
@@ -1352,9 +1352,9 @@ function AgentCard({ data, rotate, offsetX, offsetY, z }: { data: AgentCardData;
                 </div>
                 <div className="flex items-center" style={{ gap: 9 }}>
                     <OasisIcon size={24} />
-                    <span style={{ whiteSpace: 'nowrap' }}>
-                        FICHE TECHNIQUE<br />
-                        SPÉCIMEN · GTM-001
+                    <span style={{ whiteSpace: 'nowrap', textAlign: 'right' }}>
+                        SPÉCIMEN<br />
+                        GTM-001
                     </span>
                 </div>
             </div>
