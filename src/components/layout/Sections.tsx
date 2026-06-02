@@ -7,6 +7,7 @@ import { useNotchParams } from '../dev/notchParamsStore';
 import { useVitruveParams } from '../dev/vitruveParamsStore';
 import { QrBadge } from './QrBadge';
 import { ReliefButton } from '../ui/ReliefButton';
+import { ConstruitSur } from './ConstruitSur';
 import { Fragment } from 'react';
 import { useInViewReveal } from '../../hooks/useInViewReveal';
 
@@ -363,7 +364,8 @@ export function SectionIntro() {
 
             <Reveal>
             <div className="max-w-[1200px] mx-auto">
-                <header className="text-center mb-14">
+                <ConstruitSur />
+                <header className="text-center mb-14" style={{ marginTop: 64 }}>
                     <div className="font-mono" style={{ fontSize: 12, letterSpacing: '0.22em', color: 'rgba(23,23,23,0.5)' }}>
                         LE SYSTÈME
                     </div>

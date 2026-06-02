@@ -14,7 +14,7 @@ export function ConstruitSur() {
         <section
             id="section-construit-sur"
             className="relative"
-            style={{ backgroundColor: '#F7F7F5', paddingBlock: '56px', paddingInline: '32px' }}
+            style={{ backgroundColor: 'transparent', paddingBlock: '0', paddingInline: '32px' }}
             aria-label="Construit sur"
         >
             <div className="max-w-[1100px] mx-auto">
