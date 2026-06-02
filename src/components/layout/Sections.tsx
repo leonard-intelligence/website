@@ -1336,7 +1336,7 @@ function AgentCard({ data, rotate, offsetX, offsetY, z }: { data: AgentCardData;
                     alignItems: 'center',
                     justifyContent: 'space-between',
                     gap: '6%',
-                    fontSize: 10,
+                    fontSize: 9,
                     fontWeight: 500,
                     lineHeight: 1.45,
                     letterSpacing: '0.04em',
