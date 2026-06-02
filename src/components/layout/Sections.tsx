@@ -1,5 +1,5 @@
 // Sections V2 — Leonard Intelligence (design.md: warm neutrals, soft shadows, rounded corners)
-import { ArrowRight, Users, Map as MapIcon, Ruler, ShieldCheck, Boxes, Plug, Rocket, Gauge, Cpu, Workflow, Database, Layers, LayoutDashboard, type LucideIcon } from 'lucide-react';
+import { ArrowRight, Users, Map as MapIcon, Ruler, ShieldCheck, Boxes, Plug, Rocket, Gauge, Cpu, Workflow, Database, Layers, LayoutDashboard, Sparkles, type LucideIcon } from 'lucide-react';
 import { PixelLayer } from '../pixels/PixelLayer';
 import { Pixel } from '../pixels/Pixel';
 import { useBeadCtx } from '../pixels/BeadPxContext';
@@ -78,12 +78,13 @@ export const EMBOSS_MUTED: React.CSSProperties = {
 // ============================================================================
 // ── Capabilities overview grid (intro) — "Do it all" style, links to each layer ─
 const CAPS: { n: string; title: string; desc: string; href: string; icon: LucideIcon }[] = [
-    { n: '01', title: 'Modèles', desc: 'Le bon modèle pour chaque tâche — propriétaire ou open-weight, hébergeable chez vous.', href: '#section-modeles', icon: Cpu },
-    { n: '02', title: 'Harnais agentique', desc: 'Orchestration, outils, mémoire, garde-fous. Des sous-agents en parallèle.', href: '#section-harnais', icon: Workflow },
-    { n: '03', title: 'Données & intégrations', desc: 'Branché à vos APIs, CRM, ERP et bases documentaires — sans silo.', href: '#section-donnees', icon: Database },
+    { n: '01', title: 'Grands modèles de langage', desc: 'Le bon modèle pour chaque tâche — propriétaire ou open-weight.', href: '#section-modeles', icon: Cpu },
+    { n: '02', title: 'Harnais agentique', desc: "Routage d'outils, mémoire, garde-fous. Des sous-agents en parallèle.", href: '#section-harnais', icon: Workflow },
+    { n: '03', title: 'Données & intégrations', desc: "Ce à quoi l'agent se branche : API, CRM, bases, connecteurs MCP.", href: '#section-donnees', icon: Database },
     { n: '04', title: 'Contexte & connaissance', desc: 'Une mémoire qui se capitalise au fil des tours.', href: '#section-contexte', icon: Layers },
-    { n: '05', title: 'Produits & interfaces', desc: 'Les surfaces où vos équipes et vos agents collaborent.', href: '#section-produits', icon: LayoutDashboard },
-    { n: '06', title: 'Sécurité & gouvernance', desc: 'Validation humaine, accès par rôle, données souveraines.', href: '#section-securite', icon: ShieldCheck },
+    { n: '05', title: 'Capacités métier', desc: "Les compétences qui font de l'agent un expert de votre domaine.", href: '#section-capabilities', icon: Sparkles },
+    { n: '06', title: 'Produits & interfaces', desc: 'Les surfaces où humains et agents travaillent.', href: '#section-produits', icon: LayoutDashboard },
+    { n: '07', title: 'Sécurité & gouvernance', desc: 'Cloisonnement, traçabilité, accès par rôle — dans chaque couche.', href: '#section-securite', icon: ShieldCheck },
 ];
 
 function CapCard({ cap }: { cap: (typeof CAPS)[number] }) {

@@ -140,8 +140,8 @@ export function LayerModeles() {
         <LayerSection
             id="section-modeles"
             index="01"
-            eyebrow="MODÈLES"
-            title="On choisit le modèle. Par tâche."
+            eyebrow="GRANDS MODÈLES DE LANGAGE"
+            title="Le bon modèle, par tâche."
             lead="Claude, GPT, Mistral ou un modèle open-weight hébergé chez vous. Chaque tâche a ses contraintes — précision, coût, latence, confidentialité. On sélectionne le bon modèle pour chacune, jamais un seul par défaut."
             points={['Modèles propriétaires ou open-weight', 'Hébergeable dans votre périmètre', 'Arbitrage précision / coût / latence']}
             accent={TOKENS.lime}
@@ -191,7 +191,7 @@ export function LayerContexte() {
             index="04"
             eyebrow="CONTEXTE & CONNAISSANCE"
             title="Un contexte qui prend de la valeur."
-            lead="Playbooks, historique des dossiers, règles et positions de l'entreprise s'intègrent à chaque action de l'agent. Il reprend là où le tour précédent s'est arrêté — la connaissance s'accumule au lieu de se perdre."
+            lead="Playbooks, historique des dossiers, règles et positions métier s'intègrent à chaque action de l'agent. Il reprend là où le tour précédent s'est arrêté — la connaissance s'accumule au lieu de se perdre."
             points={['Playbooks & règles métier', 'Historique et mémoire des dossiers', 'La connaissance se capitalise']}
             accent={TOKENS.forest}
             bg={TOKENS.white}
@@ -207,8 +207,8 @@ export function LayerProduits() {
             id="section-produits"
             index="06"
             eyebrow="PRODUITS & INTERFACES"
-            title="Là où vos équipes travaillent."
-            lead="Les surfaces où humains et agents collaborent : add-in dans vos outils, tableau de bord de supervision, API. L'agent vit dans votre environnement de travail — pas dans un onglet à côté."
+            title="Là où humains et agents travaillent."
+            lead="Les surfaces où humains et agents collaborent : add-in dans vos outils, tableau de bord de supervision, API. L'agent travaille là où vous travaillez déjà — pas dans un onglet à côté."
             points={['Add-ins dans vos outils', 'Tableau de bord de supervision', 'API & intégration sur-mesure']}
             accent={TOKENS.lime}
             bg={TOKENS.white}
@@ -224,7 +224,7 @@ export function LayerSecurite() {
             id="section-securite"
             index="07"
             eyebrow="SÉCURITÉ & GOUVERNANCE"
-            title="Prêt pour l'entreprise, par construction."
+            title="La sécurité, intégrée à chaque couche."
             lead="Cloisonnement entre dossiers, traçabilité complète de chaque appel d'outil, contrôle d'accès par rôle, souveraineté des données. Intégré à chaque couche — pas ajouté après coup."
             points={["Cloisonnement & contrôle d'accès", 'Traçabilité de chaque action', 'Souveraineté des données']}
             accent={TOKENS.ink}
