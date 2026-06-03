@@ -132,19 +132,20 @@ export function Hero() {
                     where they render at row 1, touching the hero image bottom (0px gap). */}
             </div>
 
-            {/* Content overlay — text left, anchored to the bottom of the hero */}
+            {/* Content overlay — headline top-center, frosted card bottom-right */}
             <div
-                className="relative z-10 h-full flex flex-col justify-end"
+                className="relative z-10 h-full flex flex-col justify-between"
                 style={{ paddingInline: `${3 * sz.beadPx}px`, paddingTop: `${5 * sz.beadPx}px`, paddingBottom: `${3 * sz.beadPx}px` }}
             >
+                {/* Top-center headline */}
                 <h1
-                    className="font-sans"
+                    className="font-sans text-center mx-auto"
                     style={{
                         fontSize: 'clamp(2.25rem, 5vw, 4rem)',
                         lineHeight: 1.05,
                         fontWeight: 500,
                         letterSpacing: '-0.025em',
-                        maxWidth: '16ch',
+                        maxWidth: '20ch',
                         color: '#ffffff',
                         filter: 'drop-shadow(0 2px 14px rgba(0, 0, 0, 0.35))',
                     }}
@@ -152,26 +153,42 @@ export function Hero() {
                     Bienvenue dans l'ère des agents.
                 </h1>
 
-                <p
-                    className="font-sans text-white/90 mt-6 max-w-[52ch]"
-                    style={{
-                        fontSize: '17px',
-                        lineHeight: '24px',
-                        fontWeight: 460,
-                        textShadow: '0 1px 8px rgba(0, 0, 0, 0.25)',
-                    }}
-                >
-                    Leonard conçoit, déploie et pilote les agents sur-mesure de votre entreprise — branchés à vos systèmes, sur vos modèles et vos données.
-                </p>
+                {/* Bottom-right frosted card */}
+                <div className="flex justify-end">
+                    <div
+                        className="font-sans"
+                        style={{
+                            maxWidth: 460,
+                            padding: '22px 24px',
+                            borderRadius: 16,
+                            background: 'rgba(255, 255, 255, 0.10)',
+                            backdropFilter: 'blur(20px) saturate(1.2)',
+                            WebkitBackdropFilter: 'blur(20px) saturate(1.2)',
+                            border: '1px solid rgba(255, 255, 255, 0.16)',
+                        }}
+                    >
+                        <p
+                            style={{
+                                fontSize: '16px',
+                                lineHeight: '23px',
+                                fontWeight: 460,
+                                color: 'rgba(255, 255, 255, 0.92)',
+                                textShadow: '0 1px 8px rgba(0, 0, 0, 0.25)',
+                            }}
+                        >
+                            Leonard conçoit, déploie et pilote les agents sur-mesure de votre entreprise — branchés à vos systèmes, sur vos modèles et vos données.
+                        </p>
 
-                <div className="mt-10 flex flex-wrap items-center gap-3">
-                    <ReliefButton tone="lime" size="md" href="#contact" iconRight={<ArrowRight />}>
-                        Discutons de votre projet
-                    </ReliefButton>
+                        <div className="mt-6 flex flex-wrap items-center gap-3">
+                            <ReliefButton tone="lime" size="md" href="#contact" iconRight={<ArrowRight />}>
+                                Discutons de votre projet
+                            </ReliefButton>
 
-                    <ReliefButton tone="frost" size="md" href="#section-capabilities">
-                        Voir une fiche agent
-                    </ReliefButton>
+                            <ReliefButton tone="light" size="md" href="#section-capabilities">
+                                Voir une fiche agent
+                            </ReliefButton>
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>
