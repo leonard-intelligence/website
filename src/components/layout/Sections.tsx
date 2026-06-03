@@ -746,12 +746,10 @@ export function BeadSection({
     eyebrow,
     title,
     body,
-    illustration = '/assets/illustrations/hand-sync.svg',
 }: {
     eyebrow: string;
     title: string;
     body?: string;
-    illustration?: string;
 }) {
     return (
         <section
@@ -771,14 +769,6 @@ export function BeadSection({
                 className="absolute inset-0"
                 style={{ background: 'linear-gradient(105deg, rgba(16,16,16,0.66) 0%, rgba(16,16,16,0.34) 52%, rgba(16,16,16,0.10) 100%)' }}
             />
-            {/* Overlaid illustration (white line-art) */}
-            <img
-                aria-hidden="true"
-                src={illustration}
-                alt=""
-                className="absolute pointer-events-none hidden md:block"
-                style={{ right: '-3%', top: '50%', transform: 'translateY(-50%)', width: '44%', maxWidth: 540, opacity: 0.3, filter: 'brightness(0) invert(1)' }}
-            />
             {/* Frosted-glass text panel */}
             <Reveal>
                 <div className="relative max-w-[1100px] mx-auto flex items-center" style={{ minHeight: 368 }}>
@@ -787,11 +777,10 @@ export function BeadSection({
                             maxWidth: 540,
                             padding: '34px 36px',
                             borderRadius: 18,
-                            background: 'rgba(255,255,255,0.10)',
-                            backdropFilter: 'blur(20px) saturate(1.3)',
-                            WebkitBackdropFilter: 'blur(20px) saturate(1.3)',
-                            border: '1px solid rgba(255,255,255,0.22)',
-                            boxShadow: '0 10px 44px rgba(0,0,0,0.24), inset 0 1px 0 rgba(255,255,255,0.32)',
+                            background: 'rgba(255,255,255,0.08)',
+                            backdropFilter: 'blur(20px) saturate(1.2)',
+                            WebkitBackdropFilter: 'blur(20px) saturate(1.2)',
+                            border: '1px solid rgba(255,255,255,0.14)',
                         }}
                     >
                         <div className="font-mono" style={{ fontSize: 12, letterSpacing: '0.22em', color: 'rgba(255,255,255,0.72)' }}>
