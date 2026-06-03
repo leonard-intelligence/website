@@ -153,8 +153,8 @@ export function Hero() {
                     Bienvenue dans l'ère des agents.
                 </h1>
 
-                {/* Bottom-right frosted card */}
-                <div className="flex justify-end">
+                {/* Bottom-left frosted card */}
+                <div className="flex justify-start">
                     <div
                         className="font-sans"
                         style={{
@@ -179,7 +179,7 @@ export function Hero() {
                             Leonard conçoit, déploie et pilote les agents sur-mesure de votre entreprise — branchés à vos systèmes, sur vos modèles et vos données.
                         </p>
 
-                        <div className="mt-6 flex flex-wrap items-center gap-3">
+                        <div className="mt-6 flex items-center gap-3">
                             <ReliefButton tone="lime" size="md" href="#contact" iconRight={<ArrowRight />}>
                                 Discutons de votre projet
                             </ReliefButton>
