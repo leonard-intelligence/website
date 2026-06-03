@@ -158,7 +158,7 @@ export function Hero() {
                     <div
                         className="font-sans"
                         style={{
-                            maxWidth: 460,
+                            maxWidth: 560,
                             padding: '22px 24px',
                             borderRadius: 16,
                             background: 'rgba(255, 255, 255, 0.10)',
@@ -179,7 +179,7 @@ export function Hero() {
                             Leonard conçoit, déploie et pilote les agents sur-mesure de votre entreprise — branchés à vos systèmes, sur vos modèles et vos données.
                         </p>
 
-                        <div className="mt-6 flex items-center gap-3">
+                        <div className="mt-6 flex flex-wrap items-center gap-3">
                             <ReliefButton tone="lime" size="md" href="#contact" iconRight={<ArrowRight />}>
                                 Discutons de votre projet
                             </ReliefButton>
