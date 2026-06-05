@@ -807,6 +807,74 @@ export function BeadSection({
     );
 }
 
+// ============================================================================
+// SECTION PHASES — the agentic maturity journey (3 phases). Domain-agnostic,
+// adapted from the "Agentic Law" keynote (no legal specifics, no borrowed metrics).
+// ============================================================================
+const PHASES: { n: string; name: string; body: string }[] = [
+    { n: '01', name: 'Levier', body: "L'agent absorbe le travail à fort volume et faible valeur ajoutée. Vos équipes se recentrent sur ce qui compte." },
+    { n: '02', name: 'Différenciation', body: "L'avantage se crée. Vos workflows propriétaires deviennent un atout que vos concurrents n'ont pas." },
+    { n: '03', name: 'Réinvention', body: 'La connaissance devient produit. L’organisation se repense, AI-first.' },
+];
+
+function PhaseCard({ phase, idx }: { phase: (typeof PHASES)[number]; idx: number }) {
+    return (
+        <div className="flex-1 min-w-0 flex flex-col" style={{ padding: '24px 24px 22px', borderRadius: 14, background: TOKENS.white, boxShadow: RM_CARD_SHADOW }}>
+            <div className="flex items-center justify-between" style={{ marginBottom: 18 }}>
+                <span className="font-mono" style={{ fontSize: 13, letterSpacing: '0.16em', color: TOKENS.mutedText }}>{phase.n}</span>
+                <span className="inline-flex" style={{ gap: 4 }} aria-hidden="true">
+                    {[0, 1, 2].map((s) => (
+                        <span key={s} style={{ width: 16, height: 4, borderRadius: 999, background: s <= idx ? TOKENS.forest : '#E2E2DB', display: 'inline-block' }} />
+                    ))}
+                </span>
+            </div>
+            <h3 className="font-sans" style={{ fontSize: 19, fontWeight: 600, color: TOKENS.ink, lineHeight: 1.15 }}>{phase.name}</h3>
+            <p className="font-sans" style={{ fontSize: 14.5, lineHeight: '21px', fontWeight: 450, color: TOKENS.mutedText, marginTop: 10 }}>{phase.body}</p>
+        </div>
+    );
+}
+
+export function SectionPhases() {
+    return (
+        <section
+            id="section-phases"
+            className="relative"
+            style={{ backgroundColor: TOKENS.surface, paddingBlock: '88px', paddingInline: '32px' }}
+            aria-label="Le parcours agentique"
+        >
+            <Reveal>
+                <div className="max-w-[1200px] mx-auto">
+                    <header className="text-center mb-14">
+                        <div className="font-mono" style={{ fontSize: 13, letterSpacing: '0.22em', ...EMBOSS_MUTED }}>
+                            LE PARCOURS AGENTIQUE
+                        </div>
+                        <h2
+                            className="font-sans mt-4 mx-auto"
+                            style={{ fontSize: 'clamp(1.75rem, 3.2vw, 2.5rem)', lineHeight: 1.12, fontWeight: 500, letterSpacing: '-0.02em', maxWidth: '22ch', ...EMBOSS_DARK }}
+                        >
+                            De l'adoption à la réinvention.
+                        </h2>
+                        <p
+                            className="font-sans mt-4 mx-auto"
+                            style={{ fontSize: 17, lineHeight: '24px', fontWeight: 460, color: TOKENS.mutedText, maxWidth: '56ch' }}
+                        >
+                            La bascule agentique ne se fait pas d'un coup. Trois phases — du levier immédiat à l'organisation repensée autour des agents.
+                        </p>
+                    </header>
+                    <div className="flex flex-col min-[768px]:flex-row min-[768px]:items-stretch" style={{ gap: 12 }}>
+                        {PHASES.map((p, i) => (
+                            <Fragment key={p.n}>
+                                <PhaseCard phase={p} idx={i} />
+                                {i < PHASES.length - 1 && <RoadFlow />}
+                            </Fragment>
+                        ))}
+                    </div>
+                </div>
+            </Reveal>
+        </section>
+    );
+}
+
 export function SectionMethod() {
     return (
         <section
