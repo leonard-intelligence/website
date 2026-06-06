@@ -141,10 +141,11 @@ export function Hero() {
                 <h1
                     className="font-sans text-center mx-auto"
                     style={{
-                        fontSize: 'clamp(2.25rem, 5vw, 4rem)',
-                        lineHeight: 1.05,
-                        fontWeight: 500,
-                        letterSpacing: '-0.025em',
+                        fontFamily: 'var(--font-pixel-line)',
+                        fontSize: 'clamp(2rem, 4.4vw, 3.5rem)',
+                        lineHeight: 1.15,
+                        fontWeight: 400,
+                        letterSpacing: '0.01em',
                         maxWidth: '20ch',
                         marginTop: '16vh',
                         color: '#ffffff',
