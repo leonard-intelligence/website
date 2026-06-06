@@ -146,6 +146,7 @@ export function Hero() {
                         fontWeight: 500,
                         letterSpacing: '-0.025em',
                         maxWidth: '20ch',
+                        marginTop: '16vh',
                         color: '#ffffff',
                         filter: 'drop-shadow(0 2px 14px rgba(0, 0, 0, 0.35))',
                     }}
