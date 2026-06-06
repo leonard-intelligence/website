@@ -47,7 +47,7 @@ function LayerSection({ id, index, eyebrow, title, lead, points, accent, bg, fli
     const heading = (
         <>
             <div className="font-mono" style={{ fontSize: 13, letterSpacing: '0.22em', ...EMBOSS_MUTED }}>
-                {index} — {eyebrow}
+                {index} · {eyebrow}
             </div>
             <h2
                 className="font-sans mt-4"
@@ -142,7 +142,7 @@ export function LayerModeles() {
             index="01"
             eyebrow="GRANDS MODÈLES DE LANGAGE"
             title="Le bon modèle, par tâche."
-            lead="Claude, GPT, Mistral ou un modèle open-weight hébergé chez vous. Chaque tâche a ses contraintes — précision, coût, latence, confidentialité. On sélectionne le bon modèle pour chacune, jamais un seul par défaut."
+            lead="Claude, GPT, Mistral ou un modèle open-weight hébergé chez vous. Chaque tâche a ses contraintes : précision, coût, latence, confidentialité. On sélectionne le bon modèle pour chacune, jamais un seul par défaut."
             points={['Modèles propriétaires ou open-weight', 'Hébergeable dans votre périmètre', 'Arbitrage précision / coût / latence']}
             accent={TOKENS.lime}
             bg={TOKENS.paper}
@@ -175,7 +175,7 @@ export function LayerDonnees() {
             index="03"
             eyebrow="DONNÉES & INTÉGRATIONS"
             title="Branché à toute votre stack."
-            lead="APIs internes, CRM, ERP, bases documentaires, connecteurs MCP. Tout converge sous un même toit pour alimenter le contexte de l'agent — sans recopie, sans silo."
+            lead="APIs internes, CRM, ERP, bases documentaires, connecteurs MCP. Tout converge sous un même toit pour alimenter le contexte de l'agent, sans recopie, sans silo."
             points={['Connecteurs MCP, API, webhooks', 'CRM · ERP · DMS · bases internes', 'Ingestion documentaire']}
             accent={TOKENS.gold}
             bg={TOKENS.surface}
@@ -191,7 +191,7 @@ export function LayerContexte() {
             index="04"
             eyebrow="CONTEXTE & CONNAISSANCE"
             title="Une mémoire qui se capitalise."
-            lead="Playbooks, historique des dossiers, règles et positions métier s'intègrent à chaque action de l'agent. Il reprend là où le tour précédent s'est arrêté — la connaissance s'accumule au lieu de se perdre."
+            lead="Playbooks, historique des dossiers, règles et positions métier s'intègrent à chaque action de l'agent. Il reprend là où le tour précédent s'est arrêté. La connaissance s'accumule au lieu de se perdre."
             points={['Playbooks & règles métier', 'Historique et mémoire des dossiers', 'La connaissance se capitalise']}
             accent={TOKENS.forest}
             bg={TOKENS.white}
@@ -208,7 +208,7 @@ export function LayerProduits() {
             index="06"
             eyebrow="PRODUITS & INTERFACES"
             title="Dans votre flux, pas dans un onglet."
-            lead="Les surfaces où humains et agents collaborent : add-in dans vos outils, tableau de bord de supervision, API. L'agent travaille là où vous travaillez déjà — pas dans un onglet à côté."
+            lead="Les surfaces où humains et agents collaborent : add-in dans vos outils, tableau de bord de supervision, API. L'agent travaille là où vous travaillez déjà, pas dans un onglet à côté."
             points={['Add-ins dans vos outils', 'Tableau de bord de supervision', 'API & intégration sur-mesure']}
             accent={TOKENS.lime}
             bg={TOKENS.white}
@@ -225,7 +225,7 @@ export function LayerSecurite() {
             index="07"
             eyebrow="SÉCURITÉ & GOUVERNANCE"
             title="La sécurité, intégrée à chaque couche."
-            lead="Cloisonnement entre dossiers, traçabilité complète de chaque appel d'outil, contrôle d'accès par rôle, souveraineté des données. Intégré à chaque couche — pas ajouté après coup."
+            lead="Cloisonnement entre dossiers, traçabilité complète de chaque appel d'outil, contrôle d'accès par rôle, souveraineté des données. Intégré à chaque couche, pas ajouté après coup."
             points={["Cloisonnement & contrôle d'accès", 'Traçabilité de chaque action', 'Souveraineté des données']}
             accent={TOKENS.ink}
             bg={TOKENS.surface}

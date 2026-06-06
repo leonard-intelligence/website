@@ -25,7 +25,7 @@ export function Home() {
                 <BeadSection
                     eyebrow="INTELLIGENCE CULTIVÉE"
                     title="Organique × machine."
-                    body="Nous cultivons des systèmes agentiques pour votre métier — précis, gouvernés, branchés à votre réalité."
+                    body="Nous cultivons des systèmes agentiques pour votre métier : précis, gouvernés, branchés à votre réalité."
                 />
                 <SectionPhases />
                 <SectionMethod />

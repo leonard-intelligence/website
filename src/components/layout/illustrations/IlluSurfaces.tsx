@@ -184,7 +184,7 @@ function ThreadPanel() {
                     <SubAgentCard label="Sous-agent · Qualification" time="1m 20s" />
                     <ToolRun label="Outil · CRM" detail="fiche client récupérée" state="done" />
                     <AgentMsg>Réponse rédigée. Une action sensible nécessite ta validation avant envoi.</AgentMsg>
-                    <ToolRun label="Outil · Email" detail="brouillon prêt — en attente" state="run" />
+                    <ToolRun label="Outil · Email" detail="brouillon prêt, en attente" state="run" />
                 </div>
                 {/* bottom fade */}
                 <div aria-hidden="true" style={{ position: 'absolute', left: 0, right: 0, bottom: 0, height: 70, background: 'linear-gradient(rgba(245,245,242,0) 0%, #F5F5F2 70%)', pointerEvents: 'none' }} />

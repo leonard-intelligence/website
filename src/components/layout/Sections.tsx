@@ -78,13 +78,13 @@ export const EMBOSS_MUTED: React.CSSProperties = {
 // ============================================================================
 // ── Capabilities overview grid (intro) — "Do it all" style, links to each layer ─
 const CAPS: { n: string; title: string; desc: string; href: string; icon: LucideIcon }[] = [
-    { n: '01', title: 'Grands modèles de langage', desc: 'Le bon modèle pour chaque tâche — propriétaire ou open-weight.', href: '#section-modeles', icon: Cpu },
+    { n: '01', title: 'Grands modèles de langage', desc: 'Le bon modèle pour chaque tâche, propriétaire ou open-weight.', href: '#section-modeles', icon: Cpu },
     { n: '02', title: 'Harnais agentique', desc: "Routage d'outils, mémoire, garde-fous. Des sous-agents en parallèle.", href: '#section-harnais', icon: Workflow },
     { n: '03', title: 'Données & intégrations', desc: "Ce à quoi l'agent se branche : API, CRM, bases, connecteurs MCP.", href: '#section-donnees', icon: Database },
     { n: '04', title: 'Contexte & connaissance', desc: 'Une mémoire qui se capitalise au fil des tours.', href: '#section-contexte', icon: Layers },
     { n: '05', title: 'Capacités métier', desc: "Les compétences qui font de l'agent un expert de votre domaine.", href: '#section-capabilities', icon: Sparkles },
     { n: '06', title: 'Produits & interfaces', desc: 'Les surfaces où humains et agents travaillent.', href: '#section-produits', icon: LayoutDashboard },
-    { n: '07', title: 'Sécurité & gouvernance', desc: 'Cloisonnement, traçabilité, accès par rôle — dans chaque couche.', href: '#section-securite', icon: ShieldCheck },
+    { n: '07', title: 'Sécurité & gouvernance', desc: 'Cloisonnement, traçabilité, accès par rôle, dans chaque couche.', href: '#section-securite', icon: ShieldCheck },
 ];
 
 function CapCard({ cap }: { cap: (typeof CAPS)[number] }) {
@@ -380,7 +380,7 @@ export function SectionIntro() {
                         className="font-sans mt-4 mx-auto"
                         style={{ fontSize: 17, lineHeight: '24px', fontWeight: 460, color: TOKENS.mutedText, maxWidth: '54ch' }}
                     >
-                        Du choix du modèle au pilotage en production — chaque couche est maîtrisée, branchée à votre entreprise.
+                        Du choix du modèle au pilotage en production : chaque couche est maîtrisée, branchée à votre entreprise.
                     </p>
                 </header>
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3" style={{ gap: 18 }}>
@@ -630,7 +630,7 @@ const SERVICE_BLOCKS: ServiceBlock[] = [
         fg: '#F5F5F2',
         index: '02',
         title: 'Automatisation de workflows',
-        body: 'Orchestration d\'agents sur vos flux — documents, qualification, reporting, relances — intégrée à vos outils (CRM, ERP, API internes). Les étapes critiques restent sous validation humaine.',
+        body: 'Orchestration d\'agents sur vos flux (documents, qualification, reporting, relances), intégrée à vos outils (CRM, ERP, API internes). Les étapes critiques restent sous validation humaine.',
         visual: <IlluPipeline />,
     },
     {
@@ -858,7 +858,7 @@ export function SectionPhases() {
                             className="font-sans mt-4 mx-auto"
                             style={{ fontSize: 17, lineHeight: '24px', fontWeight: 460, color: TOKENS.mutedText, maxWidth: '56ch' }}
                         >
-                            La bascule agentique ne se fait pas d'un coup. Trois phases — du levier immédiat à l'organisation repensée autour des agents.
+                            La bascule agentique ne se fait pas d'un coup. Trois phases : du levier immédiat à l'organisation repensée autour des agents.
                         </p>
                     </header>
                     <div className="flex flex-col min-[768px]:flex-row min-[768px]:items-stretch" style={{ gap: 12 }}>
@@ -896,7 +896,7 @@ export function SectionMethod() {
                         className="font-sans mt-3 max-w-[52ch] mx-auto"
                         style={{ fontSize: '17px', lineHeight: '24px', fontWeight: 460, color: TOKENS.mutedText }}
                     >
-                        De l'idée à la production. Comment nous fabriquons des agents qui tiennent — avec vous, dans votre réalité.
+                        De l'idée à la production. Comment nous fabriquons des agents qui tiennent, avec vous, dans votre réalité.
                     </p>
                 </header>
 
@@ -922,7 +922,7 @@ export function SectionCapabilities() {
             <div className="max-w-[1100px] mx-auto">
                 <header className="text-center mb-14">
                     <div className="font-mono" style={{ fontSize: 13, letterSpacing: '0.22em', ...EMBOSS_MUTED }}>
-                        05 — CAPACITÉS MÉTIER
+                        05 · CAPACITÉS MÉTIER
                     </div>
                     <h2
                         className="font-sans mt-3 mx-auto"
@@ -934,7 +934,7 @@ export function SectionCapabilities() {
                         className="font-sans mt-4 mx-auto"
                         style={{ fontSize: '17px', lineHeight: '24px', fontWeight: 460, color: TOKENS.mutedText, maxWidth: '52ch' }}
                     >
-                        Instructions, sous-agents, outils branchés, garde-fous, latence — tout est spécifié, mesurable, auditable. Pas de boîte noire.
+                        Instructions, sous-agents, outils branchés, garde-fous, latence : tout est spécifié, mesurable, auditable. Pas de boîte noire.
                     </p>
                 </header>
 
@@ -1784,7 +1784,7 @@ export function FooterV2() {
                         className="font-sans"
                         style={{ fontSize: '15px', lineHeight: '22px', fontWeight: 460, color: TOKENS.mutedText, maxWidth: '40ch' }}
                     >
-                        Agence agentique. Nous concevons, déployons et pilotons les agents IA de production — sur-mesure, branchés à vos systèmes.
+                        Agence agentique. Nous concevons, déployons et pilotons les agents IA de production, sur-mesure, branchés à vos systèmes.
                     </p>
 
                     <nav className="flex flex-wrap gap-x-6 gap-y-2 mt-2">

@@ -269,7 +269,7 @@ function ApprovalCard() {
                     <span className="font-mono" style={{ fontSize: 8.5, color: mutedText }}>En attente</span>
                 </span>
             </div>
-            <div className="font-sans" style={{ fontSize: 11, color: ink, lineHeight: 1.4, marginBottom: 8 }}>Action sensible — envoi externe avant validation.</div>
+            <div className="font-sans" style={{ fontSize: 11, color: ink, lineHeight: 1.4, marginBottom: 8 }}>Action sensible : envoi externe avant validation.</div>
             <div className="flex items-center" style={{ gap: 8 }}>
                 {pill('Approuver', forest, `${forest}66`)}
                 {pill('Refuser', mutedText, 'rgba(0,0,0,0.15)')}
@@ -293,7 +293,7 @@ function ConsolePanel({ accent }: { accent: string }) {
                 <div className="flex flex-col" style={{ flex: '1 1 auto', padding: '12px 12px 8px' }}>
                     <UserBubble>Traite le lot de dossiers en attente.</UserBubble>
                     <AgentMsg>
-                        Je décompose en sous-agents spécialisés — recherche, vérification, synthèse.{' '}
+                        Je décompose en sous-agents spécialisés : recherche, vérification, synthèse.{' '}
                         <Strong>Je te fais valider les actions sensibles avant tout envoi externe.</Strong>
                     </AgentMsg>
                     <div className="flex flex-col" style={{ gap: 6, marginTop: 16 }}>
@@ -305,7 +305,7 @@ function ConsolePanel({ accent }: { accent: string }) {
                         <UserBubble>Lance la synthèse une fois vérifié.</UserBubble>
                     </div>
                     <AgentMsg>
-                        Compris — la synthèse démarre après la vérification. <Strong>Tu auras un récapitulatif à valider.</Strong>
+                        Compris. La synthèse démarre après la vérification. <Strong>Tu auras un récapitulatif à valider.</Strong>
                     </AgentMsg>
                     <div className="flex flex-col" style={{ gap: 6, marginTop: 16 }}>
                         <AgentRow name="Synthèse" task="Rédige le récapitulatif" state="run" accent={accent} />

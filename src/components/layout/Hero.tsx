@@ -177,7 +177,7 @@ export function Hero() {
                                 textShadow: '0 1px 8px rgba(0, 0, 0, 0.25)',
                             }}
                         >
-                            Leonard conçoit, déploie et pilote les agents sur-mesure de votre entreprise — branchés à vos systèmes, sur vos modèles et vos données.
+                            Leonard conçoit, déploie et pilote les agents sur-mesure de votre entreprise, branchés à vos systèmes, sur vos modèles et vos données.
                         </p>
 
                         <div className="mt-6 flex flex-wrap items-center gap-3">
