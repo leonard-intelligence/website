@@ -1341,13 +1341,13 @@ function AgentCard({ data, rotate, offsetX, offsetY, z }: { data: AgentCardData;
             >
                 {/* LEFT: card header eyebrow + AGENT hero */}
                 <div className="flex flex-col" style={{ gap: 8 }}>
-                    <div style={{ fontSize: 7, letterSpacing: '0.22em', fontWeight: 500, opacity: 0.85, lineHeight: 1 }}>
+                    <div style={{ fontSize: 8.5, letterSpacing: '0.22em', fontWeight: 500, opacity: 0.85, lineHeight: 1 }}>
                         LEONARD INTELLIGENCE · AGENT ID
                     </div>
                     <div
                         style={{
                             fontFamily: 'var(--font-pixel-line)',
-                            fontSize: 30,
+                            fontSize: 38,
                             letterSpacing: '0.02em',
                             lineHeight: 1,
                         }}
@@ -1359,7 +1359,7 @@ function AgentCard({ data, rotate, offsetX, offsetY, z }: { data: AgentCardData;
                 {/* RIGHT: Citizen eye — lighter-gray tint (keeps the emboss filter
                     inherited from the wrapper, only overrides the color). */}
                 <span style={{ color: ICON_MED, display: 'flex' }}>
-                    <AgentLogo size={34} />
+                    <AgentLogo size={42} />
                 </span>
             </div>
 
@@ -1392,7 +1392,7 @@ function AgentCard({ data, rotate, offsetX, offsetY, z }: { data: AgentCardData;
                         display: 'flex',
                         flexDirection: 'column',
                         justifyContent: 'space-between',
-                        fontSize: 9,
+                        fontSize: 10.5,
                         fontWeight: 450,
                     }}
                 >
