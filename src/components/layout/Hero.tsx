@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { ArrowRight } from 'lucide-react';
 import { SAMPLE_W, SAMPLE_H, SOURCE_URL } from '../pixels/BeadPxContext';
 import { ReliefButton } from '../ui/ReliefButton';
+import { useHeroTitleParams } from '../dev/heroTitleStore';
 
 type Sz = {
     beadPx: number;
@@ -13,6 +14,7 @@ type Sz = {
 
 export function Hero() {
     const [sz, setSz] = useState<Sz>({ beadPx: 0, beadW: 0, beadH: 0, leftPx: 0, topPx: 0 });
+    const heroTitle = useHeroTitleParams();
 
     const [revealed, setRevealed] = useState(false);
     useEffect(() => {
@@ -141,7 +143,7 @@ export function Hero() {
                 <h1
                     className="font-sans text-center mx-auto"
                     style={{
-                        fontFamily: 'var(--font-pixel-line)',
+                        fontFamily: `var(--font-pixel-${heroTitle.variant})`,
                         fontSize: 'clamp(2rem, 4.4vw, 3.5rem)',
                         lineHeight: 1.15,
                         fontWeight: 400,
@@ -149,7 +151,7 @@ export function Hero() {
                         maxWidth: '20ch',
                         marginTop: '16vh',
                         color: '#ffffff',
-                        filter: 'drop-shadow(0 2px 14px rgba(0, 0, 0, 0.35))',
+                        filter: `drop-shadow(0 2px 14px rgba(0, 0, 0, 0.35))${heroTitle.glow > 0 ? ` drop-shadow(0 0 ${heroTitle.glow}px ${heroTitle.glowColor})` : ''}`,
                     }}
                 >
                     Bienvenue dans l'ère des agents.
