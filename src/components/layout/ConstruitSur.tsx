@@ -17,21 +17,21 @@ export function ConstruitSur() {
             style={{ backgroundColor: 'transparent', paddingBlock: '0', paddingInline: '32px' }}
             aria-label="Construit sur"
         >
-            <div className="max-w-[1100px] mx-auto">
+            <div className="max-w-[1280px] mx-auto">
                 <ul
-                    className="flex flex-wrap items-end justify-center"
-                    style={{ gap: '40px 56px', listStyle: 'none', padding: 0 }}
+                    className="flex flex-wrap items-end justify-between"
+                    style={{ gap: '36px 48px', listStyle: 'none', padding: 0 }}
                 >
                     {LOGOS.map((l) => (
-                        <li key={l.name} className="flex flex-col items-center" style={{ gap: 8 }}>
+                        <li key={l.name} className="flex flex-col items-center" style={{ gap: 10 }}>
                             <img
                                 src={l.src}
                                 alt={l.name}
-                                style={{ height: 22, width: 'auto', objectFit: 'contain', filter: 'grayscale(1)', opacity: 0.7 }}
+                                style={{ height: 32, width: 'auto', objectFit: 'contain', filter: 'grayscale(1)', opacity: 0.7 }}
                             />
                             <span
                                 className="font-mono"
-                                style={{ fontSize: 10, letterSpacing: '0.04em', color: 'rgba(23,23,23,0.4)' }}
+                                style={{ fontSize: 11, letterSpacing: '0.04em', color: 'rgba(23,23,23,0.4)' }}
                             >
                                 {l.name}
                             </span>
