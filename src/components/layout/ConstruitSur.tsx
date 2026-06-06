@@ -18,15 +18,8 @@ export function ConstruitSur() {
             aria-label="Construit sur"
         >
             <div className="max-w-[1100px] mx-auto">
-                <div
-                    className="font-mono text-center"
-                    style={{ fontSize: 12, letterSpacing: '0.22em', color: 'rgba(23,23,23,0.5)' }}
-                >
-                    CONSTRUIT SUR
-                </div>
-
                 <ul
-                    className="mt-8 flex flex-wrap items-end justify-center"
+                    className="flex flex-wrap items-end justify-center"
                     style={{ gap: '40px 56px', listStyle: 'none', padding: 0 }}
                 >
                     {LOGOS.map((l) => (
