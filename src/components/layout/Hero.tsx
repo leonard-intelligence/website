@@ -15,6 +15,14 @@ type Sz = {
 export function Hero() {
     const [sz, setSz] = useState<Sz>({ beadPx: 0, beadW: 0, beadH: 0, leftPx: 0, topPx: 0 });
     const heroTitle = useHeroTitleParams();
+    // Preload every Geist Pixel variant so the DevTools switch is instant
+    // (otherwise a variant is only fetched on first use → swap/blank flash).
+    useEffect(() => {
+        if (typeof document === 'undefined' || !document.fonts?.load) return;
+        ['Line', 'Square', 'Grid', 'Circle', 'Triangle'].forEach((v) => {
+            document.fonts.load(`32px "Geist Pixel ${v}"`).catch(() => {});
+        });
+    }, []);
 
     const [revealed, setRevealed] = useState(false);
     useEffect(() => {
