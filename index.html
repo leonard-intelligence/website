@@ -53,11 +53,8 @@
   <!-- Web App Manifest -->
   <link rel="manifest" href="/manifest.json" />
 
-  <!-- Preload hero image so browser discovers it before JS bundle parses -->
-  <link rel="preload" as="image" type="image/webp"
-        href="/assets/hero-concepts/licorne-3-md.webp"
-        imagesrcset="/assets/hero-concepts/licorne-3-sm.webp 400w, /assets/hero-concepts/licorne-3-md.webp 800w, /assets/hero-concepts/licorne-3-lg.webp 1755w"
-        imagesizes="65vw" />
+  <!-- Preload hero bead image so the browser discovers it before the JS bundle parses -->
+  <link rel="preload" as="image" type="image/webp" href="/assets/backgrounds/flowers-beads.webp" />
 
   <!-- Content Security Policy -->
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://assets.calendly.com https://www.googletagmanager.com; style-src 'self' 'unsafe-inline' https://assets.calendly.com; img-src 'self' data: https:; font-src 'self' data:; connect-src 'self' https://assets.mailerlite.com https://calendly.com https://www.google-analytics.com https://www.googletagmanager.com; frame-src https://calendly.com;" />
