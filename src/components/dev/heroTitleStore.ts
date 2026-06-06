@@ -11,8 +11,8 @@ export type HeroTitleParams = {
 };
 
 export const DEFAULT_HERO_TITLE_PARAMS: HeroTitleParams = {
-    variant: 'line',
-    glow: 0,
+    variant: 'square',
+    glow: 2,
     glowColor: '#ffffff',
 };
 
