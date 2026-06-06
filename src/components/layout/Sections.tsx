@@ -939,7 +939,7 @@ export function SectionCapabilities() {
                 </header>
 
                 <div className="flex flex-col items-center gap-5">
-                    <div className="relative w-full" style={{ maxWidth: 560, aspectRatio: '4 / 3' }}>
+                    <div className="relative w-full" style={{ maxWidth: 620, aspectRatio: '4 / 3' }}>
                         <AgentCardStack sel={0} />
                     </div>
                     <span
