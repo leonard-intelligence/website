@@ -1354,9 +1354,6 @@ function AgentCard({ data, rotate, offsetX, offsetY, z }: { data: AgentCardData;
                     >
                         AGENT
                     </div>
-                    <div style={{ fontSize: 8, letterSpacing: '0.2em', fontWeight: 500, opacity: 0.85, lineHeight: 1 }}>
-                        {data.codename}
-                    </div>
                 </div>
 
                 {/* RIGHT: Citizen eye — lighter-gray tint (keeps the emboss filter
