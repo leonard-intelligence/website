@@ -179,6 +179,20 @@ export function Hero() {
                             border: '1px solid rgba(255, 255, 255, 0.16)',
                         }}
                     >
+                        <h2
+                            style={{
+                                fontFamily: `var(--font-pixel-${heroTitle.variant})`,
+                                fontSize: 'clamp(1.25rem, 2.4vw, 1.9rem)',
+                                lineHeight: 1.2,
+                                fontWeight: 400,
+                                letterSpacing: '0.01em',
+                                color: '#ffffff',
+                                marginBottom: 14,
+                                filter: `drop-shadow(0 1px 8px rgba(0, 0, 0, 0.35))${heroTitle.glow > 0 ? ` drop-shadow(0 0 ${heroTitle.glow}px ${heroTitle.glowColor})` : ''}`,
+                            }}
+                        >
+                            Agence agentique.
+                        </h2>
                         <p
                             style={{
                                 fontSize: '16px',
