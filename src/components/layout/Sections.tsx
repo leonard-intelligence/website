@@ -366,7 +366,27 @@ export function SectionIntro() {
             <Reveal>
             <div className="max-w-[1200px] mx-auto">
                 <ConstruitSur />
-                <header className="text-center mb-14" style={{ marginTop: 64 }}>
+            </div>
+            </Reveal>
+        </section>
+    );
+}
+
+// ============================================================================
+// SECTION SYSTEM — "Un seul système, de bout en bout" + grille de capacités.
+// (déplacée sous la carte agent : logos → carte agent → ce bloc → couches)
+// ============================================================================
+export function SectionSystem() {
+    return (
+        <section
+            id="section-system"
+            className="relative"
+            style={{ backgroundColor: TOKENS.surface, paddingBlock: '76px', paddingInline: '32px' }}
+            aria-label="Le système"
+        >
+            <Reveal>
+            <div className="max-w-[1200px] mx-auto">
+                <header className="text-center mb-14">
                     <div className="font-mono" style={{ fontSize: 12, letterSpacing: '0.22em', color: 'rgba(23,23,23,0.5)' }}>
                         LE SYSTÈME
                     </div>
@@ -981,13 +1001,13 @@ export function SectionCapabilities() {
             <div className="max-w-[1100px] mx-auto">
                 <header className="text-center mb-14">
                     <div className="font-mono" style={{ fontSize: 13, letterSpacing: '0.22em', ...EMBOSS_MUTED }}>
-                        05 · CAPACITÉS MÉTIER
+                        FICHE TECHNIQUE
                     </div>
                     <h2
                         className="font-sans mt-3 mx-auto"
                         style={{ fontSize: 'clamp(1.75rem, 3.4vw, 2.75rem)', lineHeight: 1.1, fontWeight: 500, letterSpacing: '-0.02em', maxWidth: '20ch', ...EMBOSS_DARK }}
                     >
-                        Chaque agent, une fiche technique.
+                        Créer vos agents sur mesure.
                     </h2>
                     <p
                         className="font-sans mt-4 mx-auto"

@@ -1,5 +1,5 @@
 import { Hero } from '../components/layout/Hero';
-import { SectionIntro, SectionMethod, SectionCapabilities, SectionCTA, BeadSection, SectionPhases, SectionFonts, FooterV2 } from '../components/layout/Sections';
+import { SectionIntro, SectionSystem, SectionMethod, SectionCapabilities, SectionCTA, BeadSection, SectionPhases, SectionFonts, FooterV2 } from '../components/layout/Sections';
 import { LayerModeles, LayerHarnais, LayerDonnees, LayerContexte, LayerProduits, LayerSecurite } from '../components/layout/SystemSections';
 import { SEO } from '../components/seo/SEO';
 import { JsonLd } from '../components/seo/JsonLd';
@@ -15,11 +15,12 @@ export function Home() {
                 {import.meta.env.DEV && <DevTools />}
                 <Hero />
                 <SectionIntro />
+                <SectionCapabilities />
+                <SectionSystem />
                 <LayerModeles />
                 <LayerHarnais />
                 <LayerDonnees />
                 <LayerContexte />
-                <SectionCapabilities />
                 <LayerProduits />
                 <LayerSecurite />
                 <BeadSection
