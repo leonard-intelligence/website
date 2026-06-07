@@ -157,7 +157,7 @@ export function Hero() {
                         fontWeight: 400,
                         letterSpacing: '0.01em',
                         maxWidth: '20ch',
-                        marginTop: '16vh',
+                        marginTop: '12vh',
                         color: '#ffffff',
                         filter: `drop-shadow(0 2px 14px rgba(0, 0, 0, 0.35))${heroTitle.glow > 0 ? ` drop-shadow(0 0 ${heroTitle.glow}px ${heroTitle.glowColor})` : ''}`,
                     }}
