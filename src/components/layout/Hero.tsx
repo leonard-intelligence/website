@@ -188,7 +188,7 @@ export function Hero() {
                                 letterSpacing: '0.01em',
                                 color: '#ffffff',
                                 marginBottom: 14,
-                                filter: `drop-shadow(0 1px 8px rgba(0, 0, 0, 0.35))${heroTitle.glow > 0 ? ` drop-shadow(0 0 ${heroTitle.glow}px ${heroTitle.glowColor})` : ''}`,
+                                filter: 'drop-shadow(0 1px 8px rgba(0, 0, 0, 0.35))',
                             }}
                         >
                             Agence agentique.
