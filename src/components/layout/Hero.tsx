@@ -191,7 +191,7 @@ export function Hero() {
                                 filter: 'drop-shadow(0 1px 8px rgba(0, 0, 0, 0.35))',
                             }}
                         >
-                            Agence agentique.
+                            Ingénierie agentique.
                         </h2>
                         <p
                             style={{
@@ -202,7 +202,7 @@ export function Hero() {
                                 textShadow: '0 1px 8px rgba(0, 0, 0, 0.25)',
                             }}
                         >
-                            Nous aidons les organisations à bâtir des systèmes d'IA sur mesure pour résoudre les problèmes les plus complexes.
+                            Nous aidons les entreprises à concevoir des systèmes d'IA sur mesure pour résoudre leurs défis les plus complexes.
                         </p>
 
                         <div className="mt-6 flex flex-wrap items-center gap-3">
