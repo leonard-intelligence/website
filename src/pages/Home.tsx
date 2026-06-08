@@ -1,5 +1,5 @@
 import { Hero } from '../components/layout/Hero';
-import { SectionIntro, SectionSystem, SectionDeploy, SectionMethod, SectionCapabilities, SectionCTA, BeadSection, SectionPhases, SectionFonts, FooterV2 } from '../components/layout/Sections';
+import { SectionIntro, SectionSystem, SectionDeploy, SectionRnd, SectionMethod, SectionCapabilities, SectionCTA, BeadSection, SectionPhases, SectionFonts, FooterV2 } from '../components/layout/Sections';
 import { LayerModeles, LayerHarnais, LayerDonnees, LayerContexte, LayerProduits, LayerSecurite } from '../components/layout/SystemSections';
 import { SEO } from '../components/seo/SEO';
 import { JsonLd } from '../components/seo/JsonLd';
@@ -24,6 +24,7 @@ export function Home() {
                 <LayerProduits />
                 <LayerSecurite />
                 <SectionDeploy />
+                <SectionRnd />
                 <BeadSection
                     eyebrow="INTELLIGENCE CULTIVÉE"
                     title="Organique × machine."

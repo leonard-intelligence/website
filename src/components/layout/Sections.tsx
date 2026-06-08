@@ -1,8 +1,8 @@
 // Sections V2 — Leonard Intelligence (design.md: warm neutrals, soft shadows, rounded corners)
-import { ArrowRight, Users, Map as MapIcon, Ruler, ShieldCheck, Boxes, Plug, Rocket, Gauge, Cpu, Workflow, Database, Layers, LayoutDashboard, Sparkles, type LucideIcon } from 'lucide-react';
+import { ArrowRight, Mic, Code2, Users, Map as MapIcon, Ruler, ShieldCheck, Boxes, Plug, Rocket, Gauge, Cpu, Workflow, Database, Layers, LayoutDashboard, Sparkles, type LucideIcon } from 'lucide-react';
 import { PixelLayer } from '../pixels/PixelLayer';
 import { Pixel } from '../pixels/Pixel';
-import { useBeadCtx, SOURCE_URL } from '../pixels/BeadPxContext';
+import { useBeadCtx, SOURCE_URL, SAMPLE_W, SAMPLE_H } from '../pixels/BeadPxContext';
 import { useNotchParams } from '../dev/notchParamsStore';
 import { useVitruveParams } from '../dev/vitruveParamsStore';
 import { QrBadge } from './QrBadge';
@@ -444,6 +444,198 @@ export function SectionDeploy() {
                     >
                         Construisez et déployez vos applications d'IA avec un contrôle total : agents sur mesure, exécution en production partout, du poste local au cloud souverain UE, avec un outillage de niveau entreprise.
                     </p>
+                </div>
+            </Reveal>
+        </section>
+    );
+}
+
+// ============================================================================
+// SECTION R&D — vitrine « carte beads » (inspirée Advanced R&D / Mistral),
+// recréée avec le système de beads Leonard. Header + carte + tags capacités.
+// ============================================================================
+const RND_BEADS: { src: [number, number]; left: string; top: string; bead: number; span: number }[] = [
+    { src: [96, 66], left: '7%', top: '18%', bead: 20, span: 1 },
+    { src: [68, 43], left: '15%', top: '62%', bead: 9, span: 3 },
+    { src: [74, 72], left: '5%', top: '83%', bead: 15, span: 1 },
+    { src: [91, 67], left: '90%', top: '20%', bead: 22, span: 1 },
+    { src: [100, 60], left: '93%', top: '55%', bead: 10, span: 2 },
+    { src: [79, 75], left: '83%', top: '84%', bead: 16, span: 1 },
+    { src: [66, 49], left: '72%', top: '12%', bead: 10, span: 2 },
+    { src: [80, 70], left: '26%', top: '10%', bead: 14, span: 1 },
+    { src: [6, 39], left: '31%', top: '89%', bead: 9, span: 3 },
+    { src: [86, 70], left: '63%', top: '87%', bead: 15, span: 1 },
+    { src: [53, 61], left: '10%', top: '40%', bead: 11, span: 2 },
+    { src: [96, 66], left: '92%', top: '39%', bead: 13, span: 1 },
+    { src: [47, 62], left: '78%', top: '69%', bead: 12, span: 2 },
+    { src: [91, 67], left: '21%', top: '31%', bead: 12, span: 1 },
+];
+
+function MapPatch({ src, left, top, bead, span }: { src: [number, number]; left: string; top: string; bead: number; span: number }) {
+    const [c, r] = src;
+    const px = bead * span;
+    return (
+        <div
+            aria-hidden
+            style={{
+                position: 'absolute',
+                left,
+                top,
+                width: px,
+                height: px,
+                transform: 'translate(-50%, -50%)',
+                backgroundImage: `url(${SOURCE_URL})`,
+                backgroundSize: `${SAMPLE_W * bead}px ${SAMPLE_H * bead}px`,
+                backgroundPosition: `-${c * bead}px -${r * bead}px`,
+                backgroundRepeat: 'no-repeat',
+                borderRadius: 2,
+                boxShadow: '0 1px 3px rgba(0,0,0,0.16)',
+                imageRendering: 'pixelated',
+            }}
+        />
+    );
+}
+
+const RND_CARDS: { icon: LucideIcon; label: string; dx: number }[] = [
+    { icon: Mic, label: 'Capacités vocales', dx: -34 },
+    { icon: Database, label: 'Extraction de connaissances', dx: 28 },
+    { icon: Code2, label: 'Génération de code', dx: -20 },
+    { icon: Workflow, label: 'Workflows agentiques', dx: 36 },
+];
+
+const RND_TAGS = ['PERSONNALISATION DE MODÈLE', 'RÉALISATION DE VALEUR', 'SERVICES DE DÉPLOIEMENT', 'ACCÉLÉRATION DES CAS D\'USAGE', 'ACTIVATION ENTREPRISE'];
+
+export function SectionRnd() {
+    return (
+        <section
+            id="section-rnd"
+            className="relative"
+            style={{ backgroundColor: TOKENS.surface, paddingBlock: '88px', paddingInline: '32px' }}
+            aria-label="R&D avancée"
+        >
+            <Reveal>
+                <div className="max-w-[1200px] mx-auto">
+                    {/* Header row : grand titre + bouton */}
+                    <div
+                        className="flex items-end justify-between gap-6"
+                        style={{ borderBottom: '1px solid rgba(23,23,23,0.10)', paddingBottom: 28 }}
+                    >
+                        <h2
+                            className="font-sans"
+                            style={{ fontSize: 'clamp(2.4rem, 5.2vw, 4rem)', lineHeight: 1, fontWeight: 500, letterSpacing: '-0.03em', ...EMBOSS_DARK }}
+                        >
+                            R&D avancée
+                        </h2>
+                        <a
+                            href="#contact"
+                            className="font-sans inline-flex items-center gap-2 shrink-0"
+                            style={{
+                                padding: '11px 18px',
+                                borderRadius: 999,
+                                background: TOKENS.white,
+                                boxShadow: RM_CARD_SHADOW,
+                                fontSize: 14,
+                                fontWeight: 500,
+                                color: TOKENS.ink,
+                                textDecoration: 'none',
+                            }}
+                        >
+                            Découvrir l'IA appliquée
+                            <ArrowRight size={16} />
+                        </a>
+                    </div>
+
+                    {/* Accroche */}
+                    <p
+                        className="font-sans"
+                        style={{ marginTop: 24, fontSize: 19, lineHeight: '28px', fontWeight: 460, color: TOKENS.mutedText, maxWidth: '64ch' }}
+                    >
+                        IA spécialisée pour votre domaine : du pré-entraînement sur vos données jusqu'au déploiement à grande échelle, accompagnés d'experts à chaque étape.
+                    </p>
+
+                    {/* Carte beads */}
+                    <div
+                        className="relative"
+                        style={{
+                            marginTop: 36,
+                            height: 'clamp(440px, 44vw, 560px)',
+                            borderRadius: 18,
+                            overflow: 'hidden',
+                            backgroundColor: '#EEEDE9',
+                            backgroundImage:
+                                'linear-gradient(rgba(23,23,23,0.045) 1px, transparent 1px), linear-gradient(90deg, rgba(23,23,23,0.045) 1px, transparent 1px)',
+                            backgroundSize: '46px 46px',
+                            boxShadow: 'inset 0 0 0 1px rgba(23,23,23,0.06)',
+                        }}
+                    >
+                        {/* segments de liaison (décoratifs) */}
+                        <div style={{ position: 'absolute', left: 0, top: '34%', width: '34%', height: 1, background: 'rgba(23,23,23,0.14)' }} />
+                        <div style={{ position: 'absolute', left: '34%', top: '34%', width: 1, height: '20%', background: 'rgba(23,23,23,0.14)' }} />
+                        <div style={{ position: 'absolute', right: 0, top: '62%', width: '30%', height: 1, background: 'rgba(23,23,23,0.14)' }} />
+                        <div style={{ position: 'absolute', right: '30%', top: '42%', width: 1, height: '20%', background: 'rgba(23,23,23,0.14)' }} />
+                        {['33.6%|34%', '70%|62%', '15%|18%', '85%|78%'].map((p) => {
+                            const [l, t] = p.split('|');
+                            return (
+                                <div
+                                    key={p}
+                                    style={{ position: 'absolute', left: l, top: t, width: 7, height: 7, transform: 'translate(-50%,-50%) rotate(45deg)', background: '#FFFFFF', boxShadow: '0 0 0 1px rgba(23,23,23,0.18)' }}
+                                />
+                            );
+                        })}
+
+                        {/* beads */}
+                        {RND_BEADS.map((b, i) => (
+                            <MapPatch key={i} {...b} />
+                        ))}
+
+                        {/* cartes capacités flottantes */}
+                        <div className="absolute inset-0 flex flex-col items-center justify-center" style={{ gap: 14, padding: 24 }}>
+                            {RND_CARDS.map(({ icon: Icon, label, dx }) => (
+                                <div
+                                    key={label}
+                                    className="inline-flex items-center gap-3"
+                                    style={{
+                                        transform: `translateX(${dx}px)`,
+                                        padding: '11px 18px 11px 11px',
+                                        borderRadius: 14,
+                                        background: TOKENS.white,
+                                        boxShadow: RM_CARD_SHADOW,
+                                        maxWidth: '100%',
+                                    }}
+                                >
+                                    <span
+                                        className="inline-flex items-center justify-center shrink-0"
+                                        style={{ width: 34, height: 34, borderRadius: 9, background: TOKENS.surface, boxShadow: RM_TILE_SHADOW }}
+                                    >
+                                        <Icon size={18} strokeWidth={1.8} color={TOKENS.ink} />
+                                    </span>
+                                    <span className="font-sans" style={{ fontSize: 15.5, fontWeight: 500, color: TOKENS.ink, whiteSpace: 'nowrap' }}>
+                                        {label}
+                                    </span>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+
+                    {/* tags capacités */}
+                    <div className="flex flex-wrap" style={{ gap: 12, marginTop: 28 }}>
+                        {RND_TAGS.map((t) => (
+                            <span
+                                key={t}
+                                className="font-mono"
+                                style={{
+                                    padding: '8px 14px',
+                                    borderRadius: 999,
+                                    border: '1px solid rgba(23,23,23,0.14)',
+                                    fontSize: 12,
+                                    letterSpacing: '0.12em',
+                                    color: TOKENS.mutedText,
+                                }}
+                            >
+                                {t}
+                            </span>
+                        ))}
+                    </div>
                 </div>
             </Reveal>
         </section>
