@@ -415,6 +415,42 @@ export function SectionSystem() {
 }
 
 // ============================================================================
+// SECTION DEPLOY — entête riche « build & deploy » (eyebrow + titre + corps),
+// placée après les couches. Structure inspirée des intros produit (Mistral),
+// adaptée FR, sans nom de produit et sans tiret cadratin.
+// ============================================================================
+export function SectionDeploy() {
+    return (
+        <section
+            id="section-deploy"
+            className="relative"
+            style={{ backgroundColor: TOKENS.surface, paddingBlock: '104px', paddingInline: '32px' }}
+            aria-label="Développement d'applications IA"
+        >
+            <Reveal>
+                <div className="max-w-[840px] mx-auto text-center">
+                    <div className="font-mono" style={{ fontSize: 13, letterSpacing: '0.22em', ...EMBOSS_MUTED }}>
+                        DÉVELOPPEMENT D'APPLICATIONS IA
+                    </div>
+                    <h2
+                        className="font-sans mt-4 mx-auto"
+                        style={{ fontSize: 'clamp(1.9rem, 3.6vw, 2.9rem)', lineHeight: 1.1, fontWeight: 500, letterSpacing: '-0.02em', maxWidth: '18ch', ...EMBOSS_DARK }}
+                    >
+                        Concevoir et déployer, en gardant le contrôle.
+                    </h2>
+                    <p
+                        className="font-sans mt-5 mx-auto"
+                        style={{ fontSize: 18, lineHeight: '28px', fontWeight: 460, color: TOKENS.mutedText, maxWidth: '60ch' }}
+                    >
+                        Construisez et déployez vos applications d'IA avec un contrôle total : agents sur mesure, exécution en production partout, du poste local au cloud souverain UE, avec un outillage de niveau entreprise.
+                    </p>
+                </div>
+            </Reveal>
+        </section>
+    );
+}
+
+// ============================================================================
 // SECTION 2 — Method (4 steps, like Cofounder chapters)
 // ============================================================================
 // ── Roadmap board (méthode) — staged flow of agent/human tasks (cofounder idiom) ─
