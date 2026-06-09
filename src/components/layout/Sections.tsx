@@ -732,12 +732,12 @@ const EXP_BEADS: { src: [number, number]; left?: number; right?: number; top?: n
     { src: [86, 70], right: 18, bottom: 2, span: 2 },
 ];
 
-const EXP_CARDS: { icon: LucideIcon; label: string; desc: string; dx: number }[] = [
-    { icon: TypeIcon, label: 'Texte', desc: 'Rédaction, synthèse, extraction', dx: -22 },
-    { icon: ImageIcon, label: 'Image', desc: 'Génération, édition, analyse', dx: 18 },
-    { icon: Mic, label: 'Voix', desc: 'Synthèse, transcription, temps réel', dx: -12 },
-    { icon: Video, label: 'Vidéo', desc: 'Génération, montage, analyse', dx: 22 },
-    { icon: Music, label: 'Musique', desc: 'Composition, habillage sonore', dx: -16 },
+const EXP_CARDS: { icon: LucideIcon; label: string; tags: string[]; dx: number }[] = [
+    { icon: TypeIcon, label: 'Texte', tags: ['Rédaction', 'Synthèse', 'Extraction', 'Classification'], dx: -16 },
+    { icon: ImageIcon, label: 'Image', tags: ['Génération', 'Retouche', 'Analyse', 'OCR'], dx: 14 },
+    { icon: Mic, label: 'Voix', tags: ['Synthèse vocale', 'Transcription', 'Temps réel'], dx: -10 },
+    { icon: Video, label: 'Vidéo', tags: ['Génération', 'Montage', 'Sous-titres'], dx: 16 },
+    { icon: Music, label: 'Musique', tags: ['Composition', 'Habillage', 'Jingles'], dx: -12 },
 ];
 
 export function SectionExpertise() {
@@ -805,21 +805,31 @@ export function SectionExpertise() {
 
                         {/* cartes expertises flottantes */}
                         <div className="absolute inset-0 flex flex-col items-center justify-center" style={{ gap: 18, padding: 24 }}>
-                            {EXP_CARDS.map(({ icon: Icon, label, desc, dx }) => (
+                            {EXP_CARDS.map(({ icon: Icon, label, tags, dx }) => (
                                 <div
                                     key={label}
-                                    className="inline-flex items-center gap-3"
-                                    style={{ transform: `translateX(${dx}px)`, padding: '11px 18px 11px 11px', borderRadius: 14, background: TOKENS.white, boxShadow: RM_CARD_SHADOW, maxWidth: '100%' }}
+                                    className="flex flex-col"
+                                    style={{ transform: `translateX(${dx}px)`, padding: '14px 16px', borderRadius: 14, background: TOKENS.white, boxShadow: RM_CARD_SHADOW, width: 'clamp(248px, 27vw, 300px)' }}
                                 >
-                                    <span
-                                        className="inline-flex items-center justify-center shrink-0"
-                                        style={{ width: 38, height: 38, borderRadius: 10, background: TOKENS.surface, boxShadow: RM_TILE_SHADOW }}
-                                    >
-                                        <Icon size={19} strokeWidth={1.8} color={TOKENS.ink} />
-                                    </span>
-                                    <div style={{ minWidth: 0 }}>
-                                        <div className="font-sans" style={{ fontSize: 15, fontWeight: 600, color: TOKENS.ink, lineHeight: 1.15, whiteSpace: 'nowrap' }}>{label}</div>
-                                        <div className="font-mono" style={{ fontSize: 11, color: TOKENS.mutedText, marginTop: 3, whiteSpace: 'nowrap' }}>{desc}</div>
+                                    <div className="flex items-center" style={{ gap: 11, marginBottom: 12 }}>
+                                        <span
+                                            className="inline-flex items-center justify-center shrink-0"
+                                            style={{ width: 36, height: 36, borderRadius: 9, background: TOKENS.surface, boxShadow: RM_TILE_SHADOW }}
+                                        >
+                                            <Icon size={18} strokeWidth={1.8} color={TOKENS.ink} />
+                                        </span>
+                                        <span className="font-sans" style={{ fontSize: 15.5, fontWeight: 600, color: TOKENS.ink }}>{label}</span>
+                                    </div>
+                                    <div className="flex flex-wrap" style={{ gap: 6 }}>
+                                        {tags.map((t) => (
+                                            <span
+                                                key={t}
+                                                className="font-mono"
+                                                style={{ padding: '4px 9px', borderRadius: 999, border: '1px solid rgba(23,23,23,0.12)', fontSize: 10.5, letterSpacing: '0.03em', color: TOKENS.mutedText }}
+                                            >
+                                                {t}
+                                            </span>
+                                        ))}
                                     </div>
                                 </div>
                             ))}
