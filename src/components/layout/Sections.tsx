@@ -686,7 +686,7 @@ export function SectionRnd() {
 // énumère nos expertises de génération. Beads de 24px sur une grille stricte
 // de 24px (positions et tailles = multiples de 24, comme le hero bg).
 // ============================================================================
-const EXP_BG = 24; // unité de grille bead (px) = taille d'une bead
+const EXP_BG = 12; // taille d'une bead (px) — 4 beads (2×2) par carré de fond de 24px
 
 function GridBead({ src, left, right, top, bottom, span = 1 }: { src: [number, number]; left?: number; right?: number; top?: number; bottom?: number; span?: number }) {
     const [c, r] = src;
@@ -717,17 +717,19 @@ function GridBead({ src, left, right, top, bottom, span = 1 }: { src: [number, n
 }
 
 // positions en unités de grille (×24px), ancrées aux bords → multiples de 24
+// positions en unités bead (×12px). spans pairs → éléments multiples de 24px,
+// chacun affichant un cluster de 4 beads (2×2) par carré de fond.
 const EXP_BEADS: { src: [number, number]; left?: number; right?: number; top?: number; bottom?: number; span?: number }[] = [
-    { src: [96, 66], left: 2, top: 2, span: 1 },
-    { src: [68, 43], left: 1, top: 7, span: 2 },
-    { src: [74, 72], left: 3, bottom: 2, span: 1 },
-    { src: [80, 70], left: 7, top: 1, span: 1 },
-    { src: [6, 39], left: 4, bottom: 1, span: 2 },
-    { src: [91, 67], right: 2, top: 2, span: 2 },
-    { src: [100, 60], right: 1, top: 8, span: 1 },
-    { src: [79, 75], right: 3, bottom: 2, span: 2 },
-    { src: [66, 49], right: 7, top: 1, span: 1 },
-    { src: [86, 70], right: 9, bottom: 1, span: 1 },
+    { src: [96, 66], left: 4, top: 4, span: 2 },
+    { src: [68, 43], left: 2, top: 14, span: 4 },
+    { src: [74, 72], left: 6, bottom: 4, span: 2 },
+    { src: [80, 70], left: 14, top: 2, span: 2 },
+    { src: [6, 39], left: 8, bottom: 2, span: 4 },
+    { src: [91, 67], right: 4, top: 4, span: 4 },
+    { src: [100, 60], right: 2, top: 16, span: 2 },
+    { src: [79, 75], right: 6, bottom: 4, span: 4 },
+    { src: [66, 49], right: 14, top: 2, span: 2 },
+    { src: [86, 70], right: 18, bottom: 2, span: 2 },
 ];
 
 const EXP_CARDS: { icon: LucideIcon; label: string; dx: number }[] = [
