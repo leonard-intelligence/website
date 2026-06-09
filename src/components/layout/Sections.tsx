@@ -745,7 +745,7 @@ export function SectionExpertise() {
         <section
             id="section-expertise"
             className="relative"
-            style={{ backgroundColor: TOKENS.surface, paddingBlock: '88px', paddingInline: '32px' }}
+            style={{ backgroundColor: TOKENS.surface, paddingBlock: '104px', paddingInline: '32px' }}
             aria-label="Nos expertises"
         >
             <Reveal>
@@ -770,12 +770,25 @@ export function SectionExpertise() {
                         Du texte à la vidéo : nous concevons des systèmes qui génèrent et orchestrent chaque modalité, sur mesure pour votre métier.
                     </p>
 
+                    {/* Compétences — reprend les cartes de la section suivante (CAPS) */}
+                    <div className="flex flex-wrap" style={{ gap: 10, marginTop: 24 }}>
+                        {CAPS.map((c) => (
+                            <span
+                                key={c.n}
+                                className="font-sans"
+                                style={{ padding: '8px 15px', borderRadius: 999, border: '1px solid rgba(23,23,23,0.14)', fontSize: 13.5, fontWeight: 500, color: TOKENS.ink }}
+                            >
+                                {c.title}
+                            </span>
+                        ))}
+                    </div>
+
                     {/* Carte beads — grille stricte 24px */}
                     <div
                         className="relative"
                         style={{
-                            marginTop: 36,
-                            height: 'clamp(456px, 46vw, 528px)',
+                            marginTop: 40,
+                            height: 'clamp(520px, 50vw, 600px)',
                             borderRadius: 18,
                             overflow: 'hidden',
                             backgroundColor: '#EEEDE9',
@@ -791,7 +804,7 @@ export function SectionExpertise() {
                         ))}
 
                         {/* cartes expertises flottantes */}
-                        <div className="absolute inset-0 flex flex-col items-center justify-center" style={{ gap: 12, padding: 24 }}>
+                        <div className="absolute inset-0 flex flex-col items-center justify-center" style={{ gap: 18, padding: 24 }}>
                             {EXP_CARDS.map(({ icon: Icon, label, desc, dx }) => (
                                 <div
                                     key={label}
