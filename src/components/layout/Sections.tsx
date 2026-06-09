@@ -693,12 +693,12 @@ const VORTEX_SRC: [number, number][] = [
     [66, 49], [80, 70], [6, 39], [86, 70], [53, 61], [47, 62],
 ];
 
-const EXP_CARDS: { icon: LucideIcon; label: string; pos: React.CSSProperties }[] = [
-    { icon: TypeIcon, label: 'Texte', pos: { left: '5%', top: '6%' } },
-    { icon: ImageIcon, label: 'Image', pos: { right: '6%', top: '23%' } },
-    { icon: Mic, label: 'Voix', pos: { left: '19%', top: '46%' } },
-    { icon: Video, label: 'Vidéo', pos: { right: '15%', top: '63%' } },
-    { icon: Music, label: 'Musique', pos: { left: '8%', top: '82%' } },
+const EXP_CARDS: { icon: LucideIcon; label: string; tags: string[]; pos: React.CSSProperties }[] = [
+    { icon: TypeIcon, label: 'Texte', tags: ['Rédaction', 'Synthèse', 'Extraction', 'Classification'], pos: { left: '5%', top: '5%' } },
+    { icon: ImageIcon, label: 'Image', tags: ['Génération', 'Retouche', 'Analyse', 'OCR'], pos: { right: '6%', top: '23%' } },
+    { icon: Mic, label: 'Voix', tags: ['Synthèse vocale', 'Transcription', 'Temps réel'], pos: { left: '19%', top: '45%' } },
+    { icon: Video, label: 'Vidéo', tags: ['Génération', 'Montage', 'Sous-titres'], pos: { right: '15%', top: '62%' } },
+    { icon: Music, label: 'Musique', tags: ['Composition', 'Habillage', 'Jingles'], pos: { left: '8%', top: '80%' } },
 ];
 
 export function SectionExpertise() {
@@ -734,19 +734,6 @@ export function SectionExpertise() {
                     <p className="font-sans" style={{ marginTop: 24, fontSize: 19, lineHeight: '28px', fontWeight: 460, color: TOKENS.mutedText, maxWidth: '64ch' }}>
                         Du texte à la vidéo : nous concevons des systèmes qui génèrent et orchestrent chaque modalité, sur mesure pour votre métier.
                     </p>
-
-                    {/* Compétences — reprend les cartes de la section suivante (CAPS) */}
-                    <div className="flex flex-wrap" style={{ gap: 10, marginTop: 24 }}>
-                        {CAPS.map((c) => (
-                            <span
-                                key={c.n}
-                                className="font-sans"
-                                style={{ padding: '8px 15px', borderRadius: 999, border: '1px solid rgba(23,23,23,0.14)', fontSize: 13.5, fontWeight: 500, color: TOKENS.ink }}
-                            >
-                                {c.title}
-                            </span>
-                        ))}
-                    </div>
 
                     {/* Carte beads — grille stricte 24px */}
                     <div
@@ -808,19 +795,32 @@ export function SectionExpertise() {
                         })}
 
                         {/* cartes expertises réparties dans le cadre */}
-                        {EXP_CARDS.map(({ icon: Icon, label, pos }) => (
+                        {EXP_CARDS.map(({ icon: Icon, label, tags, pos }) => (
                             <div
                                 key={label}
-                                className="absolute inline-flex items-center"
-                                style={{ ...pos, gap: 12, padding: '11px 18px 11px 11px', borderRadius: 14, background: TOKENS.white, boxShadow: RM_CARD_SHADOW }}
+                                className="absolute flex flex-col"
+                                style={{ ...pos, width: 'clamp(244px, 25vw, 296px)', padding: '14px 16px', borderRadius: 14, background: TOKENS.white, boxShadow: RM_CARD_SHADOW }}
                             >
-                                <span
-                                    className="inline-flex items-center justify-center shrink-0"
-                                    style={{ width: 36, height: 36, borderRadius: 9, background: TOKENS.surface, boxShadow: RM_TILE_SHADOW }}
-                                >
-                                    <Icon size={18} strokeWidth={1.8} color={TOKENS.ink} />
-                                </span>
-                                <span className="font-sans" style={{ fontSize: 15.5, fontWeight: 600, color: TOKENS.ink, whiteSpace: 'nowrap' }}>{label}</span>
+                                <div className="flex items-center" style={{ gap: 11, marginBottom: 12 }}>
+                                    <span
+                                        className="inline-flex items-center justify-center shrink-0"
+                                        style={{ width: 36, height: 36, borderRadius: 9, background: TOKENS.surface, boxShadow: RM_TILE_SHADOW }}
+                                    >
+                                        <Icon size={18} strokeWidth={1.8} color={TOKENS.ink} />
+                                    </span>
+                                    <span className="font-sans" style={{ fontSize: 15.5, fontWeight: 600, color: TOKENS.ink }}>{label}</span>
+                                </div>
+                                <div className="flex flex-wrap" style={{ gap: 6 }}>
+                                    {tags.map((t) => (
+                                        <span
+                                            key={t}
+                                            className="font-mono"
+                                            style={{ padding: '4px 9px', borderRadius: 999, border: '1px solid rgba(23,23,23,0.12)', fontSize: 10.5, letterSpacing: '0.03em', color: TOKENS.mutedText }}
+                                        >
+                                            {t}
+                                        </span>
+                                    ))}
+                                </div>
                             </div>
                         ))}
                     </div>
