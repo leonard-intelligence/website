@@ -1260,42 +1260,58 @@ export function SectionCapabilities() {
     return (
         <section
             id="section-capabilities"
-            className="relative"
-            style={{ backgroundColor: TOKENS.surface, paddingBlock: '76px', paddingInline: '32px' }}
+            className="relative overflow-hidden"
+            style={{ paddingBlock: '104px', paddingInline: '32px' }}
             aria-label="Capacités"
         >
-            <Reveal>
-            <div className="max-w-[1100px] mx-auto">
-                <header className="text-center mb-14">
-                    <div className="font-mono" style={{ fontSize: 13, letterSpacing: '0.22em', ...EMBOSS_MUTED }}>
-                        FICHE TECHNIQUE
-                    </div>
-                    <h2
-                        className="font-sans mt-3 mx-auto"
-                        style={{ fontSize: 'clamp(1.75rem, 3.4vw, 2.75rem)', lineHeight: 1.1, fontWeight: 500, letterSpacing: '-0.02em', maxWidth: '20ch', ...EMBOSS_DARK }}
-                    >
-                        Créer vos agents sur mesure.
-                    </h2>
-                    <p
-                        className="font-sans mt-4 mx-auto"
-                        style={{ fontSize: '17px', lineHeight: '24px', fontWeight: 460, color: TOKENS.mutedText, maxWidth: '52ch' }}
-                    >
-                        Instructions, sous-agents, outils branchés, garde-fous, latence : tout est spécifié, mesurable, auditable. Pas de boîte noire.
-                    </p>
-                </header>
+            {/* Bead background (same source as the Hero) */}
+            <div
+                aria-hidden="true"
+                className="absolute inset-0"
+                style={{ backgroundImage: `url(${SOURCE_URL})`, backgroundSize: 'cover', backgroundPosition: 'center 62%' }}
+            />
+            {/* Legibility scrim — darker on the left where the text sits */}
+            <div
+                aria-hidden="true"
+                className="absolute inset-0"
+                style={{ background: 'linear-gradient(105deg, rgba(16,16,16,0.74) 0%, rgba(16,16,16,0.44) 50%, rgba(16,16,16,0.16) 100%)' }}
+            />
 
-                <div className="flex flex-col items-center gap-5">
-                    <div className="relative w-full" style={{ maxWidth: 620, aspectRatio: '4 / 3' }}>
+            <Reveal>
+                <div className="relative max-w-[1200px] mx-auto grid grid-cols-1 lg:grid-cols-2 items-center" style={{ gap: 56 }}>
+                    {/* Text — left */}
+                    <div>
+                        <div className="font-mono" style={{ fontSize: 13, letterSpacing: '0.22em', color: 'rgba(255,255,255,0.72)' }}>
+                            FICHE TECHNIQUE
+                        </div>
+                        <h2
+                            className="font-sans mt-4"
+                            style={{ fontSize: 'clamp(1.85rem, 3.4vw, 2.75rem)', lineHeight: 1.1, fontWeight: 500, letterSpacing: '-0.02em', color: '#FFFFFF', textShadow: '0 2px 16px rgba(0,0,0,0.32)' }}
+                        >
+                            Créer vos agents sur mesure.
+                        </h2>
+                        <p
+                            className="font-sans mt-5"
+                            style={{ fontSize: 17, lineHeight: '26px', fontWeight: 460, color: 'rgba(255,255,255,0.9)', maxWidth: '46ch', textShadow: '0 1px 10px rgba(0,0,0,0.28)' }}
+                        >
+                            Instructions, sous-agents, outils branchés, garde-fous, latence : tout est spécifié, mesurable, auditable. Pas de boîte noire.
+                        </p>
+                        <span
+                            className="font-mono inline-block"
+                            style={{ marginTop: 24, fontSize: 10, letterSpacing: '0.18em', color: 'rgba(255,255,255,0.6)' }}
+                        >
+                            SPÉCIMEN · DÉMONSTRATION DE SAVOIR-FAIRE
+                        </span>
+                    </div>
+
+                    {/* Agent card — right, floating above the background */}
+                    <div
+                        className="relative w-full mx-auto"
+                        style={{ maxWidth: 560, aspectRatio: '4 / 3', filter: 'drop-shadow(0 28px 56px rgba(0,0,0,0.38))' }}
+                    >
                         <AgentCardStack sel={0} />
                     </div>
-                    <span
-                        className="font-mono"
-                        style={{ fontSize: 10, letterSpacing: '0.18em', color: TOKENS.mutedText, opacity: 0.7 }}
-                    >
-                        SPÉCIMEN · DÉMONSTRATION DE SAVOIR-FAIRE
-                    </span>
                 </div>
-            </div>
             </Reveal>
         </section>
     );
