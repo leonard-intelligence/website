@@ -3,7 +3,7 @@ import { PaintMode } from './PaintMode';
 import { useNotchParams, setNotchParams, resetNotchParams, type NotchParams, type CornerStyle } from './notchParamsStore';
 import { useVitruveParams, setVitruveParams, resetVitruveParams, type VitruveParams } from './vitruveParamsStore';
 import { useHeroTitleParams, setHeroTitleParams, resetHeroTitleParams, type PixelVariant } from './heroTitleStore';
-import { useVortexParams, setVortexParams, resetVortexParams } from './vortexParamsStore';
+import { useVortexParams, setVortexParams, resetVortexParams, type VortexShape, type VortexColorMode } from './vortexParamsStore';
 
 // ============================================================================
 // Inner-shadow tab (state, filters, controls)
@@ -521,19 +521,75 @@ function HeroTab() {
 
 function VortexTab() {
     const p = useVortexParams();
+    const shapes: { id: VortexShape; label: string }[] = [
+        { id: 'spiral', label: 'Spirale' },
+        { id: 'phyllo', label: 'Tournesol' },
+        { id: 'rings', label: 'Anneaux' },
+        { id: 'radial', label: 'Radial' },
+    ];
+    const colorModes: { id: VortexColorMode; label: string }[] = [
+        { id: 'image', label: 'Image' },
+        { id: 'radial', label: 'Radial' },
+        { id: 'solid', label: 'Couleur' },
+    ];
     return (
         <>
-            <div style={{ color: '#9a9aa6', letterSpacing: '0.08em', textTransform: 'uppercase', fontSize: 11, marginBottom: 2 }}>
-                Vortex de beads
+            <div style={{ color: '#9a9aa6', letterSpacing: '0.08em', textTransform: 'uppercase', fontSize: 11, marginBottom: 6 }}>
+                Algorithme
             </div>
-            <Slider label="Bras" min={1} max={6} step={1} value={p.arms} onChange={(v) => setVortexParams({ arms: v })} />
-            <Slider label="Beads / bras" min={3} max={40} step={1} value={p.count} onChange={(v) => setVortexParams({ count: v })} />
+            <div style={{ display: 'flex', flexWrap: 'wrap', gap: 4 }}>
+                {shapes.map((s) => (
+                    <button
+                        key={s.id}
+                        onClick={() => setVortexParams({ shape: s.id })}
+                        style={{ ...btn, flex: '1 1 45%', background: p.shape === s.id ? '#3a3aff' : '#1a1a20', color: '#fff' }}
+                    >
+                        {s.label}
+                    </button>
+                ))}
+            </div>
+
+            <Slider label="Bras / anneaux" min={1} max={8} step={1} value={p.arms} onChange={(v) => setVortexParams({ arms: v })} />
+            <Slider label="Beads" min={3} max={48} step={1} value={p.count} onChange={(v) => setVortexParams({ count: v })} />
+            <Slider label="Épaisseur des bras" min={1} max={6} step={1} value={p.thickness} onChange={(v) => setVortexParams({ thickness: v })} />
             <Slider label="Tours" min={0.5} max={5} step={0.1} value={p.turns} onChange={(v) => setVortexParams({ turns: v })} />
             <Slider label="Rayon de départ" min={0} max={160} step={4} value={p.startRadius} onChange={(v) => setVortexParams({ startRadius: v })} />
             <Slider label="Croissance" min={1} max={14} step={0.5} value={p.growth} onChange={(v) => setVortexParams({ growth: v })} />
             <Slider label="Rotation" min={0} max={360} step={5} value={p.rotation} onChange={(v) => setVortexParams({ rotation: v })} />
             <Slider label="Taille bead (px)" min={6} max={48} step={6} value={p.beadSize} onChange={(v) => setVortexParams({ beadSize: v })} />
             <Slider label="Snap grille (px)" min={0} max={48} step={12} value={p.snap} onChange={(v) => setVortexParams({ snap: v })} />
+
+            <div style={{ color: '#9a9aa6', letterSpacing: '0.08em', textTransform: 'uppercase', fontSize: 11, margin: '12px 0 6px' }}>
+                Couleur
+            </div>
+            <div style={{ display: 'flex', gap: 4 }}>
+                {colorModes.map((c) => (
+                    <button
+                        key={c.id}
+                        onClick={() => setVortexParams({ colorMode: c.id })}
+                        style={{ ...btn, flex: 1, background: p.colorMode === c.id ? '#3a3aff' : '#1a1a20', color: '#fff' }}
+                    >
+                        {c.label}
+                    </button>
+                ))}
+            </div>
+            {p.colorMode === 'solid' && (
+                <label style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginTop: 10, color: '#9a9aa6' }}>
+                    Couleur unie
+                    <input
+                        type="color"
+                        value={p.color}
+                        onChange={(e) => setVortexParams({ color: e.target.value })}
+                        style={{ width: 36, height: 24, border: 'none', background: 'transparent', cursor: 'pointer' }}
+                    />
+                </label>
+            )}
+            {p.colorMode === 'radial' && (
+                <div style={{ color: '#7a7a86', fontSize: 11, marginTop: 8, lineHeight: 1.4 }}>
+                    Près du centre = bas de l'image (fleurs), loin = haut (ciel).
+                </div>
+            )}
+
             <button onClick={() => resetVortexParams()} style={{ ...btn, marginTop: 12, width: '100%', background: '#1a1a20', color: '#fff' }}>
                 Reset
             </button>

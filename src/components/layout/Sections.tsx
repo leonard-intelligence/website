@@ -705,6 +705,7 @@ export function SectionExpertise() {
     const vortex = useVortexParams();
     const beads = buildVortex(vortex);
     const bs = vortex.beadSize;
+    const maxR = Math.max(1, ...beads.map((b) => b.r));
     return (
         <section
             id="section-expertise"
@@ -764,7 +765,28 @@ export function SectionExpertise() {
                     >
                         {/* vortex de beads — généré par algorithme (réglable : DevTools › Vortex) */}
                         {beads.map((b) => {
-                            const [sc, sr] = VORTEX_SRC[b.idx % VORTEX_SRC.length];
+                            let bg: React.CSSProperties;
+                            if (vortex.colorMode === 'solid') {
+                                bg = { backgroundColor: vortex.color };
+                            } else {
+                                let sc: number;
+                                let sr: number;
+                                if (vortex.colorMode === 'radial') {
+                                    // près du centre = bas de l'image (fleurs) ; loin = haut (ciel)
+                                    const rNorm = Math.min(1, b.r / maxR);
+                                    sr = Math.round((1 - rNorm) * (SAMPLE_H - 1));
+                                    const a = ((b.ang % (2 * Math.PI)) + 2 * Math.PI) % (2 * Math.PI);
+                                    sc = Math.min(SAMPLE_W - 1, Math.floor((a / (2 * Math.PI)) * SAMPLE_W));
+                                } else {
+                                    [sc, sr] = VORTEX_SRC[b.idx % VORTEX_SRC.length];
+                                }
+                                bg = {
+                                    backgroundImage: `url(${SOURCE_URL})`,
+                                    backgroundSize: `${SAMPLE_W * bs}px ${SAMPLE_H * bs}px`,
+                                    backgroundPosition: `-${sc * bs}px -${sr * bs}px`,
+                                    backgroundRepeat: 'no-repeat',
+                                };
+                            }
                             return (
                                 <div
                                     key={b.idx}
@@ -775,10 +797,7 @@ export function SectionExpertise() {
                                         top: `calc(50% + ${b.y - bs / 2}px)`,
                                         width: bs,
                                         height: bs,
-                                        backgroundImage: `url(${SOURCE_URL})`,
-                                        backgroundSize: `${SAMPLE_W * bs}px ${SAMPLE_H * bs}px`,
-                                        backgroundPosition: `-${sc * bs}px -${sr * bs}px`,
-                                        backgroundRepeat: 'no-repeat',
+                                        ...bg,
                                         borderRadius: 2,
                                         boxShadow: '0 1px 3px rgba(0,0,0,0.16)',
                                         imageRendering: 'pixelated',
