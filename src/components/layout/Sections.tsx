@@ -1,5 +1,5 @@
 // Sections V2 — Leonard Intelligence (design.md: warm neutrals, soft shadows, rounded corners)
-import { ArrowRight, Mic, Code2, Users, Map as MapIcon, Ruler, ShieldCheck, Boxes, Plug, Rocket, Gauge, Cpu, Workflow, Database, Layers, LayoutDashboard, Sparkles, type LucideIcon } from 'lucide-react';
+import { ArrowRight, Mic, Code2, Users, Map as MapIcon, Ruler, ShieldCheck, Boxes, Plug, Rocket, Gauge, Cpu, Workflow, Database, Layers, LayoutDashboard, Sparkles, Image as ImageIcon, Video, Music, Type as TypeIcon, type LucideIcon } from 'lucide-react';
 import { PixelLayer } from '../pixels/PixelLayer';
 import { Pixel } from '../pixels/Pixel';
 import { useBeadCtx, SOURCE_URL, SAMPLE_W, SAMPLE_H } from '../pixels/BeadPxContext';
@@ -85,6 +85,15 @@ const CAPS: { n: string; title: string; desc: string; href: string; icon: Lucide
     { n: '05', title: 'Capacités métier', desc: "Les compétences qui font de l'agent un expert de votre domaine.", href: '#section-capabilities', icon: Sparkles },
     { n: '06', title: 'Produits & interfaces', desc: 'Les surfaces où humains et agents travaillent.', href: '#section-produits', icon: LayoutDashboard },
     { n: '07', title: 'Sécurité & gouvernance', desc: 'Cloisonnement, traçabilité, accès par rôle, dans chaque couche.', href: '#section-securite', icon: ShieldCheck },
+];
+
+// Modalités de génération orchestrées au sein des systèmes.
+const MODALITIES: { icon: LucideIcon; label: string }[] = [
+    { icon: TypeIcon, label: 'Texte' },
+    { icon: ImageIcon, label: 'Image' },
+    { icon: Mic, label: 'Voix' },
+    { icon: Video, label: 'Vidéo' },
+    { icon: Music, label: 'Musique' },
 ];
 
 function CapCard({ cap }: { cap: (typeof CAPS)[number] }) {
@@ -407,6 +416,36 @@ export function SectionSystem() {
                     {CAPS.map((c) => (
                         <CapCard key={c.n} cap={c} />
                     ))}
+                </div>
+
+                {/* Génération multimodale */}
+                <div className="text-center" style={{ marginTop: 64 }}>
+                    <div className="font-mono" style={{ fontSize: 12, letterSpacing: '0.22em', color: 'rgba(23,23,23,0.5)' }}>
+                        GÉNÉRATION MULTIMODALE
+                    </div>
+                    <p
+                        className="font-sans mt-3 mx-auto"
+                        style={{ fontSize: 16, lineHeight: '23px', fontWeight: 460, color: TOKENS.mutedText, maxWidth: '52ch' }}
+                    >
+                        Texte, image, voix, vidéo, musique : générés et orchestrés ensemble, au sein de systèmes complexes.
+                    </p>
+                    <div className="flex flex-wrap justify-center" style={{ gap: 12, marginTop: 22 }}>
+                        {MODALITIES.map(({ icon: Icon, label }) => (
+                            <div
+                                key={label}
+                                className="inline-flex items-center"
+                                style={{ gap: 10, padding: '11px 18px 11px 12px', borderRadius: 999, background: TOKENS.white, boxShadow: RM_CARD_SHADOW }}
+                            >
+                                <span
+                                    className="inline-flex items-center justify-center"
+                                    style={{ width: 30, height: 30, borderRadius: 8, background: 'linear-gradient(180deg, #FFFFFF 0%, #F5F5F2 100%)', boxShadow: RM_TILE_SHADOW }}
+                                >
+                                    <Icon size={16} strokeWidth={1.7} color={TOKENS.ink} style={{ opacity: 0.75 }} />
+                                </span>
+                                <span className="font-sans" style={{ fontSize: 15, fontWeight: 500, color: TOKENS.ink }}>{label}</span>
+                            </div>
+                        ))}
+                    </div>
                 </div>
             </div>
             </Reveal>

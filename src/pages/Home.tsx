@@ -15,8 +15,8 @@ export function Home() {
                 {import.meta.env.DEV && <DevTools />}
                 <Hero />
                 <SectionIntro />
-                <SectionCapabilities />
                 <SectionSystem />
+                <SectionCapabilities />
                 <LayerModeles />
                 <LayerHarnais />
                 <LayerDonnees />
