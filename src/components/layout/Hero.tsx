@@ -162,7 +162,7 @@ export function Hero() {
                         filter: `drop-shadow(0 2px 14px rgba(0, 0, 0, 0.35))${heroTitle.glow > 0 ? ` drop-shadow(0 0 ${heroTitle.glow}px ${heroTitle.glowColor})` : ''}`,
                     }}
                 >
-                    Bienvenue dans l'ère des agents.
+                    Faites évoluer votre entreprise vers l'ère agentique.
                 </h1>
 
                 {/* Bottom-left frosted card */}
