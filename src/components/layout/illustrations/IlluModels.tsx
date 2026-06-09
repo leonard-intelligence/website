@@ -1,15 +1,16 @@
 // 01 · MODÈLES — "Le bon modèle, par tâche." (decorative).
-// Affiche les derniers modèles de langage de chaque grand fournisseur
-// (logo + nom du modèle de dernière génération), sans cadre — liste épurée.
+// Liste épurée des derniers modèles de chaque fournisseur. Les logos
+// (SVG monochromes) sont rendus via CSS mask : gris par défaut, couleur
+// de marque au survol.
 import { TOKENS } from '../Sections';
 
 const MODELS = [
-    { name: 'Claude Opus 4.8', vendor: 'Anthropic', logo: '/assets/logos/anthropic-color.svg' },
-    { name: 'GPT-5.5', vendor: 'OpenAI', logo: '/assets/logos/openai-color.svg' },
-    { name: 'Gemini 3 Pro', vendor: 'Google', logo: '/assets/logos/gemini.svg' },
-    { name: 'Mistral Large 3', vendor: 'Mistral AI', logo: '/assets/logos/mistral-color.svg' },
-    { name: 'Llama 4 Maverick', vendor: 'Meta', logo: '/assets/logos/meta-color.svg' },
-    { name: 'Nemotron 3 Ultra', vendor: 'NVIDIA', logo: '/assets/logos/nvidia-color.svg' },
+    { name: 'Claude Opus 4.8', vendor: 'Anthropic', logo: '/assets/logos/anthropic-color.svg', color: '#D97757' },
+    { name: 'GPT-5.5', vendor: 'OpenAI', logo: '/assets/logos/openai-color.svg', color: '#10A37F' },
+    { name: 'Gemini 3 Pro', vendor: 'Google', logo: '/assets/logos/gemini.svg', color: '#4285F4' },
+    { name: 'Mistral Large 3', vendor: 'Mistral AI', logo: '/assets/logos/mistral-color.svg', color: '#FA520F' },
+    { name: 'Llama 4 Maverick', vendor: 'Meta', logo: '/assets/logos/meta-color.svg', color: '#0866FF' },
+    { name: 'Nemotron 3 Ultra', vendor: 'NVIDIA', logo: '/assets/logos/nvidia-color.svg', color: '#76B900' },
 ];
 
 export function IlluModels() {
@@ -18,13 +19,26 @@ export function IlluModels() {
         <div className="w-full font-sans" aria-hidden="true">
             <div className="grid grid-cols-1 sm:grid-cols-2" style={{ gap: '26px 44px' }}>
                 {MODELS.map((m) => (
-                    <div key={m.name} className="flex items-center" style={{ gap: 14 }}>
-                        <img
-                            src={m.logo}
-                            alt=""
-                            width={32}
-                            height={32}
-                            style={{ width: 32, height: 32, objectFit: 'contain', flex: '0 0 auto' }}
+                    <div
+                        key={m.name}
+                        className="group flex items-center"
+                        style={{ '--lc': m.color, gap: 14 } as React.CSSProperties}
+                    >
+                        <span
+                            aria-hidden="true"
+                            className="shrink-0 transition-colors duration-300 [background-color:#171717] group-hover:[background-color:var(--lc)]"
+                            style={{
+                                width: 32,
+                                height: 32,
+                                WebkitMaskImage: `url(${m.logo})`,
+                                maskImage: `url(${m.logo})`,
+                                WebkitMaskRepeat: 'no-repeat',
+                                maskRepeat: 'no-repeat',
+                                WebkitMaskSize: 'contain',
+                                maskSize: 'contain',
+                                WebkitMaskPosition: 'center',
+                                maskPosition: 'center',
+                            }}
                         />
                         <div style={{ minWidth: 0 }}>
                             <div className="font-sans" style={{ fontSize: 15.5, fontWeight: 600, color: ink, lineHeight: 1.15, whiteSpace: 'nowrap' }}>
