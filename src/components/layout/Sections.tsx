@@ -1296,7 +1296,7 @@ export function SectionCapabilities() {
                         className="relative overflow-hidden"
                         style={{
                             borderRadius: 22,
-                            padding: 'clamp(28px, 4vw, 48px)',
+                            padding: 'clamp(20px, 2.5vw, 32px)',
                             boxShadow: '0 20px 48px rgba(0,0,0,0.18), inset 0 0 0 1px rgba(255,255,255,0.12)',
                         }}
                     >
@@ -1315,7 +1315,7 @@ export function SectionCapabilities() {
                         {/* carte flottante */}
                         <div
                             className="relative w-full mx-auto"
-                            style={{ maxWidth: 480, aspectRatio: '4 / 3', filter: 'drop-shadow(0 20px 40px rgba(0,0,0,0.42))' }}
+                            style={{ maxWidth: 500, aspectRatio: '0.9', filter: 'drop-shadow(0 20px 40px rgba(0,0,0,0.42))' }}
                         >
                             <AgentCardStack sel={0} />
                         </div>
@@ -2004,7 +2004,7 @@ function AgentCardStack({ sel }: { sel: number }) {
                     </filter>
                 </defs>
             </svg>
-            <AgentCard key={sel} data={AGENT_CARDS[sel]} rotate={0} offsetX={21} offsetY={5} z={1} />
+            <AgentCard key={sel} data={AGENT_CARDS[sel]} rotate={0} offsetX={21} offsetY={13} z={1} />
         </div>
     );
 }
