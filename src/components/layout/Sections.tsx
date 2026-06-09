@@ -1708,7 +1708,7 @@ function AgentCard({ data, rotate, offsetX, offsetY, z }: { data: AgentCardData;
                 {/* LEFT: card header eyebrow + AGENT hero */}
                 <div className="flex flex-col" style={{ gap: 8 }}>
                     <div style={{ fontSize: 8.5, letterSpacing: '0.22em', fontWeight: 500, opacity: 0.85, lineHeight: 1 }}>
-                        LEONARD INTELLIGENCE · AGENT ID
+                        LEONARD INTELLIGENCE
                     </div>
                     <div
                         style={{
@@ -1716,9 +1716,10 @@ function AgentCard({ data, rotate, offsetX, offsetY, z }: { data: AgentCardData;
                             fontSize: 38,
                             letterSpacing: '0.02em',
                             lineHeight: 1,
+                            whiteSpace: 'nowrap',
                         }}
                     >
-                        AGENT
+                        AGENT ID
                     </div>
                 </div>
 
