@@ -364,9 +364,21 @@ function VortexTab() {
             <Segmented value={p.colorMode} onChange={(v) => setVortexParams({ colorMode: v })} options={VORTEX_COLORS} columns={3} />
             {p.colorMode === 'solid' && <ColorField label="Couleur unie" value={p.color} onChange={(v) => setVortexParams({ color: v })} />}
             {p.colorMode === 'radial' && (
-                <div style={{ color: D.faint, fontSize: 11, marginTop: 8, lineHeight: 1.4 }}>
-                    Près du centre = bas de l'image (fleurs), loin = haut (ciel).
-                </div>
+                <>
+                    <div style={{ marginTop: 8 }}>
+                        <Segmented
+                            value={p.radialInvert ? 'inv' : 'std'}
+                            onChange={(v) => setVortexParams({ radialInvert: v === 'inv' })}
+                            columns={2}
+                            options={[{ id: 'std', label: 'Centre = fleurs' }, { id: 'inv', label: 'Centre = ciel' }]}
+                        />
+                    </div>
+                    <div style={{ color: D.faint, fontSize: 11, marginTop: 8, lineHeight: 1.4 }}>
+                        {p.radialInvert
+                            ? 'Près du centre = haut de l\'image (ciel), loin = bas (fleurs).'
+                            : 'Près du centre = bas de l\'image (fleurs), loin = haut (ciel).'}
+                    </div>
+                </>
             )}
 
             <ResetButton onClick={() => resetVortexParams()} />

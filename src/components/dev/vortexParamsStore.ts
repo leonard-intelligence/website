@@ -18,22 +18,24 @@ export type VortexParams = {
     beadSize: number;    // px (each bead)
     snap: number;        // px grid snap (0 = off)
     colorMode: VortexColorMode;
-    color: string;       // solid-mode color
+    color: string;        // solid-mode color
+    radialInvert: boolean; // radial mode: invert the center↔edge mapping
 };
 
 export const DEFAULT_VORTEX_PARAMS: VortexParams = {
     shape: 'spiral',
-    count: 14,
-    arms: 2,
-    turns: 2.6,
-    startRadius: 36,
-    growth: 6,
-    rotation: 0,
+    count: 48,
+    arms: 8,
+    turns: 2.7,
+    startRadius: 92,
+    growth: 6.5,
+    rotation: 50,
     thickness: 1,
     beadSize: 12,
-    snap: 24,
-    colorMode: 'image',
+    snap: 0,
+    colorMode: 'radial',
     color: '#D97757',
+    radialInvert: false,
 };
 
 let state: VortexParams = { ...DEFAULT_VORTEX_PARAMS };
