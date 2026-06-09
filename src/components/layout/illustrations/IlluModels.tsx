@@ -13,38 +13,29 @@ const MODELS = [
     { name: 'Nemotron 3 Ultra', vendor: 'NVIDIA', logo: '/assets/logos/nvidia-color.svg' },
 ];
 
-export function IlluModels({ accent }: { accent: string }) {
+export function IlluModels() {
     const { ink, mutedText, surface } = TOKENS;
     return (
-        <div className="w-full font-sans mx-auto" style={{ maxWidth: 460 }} aria-hidden="true">
-            {/* Eyebrow */}
-            <div className="flex items-center" style={{ gap: 8, marginBottom: 14 }}>
-                <span style={{ width: 7, height: 7, borderRadius: 999, background: accent, flex: '0 0 auto' }} />
-                <span className="font-mono" style={{ fontSize: 9.5, letterSpacing: '0.18em', color: mutedText }}>
-                    DERNIÈRE GÉNÉRATION
-                </span>
-            </div>
-
-            {/* Grid of latest models */}
-            <div className="grid grid-cols-1 sm:grid-cols-2" style={{ gap: 10 }}>
+        <div className="w-full font-sans" aria-hidden="true">
+            <div className="grid grid-cols-1 sm:grid-cols-2" style={{ gap: 12 }}>
                 {MODELS.map((m) => (
                     <div
                         key={m.name}
                         className="flex items-center"
-                        style={{ gap: 11, padding: '12px 14px', borderRadius: 12, background: surface, boxShadow: EMBOSS_SOFT }}
+                        style={{ gap: 14, padding: '17px 18px', borderRadius: 14, background: surface, boxShadow: EMBOSS_SOFT }}
                     >
                         <img
                             src={m.logo}
                             alt=""
-                            width={24}
-                            height={24}
-                            style={{ width: 24, height: 24, objectFit: 'contain', flex: '0 0 auto' }}
+                            width={30}
+                            height={30}
+                            style={{ width: 30, height: 30, objectFit: 'contain', flex: '0 0 auto' }}
                         />
                         <div style={{ minWidth: 0 }}>
-                            <div className="font-sans" style={{ fontSize: 13.5, fontWeight: 600, color: ink, lineHeight: 1.15, whiteSpace: 'nowrap' }}>
+                            <div className="font-sans" style={{ fontSize: 15, fontWeight: 600, color: ink, lineHeight: 1.15, whiteSpace: 'nowrap' }}>
                                 {m.name}
                             </div>
-                            <div className="font-mono" style={{ fontSize: 9.5, color: mutedText, marginTop: 2 }}>
+                            <div className="font-mono" style={{ fontSize: 10.5, color: mutedText, marginTop: 3 }}>
                                 {m.vendor}
                             </div>
                         </div>

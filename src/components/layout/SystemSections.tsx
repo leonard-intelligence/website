@@ -146,7 +146,7 @@ export function LayerModeles() {
             points={['Modèles propriétaires ou open-weight', 'Hébergeable dans votre périmètre', 'Arbitrage précision / coût / latence']}
             accent={TOKENS.lime}
             bg={TOKENS.paper}
-            visual={<IlluModels accent={TOKENS.lime} />}
+            visual={<IlluModels />}
         />
     );
 }
