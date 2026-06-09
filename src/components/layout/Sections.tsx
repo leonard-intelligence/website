@@ -5,6 +5,7 @@ import { Pixel } from '../pixels/Pixel';
 import { useBeadCtx, SOURCE_URL, SAMPLE_W, SAMPLE_H } from '../pixels/BeadPxContext';
 import { useNotchParams } from '../dev/notchParamsStore';
 import { useVitruveParams } from '../dev/vitruveParamsStore';
+import { useVortexParams, buildVortex } from '../dev/vortexParamsStore';
 import { QrBadge } from './QrBadge';
 import { ReliefButton } from '../ui/ReliefButton';
 import { ConstruitSur } from './ConstruitSur';
@@ -686,50 +687,10 @@ export function SectionRnd() {
 // énumère nos expertises de génération. Beads de 24px sur une grille stricte
 // de 24px (positions et tailles = multiples de 24, comme le hero bg).
 // ============================================================================
-const EXP_BG = 12; // taille d'une bead (px) — 4 beads (2×2) par carré de fond de 24px
-
-function GridBead({ src, left, right, top, bottom, span = 1 }: { src: [number, number]; left?: number; right?: number; top?: number; bottom?: number; span?: number }) {
-    const [c, r] = src;
-    const size = EXP_BG * span;
-    const pos: React.CSSProperties = {};
-    if (left !== undefined) pos.left = left * EXP_BG;
-    if (right !== undefined) pos.right = right * EXP_BG;
-    if (top !== undefined) pos.top = top * EXP_BG;
-    if (bottom !== undefined) pos.bottom = bottom * EXP_BG;
-    return (
-        <div
-            aria-hidden="true"
-            style={{
-                position: 'absolute',
-                ...pos,
-                width: size,
-                height: size,
-                backgroundImage: `url(${SOURCE_URL})`,
-                backgroundSize: `${SAMPLE_W * EXP_BG}px ${SAMPLE_H * EXP_BG}px`,
-                backgroundPosition: `-${c * EXP_BG}px -${r * EXP_BG}px`,
-                backgroundRepeat: 'no-repeat',
-                borderRadius: 2,
-                boxShadow: '0 1px 3px rgba(0,0,0,0.16)',
-                imageRendering: 'pixelated',
-            }}
-        />
-    );
-}
-
-// positions en unités de grille (×24px), ancrées aux bords → multiples de 24
-// positions en unités bead (×12px). spans pairs → éléments multiples de 24px,
-// chacun affichant un cluster de 4 beads (2×2) par carré de fond.
-const EXP_BEADS: { src: [number, number]; left?: number; right?: number; top?: number; bottom?: number; span?: number }[] = [
-    { src: [96, 66], left: 4, top: 4, span: 2 },
-    { src: [68, 43], left: 2, top: 14, span: 4 },
-    { src: [74, 72], left: 6, bottom: 4, span: 2 },
-    { src: [80, 70], left: 14, top: 2, span: 2 },
-    { src: [6, 39], left: 8, bottom: 2, span: 4 },
-    { src: [91, 67], right: 4, top: 4, span: 4 },
-    { src: [100, 60], right: 2, top: 16, span: 2 },
-    { src: [79, 75], right: 6, bottom: 4, span: 4 },
-    { src: [66, 49], right: 14, top: 2, span: 2 },
-    { src: [86, 70], right: 18, bottom: 2, span: 2 },
+// Palette de beads colorées (fleurs orange) recyclées le long du vortex.
+const VORTEX_SRC: [number, number][] = [
+    [96, 66], [91, 67], [74, 72], [68, 43], [100, 60], [79, 75],
+    [66, 49], [80, 70], [6, 39], [86, 70], [53, 61], [47, 62],
 ];
 
 const EXP_CARDS: { icon: LucideIcon; label: string; tags: string[]; pos: React.CSSProperties }[] = [
@@ -741,6 +702,9 @@ const EXP_CARDS: { icon: LucideIcon; label: string; tags: string[]; pos: React.C
 ];
 
 export function SectionExpertise() {
+    const vortex = useVortexParams();
+    const beads = buildVortex(vortex);
+    const bs = vortex.beadSize;
     return (
         <section
             id="section-expertise"
@@ -798,10 +762,30 @@ export function SectionExpertise() {
                             boxShadow: 'inset 0 0 0 1px rgba(23,23,23,0.06)',
                         }}
                     >
-                        {/* beads (24px, multiples de 24) */}
-                        {EXP_BEADS.map((b, i) => (
-                            <GridBead key={i} {...b} />
-                        ))}
+                        {/* vortex de beads — généré par algorithme (réglable : DevTools › Vortex) */}
+                        {beads.map((b) => {
+                            const [sc, sr] = VORTEX_SRC[b.idx % VORTEX_SRC.length];
+                            return (
+                                <div
+                                    key={b.idx}
+                                    aria-hidden="true"
+                                    style={{
+                                        position: 'absolute',
+                                        left: `calc(50% + ${b.x - bs / 2}px)`,
+                                        top: `calc(50% + ${b.y - bs / 2}px)`,
+                                        width: bs,
+                                        height: bs,
+                                        backgroundImage: `url(${SOURCE_URL})`,
+                                        backgroundSize: `${SAMPLE_W * bs}px ${SAMPLE_H * bs}px`,
+                                        backgroundPosition: `-${sc * bs}px -${sr * bs}px`,
+                                        backgroundRepeat: 'no-repeat',
+                                        borderRadius: 2,
+                                        boxShadow: '0 1px 3px rgba(0,0,0,0.16)',
+                                        imageRendering: 'pixelated',
+                                    }}
+                                />
+                            );
+                        })}
 
                         {/* cartes expertises réparties dans le cadre */}
                         {EXP_CARDS.map(({ icon: Icon, label, tags, pos }) => (

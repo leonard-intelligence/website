@@ -3,6 +3,7 @@ import { PaintMode } from './PaintMode';
 import { useNotchParams, setNotchParams, resetNotchParams, type NotchParams, type CornerStyle } from './notchParamsStore';
 import { useVitruveParams, setVitruveParams, resetVitruveParams, type VitruveParams } from './vitruveParamsStore';
 import { useHeroTitleParams, setHeroTitleParams, resetHeroTitleParams, type PixelVariant } from './heroTitleStore';
+import { useVortexParams, setVortexParams, resetVortexParams } from './vortexParamsStore';
 
 // ============================================================================
 // Inner-shadow tab (state, filters, controls)
@@ -37,7 +38,7 @@ function ShadowFilter({ id, params }: { id: string; params: ShadowParams }) {
 // ============================================================================
 // DevTools — unified floating panel with tabs (always renders SVG filters)
 // ============================================================================
-type Tab = 'shadow' | 'paint' | 'notch' | 'illu' | 'hero';
+type Tab = 'shadow' | 'paint' | 'notch' | 'illu' | 'hero' | 'vortex';
 
 export function DevTools() {
     const [dark, setDark] = useState<ShadowParams>(DEFAULT_PARAMS_DARK);
@@ -122,7 +123,7 @@ export function DevTools() {
                     <>
                         {/* Tabs */}
                         <div style={{ display: 'flex', gap: 4, marginBottom: 12, borderBottom: '1px solid #2a2a30', paddingBottom: 8 }}>
-                            {(['shadow', 'notch', 'illu', 'hero', 'paint'] as const).map((t) => (
+                            {(['shadow', 'notch', 'illu', 'hero', 'vortex', 'paint'] as const).map((t) => (
                                 <button
                                     key={t}
                                     onClick={() => setTab(t)}
@@ -134,7 +135,7 @@ export function DevTools() {
                                         border: tab === t ? '1px solid #3a3aff' : '1px solid transparent',
                                     }}
                                 >
-                                    {t === 'shadow' ? 'Shadow' : t === 'notch' ? 'Notch' : t === 'illu' ? 'Illu' : t === 'hero' ? 'Héro' : 'Paint'}
+                                    {t === 'shadow' ? 'Shadow' : t === 'notch' ? 'Notch' : t === 'illu' ? 'Illu' : t === 'hero' ? 'Héro' : t === 'vortex' ? 'Vortex' : 'Paint'}
                                 </button>
                             ))}
                         </div>
@@ -157,6 +158,8 @@ export function DevTools() {
                         {tab === 'illu' && <IlluTab />}
 
                         {tab === 'hero' && <HeroTab />}
+
+                        {tab === 'vortex' && <VortexTab />}
 
                         {tab === 'paint' && <PaintTabFooter active={paintActive} onActiveChange={setPaintActive} />}
                     </>
@@ -510,6 +513,28 @@ function HeroTab() {
             </label>
 
             <button onClick={() => resetHeroTitleParams()} style={{ ...btn, marginTop: 12, width: '100%', background: '#1a1a20', color: '#fff' }}>
+                Reset
+            </button>
+        </>
+    );
+}
+
+function VortexTab() {
+    const p = useVortexParams();
+    return (
+        <>
+            <div style={{ color: '#9a9aa6', letterSpacing: '0.08em', textTransform: 'uppercase', fontSize: 11, marginBottom: 2 }}>
+                Vortex de beads
+            </div>
+            <Slider label="Bras" min={1} max={6} step={1} value={p.arms} onChange={(v) => setVortexParams({ arms: v })} />
+            <Slider label="Beads / bras" min={3} max={40} step={1} value={p.count} onChange={(v) => setVortexParams({ count: v })} />
+            <Slider label="Tours" min={0.5} max={5} step={0.1} value={p.turns} onChange={(v) => setVortexParams({ turns: v })} />
+            <Slider label="Rayon de départ" min={0} max={160} step={4} value={p.startRadius} onChange={(v) => setVortexParams({ startRadius: v })} />
+            <Slider label="Croissance" min={1} max={14} step={0.5} value={p.growth} onChange={(v) => setVortexParams({ growth: v })} />
+            <Slider label="Rotation" min={0} max={360} step={5} value={p.rotation} onChange={(v) => setVortexParams({ rotation: v })} />
+            <Slider label="Taille bead (px)" min={6} max={48} step={6} value={p.beadSize} onChange={(v) => setVortexParams({ beadSize: v })} />
+            <Slider label="Snap grille (px)" min={0} max={48} step={12} value={p.snap} onChange={(v) => setVortexParams({ snap: v })} />
+            <button onClick={() => resetVortexParams()} style={{ ...btn, marginTop: 12, width: '100%', background: '#1a1a20', color: '#fff' }}>
                 Reset
             </button>
         </>
