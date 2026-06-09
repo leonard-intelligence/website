@@ -1293,11 +1293,11 @@ export function SectionCapabilities() {
 
                     {/* Cadre fond bead contenant la carte flottante — droite */}
                     <div
-                        className="relative overflow-hidden mx-auto"
+                        className="relative overflow-hidden mx-auto flex items-center justify-center"
                         style={{
-                            width: 'fit-content',
+                            width: 'clamp(440px, 44vw, 540px)',
+                            aspectRatio: '1 / 1',
                             borderRadius: 22,
-                            padding: 'clamp(22px, 2.6vw, 34px)',
                             boxShadow: '0 20px 48px rgba(0,0,0,0.18), inset 0 0 0 1px rgba(255,255,255,0.12)',
                         }}
                     >
@@ -1310,7 +1310,7 @@ export function SectionCapabilities() {
                         {/* carte flottante */}
                         <div
                             className="relative"
-                            style={{ width: 'clamp(300px, 32vw, 340px)', aspectRatio: '0.7', filter: 'drop-shadow(0 16px 32px rgba(0,0,0,0.4))' }}
+                            style={{ height: '92%', aspectRatio: '0.7', filter: 'drop-shadow(0 16px 32px rgba(0,0,0,0.4))' }}
                         >
                             <AgentCardStack sel={0} />
                         </div>
