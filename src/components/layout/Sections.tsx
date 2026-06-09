@@ -1265,7 +1265,7 @@ export function SectionCapabilities() {
             aria-label="Capacités"
         >
             <Reveal>
-                <div className="max-w-[1200px] mx-auto grid grid-cols-1 lg:grid-cols-[1fr_1.15fr] items-center" style={{ gap: 56 }}>
+                <div className="max-w-[1200px] mx-auto grid grid-cols-1 lg:grid-cols-2 items-center" style={{ gap: 56 }}>
                     {/* Text — left, en dehors du cadre */}
                     <div>
                         <div className="font-mono" style={{ fontSize: 13, letterSpacing: '0.22em', ...EMBOSS_MUTED }}>
@@ -1293,10 +1293,11 @@ export function SectionCapabilities() {
 
                     {/* Cadre fond bead contenant la carte flottante — droite */}
                     <div
-                        className="relative overflow-hidden"
+                        className="relative overflow-hidden mx-auto"
                         style={{
+                            width: 'fit-content',
                             borderRadius: 22,
-                            padding: 'clamp(32px, 4.5vw, 64px)',
+                            padding: 'clamp(22px, 2.6vw, 34px)',
                             boxShadow: '0 20px 48px rgba(0,0,0,0.18), inset 0 0 0 1px rgba(255,255,255,0.12)',
                         }}
                     >
@@ -1308,8 +1309,8 @@ export function SectionCapabilities() {
                         />
                         {/* carte flottante */}
                         <div
-                            className="relative w-full mx-auto"
-                            style={{ maxWidth: 500, aspectRatio: '0.9', filter: 'drop-shadow(0 20px 40px rgba(0,0,0,0.42))' }}
+                            className="relative"
+                            style={{ width: 'clamp(300px, 32vw, 340px)', aspectRatio: '0.7', filter: 'drop-shadow(0 16px 32px rgba(0,0,0,0.4))' }}
                         >
                             <AgentCardStack sel={0} />
                         </div>
@@ -1502,7 +1503,7 @@ function AgentCard({ data, rotate, offsetX, offsetY, z }: { data: AgentCardData;
         <div
             className="absolute agent-card-fade"
             style={{
-                width: '58%',
+                width: '88%',
                 aspectRatio: '0.7',
                 top: `${offsetY}%`,
                 left: `${offsetX}%`,
@@ -1998,7 +1999,7 @@ function AgentCardStack({ sel }: { sel: number }) {
                     </filter>
                 </defs>
             </svg>
-            <AgentCard key={sel} data={AGENT_CARDS[sel]} rotate={0} offsetX={21} offsetY={13} z={1} />
+            <AgentCard key={sel} data={AGENT_CARDS[sel]} rotate={0} offsetX={6} offsetY={6} z={1} />
         </div>
     );
 }
