@@ -1265,7 +1265,7 @@ export function SectionCapabilities() {
             aria-label="Capacités"
         >
             <Reveal>
-                <div className="max-w-[1200px] mx-auto grid grid-cols-1 lg:grid-cols-2 items-center" style={{ gap: 56 }}>
+                <div className="max-w-[1200px] mx-auto grid grid-cols-1 lg:grid-cols-[1fr_1.15fr] items-center" style={{ gap: 56 }}>
                     {/* Text — left, en dehors du cadre */}
                     <div>
                         <div className="font-mono" style={{ fontSize: 13, letterSpacing: '0.22em', ...EMBOSS_MUTED }}>
@@ -1296,7 +1296,7 @@ export function SectionCapabilities() {
                         className="relative overflow-hidden"
                         style={{
                             borderRadius: 22,
-                            padding: 'clamp(20px, 2.5vw, 32px)',
+                            padding: 'clamp(32px, 4.5vw, 64px)',
                             boxShadow: '0 20px 48px rgba(0,0,0,0.18), inset 0 0 0 1px rgba(255,255,255,0.12)',
                         }}
                     >
@@ -1305,12 +1305,6 @@ export function SectionCapabilities() {
                             aria-hidden="true"
                             className="absolute inset-0"
                             style={{ backgroundImage: `url(${SOURCE_URL})`, backgroundSize: 'cover', backgroundPosition: 'center 60%' }}
-                        />
-                        {/* léger assombrissement pour faire ressortir la carte claire */}
-                        <div
-                            aria-hidden="true"
-                            className="absolute inset-0"
-                            style={{ background: 'linear-gradient(135deg, rgba(16,16,16,0.34), rgba(16,16,16,0.12))' }}
                         />
                         {/* carte flottante */}
                         <div
