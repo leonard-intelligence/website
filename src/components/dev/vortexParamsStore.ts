@@ -23,19 +23,19 @@ export type VortexParams = {
 };
 
 export const DEFAULT_VORTEX_PARAMS: VortexParams = {
-    shape: 'spiral',
-    count: 48,
+    shape: 'rings',
+    count: 46,
     arms: 8,
-    turns: 2.7,
-    startRadius: 92,
-    growth: 6.5,
+    turns: 2.2,
+    startRadius: 112,
+    growth: 5,
     rotation: 50,
     thickness: 1,
     beadSize: 12,
     snap: 0,
     colorMode: 'radial',
     color: '#D97757',
-    radialInvert: false,
+    radialInvert: true,
 };
 
 let state: VortexParams = { ...DEFAULT_VORTEX_PARAMS };
