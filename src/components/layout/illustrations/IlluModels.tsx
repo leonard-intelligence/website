@@ -1,8 +1,9 @@
 // 01 · MODÈLES — "Le bon modèle, par tâche." (decorative).
-// Liste épurée des derniers modèles de chaque fournisseur. Les logos
-// (SVG monochromes) sont rendus via CSS mask : gris par défaut, couleur
-// de marque au survol.
+// Grille des derniers modèles de chaque fournisseur, chacun dans une carte.
+// Les logos (SVG monochromes) sont rendus via CSS mask : gris par défaut,
+// couleur de marque au survol.
 import { TOKENS } from '../Sections';
+import { EMBOSS_SOFT } from './kit';
 
 const MODELS = [
     { name: 'Claude Opus 4.8', vendor: 'Anthropic', logo: '/assets/logos/anthropic-color.svg', color: '#D97757' },
@@ -14,22 +15,22 @@ const MODELS = [
 ];
 
 export function IlluModels() {
-    const { ink, mutedText } = TOKENS;
+    const { ink, mutedText, white } = TOKENS;
     return (
         <div className="w-full font-sans" aria-hidden="true">
-            <div className="grid grid-cols-1 sm:grid-cols-2" style={{ gap: '26px 44px' }}>
+            <div className="grid grid-cols-1 sm:grid-cols-2" style={{ gap: 14 }}>
                 {MODELS.map((m) => (
                     <div
                         key={m.name}
                         className="group flex items-center"
-                        style={{ '--lc': m.color, gap: 14 } as React.CSSProperties}
+                        style={{ '--lc': m.color, gap: 13, padding: '15px 17px', borderRadius: 13, background: white, boxShadow: EMBOSS_SOFT } as React.CSSProperties}
                     >
                         <span
                             aria-hidden="true"
                             className="shrink-0 transition-colors duration-300 [background-color:#171717] group-hover:[background-color:var(--lc)]"
                             style={{
-                                width: 32,
-                                height: 32,
+                                width: 30,
+                                height: 30,
                                 WebkitMaskImage: `url(${m.logo})`,
                                 maskImage: `url(${m.logo})`,
                                 WebkitMaskRepeat: 'no-repeat',
@@ -41,10 +42,10 @@ export function IlluModels() {
                             }}
                         />
                         <div style={{ minWidth: 0 }}>
-                            <div className="font-sans" style={{ fontSize: 15.5, fontWeight: 600, color: ink, lineHeight: 1.15, whiteSpace: 'nowrap' }}>
+                            <div className="font-sans" style={{ fontSize: 15, fontWeight: 600, color: ink, lineHeight: 1.15, whiteSpace: 'nowrap' }}>
                                 {m.name}
                             </div>
-                            <div className="font-mono" style={{ fontSize: 10.5, color: mutedText, marginTop: 3 }}>
+                            <div className="font-mono" style={{ fontSize: 10.5, color: mutedText, marginTop: 2 }}>
                                 {m.vendor}
                             </div>
                         </div>

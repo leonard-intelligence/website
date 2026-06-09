@@ -1725,7 +1725,7 @@ function AgentCard({ data, rotate, offsetX, offsetY, z }: { data: AgentCardData;
                 {/* RIGHT: Citizen eye — lighter-gray tint (keeps the emboss filter
                     inherited from the wrapper, only overrides the color). */}
                 <span style={{ color: ICON_MED, display: 'flex' }}>
-                    <AgentLogo size={52} />
+                    <AgentLogo size={40} />
                 </span>
             </div>
 
