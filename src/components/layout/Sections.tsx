@@ -732,12 +732,12 @@ const EXP_BEADS: { src: [number, number]; left?: number; right?: number; top?: n
     { src: [86, 70], right: 18, bottom: 2, span: 2 },
 ];
 
-const EXP_CARDS: { icon: LucideIcon; label: string; tags: string[]; dx: number }[] = [
-    { icon: TypeIcon, label: 'Texte', tags: ['Rédaction', 'Synthèse', 'Extraction', 'Classification'], dx: -16 },
-    { icon: ImageIcon, label: 'Image', tags: ['Génération', 'Retouche', 'Analyse', 'OCR'], dx: 14 },
-    { icon: Mic, label: 'Voix', tags: ['Synthèse vocale', 'Transcription', 'Temps réel'], dx: -10 },
-    { icon: Video, label: 'Vidéo', tags: ['Génération', 'Montage', 'Sous-titres'], dx: 16 },
-    { icon: Music, label: 'Musique', tags: ['Composition', 'Habillage', 'Jingles'], dx: -12 },
+const EXP_CARDS: { icon: LucideIcon; label: string; tags: string[]; pos: React.CSSProperties }[] = [
+    { icon: TypeIcon, label: 'Texte', tags: ['Rédaction', 'Synthèse', 'Extraction', 'Classification'], pos: { left: '5%', top: '5%' } },
+    { icon: ImageIcon, label: 'Image', tags: ['Génération', 'Retouche', 'Analyse', 'OCR'], pos: { right: '6%', top: '23%' } },
+    { icon: Mic, label: 'Voix', tags: ['Synthèse vocale', 'Transcription', 'Temps réel'], pos: { left: '19%', top: '45%' } },
+    { icon: Video, label: 'Vidéo', tags: ['Génération', 'Montage', 'Sous-titres'], pos: { right: '15%', top: '62%' } },
+    { icon: Music, label: 'Musique', tags: ['Composition', 'Habillage', 'Jingles'], pos: { left: '8%', top: '80%' } },
 ];
 
 export function SectionExpertise() {
@@ -803,37 +803,35 @@ export function SectionExpertise() {
                             <GridBead key={i} {...b} />
                         ))}
 
-                        {/* cartes expertises flottantes */}
-                        <div className="absolute inset-0 flex flex-col items-center justify-center" style={{ gap: 18, padding: 24 }}>
-                            {EXP_CARDS.map(({ icon: Icon, label, tags, dx }) => (
-                                <div
-                                    key={label}
-                                    className="flex flex-col"
-                                    style={{ transform: `translateX(${dx}px)`, padding: '14px 16px', borderRadius: 14, background: TOKENS.white, boxShadow: RM_CARD_SHADOW, width: 'clamp(248px, 27vw, 300px)' }}
-                                >
-                                    <div className="flex items-center" style={{ gap: 11, marginBottom: 12 }}>
-                                        <span
-                                            className="inline-flex items-center justify-center shrink-0"
-                                            style={{ width: 36, height: 36, borderRadius: 9, background: TOKENS.surface, boxShadow: RM_TILE_SHADOW }}
-                                        >
-                                            <Icon size={18} strokeWidth={1.8} color={TOKENS.ink} />
-                                        </span>
-                                        <span className="font-sans" style={{ fontSize: 15.5, fontWeight: 600, color: TOKENS.ink }}>{label}</span>
-                                    </div>
-                                    <div className="flex flex-wrap" style={{ gap: 6 }}>
-                                        {tags.map((t) => (
-                                            <span
-                                                key={t}
-                                                className="font-mono"
-                                                style={{ padding: '4px 9px', borderRadius: 999, border: '1px solid rgba(23,23,23,0.12)', fontSize: 10.5, letterSpacing: '0.03em', color: TOKENS.mutedText }}
-                                            >
-                                                {t}
-                                            </span>
-                                        ))}
-                                    </div>
+                        {/* cartes expertises réparties dans le cadre */}
+                        {EXP_CARDS.map(({ icon: Icon, label, tags, pos }) => (
+                            <div
+                                key={label}
+                                className="absolute flex flex-col"
+                                style={{ ...pos, width: 'clamp(244px, 25vw, 296px)', padding: '14px 16px', borderRadius: 14, background: TOKENS.white, boxShadow: RM_CARD_SHADOW }}
+                            >
+                                <div className="flex items-center" style={{ gap: 11, marginBottom: 12 }}>
+                                    <span
+                                        className="inline-flex items-center justify-center shrink-0"
+                                        style={{ width: 36, height: 36, borderRadius: 9, background: TOKENS.surface, boxShadow: RM_TILE_SHADOW }}
+                                    >
+                                        <Icon size={18} strokeWidth={1.8} color={TOKENS.ink} />
+                                    </span>
+                                    <span className="font-sans" style={{ fontSize: 15.5, fontWeight: 600, color: TOKENS.ink }}>{label}</span>
                                 </div>
-                            ))}
-                        </div>
+                                <div className="flex flex-wrap" style={{ gap: 6 }}>
+                                    {tags.map((t) => (
+                                        <span
+                                            key={t}
+                                            className="font-mono"
+                                            style={{ padding: '4px 9px', borderRadius: 999, border: '1px solid rgba(23,23,23,0.12)', fontSize: 10.5, letterSpacing: '0.03em', color: TOKENS.mutedText }}
+                                        >
+                                            {t}
+                                        </span>
+                                    ))}
+                                </div>
+                            </div>
+                        ))}
                     </div>
                 </div>
             </Reveal>
