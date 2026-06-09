@@ -38,10 +38,12 @@ type LayerProps = {
     bg: string;
     flip?: boolean;
     wide?: boolean;
+    /** Render the visual without the white card panel (flat on the section bg). */
+    barePanel?: boolean;
     visual: React.ReactNode;
 };
 
-function LayerSection({ id, index, eyebrow, title, lead, points, accent, bg, flip, wide, visual }: LayerProps) {
+function LayerSection({ id, index, eyebrow, title, lead, points, accent, bg, flip, wide, barePanel, visual }: LayerProps) {
     const panelBg = bg === TOKENS.white ? TOKENS.surface : TOKENS.white;
 
     const heading = (
@@ -126,7 +128,7 @@ function LayerSection({ id, index, eyebrow, title, lead, points, accent, bg, fli
                             {heading}
                             <div className="mt-5">{body}</div>
                         </div>
-                        <div className={flip ? 'md:order-1' : ''}>{visualPanel}</div>
+                        <div className={flip ? 'md:order-1' : ''}>{barePanel ? visual : visualPanel}</div>
                     </div>
                 )}
             </Reveal>
@@ -146,6 +148,7 @@ export function LayerModeles() {
             points={['Modèles propriétaires ou open-weight', 'Hébergeable dans votre périmètre', 'Arbitrage précision / coût / latence']}
             accent={TOKENS.lime}
             bg={TOKENS.paper}
+            barePanel
             visual={<IlluModels />}
         />
     );
