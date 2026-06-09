@@ -732,12 +732,12 @@ const EXP_BEADS: { src: [number, number]; left?: number; right?: number; top?: n
     { src: [86, 70], right: 18, bottom: 2, span: 2 },
 ];
 
-const EXP_CARDS: { icon: LucideIcon; label: string; dx: number }[] = [
-    { icon: TypeIcon, label: 'Texte', dx: -30 },
-    { icon: ImageIcon, label: 'Image', dx: 26 },
-    { icon: Mic, label: 'Voix', dx: -18 },
-    { icon: Video, label: 'Vidéo', dx: 30 },
-    { icon: Music, label: 'Musique', dx: -22 },
+const EXP_CARDS: { icon: LucideIcon; label: string; desc: string; dx: number }[] = [
+    { icon: TypeIcon, label: 'Texte', desc: 'Rédaction, synthèse, extraction', dx: -22 },
+    { icon: ImageIcon, label: 'Image', desc: 'Génération, édition, analyse', dx: 18 },
+    { icon: Mic, label: 'Voix', desc: 'Synthèse, transcription, temps réel', dx: -12 },
+    { icon: Video, label: 'Vidéo', desc: 'Génération, montage, analyse', dx: 22 },
+    { icon: Music, label: 'Musique', desc: 'Composition, habillage sonore', dx: -16 },
 ];
 
 export function SectionExpertise() {
@@ -792,19 +792,22 @@ export function SectionExpertise() {
 
                         {/* cartes expertises flottantes */}
                         <div className="absolute inset-0 flex flex-col items-center justify-center" style={{ gap: 12, padding: 24 }}>
-                            {EXP_CARDS.map(({ icon: Icon, label, dx }) => (
+                            {EXP_CARDS.map(({ icon: Icon, label, desc, dx }) => (
                                 <div
                                     key={label}
                                     className="inline-flex items-center gap-3"
-                                    style={{ transform: `translateX(${dx}px)`, padding: '10px 18px 10px 10px', borderRadius: 14, background: TOKENS.white, boxShadow: RM_CARD_SHADOW, maxWidth: '100%' }}
+                                    style={{ transform: `translateX(${dx}px)`, padding: '11px 18px 11px 11px', borderRadius: 14, background: TOKENS.white, boxShadow: RM_CARD_SHADOW, maxWidth: '100%' }}
                                 >
                                     <span
                                         className="inline-flex items-center justify-center shrink-0"
-                                        style={{ width: 34, height: 34, borderRadius: 9, background: TOKENS.surface, boxShadow: RM_TILE_SHADOW }}
+                                        style={{ width: 38, height: 38, borderRadius: 10, background: TOKENS.surface, boxShadow: RM_TILE_SHADOW }}
                                     >
-                                        <Icon size={18} strokeWidth={1.8} color={TOKENS.ink} />
+                                        <Icon size={19} strokeWidth={1.8} color={TOKENS.ink} />
                                     </span>
-                                    <span className="font-sans" style={{ fontSize: 15.5, fontWeight: 500, color: TOKENS.ink, whiteSpace: 'nowrap' }}>{label}</span>
+                                    <div style={{ minWidth: 0 }}>
+                                        <div className="font-sans" style={{ fontSize: 15, fontWeight: 600, color: TOKENS.ink, lineHeight: 1.15, whiteSpace: 'nowrap' }}>{label}</div>
+                                        <div className="font-mono" style={{ fontSize: 11, color: TOKENS.mutedText, marginTop: 3, whiteSpace: 'nowrap' }}>{desc}</div>
+                                    </div>
                                 </div>
                             ))}
                         </div>
