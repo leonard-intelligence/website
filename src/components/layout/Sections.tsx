@@ -682,6 +682,138 @@ export function SectionRnd() {
 }
 
 // ============================================================================
+// SECTION EXPERTISE — variante de la carte beads (placée sous les logos) qui
+// énumère nos expertises de génération. Beads de 24px sur une grille stricte
+// de 24px (positions et tailles = multiples de 24, comme le hero bg).
+// ============================================================================
+const EXP_BG = 24; // unité de grille bead (px) = taille d'une bead
+
+function GridBead({ src, left, right, top, bottom, span = 1 }: { src: [number, number]; left?: number; right?: number; top?: number; bottom?: number; span?: number }) {
+    const [c, r] = src;
+    const size = EXP_BG * span;
+    const pos: React.CSSProperties = {};
+    if (left !== undefined) pos.left = left * EXP_BG;
+    if (right !== undefined) pos.right = right * EXP_BG;
+    if (top !== undefined) pos.top = top * EXP_BG;
+    if (bottom !== undefined) pos.bottom = bottom * EXP_BG;
+    return (
+        <div
+            aria-hidden="true"
+            style={{
+                position: 'absolute',
+                ...pos,
+                width: size,
+                height: size,
+                backgroundImage: `url(${SOURCE_URL})`,
+                backgroundSize: `${SAMPLE_W * EXP_BG}px ${SAMPLE_H * EXP_BG}px`,
+                backgroundPosition: `-${c * EXP_BG}px -${r * EXP_BG}px`,
+                backgroundRepeat: 'no-repeat',
+                borderRadius: 2,
+                boxShadow: '0 1px 3px rgba(0,0,0,0.16)',
+                imageRendering: 'pixelated',
+            }}
+        />
+    );
+}
+
+// positions en unités de grille (×24px), ancrées aux bords → multiples de 24
+const EXP_BEADS: { src: [number, number]; left?: number; right?: number; top?: number; bottom?: number; span?: number }[] = [
+    { src: [96, 66], left: 2, top: 2, span: 1 },
+    { src: [68, 43], left: 1, top: 7, span: 2 },
+    { src: [74, 72], left: 3, bottom: 2, span: 1 },
+    { src: [80, 70], left: 7, top: 1, span: 1 },
+    { src: [6, 39], left: 4, bottom: 1, span: 2 },
+    { src: [91, 67], right: 2, top: 2, span: 2 },
+    { src: [100, 60], right: 1, top: 8, span: 1 },
+    { src: [79, 75], right: 3, bottom: 2, span: 2 },
+    { src: [66, 49], right: 7, top: 1, span: 1 },
+    { src: [86, 70], right: 9, bottom: 1, span: 1 },
+];
+
+const EXP_CARDS: { icon: LucideIcon; label: string; dx: number }[] = [
+    { icon: TypeIcon, label: 'Texte', dx: -30 },
+    { icon: ImageIcon, label: 'Image', dx: 26 },
+    { icon: Mic, label: 'Voix', dx: -18 },
+    { icon: Video, label: 'Vidéo', dx: 30 },
+    { icon: Music, label: 'Musique', dx: -22 },
+];
+
+export function SectionExpertise() {
+    return (
+        <section
+            id="section-expertise"
+            className="relative"
+            style={{ backgroundColor: TOKENS.surface, paddingBlock: '88px', paddingInline: '32px' }}
+            aria-label="Nos expertises"
+        >
+            <Reveal>
+                <div className="max-w-[1200px] mx-auto">
+                    {/* Header row : grand titre + bouton */}
+                    <div className="flex items-end justify-between gap-6" style={{ borderBottom: '1px solid rgba(23,23,23,0.10)', paddingBottom: 28 }}>
+                        <h2 className="font-sans" style={{ fontSize: 'clamp(2.2rem, 4.6vw, 3.4rem)', lineHeight: 1, fontWeight: 500, letterSpacing: '-0.03em', ...EMBOSS_DARK }}>
+                            Nos expertises
+                        </h2>
+                        <a
+                            href="#section-system"
+                            className="font-sans inline-flex items-center gap-2 shrink-0"
+                            style={{ padding: '11px 18px', borderRadius: 999, background: TOKENS.white, boxShadow: RM_CARD_SHADOW, fontSize: 14, fontWeight: 500, color: TOKENS.ink, textDecoration: 'none' }}
+                        >
+                            Voir le système
+                            <ArrowRight size={16} />
+                        </a>
+                    </div>
+
+                    {/* Accroche */}
+                    <p className="font-sans" style={{ marginTop: 24, fontSize: 19, lineHeight: '28px', fontWeight: 460, color: TOKENS.mutedText, maxWidth: '64ch' }}>
+                        Du texte à la vidéo : nous concevons des systèmes qui génèrent et orchestrent chaque modalité, sur mesure pour votre métier.
+                    </p>
+
+                    {/* Carte beads — grille stricte 24px */}
+                    <div
+                        className="relative"
+                        style={{
+                            marginTop: 36,
+                            height: 'clamp(456px, 46vw, 528px)',
+                            borderRadius: 18,
+                            overflow: 'hidden',
+                            backgroundColor: '#EEEDE9',
+                            backgroundImage:
+                                'linear-gradient(rgba(23,23,23,0.045) 1px, transparent 1px), linear-gradient(90deg, rgba(23,23,23,0.045) 1px, transparent 1px)',
+                            backgroundSize: '24px 24px',
+                            boxShadow: 'inset 0 0 0 1px rgba(23,23,23,0.06)',
+                        }}
+                    >
+                        {/* beads (24px, multiples de 24) */}
+                        {EXP_BEADS.map((b, i) => (
+                            <GridBead key={i} {...b} />
+                        ))}
+
+                        {/* cartes expertises flottantes */}
+                        <div className="absolute inset-0 flex flex-col items-center justify-center" style={{ gap: 12, padding: 24 }}>
+                            {EXP_CARDS.map(({ icon: Icon, label, dx }) => (
+                                <div
+                                    key={label}
+                                    className="inline-flex items-center gap-3"
+                                    style={{ transform: `translateX(${dx}px)`, padding: '10px 18px 10px 10px', borderRadius: 14, background: TOKENS.white, boxShadow: RM_CARD_SHADOW, maxWidth: '100%' }}
+                                >
+                                    <span
+                                        className="inline-flex items-center justify-center shrink-0"
+                                        style={{ width: 34, height: 34, borderRadius: 9, background: TOKENS.surface, boxShadow: RM_TILE_SHADOW }}
+                                    >
+                                        <Icon size={18} strokeWidth={1.8} color={TOKENS.ink} />
+                                    </span>
+                                    <span className="font-sans" style={{ fontSize: 15.5, fontWeight: 500, color: TOKENS.ink, whiteSpace: 'nowrap' }}>{label}</span>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                </div>
+            </Reveal>
+        </section>
+    );
+}
+
+// ============================================================================
 // SECTION 2 — Method (4 steps, like Cofounder chapters)
 // ============================================================================
 // ── Roadmap board (méthode) — staged flow of agent/human tasks (cofounder idiom) ─
