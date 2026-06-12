@@ -7,6 +7,7 @@ import { useNotchParams } from '../dev/notchParamsStore';
 import { useVitruveParams } from '../dev/vitruveParamsStore';
 import { useVortexParams } from '../dev/vortexParamsStore';
 import { VortexBeadLayer } from './illustrations/VortexBeadLayer';
+import { IlluSystemCircuit } from './illustrations/IlluSystemCircuit';
 import { QrBadge } from './QrBadge';
 import { ReliefButton } from '../ui/ReliefButton';
 import { ConstruitSur } from './ConstruitSur';
@@ -405,7 +406,12 @@ export function SectionSystem() {
                         Du choix du modèle au pilotage en production : chaque couche est maîtrisée, branchée à votre entreprise.
                     </p>
                 </header>
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3" style={{ gap: 18 }}>
+                {/* desktop : le circuit en relief (réf. AgentMail) — chaque nœud ancre vers sa couche */}
+                <div className="hidden md:block">
+                    <IlluSystemCircuit />
+                </div>
+                {/* mobile : la grille de cartes reste plus lisible */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:hidden" style={{ gap: 18 }}>
                     {CAPS.map((c) => (
                         <CapCard key={c.n} cap={c} />
                     ))}
