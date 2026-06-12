@@ -1,10 +1,10 @@
-// LE SYSTÈME — circuit en relief (référence AgentMail) : une grille dense de
-// tuiles embossées de tailles variées, presque adjacentes, traversée par une
-// piste qui serpente. Les 7 couches sont les tuiles numérotées sur le chemin ;
-// des tuiles vides s'intercalent (le grain « circuit » de la référence).
-// 07 Sécurité est LE CADRE qui entoure tout. Chaque tuile numérotée est
-// cliquable (ancre vers sa section). Séquence : les couches s'allument une à
-// une (encre + liseré blanc), des impulsions parcourent la piste.
+// LE SYSTÈME — circuit en relief (référence AgentMail) : tuiles et pistes
+// forment UNE SEULE FORME continue. Le réseau (tuiles + connecteurs) est
+// dessiné en SVG en trois couches superposées — ombre portée, liseré blanc,
+// corps en dégradé — appliquées à l'UNION des formes : aucune couture entre
+// une piste et une tuile. Les 7 couches numérotées sont cliquables et
+// s'allument une à une (encre + liseré blanc) ; des impulsions parcourent
+// la piste ; 07 Sécurité est LE CADRE qui entoure tout.
 import { useEffect, useRef, useState } from 'react';
 import { TOKENS } from '../Sections';
 
@@ -38,7 +38,7 @@ const TILES: Tile[] = [
     { x: 553, y: SUB_Y, s: 76, id: '04', label: 'Contexte', href: '#section-contexte' },
 ];
 
-// pistes : centre à centre (les tuiles recouvrent les jonctions)
+// pistes : centre à centre (l'union masque les jonctions)
 const LINKS: [number, number][] = [
     [0, 1], [1, 2], [2, 3], [3, 4], [4, 5], [5, 6], [6, 7], [7, 8], [8, 9],
     [2, 10], [10, 11],
@@ -63,14 +63,30 @@ const SEQ: string[][] = [['01'], ['03', '04'], ['02'], ['05'], ['06'], ['07'], [
 const DURS = [1500, 1700, 1500, 1500, 1500, 1700, 2200];
 const TOTAL = DURS.reduce((a, b) => a + b, 0);
 
-// relief
-const TILE_UP = 'linear-gradient(180deg, #FFFFFF 0%, #F2F2ED 100%)';
-const TILE_SHADOW = '0 1px 2px rgba(0,0,0,0.14), 0 3px 8px rgba(0,0,0,0.06), inset 0 1px 0 rgba(255,255,255,0.95)';
-const TRACE_BG = 'linear-gradient(180deg, #FBFBF8 0%, #EEEEE9 100%)';
-const TRACE_SHADOW = '0 1px 1.5px rgba(0,0,0,0.13), inset 0 1px 0 rgba(255,255,255,0.9)';
 const TRACE_W = 12;
-
 const radiusFor = (s: number) => (s >= 76 ? 18 : s >= 56 ? 14 : s >= 44 ? 12 : 10);
+
+// L'union du réseau : toutes les formes (tuiles, pistes, déco) en rects SVG.
+// Rendue trois fois (ombre, liseré, corps) pour un relief sans couture.
+function NetworkShapes() {
+    return (
+        <>
+            {LINKS.map(([a, b], i) => {
+                const ta = TILES[a];
+                const tb = TILES[b];
+                const horiz = ta.y === tb.y;
+                return horiz ? (
+                    <rect key={`l${i}`} x={Math.min(ta.x, tb.x)} y={ta.y - TRACE_W / 2} width={Math.abs(tb.x - ta.x)} height={TRACE_W} rx={TRACE_W / 2} />
+                ) : (
+                    <rect key={`l${i}`} x={ta.x - TRACE_W / 2} y={Math.min(ta.y, tb.y)} width={TRACE_W} height={Math.abs(tb.y - ta.y)} rx={TRACE_W / 2} />
+                );
+            })}
+            {[...TILES, ...DECO].map((t, i) => (
+                <rect key={`t${i}`} x={t.x - t.s / 2} y={t.y - t.s / 2} width={t.s} height={t.s} rx={radiusFor(t.s)} />
+            ))}
+        </>
+    );
+}
 
 export function IlluSystemCircuit() {
     const { ink, mutedText } = TOKENS;
@@ -110,54 +126,6 @@ export function IlluSystemCircuit() {
     const activeIds = SEQ[step];
     const isActive = (id?: string) => !!id && activeIds.includes(id);
 
-    const renderTile = (t: Tile, key: string) => {
-        const active = isActive(t.id);
-        const inner = (
-            <span
-                className="flex items-center justify-center font-mono"
-                style={{
-                    width: t.s,
-                    height: t.s,
-                    borderRadius: radiusFor(t.s),
-                    fontSize: t.s >= 76 ? 15 : 11,
-                    letterSpacing: '0.06em',
-                    color: active ? '#FFFFFF' : TOKENS.ink,
-                    background: active ? ink : TILE_UP,
-                    boxShadow: active
-                        ? `0 0 0 2px rgba(255,255,255,0.9), 0 6px 18px rgba(0,0,0,0.22), inset 0 1px 0 rgba(255,255,255,0.25)`
-                        : TILE_SHADOW,
-                    transform: active ? 'translateY(-2px)' : 'none',
-                    transition: 'background 400ms ease, color 400ms ease, box-shadow 400ms ease, transform 400ms ease',
-                }}
-            >
-                {t.id ?? ''}
-            </span>
-        );
-        if (!t.id) {
-            return (
-                <span key={key} className="absolute" style={{ left: t.x - t.s / 2, top: t.y - t.s / 2 }}>
-                    {inner}
-                </span>
-            );
-        }
-        return (
-            <a
-                key={key}
-                href={t.href}
-                className="absolute flex flex-col items-center"
-                style={{ left: t.x - t.s / 2, top: t.y - t.s / 2, width: t.s, textDecoration: 'none' }}
-            >
-                {inner}
-                <span
-                    className="font-mono"
-                    style={{ marginTop: 8, fontSize: 10, letterSpacing: '0.1em', color: active ? TOKENS.ink : mutedText, whiteSpace: 'nowrap', transition: 'color 400ms ease' }}
-                >
-                    {t.label}
-                </span>
-            </a>
-        );
-    };
-
     return (
         <div ref={wrapRef} className="w-full mx-auto" aria-hidden="false" style={{ maxWidth: W * 1.18 }}>
             <style>{`@media (prefers-reduced-motion: reduce) { .sc-smil { display: none; } }`}</style>
@@ -181,6 +149,42 @@ export function IlluSystemCircuit() {
                         }}
                         aria-label="07 · Sécurité & gouvernance"
                     />
+
+                    {/* le réseau — une seule forme continue, relief en 3 couches */}
+                    <svg viewBox={`0 0 ${W} ${H}`} width="100%" height="100%" style={{ position: 'absolute', inset: 0, display: 'block', pointerEvents: 'none' }}>
+                        <defs>
+                            <linearGradient id="sc-body" x1="0" y1="0" x2="0" y2={H} gradientUnits="userSpaceOnUse">
+                                <stop offset="0" stopColor="#FDFDFB" />
+                                <stop offset="1" stopColor="#EFEFEA" />
+                            </linearGradient>
+                            <filter id="sc-blur" x="-20%" y="-20%" width="140%" height="140%">
+                                <feGaussianBlur stdDeviation="2" />
+                            </filter>
+                        </defs>
+                        {/* 1 · ombre portée de l'union */}
+                        <g fill="rgba(23,23,23,0.16)" filter="url(#sc-blur)" transform="translate(0 3)">
+                            <NetworkShapes />
+                        </g>
+                        {/* 2 · liseré blanc (arête haute) */}
+                        <g fill="rgba(255,255,255,0.95)" transform="translate(0 -1.4)">
+                            <NetworkShapes />
+                        </g>
+                        {/* 3 · corps */}
+                        <g fill="url(#sc-body)">
+                            <NetworkShapes />
+                        </g>
+
+                        {/* impulsions le long de la piste */}
+                        <g className="sc-smil">
+                            {PULSES.map((p, i) => (
+                                <circle key={i} r="3.4" fill={ink} opacity="0">
+                                    <animateMotion dur={`${p.dur}s`} repeatCount="indefinite" begin={`${p.begin}s`} path={p.path} />
+                                    <animate attributeName="opacity" values="0;0.4;0.4;0" keyTimes="0;0.06;0.94;1" dur={`${p.dur}s`} repeatCount="indefinite" begin={`${p.begin}s`} />
+                                </circle>
+                            ))}
+                        </g>
+                    </svg>
+
                     {/* étiquette du cadre, posée sur la bordure */}
                     <a
                         href="#section-securite"
@@ -193,8 +197,10 @@ export function IlluSystemCircuit() {
                             color: isActive('07') ? '#FFFFFF' : mutedText,
                             padding: '4px 11px',
                             borderRadius: 999,
-                            background: isActive('07') ? ink : TILE_UP,
-                            boxShadow: isActive('07') ? `0 0 0 1.5px rgba(255,255,255,0.85), ${TILE_SHADOW}` : TILE_SHADOW,
+                            background: isActive('07') ? ink : 'linear-gradient(180deg, #FFFFFF 0%, #F2F2ED 100%)',
+                            boxShadow: isActive('07')
+                                ? '0 0 0 1.5px rgba(255,255,255,0.85), 0 1px 2px rgba(0,0,0,0.14), 0 3px 8px rgba(0,0,0,0.06)'
+                                : '0 1px 2px rgba(0,0,0,0.14), 0 3px 8px rgba(0,0,0,0.06), inset 0 1px 0 rgba(255,255,255,0.95)',
                             textDecoration: 'none',
                             whiteSpace: 'nowrap',
                             transition: 'background 400ms ease, color 400ms ease, box-shadow 400ms ease',
@@ -203,39 +209,45 @@ export function IlluSystemCircuit() {
                         07 · SÉCURITÉ · LE CADRE
                     </a>
 
-                    {/* pistes — centre à centre, recouvertes par les tuiles */}
-                    {LINKS.map(([a, b], i) => {
-                        const ta = TILES[a];
-                        const tb = TILES[b];
-                        const horiz = ta.y === tb.y;
+                    {/* couches numérotées : numéro + label + état actif en overlay
+                        (le visuel au repos vient de la forme continue dessous) */}
+                    {TILES.filter((t) => t.id).map((t) => {
+                        const active = isActive(t.id);
                         return (
-                            <span
-                                key={i}
-                                className="absolute"
-                                style={
-                                    horiz
-                                        ? { left: Math.min(ta.x, tb.x), top: ta.y - TRACE_W / 2, width: Math.abs(tb.x - ta.x), height: TRACE_W, borderRadius: TRACE_W / 2, background: TRACE_BG, boxShadow: TRACE_SHADOW }
-                                        : { left: ta.x - TRACE_W / 2, top: Math.min(ta.y, tb.y), width: TRACE_W, height: Math.abs(tb.y - ta.y), borderRadius: TRACE_W / 2, background: TRACE_BG, boxShadow: TRACE_SHADOW }
-                                }
-                            />
+                            <a
+                                key={t.id}
+                                href={t.href}
+                                className="absolute flex flex-col items-center"
+                                style={{ left: t.x - t.s / 2, top: t.y - t.s / 2, width: t.s, textDecoration: 'none' }}
+                            >
+                                <span
+                                    className="flex items-center justify-center font-mono"
+                                    style={{
+                                        width: t.s,
+                                        height: t.s,
+                                        borderRadius: radiusFor(t.s),
+                                        fontSize: 15,
+                                        letterSpacing: '0.06em',
+                                        color: active ? '#FFFFFF' : TOKENS.ink,
+                                        background: active ? ink : 'transparent',
+                                        boxShadow: active
+                                            ? '0 0 0 2px rgba(255,255,255,0.9), 0 6px 18px rgba(0,0,0,0.22), inset 0 1px 0 rgba(255,255,255,0.25)'
+                                            : 'none',
+                                        transform: active ? 'translateY(-2px)' : 'none',
+                                        transition: 'background 400ms ease, color 400ms ease, box-shadow 400ms ease, transform 400ms ease',
+                                    }}
+                                >
+                                    {t.id}
+                                </span>
+                                <span
+                                    className="font-mono"
+                                    style={{ marginTop: 8, fontSize: 10, letterSpacing: '0.1em', color: active ? TOKENS.ink : mutedText, whiteSpace: 'nowrap', transition: 'color 400ms ease' }}
+                                >
+                                    {t.label}
+                                </span>
+                            </a>
                         );
                     })}
-
-                    {/* impulsions le long de la piste (passent sous les tuiles) */}
-                    <svg className="sc-smil absolute" viewBox={`0 0 ${W} ${H}`} width="100%" height="100%" style={{ inset: 0, pointerEvents: 'none' }}>
-                        {PULSES.map((p, i) => (
-                            <circle key={i} r="3.4" fill={ink} opacity="0">
-                                <animateMotion dur={`${p.dur}s`} repeatCount="indefinite" begin={`${p.begin}s`} path={p.path} />
-                                <animate attributeName="opacity" values="0;0.4;0.4;0" keyTimes="0;0.06;0.94;1" dur={`${p.dur}s`} repeatCount="indefinite" begin={`${p.begin}s`} />
-                            </circle>
-                        ))}
-                    </svg>
-
-                    {/* tuiles décoratives (non reliées) */}
-                    {DECO.map((t, i) => renderTile(t, `deco-${i}`))}
-
-                    {/* la grille du circuit : tuiles vides + couches numérotées */}
-                    {TILES.map((t, i) => renderTile(t, `tile-${i}`))}
                 </div>
             </div>
         </div>
