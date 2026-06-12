@@ -162,7 +162,7 @@ export function Hero() {
                         filter: `drop-shadow(0 2px 14px rgba(0, 0, 0, 0.35))${heroTitle.glow > 0 ? ` drop-shadow(0 0 ${heroTitle.glow}px ${heroTitle.glowColor})` : ''}`,
                     }}
                 >
-                    Faites évoluer votre entreprise vers l'ère agentique.
+                    L'intelligence se cultive.
                 </h1>
 
                 {/* Bottom-left frosted card */}
@@ -191,7 +191,7 @@ export function Hero() {
                                 filter: 'drop-shadow(0 1px 8px rgba(0, 0, 0, 0.35))',
                             }}
                         >
-                            Ingénierie agentique.
+                            Agence agentique.
                         </h2>
                         <p
                             style={{
@@ -202,7 +202,7 @@ export function Hero() {
                                 textShadow: '0 1px 8px rgba(0, 0, 0, 0.25)',
                             }}
                         >
-                            Nous aidons les entreprises à concevoir des systèmes d'IA sur mesure pour résoudre leurs défis les plus complexes.
+                            Nous cultivons les agents de votre entreprise : conçus sur-mesure, déployés en production, branchés à vos systèmes et vos données.
                         </p>
 
                         <div className="mt-6 flex flex-wrap items-center gap-3">

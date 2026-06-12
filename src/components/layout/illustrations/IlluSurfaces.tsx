@@ -1,16 +1,16 @@
-// 06 · PRODUITS & INTERFACES — product-surface preview + agent operations thread (cofounder idiom).
-// LEFT (base): an embossed preview of a delivered surface (an agent console).
-// RIGHT (overlay, taller): a conversational thread of the agent operating it — messages,
-//   sub-agent delegation, tool runs, validation gate, input bar.
+// 06 · PRODUITS & INTERFACES — a single product window with the agent chat docked
+// as a side panel INSIDE the window (cofounder idiom). The agent works in the user's
+// tool, not in a separate tab — which is exactly the section's claim.
+// LEFT (main pane): the delivered surface (an agent console with live requests).
+// RIGHT (docked sidebar): the agent thread operating it — messages, sub-agent
+//   delegation, tool runs, validation gate, input bar.
 // Light palette + Geist. Sample data is illustrative process chrome (no business outcomes).
 import { TOKENS } from '../Sections';
 import { Spinner, Check, PulseDot } from './kit';
 
 const EMBOSS = '0 0 0 0.8px #FFFFFF inset, 0 0 0 0.8px rgba(0,0,0,0.08), 0 4px 12px rgba(0,0,0,0.06)';
-const PREVIEW_SHADOW =
-    '0 0 2px rgba(0,0,0,0.22), 0 0 0 4px rgba(232,231,230,0.32), inset 0 0 0.357px 1.5px rgba(255,255,255,0.35), inset 0 2px 0 #FFFFFF';
-const PANEL_SHADOW =
-    '0 0 0 1px rgba(0,0,0,0.08), 0 0 20px rgba(0,0,0,0.03), 0 25px 25px rgba(0,0,0,0.02), 0 15px 15px rgba(0,0,0,0.02), inset 0 0 0 1px #FFFFFF';
+const WINDOW_SHADOW =
+    '0 0 2px rgba(0,0,0,0.22), 0 0 0 4px rgba(232,231,230,0.32), 0 25px 25px rgba(0,0,0,0.03), 0 15px 15px rgba(0,0,0,0.03), inset 0 0 0.357px 1.5px rgba(255,255,255,0.35), inset 0 2px 0 #FFFFFF';
 const BUBBLE_SHADOW =
     'inset 0 0 0.26px 1.1px rgba(255,255,255,0.35), inset 0 1.47px 0 #FFFFFF, 0 0 1.47px rgba(0,0,0,0.22)';
 const ROW_BG = 'linear-gradient(180deg, #F5F5F2 0%, rgba(245,245,242,0.5) 100%)';
@@ -51,58 +51,42 @@ function ProgressGrid() {
     );
 }
 
-// ── Preview: a delivered agent console surface ───────────────────────────────
-function PreviewCard() {
-    const { ink, mutedText, border, white, pale, surface, gold, forest } = TOKENS;
+// ── Main pane: the delivered console surface ─────────────────────────────────
+function MainPane() {
+    const { ink, mutedText, white, pale, surface, gold, forest } = TOKENS;
     const rows: { id: string; status: string; mark: 'done' | 'run' | 'queue' }[] = [
         { id: 'Demande #2481', status: 'Réponse proposée', mark: 'done' },
         { id: 'Demande #2482', status: 'Traitement en cours', mark: 'run' },
         { id: 'Demande #2483', status: 'En file', mark: 'queue' },
+        { id: 'Demande #2484', status: 'En file', mark: 'queue' },
     ];
     return (
-        <div style={{ width: '100%', padding: 2, borderRadius: 8, background: surface, boxShadow: PREVIEW_SHADOW }}>
-            {/* tab */}
-            <div className="flex items-center" style={{ padding: '11px 11px 6px' }}>
-                <span className="inline-flex items-center font-mono" style={{ fontSize: 9, color: mutedText, padding: '2px 9px', borderRadius: 100, background: surface, boxShadow: PILL_SHADOW, whiteSpace: 'nowrap' }}>
-                    Console agent
+        <div className="flex flex-col" style={{ minWidth: 0, flex: '1 1 auto', background: white }}>
+            {/* toolbar */}
+            <div className="flex items-center" style={{ gap: 8, padding: '10px 14px', borderBottom: `1px solid ${TOKENS.border}`, flexShrink: 0 }}>
+                <span className="font-mono" style={{ fontSize: 9.5, letterSpacing: '0.12em', color: mutedText }}>FILE D'ATTENTE</span>
+                <span className="ml-auto inline-flex items-center font-mono" style={{ fontSize: 9, color: mutedText, padding: '2px 9px', borderRadius: 100, background: surface, boxShadow: PILL_SHADOW, whiteSpace: 'nowrap' }}>
+                    4 demandes
                 </span>
             </div>
-            {/* screen */}
-            <div style={{ borderRadius: 7, background: pale, boxShadow: '0 0 0 0.7px rgba(0,0,0,0.08), inset 0 0 0 0.7px #FFFFFF', overflow: 'hidden', padding: 2 }}>
-                <div style={{ background: white, borderRadius: 6, overflow: 'hidden' }}>
-                    {/* console header */}
-                    <div className="flex items-center" style={{ gap: 7, padding: '9px 12px', borderBottom: `1px solid ${border}` }}>
-                        <span className="flex" style={{ gap: 4 }}>
-                            {['#E6675A', '#E8B53D', '#5BB85B'].map((c) => (
-                                <span key={c} style={{ width: 6, height: 6, borderRadius: 999, background: c, opacity: 0.5 }} />
-                            ))}
+            {/* rows */}
+            <div className="flex flex-col" style={{ gap: 7, padding: 12, flex: '1 1 auto' }}>
+                {rows.map((r) => (
+                    <div key={r.id} className="flex items-center" style={{ gap: 10, padding: '8px 10px', borderRadius: 9, background: pale, boxShadow: EMBOSS }}>
+                        <span className="inline-flex items-center justify-center" style={{ width: 24, height: 24, borderRadius: 7, background: surface, boxShadow: 'inset 0 0 0 0.7px #FFFFFF, 0 0 0 0.7px rgba(0,0,0,0.07)', flex: '0 0 auto' }}>
+                            <PixelGlyph size={11} />
                         </span>
-                        <span className="font-mono" style={{ fontSize: 9.5, letterSpacing: '0.12em', color: mutedText }}>CONSOLE · RELATION CLIENT</span>
+                        <div style={{ flex: '1 1 auto', minWidth: 0 }}>
+                            <div className="font-sans truncate" style={{ fontSize: 11, fontWeight: 500, color: ink, lineHeight: '15px' }}>{r.id}</div>
+                            <div className="font-sans truncate" style={{ fontSize: 10.5, color: mutedText, lineHeight: '14px' }}>{r.status}</div>
+                        </div>
+                        <span className="inline-flex items-center" style={{ flex: '0 0 auto' }}>
+                            {r.mark === 'done' && <Check color={forest} size={11} />}
+                            {r.mark === 'run' && <Spinner color={ink} size={11} />}
+                            {r.mark === 'queue' && <span style={{ width: 7, height: 7, borderRadius: 999, background: gold }} />}
+                        </span>
                     </div>
-                    {/* rows */}
-                    <div className="flex flex-col" style={{ gap: 7, padding: 12 }}>
-                        {rows.map((r) => (
-                            <div key={r.id} className="flex items-center" style={{ gap: 10, padding: '8px 10px', borderRadius: 9, background: pale, boxShadow: EMBOSS }}>
-                                <span className="inline-flex items-center justify-center" style={{ width: 24, height: 24, borderRadius: 7, background: surface, boxShadow: 'inset 0 0 0 0.7px #FFFFFF, 0 0 0 0.7px rgba(0,0,0,0.07)', flex: '0 0 auto' }}>
-                                    <PixelGlyph size={11} />
-                                </span>
-                                <div style={{ flex: '1 1 auto', minWidth: 0 }}>
-                                    <div className="font-sans truncate" style={{ fontSize: 11, fontWeight: 500, color: ink, lineHeight: '15px' }}>{r.id}</div>
-                                    <div className="font-sans truncate" style={{ fontSize: 10.5, color: mutedText, lineHeight: '14px' }}>{r.status}</div>
-                                </div>
-                                <span className="inline-flex items-center" style={{ flex: '0 0 auto' }}>
-                                    {r.mark === 'done' && <Check color={forest} size={11} />}
-                                    {r.mark === 'run' && <Spinner color={ink} size={11} />}
-                                    {r.mark === 'queue' && <span style={{ width: 7, height: 7, borderRadius: 999, background: gold }} />}
-                                </span>
-                            </div>
-                        ))}
-                    </div>
-                </div>
-            </div>
-            {/* label */}
-            <div style={{ padding: '8px 11px 6px' }}>
-                <span className="font-sans" style={{ fontSize: 9, fontWeight: 500, color: mutedText }}>Console · Relation client</span>
+                ))}
             </div>
         </div>
     );
@@ -159,15 +143,19 @@ function ToolRun({ label, detail, state }: { label: string; detail: string; stat
     );
 }
 
-function ThreadPanel() {
+// ── Docked sidebar: the agent thread inside the window ──────────────────────
+function ChatSidebar() {
     const { ink, mutedText, border, surface, pale, gold } = TOKENS;
     return (
-        <div className="flex flex-col" style={{ width: '100%', minHeight: 420, height: '100%', padding: '6px 2px 2px', borderRadius: 12, background: pale, boxShadow: PANEL_SHADOW, overflow: 'hidden' }}>
-            {/* breadcrumb */}
-            <div className="flex items-center" style={{ gap: 5, padding: '4px 13px 8px', flexShrink: 0 }}>
-                <span className="font-sans" style={{ fontSize: 10, fontWeight: 500, color: mutedText }}>Agent · Relation client</span>
-                <span className="font-sans" style={{ fontSize: 10, fontWeight: 500, color: mutedText }}>/</span>
-                <span className="font-sans" style={{ fontSize: 10, fontWeight: 500, color: ink }}>Session</span>
+        <div
+            className="flex flex-col w-full min-[768px]:w-[46%]"
+            style={{ flexShrink: 0, minWidth: 0, background: pale, borderLeft: `1px solid ${border}` }}
+        >
+            {/* sidebar header */}
+            <div className="flex items-center" style={{ gap: 5, padding: '9px 13px', borderBottom: `1px solid ${border}`, flexShrink: 0 }}>
+                <span style={{ width: 14, height: 14, display: 'flex', alignItems: 'center', justifyContent: 'center' }}><PixelGlyph /></span>
+                <span className="font-sans" style={{ fontSize: 10, fontWeight: 500, color: ink }}>Agent</span>
+                <span className="font-sans" style={{ fontSize: 10, fontWeight: 500, color: mutedText }}>/ Session</span>
                 <span className="ml-auto inline-flex items-center" style={{ gap: 5 }}>
                     <PulseDot color={gold} size={6} />
                     <span className="font-mono" style={{ fontSize: 9, color: mutedText }}>en cours</span>
@@ -175,8 +163,8 @@ function ThreadPanel() {
             </div>
 
             {/* thread area */}
-            <div className="relative" style={{ flex: '1 1 auto', minHeight: 0, borderRadius: 11, border: `0.6px solid ${border}`, background: surface, boxShadow: 'inset 0 1.1px 0 rgba(255,255,255,0.25), inset 0 1.5px 9px rgba(0,0,0,0.03)', overflow: 'hidden' }}>
-                <div className="flex flex-col" style={{ gap: 2, padding: '14px 16px 56px' }}>
+            <div className="relative" style={{ flex: '1 1 auto', minHeight: 0, background: surface, overflow: 'hidden' }}>
+                <div className="flex flex-col" style={{ gap: 2, padding: '14px 14px 56px' }}>
                     <UserBubble>Traite les demandes entrantes et escalade si besoin.</UserBubble>
                     <div style={{ height: 6 }} />
                     <AgentMsg>Je récupère le contexte du dossier et je m'appuie sur les outils branchés.</AgentMsg>
@@ -191,7 +179,7 @@ function ThreadPanel() {
             </div>
 
             {/* input bar */}
-            <div style={{ flexShrink: 0, marginTop: 8, height: 42, borderRadius: 8, background: pale, boxShadow: '0 2px 4px rgba(0,0,0,0.08), 0 0 0 1px rgba(0,0,0,0.08), inset 0 0 0 1px #FFFFFF', position: 'relative' }}>
+            <div style={{ flexShrink: 0, margin: 10, height: 42, borderRadius: 8, background: pale, boxShadow: '0 2px 4px rgba(0,0,0,0.08), 0 0 0 1px rgba(0,0,0,0.08), inset 0 0 0 1px #FFFFFF', position: 'relative' }}>
                 <span className="font-sans" style={{ position: 'absolute', left: 13, top: '50%', transform: 'translateY(-50%)', fontSize: 11, fontWeight: 500, color: '#BFBFBF', whiteSpace: 'nowrap' }}>Demander à l'agent…</span>
                 <span className="inline-flex items-center justify-center" style={{ position: 'absolute', right: 7, top: 7, width: 28, height: 28, borderRadius: 6, border: '1px solid #383838', background: SEND_BG, boxShadow: SEND_SHADOW }}>
                     <svg width="12" height="12" viewBox="0 0 17 17" fill="none" aria-hidden="true"><path d="M8.5 14.17V2.83M8.5 2.83 3.54 7.79M8.5 2.83 13.46 7.79" stroke="white" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" /></svg>
@@ -201,18 +189,49 @@ function ThreadPanel() {
     );
 }
 
-export function IlluSurfaces({ accent }: { accent: string }) {
+// ── One window: the product surface with the agent docked on the side ───────
+export function IlluSurfaces({ accent, onImage }: { accent: string; onImage?: boolean }) {
     // accent (lime) reserved for the section; this surface reads in neutral product chrome.
+    // onImage: rendered over the bead-image background → deeper drop shadow + light caption.
     void accent;
+    const { mutedText, border, white, surface } = TOKENS;
     return (
-        <div className="w-full font-sans mx-auto" style={{ maxWidth: 960 }} aria-hidden="true">
-            <div className="relative min-[768px]:h-[440px]">
-                <div className="w-full min-[768px]:absolute min-[768px]:left-0 min-[768px]:top-1/2 min-[768px]:w-[62%] min-[768px]:-translate-y-1/2" style={{ zIndex: 1 }}>
-                    <PreviewCard />
+        <div className="w-full font-sans mx-auto" style={{ maxWidth: 880 }} aria-hidden="true">
+            <div style={{ padding: 2, borderRadius: 12, background: surface, boxShadow: onImage ? `${WINDOW_SHADOW}, 0 36px 70px rgba(0,0,0,0.38)` : WINDOW_SHADOW }}>
+                <div style={{ borderRadius: 10, background: white, overflow: 'hidden', border: `1px solid ${border}` }}>
+                    {/* window title bar */}
+                    <div className="flex items-center" style={{ gap: 8, padding: '10px 14px', borderBottom: `1px solid ${border}`, background: white }}>
+                        <span className="flex" style={{ gap: 4 }}>
+                            {['#E6675A', '#E8B53D', '#5BB85B'].map((c) => (
+                                <span key={c} style={{ width: 6, height: 6, borderRadius: 999, background: c, opacity: 0.5 }} />
+                            ))}
+                        </span>
+                        <span className="font-mono truncate" style={{ fontSize: 9.5, letterSpacing: '0.12em', color: mutedText, minWidth: 0, flex: '1 1 auto' }}>CONSOLE · RELATION CLIENT</span>
+                        <span className="ml-auto inline-flex items-center font-mono" style={{ gap: 6, fontSize: 9, color: mutedText, padding: '2px 9px', borderRadius: 100, background: surface, boxShadow: PILL_SHADOW, whiteSpace: 'nowrap', flexShrink: 0 }}>
+                            <PixelGlyph size={9} />
+                            Agent intégré
+                        </span>
+                    </div>
+                    {/* window body: main pane + docked chat sidebar */}
+                    <div className="flex flex-col min-[768px]:flex-row" style={{ minHeight: 420 }}>
+                        <MainPane />
+                        <ChatSidebar />
+                    </div>
                 </div>
-                <div className="w-full mt-4 min-[768px]:mt-0 min-[768px]:absolute min-[768px]:right-0 min-[768px]:top-0 min-[768px]:bottom-0 min-[768px]:w-[42%]" style={{ zIndex: 2 }}>
-                    <ThreadPanel />
-                </div>
+            </div>
+            {/* caption */}
+            <div className="flex justify-center" style={{ padding: '12px 4px 0' }}>
+                <span
+                    className="font-sans"
+                    style={{
+                        fontSize: 9,
+                        fontWeight: 500,
+                        color: onImage ? 'rgba(255,255,255,0.85)' : mutedText,
+                        textShadow: onImage ? '0 1px 8px rgba(0,0,0,0.4)' : undefined,
+                    }}
+                >
+                    L'agent, intégré à votre outil — pas dans un onglet à côté.
+                </span>
             </div>
         </div>
     );
