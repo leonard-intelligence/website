@@ -3,8 +3,10 @@
 // Layer 05 (Capacités métier) is the existing SectionCapabilities (Agent ID card).
 import { useInViewReveal } from '../../hooks/useInViewReveal';
 import { TOKENS, EMBOSS_DARK, EMBOSS_MUTED, CARD_SHADOW } from './Sections';
-import { IlluModels } from './illustrations/IlluModels';
+import { SOURCE_URL } from '../pixels/BeadPxContext';
+import { IlluModelField } from './illustrations/IlluModelField';
 import { IlluHarness } from './illustrations/IlluHarness';
+import { IlluHarnessTrace } from './illustrations/IlluHarnessTrace';
 import { IlluConnect } from './illustrations/IlluConnect';
 import { IlluCompound } from './illustrations/IlluCompound';
 import { IlluSurfaces } from './illustrations/IlluSurfaces';
@@ -41,9 +43,11 @@ type LayerProps = {
     /** Render the visual without the white card panel (flat on the section bg). */
     barePanel?: boolean;
     visual: React.ReactNode;
+    /** Optional full-width block rendered under the text/visual grid. */
+    below?: React.ReactNode;
 };
 
-function LayerSection({ id, index, eyebrow, title, lead, points, accent, bg, flip, wide, barePanel, visual }: LayerProps) {
+function LayerSection({ id, index, eyebrow, title, lead, points, accent, bg, flip, wide, barePanel, visual, below }: LayerProps) {
     const panelBg = bg === TOKENS.white ? TOKENS.surface : TOKENS.white;
 
     const heading = (
@@ -120,15 +124,19 @@ function LayerSection({ id, index, eyebrow, title, lead, points, accent, bg, fli
                             <div>{heading}</div>
                             <div>{body}</div>
                         </div>
-                        {visualPanel}
+                        {barePanel ? visual : visualPanel}
+                        {below && <div style={{ marginTop: 28 }}>{below}</div>}
                     </div>
                 ) : (
-                    <div className="max-w-[1100px] mx-auto grid grid-cols-1 md:grid-cols-2 gap-10 lg:gap-16 items-center">
-                        <div className={flip ? 'md:order-2' : ''}>
-                            {heading}
-                            <div className="mt-5">{body}</div>
+                    <div className="max-w-[1100px] mx-auto">
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-10 lg:gap-16 items-center">
+                            <div className={flip ? 'md:order-2' : ''}>
+                                {heading}
+                                <div className="mt-5">{body}</div>
+                            </div>
+                            <div className={flip ? 'md:order-1' : ''}>{barePanel ? visual : visualPanel}</div>
                         </div>
-                        <div className={flip ? 'md:order-1' : ''}>{barePanel ? visual : visualPanel}</div>
+                        {below && <div style={{ marginTop: 28 }}>{below}</div>}
                     </div>
                 )}
             </Reveal>
@@ -143,13 +151,13 @@ export function LayerModeles() {
             id="section-modeles"
             index="01"
             eyebrow="GRANDS MODÈLES DE LANGAGE"
-            title="Le bon modèle, par tâche."
-            lead="Claude, GPT, Mistral ou un modèle open-weight hébergé chez vous. Chaque tâche a ses contraintes : précision, coût, latence, confidentialité. On sélectionne le bon modèle pour chacune, jamais un seul par défaut."
-            points={['Modèles propriétaires ou open-weight', 'Hébergeable dans votre périmètre', 'Arbitrage précision / coût / latence']}
+            title="Jamais un modèle par défaut."
+            lead="Claude, GPT, Mistral ou open-weight hébergé chez vous : chaque tâche a son optimum. Nous arbitrons précision, coût, latence et confidentialité — et nous remplaçons un modèle dès qu'un meilleur existe."
+            points={['Frontier ou open-weight, par tâche', 'Hébergeable dans votre périmètre', 'Remplaçable sans réécrire le système']}
             accent={TOKENS.lime}
             bg={TOKENS.paper}
             barePanel
-            visual={<IlluModels />}
+            visual={<IlluModelField />}
         />
     );
 }
@@ -165,8 +173,31 @@ export function LayerHarnais() {
             points={["Routage d'outils & contrôle de flux", 'Mémoire et garde-fous intégrés', 'Sous-agents en parallèle']}
             accent={TOKENS.ink}
             bg={TOKENS.white}
-            wide
-            visual={<IlluHarness accent={TOKENS.ink} />}
+            flip
+            barePanel
+            visual={
+                /* Un seul cadre parent : le schéma rond en haut, la trace d'exécution
+                   compacte en dessous, posée sur la surface (style « Demande #2481 ») */
+                <div
+                    className="w-full"
+                    style={{
+                        borderRadius: 16,
+                        border: `1px solid ${TOKENS.border}`,
+                        backgroundColor: TOKENS.surface,
+                        boxShadow: CARD_SHADOW,
+                        padding: 5,
+                    }}
+                >
+                    {/* le schéma garde son air via son propre padding */}
+                    <div className="flex justify-center" style={{ padding: 'clamp(14px, 2.2vw, 22px) clamp(14px, 2.2vw, 22px) 0' }}>
+                        <IlluHarness accent={TOKENS.ink} />
+                    </div>
+                    {/* la trace colle aux bords du parent à 5px */}
+                    <div style={{ marginTop: 5 }}>
+                        <IlluHarnessTrace accent={TOKENS.ink} />
+                    </div>
+                </div>
+            }
         />
     );
 }
@@ -210,13 +241,34 @@ export function LayerProduits() {
             id="section-produits"
             index="06"
             eyebrow="PRODUITS & INTERFACES"
-            title="Dans votre flux, pas dans un onglet."
-            lead="Les surfaces où humains et agents collaborent : add-in dans vos outils, tableau de bord de supervision, API. L'agent travaille là où vous travaillez déjà, pas dans un onglet à côté."
-            points={['Add-ins dans vos outils', 'Tableau de bord de supervision', 'API & intégration sur-mesure']}
+            title="Votre dashboard, cousu main."
+            lead="Nous construisons votre tableau de bord sur mesure : exactement les fonctionnalités dont vous avez besoin, et nous en ajoutons à la demande. Spécialistes des interfaces agentiques, nous concevons la meilleure expérience entre vous et vos agents — sans jamais vous plonger dans la technique."
+            points={['Sur mesure pour vos workflows', 'Nouvelles fonctionnalités à la demande', 'Toute la puissance, zéro technique']}
             accent={TOKENS.lime}
             bg={TOKENS.white}
             wide
-            visual={<IlluSurfaces accent={TOKENS.lime} />}
+            barePanel
+            visual={
+                /* Cadre fond bead contenant la fenêtre flottante — même idiome que la carte Agent ID */
+                <div
+                    className="relative overflow-hidden w-full"
+                    style={{
+                        borderRadius: 22,
+                        boxShadow: '0 20px 48px rgba(0,0,0,0.18), inset 0 0 0 1px rgba(255,255,255,0.12)',
+                        padding: 'clamp(20px, 4.5vw, 56px)',
+                    }}
+                >
+                    {/* fond bead (même source que le héro, cadrage ciel) */}
+                    <div
+                        aria-hidden="true"
+                        className="absolute inset-0"
+                        style={{ backgroundImage: `url(${SOURCE_URL})`, backgroundSize: 'cover', backgroundPosition: 'center 22%' }}
+                    />
+                    <div className="relative">
+                        <IlluSurfaces accent={TOKENS.lime} onImage />
+                    </div>
+                </div>
+            }
         />
     );
 }
@@ -227,9 +279,9 @@ export function LayerSecurite() {
             id="section-securite"
             index="07"
             eyebrow="SÉCURITÉ & GOUVERNANCE"
-            title="La sécurité, intégrée à chaque couche."
-            lead="Cloisonnement entre dossiers, traçabilité complète de chaque appel d'outil, contrôle d'accès par rôle, souveraineté des données. Intégré à chaque couche, pas ajouté après coup."
-            points={["Cloisonnement & contrôle d'accès", 'Traçabilité de chaque action', 'Souveraineté des données']}
+            title="Autonome, jamais hors de contrôle."
+            lead="Un agent en production agit sur vos vrais systèmes — alors chaque geste est journalisé, les actions sensibles attendent une validation humaine, et vos données restent dans votre périmètre. Vous savez toujours qui a fait quoi, quand."
+            points={['Actions sensibles validées par un humain', 'Chaque geste journalisé, rejouable', 'Données dans votre périmètre']}
             accent={TOKENS.ink}
             bg={TOKENS.surface}
             flip

@@ -2,14 +2,15 @@
 import { ArrowRight, Mic, Users, Map as MapIcon, Ruler, ShieldCheck, Boxes, Plug, Rocket, Gauge, Cpu, Workflow, Database, Layers, LayoutDashboard, Sparkles, Image as ImageIcon, Video, Music, Type as TypeIcon, type LucideIcon } from 'lucide-react';
 import { PixelLayer } from '../pixels/PixelLayer';
 import { Pixel } from '../pixels/Pixel';
-import { useBeadCtx, SOURCE_URL, SAMPLE_W, SAMPLE_H } from '../pixels/BeadPxContext';
+import { useBeadCtx, SOURCE_URL } from '../pixels/BeadPxContext';
 import { useNotchParams } from '../dev/notchParamsStore';
 import { useVitruveParams } from '../dev/vitruveParamsStore';
-import { useVortexParams, buildVortex } from '../dev/vortexParamsStore';
+import { useVortexParams } from '../dev/vortexParamsStore';
+import { VortexBeadLayer } from './illustrations/VortexBeadLayer';
 import { QrBadge } from './QrBadge';
 import { ReliefButton } from '../ui/ReliefButton';
 import { ConstruitSur } from './ConstruitSur';
-import { Fragment } from 'react';
+import { Fragment, useEffect, useState } from 'react';
 import { useInViewReveal } from '../../hooks/useInViewReveal';
 
 function Reveal({ children, className }: { children: React.ReactNode; className?: string }) {
@@ -86,15 +87,6 @@ const CAPS: { n: string; title: string; desc: string; href: string; icon: Lucide
     { n: '05', title: 'Capacités métier', desc: "Les compétences qui font de l'agent un expert de votre domaine.", href: '#section-capabilities', icon: Sparkles },
     { n: '06', title: 'Produits & interfaces', desc: 'Les surfaces où humains et agents travaillent.', href: '#section-produits', icon: LayoutDashboard },
     { n: '07', title: 'Sécurité & gouvernance', desc: 'Cloisonnement, traçabilité, accès par rôle, dans chaque couche.', href: '#section-securite', icon: ShieldCheck },
-];
-
-// Modalités de génération orchestrées au sein des systèmes.
-const MODALITIES: { icon: LucideIcon; label: string }[] = [
-    { icon: TypeIcon, label: 'Texte' },
-    { icon: ImageIcon, label: 'Image' },
-    { icon: Mic, label: 'Voix' },
-    { icon: Video, label: 'Vidéo' },
-    { icon: Music, label: 'Musique' },
 ];
 
 function CapCard({ cap }: { cap: (typeof CAPS)[number] }) {
@@ -419,35 +411,6 @@ export function SectionSystem() {
                     ))}
                 </div>
 
-                {/* Génération multimodale */}
-                <div className="text-center" style={{ marginTop: 64 }}>
-                    <div className="font-mono" style={{ fontSize: 12, letterSpacing: '0.22em', color: 'rgba(23,23,23,0.5)' }}>
-                        GÉNÉRATION MULTIMODALE
-                    </div>
-                    <p
-                        className="font-sans mt-3 mx-auto"
-                        style={{ fontSize: 16, lineHeight: '23px', fontWeight: 460, color: TOKENS.mutedText, maxWidth: '52ch' }}
-                    >
-                        Texte, image, voix, vidéo, musique : générés et orchestrés ensemble, au sein de systèmes complexes.
-                    </p>
-                    <div className="flex flex-wrap justify-center" style={{ gap: 12, marginTop: 22 }}>
-                        {MODALITIES.map(({ icon: Icon, label }) => (
-                            <div
-                                key={label}
-                                className="inline-flex items-center"
-                                style={{ gap: 10, padding: '11px 18px 11px 12px', borderRadius: 999, background: TOKENS.white, boxShadow: RM_CARD_SHADOW }}
-                            >
-                                <span
-                                    className="inline-flex items-center justify-center"
-                                    style={{ width: 30, height: 30, borderRadius: 8, background: 'linear-gradient(180deg, #FFFFFF 0%, #F5F5F2 100%)', boxShadow: RM_TILE_SHADOW }}
-                                >
-                                    <Icon size={16} strokeWidth={1.7} color={TOKENS.ink} style={{ opacity: 0.75 }} />
-                                </span>
-                                <span className="font-sans" style={{ fontSize: 15, fontWeight: 500, color: TOKENS.ink }}>{label}</span>
-                            </div>
-                        ))}
-                    </div>
-                </div>
             </div>
             </Reveal>
         </section>
@@ -495,12 +458,6 @@ export function SectionDeploy() {
 // énumère nos expertises de génération. Beads de 24px sur une grille stricte
 // de 24px (positions et tailles = multiples de 24, comme le hero bg).
 // ============================================================================
-// Palette de beads colorées (fleurs orange) recyclées le long du vortex.
-const VORTEX_SRC: [number, number][] = [
-    [96, 66], [91, 67], [74, 72], [68, 43], [100, 60], [79, 75],
-    [66, 49], [80, 70], [6, 39], [86, 70], [53, 61], [47, 62],
-];
-
 const EXP_CARDS: { icon: LucideIcon; label: string; tags: string[]; pos: React.CSSProperties }[] = [
     { icon: TypeIcon, label: 'Texte', tags: ['Rédaction', 'Synthèse', 'Extraction', 'Classification'], pos: { left: '5%', top: '5%' } },
     { icon: ImageIcon, label: 'Image', tags: ['Génération', 'Retouche', 'Analyse', 'OCR'], pos: { right: '6%', top: '23%' } },
@@ -510,10 +467,7 @@ const EXP_CARDS: { icon: LucideIcon; label: string; tags: string[]; pos: React.C
 ];
 
 export function SectionExpertise() {
-    const vortex = useVortexParams();
-    const beads = buildVortex(vortex);
-    const bs = vortex.beadSize;
-    const maxR = Math.max(1, ...beads.map((b) => b.r));
+    const vortex = useVortexParams('expertises');
     return (
         <section
             id="section-expertise"
@@ -558,49 +512,8 @@ export function SectionExpertise() {
                             boxShadow: 'inset 0 0 0 1px rgba(23,23,23,0.06)',
                         }}
                     >
-                        {/* vortex de beads — généré par algorithme (réglable : DevTools › Vortex) */}
-                        {beads.map((b) => {
-                            let bg: React.CSSProperties;
-                            if (vortex.colorMode === 'solid') {
-                                bg = { backgroundColor: vortex.color };
-                            } else {
-                                let sc: number;
-                                let sr: number;
-                                if (vortex.colorMode === 'radial') {
-                                    // près du centre = bas de l'image (fleurs) ; loin = haut (ciel) — inversable
-                                    const rNorm = Math.min(1, b.r / maxR);
-                                    const tNorm = vortex.radialInvert ? rNorm : 1 - rNorm;
-                                    sr = Math.round(tNorm * (SAMPLE_H - 1));
-                                    const a = ((b.ang % (2 * Math.PI)) + 2 * Math.PI) % (2 * Math.PI);
-                                    sc = Math.min(SAMPLE_W - 1, Math.floor((a / (2 * Math.PI)) * SAMPLE_W));
-                                } else {
-                                    [sc, sr] = VORTEX_SRC[b.idx % VORTEX_SRC.length];
-                                }
-                                bg = {
-                                    backgroundImage: `url(${SOURCE_URL})`,
-                                    backgroundSize: `${SAMPLE_W * bs}px ${SAMPLE_H * bs}px`,
-                                    backgroundPosition: `-${sc * bs}px -${sr * bs}px`,
-                                    backgroundRepeat: 'no-repeat',
-                                };
-                            }
-                            return (
-                                <div
-                                    key={b.idx}
-                                    aria-hidden="true"
-                                    style={{
-                                        position: 'absolute',
-                                        left: `calc(50% + ${b.x - bs / 2}px)`,
-                                        top: `calc(50% + ${b.y - bs / 2}px)`,
-                                        width: bs,
-                                        height: bs,
-                                        ...bg,
-                                        borderRadius: 2,
-                                        boxShadow: '0 1px 3px rgba(0,0,0,0.16)',
-                                        imageRendering: 'pixelated',
-                                    }}
-                                />
-                            );
-                        })}
+                        {/* vortex de beads — généré par algorithme (réglable : DevTools › Vortex › Expertises) */}
+                        <VortexBeadLayer params={vortex} />
 
                         {/* cartes expertises réparties dans le cadre */}
                         {EXP_CARDS.map(({ icon: Icon, label, tags, pos }) => (
@@ -694,67 +607,114 @@ const ROAD_LABEL: Record<RoadType, string> = {
     approval: 'Validation requise',
 };
 
-function RoadTaskCard({ task }: { task: RoadTask }) {
+// Statut d'une colonne dans la séquence animée
+type RoadStatus = 'passed' | 'active' | 'future';
+
+function RoadCheck() {
+    return (
+        <svg viewBox="0 0 10 10" width={11} height={11} aria-hidden="true">
+            <path d="M1 5 l3 3 l5 -7" fill="none" stroke={TOKENS.forest} strokeWidth="1.6" />
+        </svg>
+    );
+}
+
+function RoadTaskCard({ task, status }: { task: RoadTask; status: RoadStatus }) {
     const Icon = task.icon;
     const approval = task.type === 'approval';
+    const active = status === 'active';
     return (
         <div
             className="flex items-center justify-between"
-            style={{ height: 44, paddingLeft: 6, paddingRight: 8, borderRadius: 8, background: TOKENS.white, boxShadow: RM_CARD_SHADOW }}
+            style={{
+                height: 50,
+                paddingLeft: 7,
+                paddingRight: 10,
+                borderRadius: 9,
+                background: TOKENS.white,
+                boxShadow: active ? `0 0 0 1px ${TOKENS.ink}30, ${RM_CARD_SHADOW}` : RM_CARD_SHADOW,
+                opacity: status === 'future' ? 0.72 : 1,
+                transition: 'box-shadow 400ms ease, opacity 400ms ease',
+            }}
         >
-            <div className="flex items-center" style={{ gap: 8, minWidth: 0 }}>
+            <div className="flex items-center" style={{ gap: 9, minWidth: 0 }}>
                 <span
                     className="inline-flex items-center justify-center shrink-0"
-                    style={{ width: 28, height: 28, borderRadius: 6, background: 'linear-gradient(180deg, #FFFFFF 0%, #F5F5F2 100%)', boxShadow: RM_TILE_SHADOW }}
+                    style={{ width: 32, height: 32, borderRadius: 7, background: 'linear-gradient(180deg, #FFFFFF 0%, #F5F5F2 100%)', boxShadow: RM_TILE_SHADOW }}
                 >
-                    <Icon size={14} strokeWidth={1.6} color={TOKENS.ink} style={{ opacity: 0.66 }} />
+                    <Icon size={15} strokeWidth={1.6} color={TOKENS.ink} style={{ opacity: 0.66 }} />
                 </span>
                 <div className="flex flex-col" style={{ gap: 3, minWidth: 0 }}>
-                    <span className="font-sans truncate" style={{ fontSize: 11, fontWeight: 500, color: TOKENS.ink, lineHeight: 1 }}>{task.label}</span>
-                    <span className="font-mono inline-flex items-center" style={{ gap: 5, fontSize: 8.5, color: TOKENS.mutedText, lineHeight: 1 }}>
+                    <span className="font-sans truncate" style={{ fontSize: 12, fontWeight: 500, color: TOKENS.ink, lineHeight: 1 }}>{task.label}</span>
+                    <span className="font-mono inline-flex items-center" style={{ gap: 5, fontSize: 9, color: TOKENS.mutedText, lineHeight: 1 }}>
                         {approval && <span style={{ width: 5, height: 5, borderRadius: 999, background: TOKENS.gold, display: 'inline-block' }} />}
                         {ROAD_LABEL[task.type]}
                     </span>
                 </div>
             </div>
-            <span
-                className="inline-flex items-center justify-center shrink-0"
-                style={{ width: 16, height: 17, borderRadius: 4, background: 'linear-gradient(180deg, #EBEBE8, #F5F5F2)', boxShadow: 'inset 0 -0.5px 0 rgba(0,0,0,0.12), inset 0 1px 1px rgba(255,255,255,0.24)' }}
-            >
-                <ArrowRight size={9} color="rgba(32,32,32,0.4)" />
+            {/* état : ✓ passé · spinner actif · → à venir */}
+            <span className="inline-flex items-center justify-center shrink-0" style={{ width: 18, height: 18 }}>
+                {status === 'passed' && <RoadCheck />}
+                {status === 'active' && (
+                    <span
+                        className="animate-spin"
+                        style={{ width: 11, height: 11, borderRadius: 999, border: `2px solid ${TOKENS.ink}40`, borderTopColor: TOKENS.ink, display: 'inline-block' }}
+                    />
+                )}
+                {status === 'future' && <ArrowRight size={10} color="rgba(32,32,32,0.4)" />}
             </span>
         </div>
     );
 }
 
-function RoadFlow() {
+// La flèche entre deux étapes — « brille » quand l'étape suivante s'active :
+// trait encré + point qui la parcourt en continu.
+function RoadFlow({ lit = false }: { lit?: boolean }) {
+    const stroke = lit ? 'rgba(23,23,23,0.8)' : 'rgba(23,23,23,0.35)';
     return (
-        <div className="hidden min-[768px]:flex items-center justify-center" style={{ width: 30, flex: '0 0 auto', alignSelf: 'center' }} aria-hidden="true">
-            <svg width="30" height="10" viewBox="0 0 30 10" fill="none">
-                <circle cx="2" cy="5" r="1.6" fill={TOKENS.surface} stroke="rgba(0,0,0,0.18)" strokeWidth="0.6" />
-                <path d="M5 5 H23" stroke="rgba(23,23,23,0.35)" strokeWidth="0.9" strokeDasharray="2 2" strokeLinecap="round" />
-                <path d="M22 2.5 L25.5 5 L22 7.5" stroke="rgba(23,23,23,0.35)" strokeWidth="0.9" strokeLinecap="round" strokeLinejoin="round" />
+        <div className="hidden min-[768px]:flex items-center justify-center relative" style={{ width: 36, flex: '0 0 auto', alignSelf: 'center' }} aria-hidden="true">
+            <svg width="36" height="12" viewBox="0 0 36 12" fill="none">
+                <circle cx="2.5" cy="6" r="1.8" fill={TOKENS.surface} stroke="rgba(0,0,0,0.18)" strokeWidth="0.6" />
+                <path d="M6 6 H28" stroke={stroke} strokeWidth="1" strokeDasharray="2 2" strokeLinecap="round" style={{ transition: 'stroke 350ms ease' }} />
+                <path d="M27 3 L31 6 L27 9" stroke={stroke} strokeWidth="1" strokeLinecap="round" strokeLinejoin="round" style={{ transition: 'stroke 350ms ease' }} />
             </svg>
+            {lit && (
+                <span
+                    className="rm-flow-dot absolute"
+                    style={{ top: '50%', left: 4, width: 5, height: 5, marginTop: -2.5, borderRadius: 999, background: TOKENS.ink }}
+                />
+            )}
         </div>
     );
 }
 
-function RoadStageCol({ st }: { st: RoadStage }) {
+function RoadStageCol({ st, status }: { st: RoadStage; status: RoadStatus }) {
+    const active = status === 'active';
+    const passed = status === 'passed';
     return (
-        <div className="flex-1 min-w-0 flex flex-col" style={{ padding: '14px 12px' }}>
-            <div className="flex items-center justify-between" style={{ marginBottom: 8 }}>
+        <div className="flex-1 min-w-0 flex flex-col" style={{ padding: '16px 14px' }}>
+            <div className="flex items-center justify-between" style={{ marginBottom: 9 }}>
                 <span
                     className="inline-flex items-center font-mono"
-                    style={{ fontSize: 9, color: TOKENS.mutedText, padding: '3px 9px', borderRadius: 999, background: TOKENS.surface, boxShadow: RM_PILL_SHADOW, whiteSpace: 'nowrap' }}
+                    style={{
+                        gap: 6,
+                        fontSize: 9.5,
+                        color: active ? '#FFFFFF' : TOKENS.mutedText,
+                        padding: '4px 10px',
+                        borderRadius: 999,
+                        background: active ? TOKENS.ink : TOKENS.surface,
+                        boxShadow: passed ? `0 0 0 1px ${TOKENS.forest}55, ${RM_PILL_SHADOW}` : RM_PILL_SHADOW,
+                        whiteSpace: 'nowrap',
+                        transition: 'background 400ms ease, color 400ms ease, box-shadow 400ms ease',
+                    }}
                 >
+                    {passed && <RoadCheck />}
                     {st.stage}
                 </span>
-                <span className="font-mono" style={{ fontSize: 8, color: TOKENS.mutedText }}>{st.tasks.length}</span>
             </div>
-            <span className="font-sans" style={{ fontSize: 10.5, color: TOKENS.mutedText, lineHeight: 1.3, marginBottom: 12, minHeight: 28 }}>{st.sub}</span>
-            <div className="flex flex-col" style={{ gap: 10 }}>
+            <span className="font-sans" style={{ fontSize: 11.5, color: TOKENS.mutedText, lineHeight: 1.35, marginBottom: 13, minHeight: 31 }}>{st.sub}</span>
+            <div className="flex flex-col" style={{ gap: 11 }}>
                 {st.tasks.map((t) => (
-                    <RoadTaskCard key={t.label} task={t} />
+                    <RoadTaskCard key={t.label} task={t} status={status} />
                 ))}
             </div>
         </div>
@@ -762,24 +722,54 @@ function RoadStageCol({ st }: { st: RoadStage }) {
 }
 
 function RoadmapBoard() {
+    // Séquence : étape 0 → 1 → 2 → 3 → tout terminé (pause) → boucle.
+    const [step, setStep] = useState(0);
+    useEffect(() => {
+        if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+            setStep(4); // état final statique : tout est ✓
+            return;
+        }
+        const t0 = performance.now();
+        const DURS = [2400, 2400, 2400, 2400, 3200]; // 4 étapes + repos « terminé »
+        const TOTAL = DURS.reduce((a, b) => a + b, 0);
+        const id = setInterval(() => {
+            const e = (performance.now() - t0) % TOTAL;
+            let acc = 0;
+            let s = DURS.length - 1;
+            for (let i = 0; i < DURS.length; i++) {
+                acc += DURS[i];
+                if (e < acc) { s = i; break; }
+            }
+            setStep(s);
+        }, 150);
+        return () => clearInterval(id);
+    }, []);
+
+    const statusOf = (i: number): RoadStatus => (step === 4 || i < step ? 'passed' : i === step ? 'active' : 'future');
+
     return (
         <div
             className="relative w-full mx-auto"
             style={{
-                maxWidth: 1040,
+                maxWidth: 1200,
                 borderRadius: 14,
                 backgroundColor: '#EAEAE6',
                 backgroundImage: 'radial-gradient(rgba(23,23,23,0.08) 0.6px, transparent 0.6px)',
                 backgroundSize: '12px 12px',
                 boxShadow: '1px 2px 2px #FFFFFF, 1px 4px 5px #FFFFFF',
-                padding: 10,
+                padding: 12,
             }}
         >
+            <style>{`
+                @keyframes rm-flow { 0% { transform: translateX(0); opacity: 0; } 18% { opacity: 1; } 82% { opacity: 1; } 100% { transform: translateX(22px); opacity: 0; } }
+                .rm-flow-dot { animation: rm-flow 750ms linear infinite; }
+                @media (prefers-reduced-motion: reduce) { .rm-flow-dot { display: none; } }
+            `}</style>
             <div className="flex flex-col min-[768px]:flex-row min-[768px]:items-stretch" style={{ gap: 8 }}>
                 {ROADMAP.map((st, i) => (
                     <Fragment key={st.stage}>
-                        <RoadStageCol st={st} />
-                        {i < ROADMAP.length - 1 && <RoadFlow />}
+                        <RoadStageCol st={st} status={statusOf(i)} />
+                        {i < ROADMAP.length - 1 && <RoadFlow lit={step === i + 1} />}
                     </Fragment>
                 ))}
             </div>
@@ -2112,14 +2102,19 @@ export function FooterV2() {
                     </p>
 
                     <nav className="flex flex-wrap gap-x-6 gap-y-2 mt-2">
-                        {['Méthode', 'Services', 'Mentions légales', 'Contact'].map((l) => (
+                        {[
+                            { label: 'Méthode', href: '#section-method' },
+                            { label: 'Expertises', href: '#section-expertise' },
+                            { label: 'Mentions légales', href: '/mentions-legales' },
+                            { label: 'Contact', href: '#contact' },
+                        ].map(({ label, href }) => (
                             <a
-                                key={l}
-                                href="#"
+                                key={label}
+                                href={href}
                                 className="hover:underline"
                                 style={{ fontSize: '14px', color: TOKENS.ink, fontWeight: 460 }}
                             >
-                                {l}
+                                {label}
                             </a>
                         ))}
                     </nav>
