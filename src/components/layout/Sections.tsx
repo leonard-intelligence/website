@@ -81,13 +81,13 @@ export const EMBOSS_MUTED: React.CSSProperties = {
 // ============================================================================
 // ── Capabilities overview grid (intro) — "Do it all" style, links to each layer ─
 const CAPS: { n: string; title: string; desc: string; href: string; icon: LucideIcon }[] = [
-    { n: '01', title: 'Grands modèles de langage', desc: 'Le bon modèle pour chaque tâche, propriétaire ou open-weight.', href: '#section-modeles', icon: Cpu },
-    { n: '02', title: 'Harnais agentique', desc: "Routage d'outils, mémoire, garde-fous. Des sous-agents en parallèle.", href: '#section-harnais', icon: Workflow },
-    { n: '03', title: 'Données & intégrations', desc: "Ce à quoi l'agent se branche : API, CRM, bases, connecteurs MCP.", href: '#section-donnees', icon: Database },
-    { n: '04', title: 'Contexte & connaissance', desc: 'Une mémoire qui se capitalise au fil des tours.', href: '#section-contexte', icon: Layers },
+    { n: '01', title: 'Grands modèles de langage', desc: 'À chaque solution, son modèle — propriétaire ou open-weight.', href: '#section-modeles', icon: Cpu },
+    { n: '02', title: 'Écosystème agentique', desc: 'Compétences, outils et autonomie au service de la valeur.', href: '#section-harnais', icon: Workflow },
+    { n: '03', title: 'Données & intégrations', desc: 'Toutes vos sources canalisées vers un environnement unique.', href: '#section-donnees', icon: Database },
+    { n: '04', title: 'Contexte & connaissance', desc: 'Ne perdez plus rien : la mémoire se capitalise.', href: '#section-contexte', icon: Layers },
     { n: '05', title: 'Capacités métier', desc: "Les compétences qui font de l'agent un expert de votre domaine.", href: '#section-capabilities', icon: Sparkles },
     { n: '06', title: 'Produits & interfaces', desc: 'Les surfaces où humains et agents travaillent.', href: '#section-produits', icon: LayoutDashboard },
-    { n: '07', title: 'Sécurité & gouvernance', desc: 'Cloisonnement, traçabilité, accès par rôle, dans chaque couche.', href: '#section-securite', icon: ShieldCheck },
+    { n: '07', title: 'Autonomie contrôlée', desc: 'Le bon rapport autonomie-contrôle, systèmes critiques protégés.', href: '#section-securite', icon: ShieldCheck },
 ];
 
 function CapCard({ cap }: { cap: (typeof CAPS)[number] }) {
@@ -403,7 +403,7 @@ export function SectionSystem() {
                         className="font-sans mt-4 mx-auto"
                         style={{ fontSize: 17, lineHeight: '24px', fontWeight: 460, color: TOKENS.mutedText, maxWidth: '54ch' }}
                     >
-                        Du choix du modèle au pilotage en production : chaque couche est maîtrisée, branchée à votre entreprise.
+                        Toute la stack au service de votre entreprise — et votre entreprise au service de vos clients. Le grand gagnant : votre client.
                     </p>
                 </header>
                 {/* desktop : le circuit en relief (réf. AgentMail) — chaque nœud ancre vers sa couche */}
@@ -500,7 +500,7 @@ export function SectionExpertise() {
 
                     {/* Accroche */}
                     <p className="font-sans" style={{ marginTop: 24, fontSize: 19, lineHeight: '28px', fontWeight: 460, color: TOKENS.mutedText, maxWidth: '64ch' }}>
-                        Du texte à la vidéo : nous concevons des systèmes qui génèrent et orchestrent chaque modalité, sur mesure pour votre métier.
+                        Tirez profit des meilleurs modèles au monde, dans tous les domaines : texte, image, voix, vidéo, musique — orchestrés sur mesure pour votre métier.
                     </p>
 
                     {/* Carte beads — grille stricte 24px */}
@@ -1234,7 +1234,7 @@ export function SectionCapabilities() {
                             className="font-sans mt-5"
                             style={{ fontSize: 17, lineHeight: '26px', fontWeight: 460, color: TOKENS.mutedText, maxWidth: '46ch' }}
                         >
-                            Instructions, sous-agents, outils branchés, garde-fous, latence : tout est spécifié, mesurable, auditable. Pas de boîte noire.
+                            Des agents construits sur vos données, qui connaissent les spécificités techniques et métier de votre entreprise. Instructions, outils, garde-fous : tout est spécifié, mesurable, auditable. Pas de boîte noire.
                         </p>
                         <span
                             className="font-mono inline-block"

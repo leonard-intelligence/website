@@ -23,7 +23,7 @@ const TILES: Tile[] = [
     { x: 110, y: ROW_Y, s: 76, id: '01', label: 'Modèles', href: '#section-modeles' },
     { x: 205, y: ROW_Y, s: 44 },
     { x: 287, y: ROW_Y, s: 56 },
-    { x: 382, y: ROW_Y, s: 76, id: '02', label: 'Harnais', href: '#section-harnais' },
+    { x: 382, y: ROW_Y, s: 76, id: '02', label: 'Écosystème', href: '#section-harnais' },
     { x: 474, y: ROW_Y, s: 44 },
     { x: 553, y: ROW_Y, s: 56 },
     { x: 648, y: ROW_Y, s: 76, id: '05', label: 'Capacités', href: '#section-capabilities' },
@@ -211,7 +211,7 @@ export function IlluSystemCircuit() {
                             transition: 'background 400ms ease, color 400ms ease, box-shadow 400ms ease',
                         }}
                     >
-                        07 · SÉCURITÉ · LE CADRE
+                        07 · AUTONOMIE CONTRÔLÉE
                     </a>
 
                     {/* couches numérotées : numéro + label + état actif en overlay

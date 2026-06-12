@@ -151,7 +151,7 @@ export function LayerModeles() {
             id="section-modeles"
             index="01"
             eyebrow="GRANDS MODÈLES DE LANGAGE"
-            title="Jamais un modèle par défaut."
+            title="À chaque solution, son modèle."
             lead="Claude, GPT, Mistral ou open-weight hébergé chez vous : chaque tâche a son optimum. Nous arbitrons précision, coût, latence et confidentialité — et nous remplaçons un modèle dès qu'un meilleur existe."
             points={['Frontier ou open-weight, par tâche', 'Hébergeable dans votre périmètre', 'Remplaçable sans réécrire le système']}
             accent={TOKENS.lime}
@@ -167,10 +167,10 @@ export function LayerHarnais() {
         <LayerSection
             id="section-harnais"
             index="02"
-            eyebrow="HARNAIS AGENTIQUE"
-            title="La couche d'orchestration."
-            lead="La couche d'orchestration : routage d'outils, contrôle de flux, mémoire, sélection de modèle et garde-fous. Des sous-agents spécialisés s'exécutent en parallèle pour mener un workflow de bout en bout."
-            points={["Routage d'outils & contrôle de flux", 'Mémoire et garde-fous intégrés', 'Sous-agents en parallèle']}
+            eyebrow="ÉCOSYSTÈME AGENTIQUE"
+            title="Un écosystème qui crée de la valeur."
+            lead="Nous construisons un véritable écosystème agentique adapté à votre entreprise : des agents équipés de compétences et d'outils pour accomplir un maximum de tâches en autonomie — et apporter de la valeur réelle, mesurable, chaque jour."
+            points={['Compétences & outils adaptés à votre métier', 'Un maximum de tâches en autonomie', 'De la valeur réelle, mesurable']}
             accent={TOKENS.ink}
             bg={TOKENS.white}
             flip
@@ -208,9 +208,9 @@ export function LayerDonnees() {
             id="section-donnees"
             index="03"
             eyebrow="DONNÉES & INTÉGRATIONS"
-            title="Branché à toute votre stack."
-            lead="APIs internes, CRM, ERP, bases documentaires, connecteurs MCP. Tout converge sous un même toit pour alimenter le contexte de l'agent, sans recopie, sans silo."
-            points={['Connecteurs MCP, API, webhooks', 'CRM · ERP · DMS · bases internes', 'Ingestion documentaire']}
+            title="Toutes vos sources, un seul environnement."
+            lead="Base de données, chatbot de votre site, WhatsApp, e-mails, Discord : nous canalisons toutes vos sources vers un même environnement, standardisé. Les flux arrivent dans tous les formats — ils ressortent unifiés, prêts à nourrir vos agents."
+            points={['Toutes les sources pertinentes, sans exception', 'Centralisées dans un environnement standardisé', "Des données unifiées, prêtes à l'emploi"]}
             accent={TOKENS.gold}
             bg={TOKENS.surface}
             visual={<IlluConnect accent={TOKENS.gold} />}
@@ -224,9 +224,9 @@ export function LayerContexte() {
             id="section-contexte"
             index="04"
             eyebrow="CONTEXTE & CONNAISSANCE"
-            title="Une mémoire qui se capitalise."
-            lead="Playbooks, historique des dossiers, règles et positions métier s'intègrent à chaque action de l'agent. Il reprend là où le tour précédent s'est arrêté. La connaissance s'accumule au lieu de se perdre."
-            points={['Playbooks & règles métier', 'Historique et mémoire des dossiers', 'La connaissance se capitalise']}
+            title="Ne perdez plus rien. Souvenez-vous de tout."
+            lead="Chaque échange, chaque décision, chaque dossier nourrit la mémoire de vos agents. L'information ne s'évapore plus : elle se capitalise — et chaque nouvelle tâche démarre avec tout l'historique. Vous gagnez en productivité à chaque itération."
+            points={['Aucune information perdue', 'Une mémoire qui se capitalise', "De la productivité qui s'accumule"]}
             accent={TOKENS.forest}
             bg={TOKENS.white}
             flip
@@ -278,10 +278,10 @@ export function LayerSecurite() {
         <LayerSection
             id="section-securite"
             index="07"
-            eyebrow="SÉCURITÉ & GOUVERNANCE"
-            title="Autonome, jamais hors de contrôle."
-            lead="Un agent en production agit sur vos vrais systèmes — alors chaque geste est journalisé, les actions sensibles attendent une validation humaine, et vos données restent dans votre périmètre. Vous savez toujours qui a fait quoi, quand."
-            points={['Actions sensibles validées par un humain', 'Chaque geste journalisé, rejouable', 'Données dans votre périmètre']}
+            eyebrow="AUTONOMIE CONTRÔLÉE"
+            title="Le bon curseur entre autonomie et contrôle."
+            lead="Nous construisons des systèmes au bon rapport autonomie-contrôle : assez d'autonomie pour aller chercher les meilleurs résultats, assez de contrôle pour protéger les systèmes critiques de votre entreprise. Chaque geste est journalisé, les actions sensibles attendent une validation humaine."
+            points={['Le bon curseur autonomie / contrôle', 'Actions sensibles validées par un humain', 'Vos systèmes critiques protégés']}
             accent={TOKENS.ink}
             bg={TOKENS.surface}
             flip
