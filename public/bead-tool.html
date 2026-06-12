@@ -1,0 +1,467 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Bead Filter — Leonard Intelligence</title>
+<style>
+  :root {
+    --bg: #0b0b14;
+    --panel: #14141f;
+    --line: #2a2a3a;
+    --text: #e7e7ee;
+    --muted: #8a8a9a;
+    --accent: #3a3aff;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; height: 100%; background: var(--bg); color: var(--text);
+    font-family: ui-sans-serif, system-ui, "Inter", sans-serif; }
+  .app { display: grid; grid-template-columns: 320px 1fr; height: 100vh; }
+  .panel { background: var(--panel); border-right: 1px solid var(--line); padding: 20px;
+    overflow-y: auto; }
+  .stage { display: flex; align-items: center; justify-content: center; padding: 24px;
+    overflow: hidden; }
+  canvas { max-width: 100%; max-height: 100%; display: block;
+    background: repeating-conic-gradient(#1a1a26 0% 25%, #14141f 0% 50%) 0 0 / 16px 16px; }
+  h1 { font-size: 14px; letter-spacing: .12em; text-transform: uppercase; margin: 0 0 16px;
+    color: var(--muted); font-weight: 500; }
+  label { display: block; font-size: 12px; color: var(--muted); margin: 14px 0 6px;
+    text-transform: uppercase; letter-spacing: .08em; }
+  input[type="range"] { width: 100%; }
+  input[type="text"], input[type="number"], select {
+    width: 100%; background: #0b0b14; border: 1px solid var(--line); color: var(--text);
+    padding: 8px 10px; border-radius: 6px; font: inherit; font-size: 13px;
+  }
+  .row { display: grid; grid-template-columns: 1fr auto; gap: 10px; align-items: center; }
+  .val { font-variant-numeric: tabular-nums; font-size: 12px; color: var(--text); }
+  .group { padding: 12px 0; border-bottom: 1px solid var(--line); }
+  .group:last-child { border-bottom: 0; }
+  .check { display: flex; align-items: center; gap: 8px; font-size: 13px; }
+  .check input { accent-color: var(--accent); }
+  .btns { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 16px; }
+  button { background: var(--accent); color: white; border: 0; padding: 10px 12px;
+    font: inherit; font-size: 13px; font-weight: 500; border-radius: 6px; cursor: pointer; }
+  button.secondary { background: transparent; border: 1px solid var(--line); color: var(--text); }
+  button:hover { transform: translateY(-1px); }
+  .hint { font-size: 11px; color: var(--muted); margin-top: 8px; line-height: 1.5; }
+  .file { display: block; font-size: 12px; color: var(--muted); margin-top: 6px; }
+  .info { font-size: 11px; color: var(--muted); margin-top: 4px; }
+</style>
+</head>
+<body>
+<div class="app">
+  <aside class="panel">
+    <h1>Bead Filter</h1>
+
+    <div class="group">
+      <label>Source image</label>
+      <input type="text" id="srcUrl" value="/assets/backgrounds/flowers.jpeg" />
+      <input type="file" id="file" accept="image/*" class="file" />
+      <div class="info" id="srcInfo">—</div>
+    </div>
+
+    <div class="group">
+      <label class="row"><span>Cell size (px)</span><span class="val" id="cellVal">12</span></label>
+      <input type="range" id="cell" min="2" max="48" value="12" />
+
+      <label class="row"><span>Bead radius (% of cell)</span><span class="val" id="rVal">95</span></label>
+      <input type="range" id="r" min="20" max="100" value="95" />
+
+      <label class="row"><span>Output scale</span><span class="val" id="scaleVal">1</span></label>
+      <input type="range" id="scale" min="0.25" max="2" step="0.25" value="1" />
+    </div>
+
+    <div class="group">
+      <label>Shape</label>
+      <select id="shape">
+        <option value="circle" selected>Circle</option>
+        <option value="square">Square</option>
+        <option value="relief">Relief bead (3D)</option>
+        <option value="tritone">Tri-tone bead (3 tons)</option>
+      </select>
+      <label class="row" id="reliefStepsRow" style="margin-top:10px;display:none"><span>Relief steps</span><span class="val" id="reliefStepsVal">5</span></label>
+      <input type="range" id="reliefSteps" min="2" max="10" step="1" value="5" style="display:none" />
+      <label class="row" id="reliefShadowRow" style="margin-top:8px;display:none"><span>Shadow strength</span><span class="val" id="reliefShadowVal">0.55</span></label>
+      <input type="range" id="reliefShadow" min="0" max="1" step="0.05" value="0.55" style="display:none" />
+      <label class="row" id="reliefLightRow" style="margin-top:8px;display:none"><span>Highlight strength</span><span class="val" id="reliefLightVal">0.7</span></label>
+      <input type="range" id="reliefLight" min="0" max="1" step="0.05" value="0.7" style="display:none" />
+
+      <label style="margin-top:14px">Background</label>
+      <select id="bg">
+        <option value="transparent">Transparent</option>
+        <option value="#0a0a3a">Blue-900 (#0a0a3a)</option>
+        <option value="#3A3AFF">Blue-500 (#3A3AFF)</option>
+        <option value="#000000">Black</option>
+        <option value="#F7F7F5">Paper (#F7F7F5)</option>
+        <option value="custom">Custom…</option>
+      </select>
+      <input type="text" id="bgCustom" placeholder="#hex or rgba()" style="margin-top:6px;display:none" />
+    </div>
+
+    <div class="group">
+      <label class="check"><input type="checkbox" id="boost" /> Saturation boost</label>
+      <label class="row" style="margin-top:8px"><span>Boost amount</span><span class="val" id="boostVal">1.2</span></label>
+      <input type="range" id="boostAmt" min="1" max="2" step="0.05" value="1.2" />
+
+      <label class="check" style="margin-top:14px"><input type="checkbox" id="darken" /> Darken</label>
+      <label class="row" style="margin-top:8px"><span>Darken amount</span><span class="val" id="darkVal">0.8</span></label>
+      <input type="range" id="darkAmt" min="0.3" max="1" step="0.05" value="0.8" />
+    </div>
+
+    <div class="group">
+      <label class="check"><input type="checkbox" id="tint" /> Color filter</label>
+
+      <label style="margin-top:10px">Mode</label>
+      <select id="tintMode">
+        <option value="mix" selected>Mix (toward color)</option>
+        <option value="multiply">Multiply</option>
+        <option value="duotone">Duotone (lum → A→B)</option>
+        <option value="hue">Hue shift (deg)</option>
+      </select>
+
+      <div id="tintColors">
+        <label class="row" style="margin-top:10px"><span id="colorALabel">Color</span><input type="color" id="colorA" value="#3a3aff" style="height:28px;width:48px;padding:0;border:1px solid var(--line);background:transparent" /></label>
+        <label class="row" id="colorBRow" style="margin-top:8px;display:none"><span>Color B</span><input type="color" id="colorB" value="#ffffff" style="height:28px;width:48px;padding:0;border:1px solid var(--line);background:transparent" /></label>
+      </div>
+
+      <label class="row" id="amtRow" style="margin-top:10px"><span>Amount</span><span class="val" id="tintAmtVal">0.5</span></label>
+      <input type="range" id="tintAmt" min="0" max="1" step="0.05" value="0.5" />
+
+      <label class="row" id="hueRow" style="margin-top:10px;display:none"><span>Hue shift (°)</span><span class="val" id="hueVal">180</span></label>
+      <input type="range" id="hueAmt" min="0" max="360" step="1" value="180" style="display:none" />
+    </div>
+
+    <div class="btns">
+      <button id="dlPng">Download PNG</button>
+      <button id="dlWebp" class="secondary">Download WebP</button>
+    </div>
+    <div class="hint">PNG keeps transparency. WebP is smaller — pick if your background is solid.</div>
+  </aside>
+
+  <main class="stage">
+    <canvas id="cv"></canvas>
+  </main>
+</div>
+
+<script type="module">
+  const $ = (id) => document.getElementById(id);
+  const cv = $('cv'); const ctx = cv.getContext('2d');
+  const srcUrl = $('srcUrl'); const fileInp = $('file'); const srcInfo = $('srcInfo');
+  const cell = $('cell'), cellVal = $('cellVal');
+  const r = $('r'), rVal = $('rVal');
+  const scale = $('scale'), scaleVal = $('scaleVal');
+  const shape = $('shape');
+  const bg = $('bg'), bgCustom = $('bgCustom');
+  const boost = $('boost'), boostAmt = $('boostAmt'), boostVal = $('boostVal');
+  const darken = $('darken'), darkAmt = $('darkAmt'), darkVal = $('darkVal');
+  const tint = $('tint'), tintMode = $('tintMode');
+  const colorA = $('colorA'), colorB = $('colorB');
+  const tintAmt = $('tintAmt'), tintAmtVal = $('tintAmtVal');
+  const hueAmt = $('hueAmt'), hueVal = $('hueVal');
+  const colorBRow = $('colorBRow'), hueRow = $('hueRow'), amtRow = $('amtRow');
+  const colorALabel = $('colorALabel');
+  const reliefSteps = $('reliefSteps'), reliefStepsVal = $('reliefStepsVal'), reliefStepsRow = $('reliefStepsRow');
+  const reliefShadow = $('reliefShadow'), reliefShadowVal = $('reliefShadowVal'), reliefShadowRow = $('reliefShadowRow');
+  const reliefLight = $('reliefLight'), reliefLightVal = $('reliefLightVal'), reliefLightRow = $('reliefLightRow');
+
+  let img = null;
+
+  function loadImage(src) {
+    return new Promise((res, rej) => {
+      const i = new Image(); i.crossOrigin = 'anonymous';
+      i.onload = () => res(i); i.onerror = rej; i.src = src;
+    });
+  }
+
+  async function setSource(src) {
+    try {
+      img = await loadImage(src);
+      srcInfo.textContent = `${img.naturalWidth} × ${img.naturalHeight}`;
+      render();
+    } catch (e) {
+      srcInfo.textContent = `Error loading: ${e.message || e}`;
+    }
+  }
+
+  function hexToRgb(h) {
+    const m = h.replace('#','');
+    return [parseInt(m.slice(0,2),16), parseInt(m.slice(2,4),16), parseInt(m.slice(4,6),16)];
+  }
+
+  function rgbToHsl(r, g, b) {
+    r /= 255; g /= 255; b /= 255;
+    const max = Math.max(r,g,b), min = Math.min(r,g,b);
+    let h, s, l = (max + min) / 2;
+    if (max === min) { h = s = 0; }
+    else {
+      const d = max - min;
+      s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
+      switch (max) {
+        case r: h = (g - b) / d + (g < b ? 6 : 0); break;
+        case g: h = (b - r) / d + 2; break;
+        case b: h = (r - g) / d + 4; break;
+      }
+      h *= 60;
+    }
+    return [h, s, l];
+  }
+
+  function hslToRgb(h, s, l) {
+    h = ((h % 360) + 360) % 360;
+    const c = (1 - Math.abs(2*l - 1)) * s;
+    const x = c * (1 - Math.abs(((h / 60) % 2) - 1));
+    const m = l - c/2;
+    let r = 0, g = 0, b = 0;
+    if (h < 60)      { r = c; g = x; b = 0; }
+    else if (h < 120){ r = x; g = c; b = 0; }
+    else if (h < 180){ r = 0; g = c; b = x; }
+    else if (h < 240){ r = 0; g = x; b = c; }
+    else if (h < 300){ r = x; g = 0; b = c; }
+    else             { r = c; g = 0; b = x; }
+    return [(r+m)*255, (g+m)*255, (b+m)*255];
+  }
+
+  function applyTint([R, G, B]) {
+    if (!tint.checked) return [R, G, B];
+    const mode = tintMode.value;
+    const a = parseFloat(tintAmt.value);
+    if (mode === 'mix') {
+      const [tr, tg, tb] = hexToRgb(colorA.value);
+      return [R + (tr - R) * a, G + (tg - G) * a, B + (tb - B) * a];
+    }
+    if (mode === 'multiply') {
+      const [tr, tg, tb] = hexToRgb(colorA.value);
+      const mr = (R / 255) * (tr / 255) * 255;
+      const mg = (G / 255) * (tg / 255) * 255;
+      const mb = (B / 255) * (tb / 255) * 255;
+      return [R + (mr - R) * a, G + (mg - G) * a, B + (mb - B) * a];
+    }
+    if (mode === 'duotone') {
+      const [ar, ag, ab] = hexToRgb(colorA.value);
+      const [br, bg, bb] = hexToRgb(colorB.value);
+      const lum = (0.2126*R + 0.7152*G + 0.0722*B) / 255;
+      const dr = ar + (br - ar) * lum;
+      const dg = ag + (bg - ag) * lum;
+      const db = ab + (bb - ab) * lum;
+      return [R + (dr - R) * a, G + (dg - G) * a, B + (db - B) * a];
+    }
+    if (mode === 'hue') {
+      const shift = parseFloat(hueAmt.value);
+      const [h, s, l] = rgbToHsl(R, G, B);
+      return hslToRgb(h + shift, s, l);
+    }
+    return [R, G, B];
+  }
+
+  function adjustColor([R, G, B]) {
+    if (boost.checked) {
+      const k = parseFloat(boostAmt.value);
+      const m = (R + G + B) / 3;
+      R = Math.max(0, Math.min(255, m + (R - m) * k));
+      G = Math.max(0, Math.min(255, m + (G - m) * k));
+      B = Math.max(0, Math.min(255, m + (B - m) * k));
+    }
+    if (darken.checked) {
+      const k = parseFloat(darkAmt.value);
+      R *= k; G *= k; B *= k;
+    }
+    [R, G, B] = applyTint([R, G, B]);
+    R = Math.max(0, Math.min(255, R));
+    G = Math.max(0, Math.min(255, G));
+    B = Math.max(0, Math.min(255, B));
+    return [R | 0, G | 0, B | 0];
+  }
+
+  function getBg() {
+    const v = bg.value;
+    if (v === 'custom') return bgCustom.value || 'transparent';
+    return v;
+  }
+
+  function render() {
+    if (!img) return;
+    const cellPx = parseInt(cell.value, 10);
+    const radPct = parseInt(r.value, 10) / 100;
+    const s = parseFloat(scale.value);
+
+    // Sample buffer at native resolution / cellPx-of-source
+    const sampleW = Math.floor(img.naturalWidth / cellPx);
+    const sampleH = Math.floor(img.naturalHeight / cellPx);
+
+    // Canvas size = exact integer multiple of cellPx (then optional output scale).
+    // This guarantees every bead is a clean cellPx × cellPx in the source,
+    // and consumers can scale the export uniformly without partial cells.
+    const baseOutCell = cellPx;
+    const W = Math.round(sampleW * baseOutCell * s);
+    const H = Math.round(sampleH * baseOutCell * s);
+
+    cv.width = W; cv.height = H;
+
+    const tmp = document.createElement('canvas');
+    tmp.width = sampleW; tmp.height = sampleH;
+    const tctx = tmp.getContext('2d');
+    tctx.imageSmoothingEnabled = true;
+    tctx.drawImage(img, 0, 0, sampleW, sampleH);
+    const data = tctx.getImageData(0, 0, sampleW, sampleH).data;
+
+    // Bg
+    const bgVal = getBg();
+    if (bgVal === 'transparent') {
+      ctx.clearRect(0, 0, W, H);
+    } else {
+      ctx.fillStyle = bgVal;
+      ctx.fillRect(0, 0, W, H);
+    }
+
+    const outCell = (W / sampleW); // = baseOutCell * s, integer cell size
+    const radius = (outCell * radPct) / 2;
+
+    const steps = parseInt(reliefSteps.value, 10);
+    const shadowK = parseFloat(reliefShadow.value);
+    const lightK = parseFloat(reliefLight.value);
+
+    for (let y = 0; y < sampleH; y++) {
+      for (let x = 0; x < sampleW; x++) {
+        const i = (y * sampleW + x) * 4;
+        const c = adjustColor([data[i], data[i+1], data[i+2]]);
+        const cx = x * outCell + outCell / 2;
+        const cy = y * outCell + outCell / 2;
+        ctx.fillStyle = `rgb(${c[0]}, ${c[1]}, ${c[2]})`;
+        if (shape.value === 'circle') {
+          ctx.beginPath();
+          ctx.arc(cx, cy, radius, 0, Math.PI * 2);
+          ctx.fill();
+        } else if (shape.value === 'square') {
+          const sz = outCell * radPct;
+          ctx.fillRect(cx - sz/2, cy - sz/2, sz, sz);
+        } else if (shape.value === 'tritone') {
+          const sz = outCell * radPct;
+          const ox = x * outCell + (outCell - sz) / 2;
+          const oy = y * outCell + (outCell - sz) / 2;
+          const stepSz = sz / steps;
+
+          // Pre-compute the 3 tones
+          const dR = Math.max(0, Math.min(255, c[0] * (1 - shadowK))) | 0;
+          const dG = Math.max(0, Math.min(255, c[1] * (1 - shadowK))) | 0;
+          const dB = Math.max(0, Math.min(255, c[2] * (1 - shadowK))) | 0;
+          const lR = Math.max(0, Math.min(255, c[0] + (255 - c[0]) * lightK)) | 0;
+          const lG = Math.max(0, Math.min(255, c[1] + (255 - c[1]) * lightK)) | 0;
+          const lB = Math.max(0, Math.min(255, c[2] + (255 - c[2]) * lightK)) | 0;
+          const dark = `rgb(${dR}, ${dG}, ${dB})`;
+          const mid = `rgb(${c[0]}, ${c[1]}, ${c[2]})`;
+          const light = `rgb(${lR}, ${lG}, ${lB})`;
+
+          // 3-zone diagonal split: light top-left, mid on anti-diagonal, dark bottom-right
+          for (let j = 0; j < steps; j++) {       // row (y)
+            for (let i = 0; i < steps; i++) {     // col (x)
+              const sum = i + j;
+              if (sum < steps - 1) ctx.fillStyle = light;
+              else if (sum === steps - 1) ctx.fillStyle = mid;
+              else ctx.fillStyle = dark;
+              ctx.fillRect(ox + i * stepSz, oy + j * stepSz, stepSz, stepSz);
+            }
+          }
+        } else if (shape.value === 'relief') {
+          // Bead size respects radPct (gap between beads if < 100%)
+          const sz = outCell * radPct;
+          const ox = x * outCell + (outCell - sz) / 2;
+          const oy = y * outCell + (outCell - sz) / 2;
+
+          // 1. Base fill
+          ctx.fillRect(ox, oy, sz, sz);
+
+          // 2. Stepped shadow in bottom-right corner — quantized into 3 discrete bands
+          const stepSz = sz / steps;
+          const BANDS = 3;
+          const bandFactors = [0.4, 0.7, 1.0]; // outer → corner
+          for (let k = 0; k < steps; k++) {
+            const band = Math.min(BANDS - 1, Math.floor(k * BANDS / steps));
+            const stepShadowK = shadowK * bandFactors[band];
+            const sR = Math.max(0, Math.min(255, c[0] * (1 - stepShadowK))) | 0;
+            const sG = Math.max(0, Math.min(255, c[1] * (1 - stepShadowK))) | 0;
+            const sB = Math.max(0, Math.min(255, c[2] * (1 - stepShadowK))) | 0;
+            ctx.fillStyle = `rgb(${sR}, ${sG}, ${sB})`;
+            ctx.fillRect(
+              ox + sz - (k + 1) * stepSz,
+              oy + k * stepSz,
+              (k + 1) * stepSz,
+              stepSz
+            );
+          }
+
+          // 3. Highlight: small bright square upper-left/center
+          const hR = Math.max(0, Math.min(255, c[0] + (255 - c[0]) * lightK)) | 0;
+          const hG = Math.max(0, Math.min(255, c[1] + (255 - c[1]) * lightK)) | 0;
+          const hB = Math.max(0, Math.min(255, c[2] + (255 - c[2]) * lightK)) | 0;
+          ctx.fillStyle = `rgb(${hR}, ${hG}, ${hB})`;
+          const hsz = stepSz; // 1-step block
+          ctx.fillRect(ox + stepSz, oy + stepSz, hsz, hsz);
+        }
+      }
+    }
+  }
+
+  function download(type) {
+    const ext = type === 'image/png' ? 'png' : 'webp';
+    const url = cv.toDataURL(type, 0.95);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `flowers-beads-${cell.value}px.${ext}`;
+    a.click();
+  }
+
+  function syncTintUI() {
+    const mode = tintMode.value;
+    const isHue = mode === 'hue';
+    const isDuo = mode === 'duotone';
+    colorBRow.style.display = isDuo ? 'grid' : 'none';
+    hueRow.style.display = isHue ? 'grid' : 'none';
+    hueAmt.style.display = isHue ? 'block' : 'none';
+    amtRow.style.display = isHue ? 'none' : 'grid';
+    tintAmt.style.display = isHue ? 'none' : 'block';
+    colorALabel.textContent = isDuo ? 'Color A (shadow)' : 'Color';
+  }
+
+  function syncShapeUI() {
+    const showRelief = shape.value === 'relief' || shape.value === 'tritone';
+    [reliefStepsRow, reliefShadowRow, reliefLightRow].forEach(el => el.style.display = showRelief ? 'grid' : 'none');
+    [reliefSteps, reliefShadow, reliefLight].forEach(el => el.style.display = showRelief ? 'block' : 'none');
+  }
+
+  // Wire
+  [cell, r, scale, boostAmt, darkAmt, tintAmt, hueAmt, reliefSteps, reliefShadow, reliefLight].forEach(el => el.addEventListener('input', () => {
+    cellVal.textContent = cell.value;
+    rVal.textContent = r.value;
+    scaleVal.textContent = scale.value;
+    boostVal.textContent = boostAmt.value;
+    darkVal.textContent = darkAmt.value;
+    tintAmtVal.textContent = tintAmt.value;
+    hueVal.textContent = hueAmt.value;
+    reliefStepsVal.textContent = reliefSteps.value;
+    reliefShadowVal.textContent = reliefShadow.value;
+    reliefLightVal.textContent = reliefLight.value;
+    render();
+  }));
+  [boost, darken, tint, colorA, colorB].forEach(el => el.addEventListener('change', render));
+  shape.addEventListener('change', () => { syncShapeUI(); render(); });
+  tintMode.addEventListener('change', () => { syncTintUI(); render(); });
+  syncTintUI();
+  syncShapeUI();
+  bg.addEventListener('change', () => {
+    bgCustom.style.display = bg.value === 'custom' ? 'block' : 'none';
+    render();
+  });
+  bgCustom.addEventListener('input', render);
+  srcUrl.addEventListener('change', () => setSource(srcUrl.value));
+  fileInp.addEventListener('change', (e) => {
+    const f = e.target.files?.[0]; if (!f) return;
+    const url = URL.createObjectURL(f);
+    setSource(url);
+  });
+  $('dlPng').addEventListener('click', () => download('image/png'));
+  $('dlWebp').addEventListener('click', () => download('image/webp'));
+
+  setSource(srcUrl.value);
+</script>
+</body>
+</html>

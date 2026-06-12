@@ -1,6 +1,5 @@
 import { Suspense, lazy } from 'react';
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
-import { Navbar } from './components/layout/Navbar';
 import { FxProvider } from './components/fx/FxProvider';
 import { SectionLoader } from './components/ui/SectionLoader';
 
@@ -10,7 +9,7 @@ import { ErrorBoundary } from './components/ErrorBoundary';
 const Home = lazy(() => import('./pages/Home'));
 const CGV = lazy(() => import('./pages/Legal/CGV'));
 const MentionsLegales = lazy(() => import('./pages/Legal/MentionsLegales'));
-const Footer = lazy(() => import('./components/layout/Footer').then((m) => ({ default: m.Footer })));
+const ButtonsLab = lazy(() => import('./pages/Lab/Buttons'));
 
 // 404 page component
 function NotFound() {
@@ -30,11 +29,10 @@ function NotFound() {
 
 // Component to conditionally render layout based on route
 function AppLayout() {
-    const location = useLocation();
-    const isLegalPage = location.pathname === '/cgv' || location.pathname === '/mentions-legales';
+    useLocation();
 
     return (
-        <div className="min-h-screen bg-background text-foreground font-sans">
+        <div className="min-h-screen bg-[#F7F7F5] text-foreground font-sans">
             {/* Skip to content link for accessibility */}
             <a
                 href="#main-content"
@@ -42,8 +40,6 @@ function AppLayout() {
             >
                 Aller au contenu principal
             </a>
-
-            {!isLegalPage && <Navbar />}
 
             <ErrorBoundary>
                 <Routes>
@@ -64,15 +60,17 @@ function AppLayout() {
                             </Suspense>
                         }
                     />
+                    <Route
+                        path="/lab/buttons"
+                        element={
+                            <Suspense fallback={<SectionLoader />}>
+                                <ButtonsLab />
+                            </Suspense>
+                        }
+                    />
                     <Route path="*" element={<NotFound />} />
                 </Routes>
             </ErrorBoundary>
-
-            {!isLegalPage && (
-                <Suspense fallback={null}>
-                    <Footer />
-                </Suspense>
-            )}
         </div>
     );
 }

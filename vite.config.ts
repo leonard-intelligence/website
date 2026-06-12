@@ -7,6 +7,7 @@ import viteCompression from 'vite-plugin-compression';
 // https://vite.dev/config/
 export default defineConfig({
     base: '/',
+    server: { port: 5174 },
     plugins: [
         react(),
         tailwindcss(),
@@ -26,7 +27,7 @@ export default defineConfig({
                     router: ['react-router-dom'],
                     helmet: ['react-helmet-async'],
                     ui: ['radix-ui', 'lucide-react', 'class-variance-authority', 'clsx', 'tailwind-merge'],
-                    fonts: ['@fontsource/geist-sans', '@fontsource-variable/jetbrains-mono', '@fontsource/jacquard-24'],
+                    fonts: ['@fontsource-variable/jetbrains-mono', '@fontsource/jacquard-24'],
                 },
             },
         },

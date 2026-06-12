@@ -1,0 +1,234 @@
+/* ============================================================================
+   ReliefButton — pilier « Relief » de la DA Intelligence cultivée.
+   Biseau à deux arêtes (lèvre claire en haut, ombre en bas) + ombre portée.
+   Chaque ton règle des variables ; les états (hover/active/focus/disabled)
+   partagent un seul jeu de règles qui lit ces variables.
+   ============================================================================ */
+
+.btn {
+    /* layout */
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--rb-gap, 9px);
+    white-space: nowrap;
+    user-select: none;
+    border: none;
+    cursor: pointer;
+    text-decoration: none;
+    font-family: var(--font-sans, system-ui, sans-serif);
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    line-height: 1;
+    -webkit-font-smoothing: antialiased;
+
+    /* tone-driven (defaults = ton "dark") */
+    background: var(--rb-bg);
+    color: var(--rb-color);
+    border-radius: var(--rb-radius, 13px);
+    box-shadow: var(--rb-shadow);
+
+    transition:
+        transform 0.12s ease,
+        box-shadow 0.18s ease,
+        background 0.18s ease;
+}
+
+.btn:focus { outline: none; }
+.btn:focus-visible,
+.btn.isFocus {
+    outline: 2px solid #a3e635;
+    outline-offset: 2px;
+}
+
+/* hover (réel + forcé pour la galerie) — pas de soulèvement :
+   simple éclaircissement du fond, l'ombre reste celle du repos. */
+.btn:hover:not(:disabled):not(:active):not(.isActive),
+.btn.isHover {
+    background: var(--rb-bg-hover, var(--rb-bg));
+    box-shadow: var(--rb-shadow-hover, var(--rb-shadow));
+}
+
+/* active / pressé — le bouton se pose : même relief, l'ombre portée disparaît,
+   on le descend de 2px (pas de creux). */
+.btn:active:not(:disabled),
+.btn.isActive {
+    background: var(--rb-bg-active, var(--rb-bg));
+    box-shadow: var(--rb-shadow-active, var(--rb-shadow));
+    transform: translateY(2px);
+}
+
+/* désactivé — biseau inversé (gravé), texte atténué */
+.btn:disabled,
+.btn.isDisabled {
+    cursor: not-allowed;
+    transform: none;
+    background: #ececea;
+    color: #bdbdb7;
+    box-shadow:
+        inset 0 1px 2px rgba(0, 0, 0, 0.07),
+        inset 0 0 0 1px rgba(0, 0, 0, 0.05),
+        inset 0 -1px 1px rgba(255, 255, 255, 0.6);
+}
+
+/* ============================ TAILLES ============================ */
+.sm {
+    --rb-radius: 10px;
+    --rb-gap: 7px;
+    font-size: 13px;
+    padding: 8px 16px;
+}
+.md {
+    --rb-radius: 13px;
+    --rb-gap: 9px;
+    font-size: 15px;
+    padding: 11px 22px;
+}
+.lg {
+    --rb-radius: 16px;
+    --rb-gap: 10px;
+    font-size: 17px;
+    padding: 15px 30px;
+}
+
+.iconOnly.sm { padding: 8px; }
+.iconOnly.md { padding: 11px; }
+.iconOnly.lg { padding: 15px; }
+
+.block { width: 100%; }
+
+.icon {
+    display: inline-flex;
+    flex: none;
+    align-items: center;
+    justify-content: center;
+}
+.sm .icon svg { width: 16px; height: 16px; }
+.md .icon svg { width: 18px; height: 18px; }
+.lg .icon svg { width: 20px; height: 20px; }
+
+.label { display: inline-flex; align-items: center; }
+
+/* ============================ TONS ============================ */
+
+/* ---- DARK — CTA principal ---- */
+.dark {
+    --rb-color: #fbfbf8;
+    --rb-bg: linear-gradient(180deg, #2c2c2c 0%, #161616 100%);
+    --rb-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.22),
+        inset 0 -1.5px 0 rgba(0, 0, 0, 0.55),
+        0 0 0 0.5px rgba(0, 0, 0, 0.55),
+        0 0.5px 1px rgba(0, 0, 0, 0.35),
+        0 2.5px 7px rgba(0, 0, 0, 0.22);
+    --rb-bg-hover: linear-gradient(180deg, #383838 0%, #1c1c1c 100%);
+    --rb-shadow-active:
+        inset 0 1px 0 rgba(255, 255, 255, 0.22),
+        inset 0 -1.5px 0 rgba(0, 0, 0, 0.55),
+        0 0 0 0.5px rgba(0, 0, 0, 0.55);
+}
+
+/* ---- LIGHT — secondaire ---- */
+.light {
+    --rb-color: #171717;
+    --rb-bg: linear-gradient(180deg, #ffffff 0%, #f0f0ed 100%);
+    --rb-shadow:
+        inset 0 1.5px 0 #ffffff,
+        inset 1.5px 0 0 rgba(255, 255, 255, 0.7),
+        inset -1.5px 0 0 rgba(0, 0, 0, 0.04),
+        inset 0 -2px 2px rgba(0, 0, 0, 0.05),
+        0 0 0 0.5px rgba(0, 0, 0, 0.08),
+        0 0.5px 1px rgba(0, 0, 0, 0.05),
+        0 2.5px 6px rgba(0, 0, 0, 0.08);
+    --rb-bg-hover: linear-gradient(180deg, #ffffff 0%, #f5f5f2 100%);
+    --rb-shadow-active:
+        inset 0 1.5px 0 #ffffff,
+        inset 1.5px 0 0 rgba(255, 255, 255, 0.7),
+        inset -1.5px 0 0 rgba(0, 0, 0, 0.04),
+        inset 0 -2px 2px rgba(0, 0, 0, 0.05),
+        0 0 0 0.5px rgba(0, 0, 0, 0.08);
+}
+
+/* ---- LIME — accent (1 par écran) ---- */
+.lime {
+    --rb-color: #1a2207;
+    --rb-bg: linear-gradient(180deg, #b6f24a 0%, #9bdc2e 100%);
+    --rb-shadow:
+        inset 0 1.5px 0 rgba(255, 255, 255, 0.55),
+        inset 0 -1.5px 0 rgba(0, 0, 0, 0.12),
+        0 0 0 0.5px rgba(80, 120, 20, 0.45),
+        0 0.5px 1px rgba(0, 0, 0, 0.12),
+        0 2.5px 6.5px rgba(120, 180, 40, 0.32);
+    --rb-bg-hover: linear-gradient(180deg, #c2f95e 0%, #a6e636 100%);
+    --rb-shadow-active:
+        inset 0 1.5px 0 rgba(255, 255, 255, 0.55),
+        inset 0 -1.5px 0 rgba(0, 0, 0, 0.12),
+        0 0 0 0.5px rgba(80, 120, 20, 0.45);
+}
+
+/* ---- GOLD — accent chaleur ---- */
+.gold {
+    --rb-color: #3a2c06;
+    --rb-bg: linear-gradient(180deg, #f4d77a 0%, #e9c24e 100%);
+    --rb-shadow:
+        inset 0 1.5px 0 rgba(255, 255, 255, 0.6),
+        inset 0 -1.5px 0 rgba(0, 0, 0, 0.1),
+        0 0 0 0.5px rgba(150, 110, 20, 0.4),
+        0 0.5px 1px rgba(0, 0, 0, 0.12),
+        0 2.5px 6.5px rgba(200, 160, 50, 0.34);
+    --rb-bg-hover: linear-gradient(180deg, #f8de8a 0%, #efc95c 100%);
+    --rb-shadow-active:
+        inset 0 1.5px 0 rgba(255, 255, 255, 0.6),
+        inset 0 -1.5px 0 rgba(0, 0, 0, 0.1),
+        0 0 0 0.5px rgba(150, 110, 20, 0.4);
+}
+
+/* ---- FROST — verre sur imagerie (hero/contact) ---- */
+.frost {
+    --rb-color: #ffffff;
+    -webkit-backdrop-filter: blur(15px) saturate(118%);
+    backdrop-filter: blur(15px) saturate(118%);
+    --rb-bg: linear-gradient(to right, rgba(0, 0, 0, 0.18), rgba(0, 0, 0, 0.10));
+    background-clip: padding-box;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    --rb-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.15);
+    --rb-bg-hover: linear-gradient(to right, rgba(0, 0, 0, 0.24), rgba(0, 0, 0, 0.14));
+    --rb-shadow-active: none;
+}
+.frost:disabled,
+.frost.isDisabled {
+    -webkit-backdrop-filter: blur(15px);
+    backdrop-filter: blur(15px);
+    background: linear-gradient(to right, rgba(0, 0, 0, 0.10), rgba(0, 0, 0, 0.06));
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    color: rgba(255, 255, 255, 0.45);
+    box-shadow: none;
+}
+
+/* ---- GHOST — tertiaire / texte ---- */
+.ghost {
+    --rb-color: #3a3a36;
+    --rb-bg: transparent;
+    --rb-shadow: none;
+    --rb-bg-hover: rgba(0, 0, 0, 0.045);
+    --rb-shadow-hover: none;
+    --rb-bg-active: rgba(0, 0, 0, 0.08);
+    --rb-shadow-active: none;
+}
+.ghost:hover:not(:disabled):not(:active):not(.isActive),
+.ghost.isHover { transform: none; }
+.ghost:disabled,
+.ghost.isDisabled {
+    background: transparent;
+    box-shadow: none;
+    color: #c7c7c0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .btn,
+    .btn:hover,
+    .btn:active,
+    .btn.isHover,
+    .btn.isActive { transform: none; transition: none; }
+}

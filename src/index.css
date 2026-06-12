@@ -1,6 +1,57 @@
 @import "tailwindcss";
 @import "tw-animate-css";
-@import "@fontsource/geist-sans";
+
+/* ========== GEIST FONTS (from the vercel `geist` npm package) ==========
+   Variable Sans + Variable Mono + 5 Pixel display fonts.
+   Vite resolves the ../node_modules paths at build time and inlines/serves
+   the woff2 files. Variable fonts support the full weight axis (100–900)
+   from a single file, so no per-weight @font-face is needed. */
+
+@font-face {
+    font-family: 'Geist Sans';
+    src: url('../node_modules/geist/dist/fonts/geist-sans/Geist-Variable.woff2') format('woff2-variations');
+    font-weight: 100 900;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Geist Mono';
+    src: url('../node_modules/geist/dist/fonts/geist-mono/GeistMono-Variable.woff2') format('woff2-variations');
+    font-weight: 100 900;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Geist Pixel Square';
+    src: url('../node_modules/geist/dist/fonts/geist-pixel/GeistPixel-Square.woff2') format('woff2');
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Geist Pixel Grid';
+    src: url('../node_modules/geist/dist/fonts/geist-pixel/GeistPixel-Grid.woff2') format('woff2');
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Geist Pixel Circle';
+    src: url('../node_modules/geist/dist/fonts/geist-pixel/GeistPixel-Circle.woff2') format('woff2');
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Geist Pixel Triangle';
+    src: url('../node_modules/geist/dist/fonts/geist-pixel/GeistPixel-Triangle.woff2') format('woff2');
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Geist Pixel Line';
+    src: url('../node_modules/geist/dist/fonts/geist-pixel/GeistPixel-Line.woff2') format('woff2');
+    font-display: swap;
+}
 
 /* ========== SHADCN TAILWIND CSS (inlined due to export compatibility) ========== */
 @theme inline {
@@ -161,11 +212,16 @@
 }
 
 @theme inline {
-  --font-mono: 'JetBrains Mono Variable', monospace;
   --font-sans: 'Geist Sans', sans-serif;
+  --font-mono: 'Geist Mono', 'JetBrains Mono Variable', monospace;
   --font-jacquard: 'Jacquard 24', cursive;
   --font-junicode: 'Junicode', serif;
-  /* Keep Inter for softer body text if needed, or use Mono for strict tech feel. Prime uses both. */
+  /* Geist Pixel display fonts — use via Tailwind's font-pixel-* utilities or `font-family: var(--font-pixel-grid)`. */
+  --font-pixel-square: 'Geist Pixel Square', monospace;
+  --font-pixel-grid: 'Geist Pixel Grid', monospace;
+  --font-pixel-circle: 'Geist Pixel Circle', monospace;
+  --font-pixel-triangle: 'Geist Pixel Triangle', monospace;
+  --font-pixel-line: 'Geist Pixel Line', monospace;
 }
 
 @layer base {

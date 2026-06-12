@@ -12,6 +12,9 @@ dist
 dist-ssr
 *.local
 
+# Brainstorming visual companion (local mockups)
+.superpowers/
+
 # Environment variables
 .env
 .env.local
