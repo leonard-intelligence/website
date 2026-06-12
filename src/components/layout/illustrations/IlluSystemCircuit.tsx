@@ -128,7 +128,10 @@ export function IlluSystemCircuit() {
 
     return (
         <div ref={wrapRef} className="w-full mx-auto" aria-hidden="false" style={{ maxWidth: W * 1.18 }}>
-            <style>{`@media (prefers-reduced-motion: reduce) { .sc-smil { display: none; } }`}</style>
+            <style>{`
+                @media (prefers-reduced-motion: reduce) { .sc-smil { display: none; } }
+                .sc-node > span:first-child:hover { box-shadow: 0 0 0 1.5px rgba(23,23,23,0.22); }
+            `}</style>
             <div className="relative" style={{ height: H * scale }}>
                 <div
                     className="absolute font-sans"
@@ -140,37 +143,39 @@ export function IlluSystemCircuit() {
                         className="absolute block"
                         style={{
                             inset: 4,
-                            borderRadius: 30,
-                            border: '8px solid #F1F1EC',
+                            borderRadius: 28,
+                            border: '6px solid #F2F2EE',
                             boxShadow: isActive('07')
-                                ? `0 0 0 1.5px ${ink}38, 0 1px 2px rgba(0,0,0,0.10), inset 0 1px 1px rgba(0,0,0,0.05), inset 0 -1px 0 rgba(255,255,255,0.9)`
-                                : '0 1px 2px rgba(0,0,0,0.10), inset 0 1px 1px rgba(0,0,0,0.05), inset 0 -1px 0 rgba(255,255,255,0.9)',
+                                ? `0 0 0 1.5px ${ink}38, 0 1px 1.5px rgba(0,0,0,0.12), inset 0 1px 0 rgba(255,255,255,0.9), inset 0 -0.5px 0 rgba(0,0,0,0.06)`
+                                : '0 1px 1.5px rgba(0,0,0,0.12), 0 0 0 0.5px rgba(23,23,23,0.05), inset 0 1px 0 rgba(255,255,255,0.9), inset 0 -0.5px 0 rgba(0,0,0,0.06)',
                             transition: 'box-shadow 400ms ease',
                         }}
                         aria-label="07 · Sécurité & gouvernance"
                     />
 
-                    {/* le réseau — une seule forme continue, relief en 3 couches */}
+                    {/* le réseau — une seule forme continue. Relief sec, façon référence :
+                        corps quasi ton sur ton, arête blanche 1px en haut, ombre courte et
+                        serrée en bas, hairline de définition sur tout le contour. */}
                     <svg viewBox={`0 0 ${W} ${H}`} width="100%" height="100%" style={{ position: 'absolute', inset: 0, display: 'block', pointerEvents: 'none' }}>
                         <defs>
-                            <linearGradient id="sc-body" x1="0" y1="0" x2="0" y2={H} gradientUnits="userSpaceOnUse">
-                                <stop offset="0" stopColor="#FDFDFB" />
-                                <stop offset="1" stopColor="#EFEFEA" />
-                            </linearGradient>
                             <filter id="sc-blur" x="-20%" y="-20%" width="140%" height="140%">
-                                <feGaussianBlur stdDeviation="2" />
+                                <feGaussianBlur stdDeviation="0.7" />
                             </filter>
                         </defs>
-                        {/* 1 · ombre portée de l'union */}
-                        <g fill="rgba(23,23,23,0.16)" filter="url(#sc-blur)" transform="translate(0 3)">
+                        {/* 1 · hairline de contour (union légèrement dilatée par le flou) */}
+                        <g fill="rgba(23,23,23,0.10)" filter="url(#sc-blur)" transform="translate(0 0.4)">
                             <NetworkShapes />
                         </g>
-                        {/* 2 · liseré blanc (arête haute) */}
-                        <g fill="rgba(255,255,255,0.95)" transform="translate(0 -1.4)">
+                        {/* 2 · ombre courte sous l'union */}
+                        <g fill="rgba(23,23,23,0.13)" filter="url(#sc-blur)" transform="translate(0 1.8)">
                             <NetworkShapes />
                         </g>
-                        {/* 3 · corps */}
-                        <g fill="url(#sc-body)">
+                        {/* 3 · arête blanche (haut) */}
+                        <g fill="#FFFFFF" transform="translate(0 -1)">
+                            <NetworkShapes />
+                        </g>
+                        {/* 4 · corps — plat, presque la valeur du fond */}
+                        <g fill="#F3F3EF">
                             <NetworkShapes />
                         </g>
 
@@ -197,10 +202,10 @@ export function IlluSystemCircuit() {
                             color: isActive('07') ? '#FFFFFF' : mutedText,
                             padding: '4px 11px',
                             borderRadius: 999,
-                            background: isActive('07') ? ink : 'linear-gradient(180deg, #FFFFFF 0%, #F2F2ED 100%)',
+                            background: isActive('07') ? ink : '#F3F3EF',
                             boxShadow: isActive('07')
-                                ? '0 0 0 1.5px rgba(255,255,255,0.85), 0 1px 2px rgba(0,0,0,0.14), 0 3px 8px rgba(0,0,0,0.06)'
-                                : '0 1px 2px rgba(0,0,0,0.14), 0 3px 8px rgba(0,0,0,0.06), inset 0 1px 0 rgba(255,255,255,0.95)',
+                                ? '0 0 0 1.5px rgba(255,255,255,0.85), 0 1.5px 3px rgba(0,0,0,0.18)'
+                                : '0 1px 1.5px rgba(0,0,0,0.14), 0 0 0 0.5px rgba(23,23,23,0.06), inset 0 1px 0 #FFFFFF',
                             textDecoration: 'none',
                             whiteSpace: 'nowrap',
                             transition: 'background 400ms ease, color 400ms ease, box-shadow 400ms ease',
@@ -217,7 +222,7 @@ export function IlluSystemCircuit() {
                             <a
                                 key={t.id}
                                 href={t.href}
-                                className="absolute flex flex-col items-center"
+                                className="sc-node absolute flex flex-col items-center"
                                 style={{ left: t.x - t.s / 2, top: t.y - t.s / 2, width: t.s, textDecoration: 'none' }}
                             >
                                 <span
@@ -231,9 +236,9 @@ export function IlluSystemCircuit() {
                                         color: active ? '#FFFFFF' : TOKENS.ink,
                                         background: active ? ink : 'transparent',
                                         boxShadow: active
-                                            ? '0 0 0 2px rgba(255,255,255,0.9), 0 6px 18px rgba(0,0,0,0.22), inset 0 1px 0 rgba(255,255,255,0.25)'
+                                            ? '0 0 0 2px rgba(255,255,255,0.92), 0 3px 9px rgba(0,0,0,0.22), inset 0 1px 0 rgba(255,255,255,0.22)'
                                             : 'none',
-                                        transform: active ? 'translateY(-2px)' : 'none',
+                                        transform: active ? 'translateY(-1px)' : 'none',
                                         transition: 'background 400ms ease, color 400ms ease, box-shadow 400ms ease, transform 400ms ease',
                                     }}
                                 >
