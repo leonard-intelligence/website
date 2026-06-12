@@ -1,9 +1,12 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { PaintMode } from './PaintMode';
 import { useNotchParams, setNotchParams, resetNotchParams, type NotchParams, type CornerStyle } from './notchParamsStore';
 import { useVitruveParams, setVitruveParams, resetVitruveParams, type VitruveParams } from './vitruveParamsStore';
 import { useHeroTitleParams, setHeroTitleParams, resetHeroTitleParams, type PixelVariant } from './heroTitleStore';
-import { useVortexParams, setVortexParams, resetVortexParams, type VortexShape, type VortexColorMode } from './vortexParamsStore';
+import {
+    useVortexParams, setVortexParams, resetVortexParams, VORTEX_SECTIONS,
+    type VortexShape, type VortexColorMode, type VortexParams, type VortexSectionId,
+} from './vortexParamsStore';
 import {
     D, PANEL_SHADOW, SectionLabel, Card, Slider, Segmented, ColorField, Toggle, ResetButton, Readout,
     pressable, type SegOption,
@@ -55,6 +58,29 @@ export function DevTools() {
     const [paintActive, setPaintActive] = useState(false);
     const [activeShadow, setActiveShadow] = useState<'dark' | 'light'>('dark');
 
+    // Drag du panneau par son header (position par défaut : haut-droite)
+    const [pos, setPos] = useState<{ x: number; y: number } | null>(null);
+    const panelRef = useRef<HTMLDivElement>(null);
+    const onDragStart = (e: React.PointerEvent) => {
+        if ((e.target as HTMLElement).closest('button')) return; // le bouton +/– reste cliquable
+        const rect = panelRef.current?.getBoundingClientRect();
+        if (!rect) return;
+        const dx = e.clientX - rect.left;
+        const dy = e.clientY - rect.top;
+        const onMove = (ev: PointerEvent) => {
+            const x = Math.min(Math.max(ev.clientX - dx, 8 - rect.width + 80), window.innerWidth - 80);
+            const y = Math.min(Math.max(ev.clientY - dy, 8), window.innerHeight - 48);
+            setPos({ x, y });
+        };
+        const onUp = () => {
+            window.removeEventListener('pointermove', onMove);
+            window.removeEventListener('pointerup', onUp);
+        };
+        window.addEventListener('pointermove', onMove);
+        window.addEventListener('pointerup', onUp);
+        e.preventDefault();
+    };
+
     useEffect(() => {
         document.documentElement.style.setProperty('--emboss-color-dark', colorDark);
         document.documentElement.style.setProperty('--emboss-color-muted', colorMuted);
@@ -93,13 +119,15 @@ export function DevTools() {
             <PaintMode active={paintActive} onActiveChange={setPaintActive} />
 
             <div
+                ref={panelRef}
                 data-devtools
                 role="dialog"
                 aria-label="Dev tools"
                 style={{
                     position: 'fixed',
-                    top: 16,
-                    right: 16,
+                    top: pos ? pos.y : 16,
+                    left: pos ? pos.x : undefined,
+                    right: pos ? undefined : 16,
                     zIndex: 9999,
                     background: D.panel,
                     color: D.ink,
@@ -122,8 +150,16 @@ export function DevTools() {
                     [data-devtools] ::-webkit-scrollbar-thumb { background: rgba(23,23,23,0.18); border-radius: 8px; }
                 `}</style>
 
-                {/* Header (fixed) */}
-                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 10, padding: '13px 15px', flex: '0 0 auto' }}>
+                {/* Header (fixed) — poignée de drag */}
+                <div
+                    onPointerDown={onDragStart}
+                    style={{
+                        display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 10,
+                        padding: '13px 15px', flex: '0 0 auto',
+                        cursor: 'grab', touchAction: 'none', userSelect: 'none',
+                    }}
+                    title="Glisser pour déplacer"
+                >
                     <span style={{ fontFamily: 'var(--font-mono)', fontSize: 11, letterSpacing: '0.2em', textTransform: 'uppercase', color: D.faint }}>
                         Dev tools{!open && activeLabel ? ` · ${activeLabel}` : ''}
                     </span>
@@ -328,11 +364,15 @@ function HeroTab() {
 // ----------------------------------------------------------------------------
 // Vortex tab — bead-vortex generator
 // ----------------------------------------------------------------------------
+const VORTEX_SECTION_OPTS: SegOption<VortexSectionId>[] = VORTEX_SECTIONS.map((s) => ({ id: s.id, label: s.label }));
 const VORTEX_SHAPES: SegOption<VortexShape>[] = [
     { id: 'spiral', label: 'Spirale' },
     { id: 'phyllo', label: 'Tournesol' },
     { id: 'rings', label: 'Anneaux' },
     { id: 'radial', label: 'Radial' },
+    { id: 'rose', label: 'Rosace' },
+    { id: 'lissajous', label: 'Lissajous' },
+    { id: 'scatter', label: 'Nuage' },
 ];
 const VORTEX_COLORS: SegOption<VortexColorMode>[] = [
     { id: 'image', label: 'Image' },
@@ -341,34 +381,39 @@ const VORTEX_COLORS: SegOption<VortexColorMode>[] = [
 ];
 
 function VortexTab() {
-    const p = useVortexParams();
+    const [section, setSection] = useState<VortexSectionId>('expertises');
+    const p = useVortexParams(section);
+    const set = (next: Partial<VortexParams>) => setVortexParams(section, next);
     return (
         <>
+            <SectionLabel>Section</SectionLabel>
+            <Segmented value={section} onChange={setSection} options={VORTEX_SECTION_OPTS} columns={2} />
+
             <SectionLabel>Algorithme</SectionLabel>
-            <Segmented value={p.shape} onChange={(v) => setVortexParams({ shape: v })} options={VORTEX_SHAPES} columns={2} />
+            <Segmented value={p.shape} onChange={(v) => set({ shape: v })} options={VORTEX_SHAPES} columns={2} />
 
             <SectionLabel>Forme</SectionLabel>
-            <Slider label="Bras / anneaux" min={1} max={8} step={1} value={p.arms} onChange={(v) => setVortexParams({ arms: v })} />
-            <Slider label="Beads" min={3} max={48} step={1} value={p.count} onChange={(v) => setVortexParams({ count: v })} />
-            <Slider label="Épaisseur des bras" min={1} max={6} step={1} value={p.thickness} onChange={(v) => setVortexParams({ thickness: v })} />
-            <Slider label="Tours" min={0.5} max={5} step={0.1} value={p.turns} onChange={(v) => setVortexParams({ turns: v })} />
-            <Slider label="Rayon de départ" min={0} max={160} step={4} value={p.startRadius} onChange={(v) => setVortexParams({ startRadius: v })} unit="px" />
-            <Slider label="Croissance" min={1} max={14} step={0.5} value={p.growth} onChange={(v) => setVortexParams({ growth: v })} unit="×" />
-            <Slider label="Rotation" min={0} max={360} step={5} value={p.rotation} onChange={(v) => setVortexParams({ rotation: v })} unit="°" />
+            <Slider label="Bras / anneaux / pétales" min={1} max={12} step={1} value={p.arms} onChange={(v) => set({ arms: v })} />
+            <Slider label="Beads" min={3} max={96} step={1} value={p.count} onChange={(v) => set({ count: v })} />
+            <Slider label="Épaisseur des bras" min={1} max={6} step={1} value={p.thickness} onChange={(v) => set({ thickness: v })} />
+            <Slider label="Tours / fréq. b" min={0.5} max={5} step={0.1} value={p.turns} onChange={(v) => set({ turns: v })} />
+            <Slider label="Rayon de départ" min={0} max={160} step={4} value={p.startRadius} onChange={(v) => set({ startRadius: v })} unit="px" />
+            <Slider label="Croissance" min={1} max={14} step={0.5} value={p.growth} onChange={(v) => set({ growth: v })} unit="×" />
+            <Slider label="Rotation" min={0} max={360} step={5} value={p.rotation} onChange={(v) => set({ rotation: v })} unit="°" />
 
             <SectionLabel>Beads</SectionLabel>
-            <Slider label="Taille bead" min={6} max={48} step={6} value={p.beadSize} onChange={(v) => setVortexParams({ beadSize: v })} unit="px" />
-            <Slider label="Snap grille" min={0} max={48} step={12} value={p.snap} onChange={(v) => setVortexParams({ snap: v })} unit="px" />
+            <Slider label="Taille bead" min={6} max={48} step={6} value={p.beadSize} onChange={(v) => set({ beadSize: v })} unit="px" />
+            <Slider label="Snap grille" min={0} max={48} step={12} value={p.snap} onChange={(v) => set({ snap: v })} unit="px" />
 
             <SectionLabel>Couleur</SectionLabel>
-            <Segmented value={p.colorMode} onChange={(v) => setVortexParams({ colorMode: v })} options={VORTEX_COLORS} columns={3} />
-            {p.colorMode === 'solid' && <ColorField label="Couleur unie" value={p.color} onChange={(v) => setVortexParams({ color: v })} />}
+            <Segmented value={p.colorMode} onChange={(v) => set({ colorMode: v })} options={VORTEX_COLORS} columns={3} />
+            {p.colorMode === 'solid' && <ColorField label="Couleur unie" value={p.color} onChange={(v) => set({ color: v })} />}
             {p.colorMode === 'radial' && (
                 <>
                     <div style={{ marginTop: 8 }}>
                         <Segmented
                             value={p.radialInvert ? 'inv' : 'std'}
-                            onChange={(v) => setVortexParams({ radialInvert: v === 'inv' })}
+                            onChange={(v) => set({ radialInvert: v === 'inv' })}
                             columns={2}
                             options={[{ id: 'std', label: 'Centre = fleurs' }, { id: 'inv', label: 'Centre = ciel' }]}
                         />
@@ -381,7 +426,7 @@ function VortexTab() {
                 </>
             )}
 
-            <ResetButton onClick={() => resetVortexParams()} />
+            <ResetButton onClick={() => resetVortexParams(section)} />
         </>
     );
 }

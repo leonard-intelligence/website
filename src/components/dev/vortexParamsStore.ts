@@ -1,16 +1,17 @@
-// Store for the bead "vortex" in SectionExpertise — parametric shape generator
-// (several algorithms) with live DevTools control. Same useSyncExternalStore
-// pattern as the other dev stores.
+// Store for the bead "vortex" panels — parametric shape generator (several
+// algorithms) with live DevTools control. Multi-section: each section that
+// renders a vortex has its own params, selectable in DevTools › Vortex.
+// Same useSyncExternalStore pattern as the other dev stores.
 import { useSyncExternalStore } from 'react';
 
-export type VortexShape = 'spiral' | 'phyllo' | 'rings' | 'radial';
+export type VortexShape = 'spiral' | 'phyllo' | 'rings' | 'radial' | 'rose' | 'lissajous' | 'scatter';
 export type VortexColorMode = 'image' | 'radial' | 'solid';
 
 export type VortexParams = {
     shape: VortexShape;
     count: number;       // beads per arm / ring / spoke (or total density for phyllo)
-    arms: number;        // arms / rings / spokes
-    turns: number;       // total rotations along an arm (spiral)
+    arms: number;        // arms / rings / spokes / petals / fréquence a
+    turns: number;       // total rotations along an arm (spiral) / fréquence b (lissajous)
     startRadius: number; // px (innermost radius)
     growth: number;      // endRadius / startRadius
     rotation: number;    // deg (global rotation)
@@ -22,43 +23,72 @@ export type VortexParams = {
     radialInvert: boolean; // radial mode: invert the center↔edge mapping
 };
 
-export const DEFAULT_VORTEX_PARAMS: VortexParams = {
-    shape: 'rings',
-    count: 46,
-    arms: 8,
-    turns: 2.2,
-    startRadius: 112,
-    growth: 5,
-    rotation: 50,
-    thickness: 1,
-    beadSize: 12,
-    snap: 0,
-    colorMode: 'radial',
-    color: '#D97757',
-    radialInvert: true,
+// ── Sections with a vortex effect (selectable in DevTools) ──────────────────
+export type VortexSectionId = 'expertises' | 'modeles';
+
+export const VORTEX_SECTIONS: { id: VortexSectionId; label: string }[] = [
+    { id: 'expertises', label: 'Expertises' },
+    { id: 'modeles', label: '01 · Modèles' },
+];
+
+const DEFAULTS: Record<VortexSectionId, VortexParams> = {
+    expertises: {
+        shape: 'rings',
+        count: 46,
+        arms: 8,
+        turns: 2.2,
+        startRadius: 112,
+        growth: 5,
+        rotation: 50,
+        thickness: 1,
+        beadSize: 12,
+        snap: 0,
+        colorMode: 'radial',
+        color: '#D97757',
+        radialInvert: true,
+    },
+    modeles: {
+        // champ phyllotaxie (tournesol) derrière les cartes logos
+        shape: 'phyllo',
+        count: 60,
+        arms: 4,
+        turns: 2.2,
+        startRadius: 20,
+        growth: 14,
+        rotation: 0,
+        thickness: 1,
+        beadSize: 12,
+        snap: 0,
+        colorMode: 'radial',
+        color: '#D97757',
+        radialInvert: false,
+    },
 };
 
-let state: VortexParams = { ...DEFAULT_VORTEX_PARAMS };
+let state: Record<VortexSectionId, VortexParams> = {
+    expertises: { ...DEFAULTS.expertises },
+    modeles: { ...DEFAULTS.modeles },
+};
 const subscribers = new Set<() => void>();
 
-export function setVortexParams(next: Partial<VortexParams>) {
-    state = { ...state, ...next };
+export function setVortexParams(section: VortexSectionId, next: Partial<VortexParams>) {
+    state = { ...state, [section]: { ...state[section], ...next } };
     subscribers.forEach((s) => s());
 }
 
-export function resetVortexParams() {
-    state = { ...DEFAULT_VORTEX_PARAMS };
+export function resetVortexParams(section: VortexSectionId) {
+    state = { ...state, [section]: { ...DEFAULTS[section] } };
     subscribers.forEach((s) => s());
 }
 
-export function useVortexParams(): VortexParams {
+export function useVortexParams(section: VortexSectionId): VortexParams {
     return useSyncExternalStore(
         (subscriber) => {
             subscribers.add(subscriber);
             return () => subscribers.delete(subscriber);
         },
-        () => state,
-        () => state,
+        () => state[section],
+        () => state[section],
     );
 }
 
@@ -104,6 +134,46 @@ export function buildVortex(p: VortexParams): VortexPoint[] {
             const rt = rings > 1 ? ring / (rings - 1) : 0;
             const r = p.startRadius * Math.pow(grow, rt);
             for (let i = 0; i < p.count; i++) place(rot + (2 * Math.PI / p.count) * i, r);
+        }
+    } else if (p.shape === 'rose') {
+        // rosace (rhodonea) — r = base + amplitude·cos(k·θ), k = bras (pétales)
+        const N = Math.max(2, p.count * Math.max(1, p.arms));
+        const k = Math.max(1, Math.round(p.arms));
+        const amp = p.startRadius * (grow - 1);
+        const span = p.turns * 2 * Math.PI;
+        for (let i = 0; i < N; i++) {
+            const th = (i / (N - 1)) * span;
+            place(rot + th, p.startRadius + amp * Math.cos(k * th));
+        }
+    } else if (p.shape === 'lissajous') {
+        // courbe de Lissajous — x = R·sin(a·t + φ), y = R·sin(b·t)
+        const N = Math.max(2, p.count * Math.max(1, p.arms));
+        const R = p.startRadius * grow;
+        const fa = Math.max(1, Math.round(p.arms));
+        const fb = Math.max(1, Math.round(p.turns));
+        for (let i = 0; i < N; i++) {
+            const t = (i / N) * 2 * Math.PI;
+            const x = R * Math.sin(fa * t + rot);
+            const y = R * Math.sin(fb * t);
+            raw.push({ x, y, idx: gi++, r: Math.hypot(x, y), ang: Math.atan2(y, x) });
+        }
+    } else if (p.shape === 'scatter') {
+        // nuage déterministe — séquence R2 low-discrepancy (quasi-aléatoire stable)
+        const N = Math.max(1, p.count * Math.max(1, p.arms));
+        const R = p.startRadius * grow;
+        const g = 1.32471795724474602596; // nombre plastique
+        const a1 = 1 / g;
+        const a2 = 1 / (g * g);
+        const cos = Math.cos(rot);
+        const sin = Math.sin(rot);
+        for (let i = 0; i < N; i++) {
+            const u = (0.5 + a1 * (i + 1)) % 1;
+            const v = (0.5 + a2 * (i + 1)) % 1;
+            const px = (u - 0.5) * 2 * R;
+            const py = (v - 0.5) * 2 * R;
+            const x = px * cos - py * sin;
+            const y = px * sin + py * cos;
+            raw.push({ x, y, idx: gi++, r: Math.hypot(x, y), ang: Math.atan2(y, x) });
         }
     } else {
         // phyllotaxis (sunflower) — golden angle + sqrt density
