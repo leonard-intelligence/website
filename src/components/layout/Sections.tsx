@@ -81,7 +81,7 @@ export const EMBOSS_MUTED: React.CSSProperties = {
 // ============================================================================
 // ── Capabilities overview grid (intro) — "Do it all" style, links to each layer ─
 const CAPS: { n: string; title: string; desc: string; href: string; icon: LucideIcon }[] = [
-    { n: '01', title: 'Grands modèles de langage', desc: 'À chaque solution, son modèle — propriétaire ou open-weight.', href: '#section-modeles', icon: Cpu },
+    { n: '01', title: 'Grands modèles de langage', desc: 'À chaque solution, son modèle, propriétaire ou open-weight.', href: '#section-modeles', icon: Cpu },
     { n: '02', title: 'Écosystème agentique', desc: 'Compétences, outils et autonomie au service de la valeur.', href: '#section-harnais', icon: Workflow },
     { n: '03', title: 'Données & intégrations', desc: 'Toutes vos sources canalisées vers un environnement unique.', href: '#section-donnees', icon: Database },
     { n: '04', title: 'Contexte & connaissance', desc: 'Ne perdez plus rien : la mémoire se capitalise.', href: '#section-contexte', icon: Layers },
@@ -403,7 +403,7 @@ export function SectionSystem() {
                         className="font-sans mt-4 mx-auto"
                         style={{ fontSize: 17, lineHeight: '24px', fontWeight: 460, color: TOKENS.mutedText, maxWidth: '54ch' }}
                     >
-                        Toute la stack au service de votre entreprise — et votre entreprise au service de vos clients. Le grand gagnant : votre client.
+                        Toute la stack au service de votre entreprise, et votre entreprise au service de vos clients. Le grand gagnant : votre client.
                     </p>
                 </header>
                 {/* desktop : le circuit en relief (réf. AgentMail) — chaque nœud ancre vers sa couche */}
@@ -500,7 +500,7 @@ export function SectionExpertise() {
 
                     {/* Accroche */}
                     <p className="font-sans" style={{ marginTop: 24, fontSize: 19, lineHeight: '28px', fontWeight: 460, color: TOKENS.mutedText, maxWidth: '64ch' }}>
-                        Tirez profit des meilleurs modèles au monde, dans tous les domaines : texte, image, voix, vidéo, musique — orchestrés sur mesure pour votre métier.
+                        Tirez profit des meilleurs modèles au monde, dans tous les domaines : texte, image, voix, vidéo, musique, orchestrés sur mesure pour votre métier.
                     </p>
 
                     {/* Carte beads — grille stricte 24px */}

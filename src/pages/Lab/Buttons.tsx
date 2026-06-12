@@ -86,8 +86,8 @@ export default function ButtonsLab() {
             el.getAttribute('aria-disabled') === 'true'
         )
             return;
-        const tone = el.getAttribute('data-tone') ?? '—';
-        const sizeAttr = el.getAttribute('data-size') ?? '—';
+        const tone = el.getAttribute('data-tone') ?? '·';
+        const sizeAttr = el.getAttribute('data-size') ?? '·';
         const label = el.textContent?.trim() || 'icône';
         setClicks((c) => c + 1);
         setToast(`${tone} · ${sizeAttr} · « ${label} »`);
@@ -98,7 +98,7 @@ export default function ButtonsLab() {
     return (
         <div style={{ minHeight: '100vh', background: surface, transition: 'background .25s ease' }}>
             <Helmet>
-                <title>Lab · Boutons Relief — Leonard</title>
+                <title>Lab · Boutons Relief · Leonard</title>
             </Helmet>
 
             {/* top bar + background switcher */}
@@ -164,7 +164,7 @@ export default function ButtonsLab() {
                         margin: '0 0 8px',
                     }}
                 >
-                    Boutons — pilier Relief
+                    Boutons · pilier Relief
                 </h1>
                 <p
                     style={{
@@ -181,7 +181,7 @@ export default function ButtonsLab() {
                 </p>
 
                 {/* TEST DU CLIC */}
-                <Section title="Test du clic — maintiens pour sentir l'enfoncement">
+                <Section title="Test du clic · maintiens pour sentir l'enfoncement">
                     <p
                         style={{
                             fontFamily: "'Geist Sans', sans-serif",
@@ -204,7 +204,7 @@ export default function ButtonsLab() {
                 </Section>
 
                 {/* TONS × TAILLES */}
-                <Section title="Tons × tailles — interactifs">
+                <Section title="Tons × tailles · interactifs">
                     <div
                         style={{
                             display: 'grid',
@@ -238,7 +238,7 @@ export default function ButtonsLab() {
                 </Section>
 
                 {/* ÉTATS */}
-                <Section title="États — repos / hover / pressé / focus / désactivé">
+                <Section title="États · repos / hover / pressé / focus / désactivé">
                     <div style={{ display: 'flex', flexDirection: 'column', gap: 22 }}>
                         {(['dark', 'light', 'lime'] as ReliefTone[]).map((tone) => (
                             <div
@@ -270,7 +270,7 @@ export default function ButtonsLab() {
                 </Section>
 
                 {/* ICÔNES */}
-                <Section title="Icônes — gauche / droite / seule">
+                <Section title="Icônes · gauche / droite / seule">
                     <div style={{ display: 'flex', flexWrap: 'wrap', gap: 16, alignItems: 'center' }}>
                         <ReliefButton tone="dark" iconLeft={<Plus />}>
                             Ajouter un agent
@@ -294,7 +294,7 @@ export default function ButtonsLab() {
                 </Section>
 
                 {/* FROST */}
-                <Section title="Frost — sur imagerie (hero / contact)">
+                <Section title="Frost · sur imagerie (hero / contact)">
                     <div
                         style={{
                             position: 'relative',
@@ -321,10 +321,10 @@ export default function ButtonsLab() {
                 </Section>
 
                 {/* EMPLACEMENT */}
-                <Section title="En contexte — emplacements types">
+                <Section title="En contexte · emplacements types">
                     <div style={{ display: 'flex', flexDirection: 'column', gap: 22 }}>
                         {/* navbar */}
-                        <ContextCard caption="navbar — minimale, 1 CTA clair">
+                        <ContextCard caption="navbar · minimale, 1 CTA clair">
                             <div
                                 style={{
                                     display: 'flex',
@@ -345,7 +345,7 @@ export default function ButtonsLab() {
                         </ContextCard>
 
                         {/* hero */}
-                        <ContextCard caption="hero — frost sur perles + CTA dark" pad={false}>
+                        <ContextCard caption="hero · frost sur perles + CTA dark" pad={false}>
                             <div
                                 style={{
                                     position: 'relative',
@@ -394,13 +394,13 @@ export default function ButtonsLab() {
                         </ContextCard>
 
                         {/* card footer */}
-                        <ContextCard caption="pied de carte — secondaire + principal alignés à droite">
+                        <ContextCard caption="pied de carte · secondaire + principal alignés à droite">
                             <div style={{ padding: '22px 24px' }}>
                                 <h3 style={{ fontFamily: "'Geist Sans'", fontWeight: 600, color: INK, margin: '0 0 6px', fontSize: 18 }}>
                                     Anatomie d'un agent
                                 </h3>
                                 <p style={{ fontFamily: "'Geist Sans'", color: MUTED, margin: '0 0 18px', fontSize: 14 }}>
-                                    Modèle, outils, garde-fous, statut — chaque agent est une fiche.
+                                    Modèle, outils, garde-fous, statut : chaque agent est une fiche.
                                 </p>
                                 <div style={{ display: 'flex', gap: 12, justifyContent: 'flex-end' }}>
                                     <ReliefButton tone="light" size="sm">En savoir plus</ReliefButton>
@@ -412,7 +412,7 @@ export default function ButtonsLab() {
                         </ContextCard>
 
                         {/* form submit */}
-                        <ContextCard caption="formulaire — bouton pleine largeur">
+                        <ContextCard caption="formulaire · bouton pleine largeur">
                             <div style={{ padding: 24, maxWidth: 420 }}>
                                 <div
                                     style={{
@@ -437,7 +437,7 @@ export default function ButtonsLab() {
                 </Section>
             </div>
 
-            {/* retour de clic — confirme que chaque bouton fonctionne */}
+            {/* retour de clic · confirme que chaque bouton fonctionne */}
             <div
                 aria-live="polite"
                 style={{

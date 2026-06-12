@@ -185,7 +185,7 @@ export function SectionMemory() {
                     <div className="lg:col-span-8 relative p-6 md:p-12 min-h-[400px] flex flex-col justify-between overflow-hidden border-b lg:border-b-0 lg:border-r border-white/10">
                         {/* Header Area */}
                         <div className="relative z-10 mb-12 text-left reveal-right">
-                            <div className="text-[#e67d23] mb-2 text-lg">Module 02 — Base de connaissance</div>
+                            <div className="text-[#e67d23] mb-2 text-lg">Module 02 · Base de connaissance</div>
                             <h2 id="expertise-memory-heading" className="text-4xl md:text-5xl font-mono text-white leading-tight max-w-4xl uppercase tracking-[-0.02em]">
                                 <span className="text-muted-foreground">Ne perdez plus</span><br />
                                 le savoir de vos experts.

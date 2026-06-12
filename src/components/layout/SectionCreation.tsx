@@ -16,7 +16,7 @@ export function SectionCreation() {
                     <div className="lg:col-span-8 relative p-6 md:p-12 min-h-[400px] flex flex-col justify-between overflow-hidden border-b lg:border-b-0 lg:border-r border-white/10">
                         {/* Header Area */}
                         <div className="relative z-10 mb-12 text-left reveal-right">
-                            <div className="text-[#e67d23] mb-2 text-lg">Module 04 — Création</div>
+                            <div className="text-[#e67d23] mb-2 text-lg">Module 04 · Création</div>
                             <h2 id="expertise-creation-heading" className="text-4xl md:text-5xl font-mono text-white leading-tight ml-auto max-w-4xl uppercase tracking-[-0.02em]">
                                 PRODUISEZ EN HEURES CE QUI PRENAIT DES SEMAINES.
                             </h2>

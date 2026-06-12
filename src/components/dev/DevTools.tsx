@@ -441,7 +441,7 @@ function PaintTab({ active, onActiveChange }: { active: boolean; onActiveChange:
                 active={active}
                 onChange={onActiveChange}
                 label="Démarrer le mode peinture (⌘P)"
-                activeLabel="● Mode peinture actif — cliquer pour arrêter"
+                activeLabel="● Mode peinture actif · cliquer pour arrêter"
             />
             <p style={{ marginTop: 10, color: D.faint, fontSize: 11 }}>
                 Les contrôles de peinture (source, outils, export) apparaissent dans un panneau séparé quand le mode est actif.

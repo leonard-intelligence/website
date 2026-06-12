@@ -40,7 +40,7 @@ export function SectionAgents() {
                     <div className="lg:col-span-8 relative p-6 md:p-12 min-h-[400px] flex flex-col justify-between overflow-hidden">
                         {/* Header Area */}
                         <div className="relative z-10 mb-12 text-right reveal-right">
-                            <div className="text-[#e67d23] mb-2 text-lg">Module 01 — Agents</div>
+                            <div className="text-[#e67d23] mb-2 text-lg">Module 01 · Agents</div>
                             <h2 id="expertise-agents-heading" className="text-4xl md:text-5xl font-mono text-white leading-tight ml-auto max-w-4xl uppercase tracking-[-0.02em]">
                                 BÂTISSEZ VOTRE ÉQUIPE D'AGENTS POUR DÉVELOPPER VOTRE ENTREPRISE.
                             </h2>

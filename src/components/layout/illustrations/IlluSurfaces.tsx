@@ -230,7 +230,7 @@ export function IlluSurfaces({ accent, onImage }: { accent: string; onImage?: bo
                         textShadow: onImage ? '0 1px 8px rgba(0,0,0,0.4)' : undefined,
                     }}
                 >
-                    L'agent, intégré à votre outil — pas dans un onglet à côté.
+                    L'agent, intégré à votre outil. Pas dans un onglet à côté.
                 </span>
             </div>
         </div>
