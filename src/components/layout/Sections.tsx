@@ -1115,65 +1115,6 @@ export function SectionPhases() {
     );
 }
 
-// ============================================================================
-// SECTION FONTS (bonus) — specimen of every loaded font, to see them live.
-// ============================================================================
-const SHOWCASE_FONTS: { name: string; css: string; pixel?: boolean }[] = [
-    { name: 'Geist Sans', css: 'var(--font-sans)' },
-    { name: 'Geist Mono', css: 'var(--font-mono)' },
-    // Pixel variants need to render large: their square/grid/circle/triangle
-    // texture is only legible above ~56px. Below that they all look identical.
-    { name: 'Geist Pixel · Line', css: 'var(--font-pixel-line)', pixel: true },
-    { name: 'Geist Pixel · Square', css: 'var(--font-pixel-square)', pixel: true },
-    { name: 'Geist Pixel · Grid', css: 'var(--font-pixel-grid)', pixel: true },
-    { name: 'Geist Pixel · Circle', css: 'var(--font-pixel-circle)', pixel: true },
-    { name: 'Geist Pixel · Triangle', css: 'var(--font-pixel-triangle)', pixel: true },
-];
-
-export function SectionFonts() {
-    return (
-        <section
-            id="section-fonts"
-            className="relative"
-            style={{ backgroundColor: TOKENS.surface, paddingBlock: '88px', paddingInline: '32px' }}
-            aria-label="Polices (bonus)"
-        >
-            <Reveal>
-                <div className="max-w-[1100px] mx-auto">
-                    <header className="mb-12">
-                        <div className="font-mono" style={{ fontSize: 13, letterSpacing: '0.22em', ...EMBOSS_MUTED }}>BONUS · POLICES</div>
-                        <h2 className="font-sans mt-3" style={{ fontSize: 'clamp(1.6rem, 2.6vw, 2.2rem)', fontWeight: 500, letterSpacing: '-0.02em', ...EMBOSS_DARK }}>
-                            Toutes les polices disponibles.
-                        </h2>
-                    </header>
-                    <div className="flex flex-col" style={{ gap: 14 }}>
-                        {SHOWCASE_FONTS.map((f) => (
-                            <div key={f.name} style={{ padding: '20px 24px', borderRadius: 14, background: TOKENS.white, boxShadow: RM_CARD_SHADOW }}>
-                                <div className="font-mono" style={{ fontSize: 11, letterSpacing: '0.14em', color: TOKENS.mutedText, marginBottom: 12 }}>{f.name}</div>
-                                <div
-                                    style={{
-                                        fontFamily: f.css,
-                                        // Pixel fonts only reveal their texture when large.
-                                        fontSize: f.pixel ? 'clamp(2.25rem, 5.5vw, 4rem)' : 'clamp(1.5rem, 3.4vw, 2.4rem)',
-                                        lineHeight: f.pixel ? 1.15 : 1.2,
-                                        color: TOKENS.ink,
-                                        wordBreak: 'break-word',
-                                    }}
-                                >
-                                    Bienvenue dans l'ère des agents.
-                                </div>
-                                <div style={{ fontFamily: f.css, fontSize: f.pixel ? 22 : 15, color: TOKENS.mutedText, marginTop: 10 }}>
-                                    AaBbCc Éàèïô 0123456789 · Léonard Intelligence
-                                </div>
-                            </div>
-                        ))}
-                    </div>
-                </div>
-            </Reveal>
-        </section>
-    );
-}
-
 export function SectionMethod() {
     return (
         <section
@@ -2124,14 +2065,6 @@ export function FooterV2() {
                             </a>
                         ))}
                     </nav>
-
-                    <a
-                        href="mailto:guillaume3301@proton.me"
-                        className="font-mono hover:underline"
-                        style={{ fontSize: '13px', color: TOKENS.mutedText, letterSpacing: '0.02em' }}
-                    >
-                        guillaume3301@proton.me
-                    </a>
                 </div>
 
                 <div className="flex justify-end">
