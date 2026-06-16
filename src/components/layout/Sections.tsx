@@ -521,7 +521,7 @@ export function SectionExpertise() {
                         {/* vortex de beads — généré par algorithme (réglable : DevTools › Vortex › Expertises) */}
                         <VortexBeadLayer params={vortex} />
 
-                        {/* Symbole Leonard au cœur du vortex */}
+                        {/* Symbole Leonard au cœur du vortex — sans fond, en noir */}
                         <div
                             aria-hidden="true"
                             className="absolute flex items-center justify-center"
@@ -529,15 +529,11 @@ export function SectionExpertise() {
                                 left: '50%',
                                 top: '50%',
                                 transform: 'translate(-50%, -50%)',
-                                width: 78,
-                                height: 78,
-                                borderRadius: 20,
-                                background: TOKENS.white,
-                                boxShadow: `${RM_CARD_SHADOW}, 0 16px 36px rgba(0,0,0,0.18)`,
+                                color: '#000000',
                                 zIndex: 1,
                             }}
                         >
-                            <LeonardSymbol size={42} />
+                            <LeonardSymbol size={60} />
                         </div>
 
                         {/* cartes expertises réparties dans le cadre */}
