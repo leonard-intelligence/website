@@ -7,7 +7,7 @@ import { useNotchParams } from '../dev/notchParamsStore';
 import { useVitruveParams } from '../dev/vitruveParamsStore';
 import { useVortexParams } from '../dev/vortexParamsStore';
 import { VortexBeadLayer } from './illustrations/VortexBeadLayer';
-import { IlluSystemCircuit } from './illustrations/IlluSystemCircuit';
+import { IlluCircuit } from './illustrations/IlluCircuit';
 import { QrBadge } from './QrBadge';
 import { ReliefButton } from '../ui/ReliefButton';
 import { ConstruitSur } from './ConstruitSur';
@@ -122,7 +122,7 @@ export function SectionIntro() {
         <section
             id="section-intro"
             className="relative"
-            style={{ backgroundColor: TOKENS.surface, paddingBlock: '76px', paddingInline: '32px' }}
+            style={{ backgroundColor: TOKENS.surface, paddingTop: '116px', paddingBottom: '36px', paddingInline: '32px' }}
             aria-label="Leonard Intelligence"
         >
             {/* Painted drip layer — constrained to the hero bead area width (clip horizontally).
@@ -406,9 +406,9 @@ export function SectionSystem() {
                         Toute la stack au service de votre entreprise, et votre entreprise au service de vos clients. Le grand gagnant : votre client.
                     </p>
                 </header>
-                {/* desktop : le circuit en relief (réf. AgentMail) — chaque nœud ancre vers sa couche */}
+                {/* desktop : circuit imprimé — le système comme un circuit intégré unique */}
                 <div className="hidden md:block">
-                    <IlluSystemCircuit />
+                    <IlluCircuit />
                 </div>
                 {/* mobile : la grille de cartes reste plus lisible */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:hidden" style={{ gap: 18 }}>
@@ -478,7 +478,7 @@ export function SectionExpertise() {
         <section
             id="section-expertise"
             className="relative"
-            style={{ backgroundColor: TOKENS.surface, paddingBlock: '104px', paddingInline: '32px' }}
+            style={{ backgroundColor: TOKENS.surface, paddingTop: '48px', paddingBottom: '104px', paddingInline: '32px' }}
             aria-label="Nos expertises"
         >
             <Reveal>
@@ -520,6 +520,25 @@ export function SectionExpertise() {
                     >
                         {/* vortex de beads — généré par algorithme (réglable : DevTools › Vortex › Expertises) */}
                         <VortexBeadLayer params={vortex} />
+
+                        {/* Symbole Leonard au cœur du vortex */}
+                        <div
+                            aria-hidden="true"
+                            className="absolute flex items-center justify-center"
+                            style={{
+                                left: '50%',
+                                top: '50%',
+                                transform: 'translate(-50%, -50%)',
+                                width: 78,
+                                height: 78,
+                                borderRadius: 20,
+                                background: TOKENS.white,
+                                boxShadow: `${RM_CARD_SHADOW}, 0 16px 36px rgba(0,0,0,0.18)`,
+                                zIndex: 1,
+                            }}
+                        >
+                            <LeonardSymbol size={42} />
+                        </div>
 
                         {/* cartes expertises réparties dans le cadre */}
                         {EXP_CARDS.map(({ icon: Icon, label, tags, pos }) => (

@@ -1,7 +1,9 @@
 // 01 · MODÈLES — "Le bon modèle, par tâche." (decorative).
 // Grille des derniers modèles de chaque fournisseur, chacun dans une carte.
 // Les logos (SVG monochromes) sont rendus via CSS mask : gris par défaut,
-// couleur de marque au survol.
+// couleur de marque au survol — ET au scroll d'entrée, chaque carte s'allume
+// brièvement dans le désordre (vague animée), le hover restant prioritaire.
+import { useEffect, useRef, useState } from 'react';
 import { TOKENS } from '../Sections';
 import { EMBOSS_SOFT } from './kit';
 
@@ -16,8 +18,41 @@ const MODELS = [
 
 export function IlluModels() {
     const { ink, mutedText, white } = TOKENS;
+    const ref = useRef<HTMLDivElement>(null);
+    const [active, setActive] = useState<Record<string, boolean>>({});
+
+    useEffect(() => {
+        const el = ref.current;
+        if (!el) return;
+        if (window.matchMedia?.('(prefers-reduced-motion: reduce)').matches) return;
+        const timers: number[] = [];
+        const obs = new IntersectionObserver(
+            (entries) => {
+                if (!entries.some((e) => e.isIntersecting)) return;
+                obs.disconnect();
+                // ordre aléatoire (Fisher-Yates)
+                const order = MODELS.map((m) => m.name);
+                for (let i = order.length - 1; i > 0; i--) {
+                    const j = Math.floor(Math.random() * (i + 1));
+                    [order[i], order[j]] = [order[j], order[i]];
+                }
+                order.forEach((name, i) => {
+                    const onAt = 280 + i * 300 + Math.random() * 140;
+                    timers.push(window.setTimeout(() => setActive((a) => ({ ...a, [name]: true })), onAt));
+                    timers.push(window.setTimeout(() => setActive((a) => ({ ...a, [name]: false })), onAt + 780));
+                });
+            },
+            { threshold: 0.35 },
+        );
+        obs.observe(el);
+        return () => {
+            obs.disconnect();
+            timers.forEach((t) => clearTimeout(t));
+        };
+    }, []);
+
     return (
-        <div className="w-full font-sans" aria-hidden="true">
+        <div ref={ref} className="w-full font-sans" aria-hidden="true">
             <div className="grid grid-cols-1 sm:grid-cols-2" style={{ gap: 14 }}>
                 {MODELS.map((m) => (
                     <div
@@ -27,7 +62,8 @@ export function IlluModels() {
                     >
                         <span
                             aria-hidden="true"
-                            className="shrink-0 transition-colors duration-300 [background-color:#171717] group-hover:[background-color:var(--lc)]"
+                            data-active={active[m.name] ? 'true' : undefined}
+                            className="shrink-0 transition-colors duration-500 [background-color:#171717] group-hover:[background-color:var(--lc)] data-[active=true]:[background-color:var(--lc)] data-[active=true]:duration-300"
                             style={{
                                 width: 30,
                                 height: 30,
