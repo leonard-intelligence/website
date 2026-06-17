@@ -2064,7 +2064,7 @@ type WinLayer = {
 };
 
 // Calques de l'effet holo dans la fenêtre image, selon le preset choisi.
-function WindowFoil({ effect, foil, strength, glare, sat, fpTile, fpRelief }: { effect: WindowEffect; foil: FoilKind; strength: number; glare: number; sat: number; fpTile: number; fpRelief: number }) {
+function WindowFoil({ effect, foil, strength, sat, fpTile, fpRelief }: { effect: WindowEffect; foil: FoilKind; strength: number; sat: number; fpTile: number; fpRelief: number }) {
     let layers: WinLayer[];
     switch (effect) {
         case 'holo':
@@ -2205,7 +2205,6 @@ function WindowFoil({ effect, foil, strength, glare, sat, fpTile, fpRelief }: { 
                     }}
                 />
             ))}
-            <div style={{ position: 'absolute', inset: 0, background: GLARE, mixBlendMode: 'screen', opacity: `calc(var(--hover, 0) * ${glare})`, transition: 'opacity 360ms ease-out' }} />
         </Fragment>
     );
 }
@@ -2284,26 +2283,25 @@ function HoloAgentCard() {
                     transition: 'opacity 360ms ease-out',
                 }}
             />
-            {/* reflet lumineux mobile (corps) */}
+            {/* ZONE ILLUSTRATION — traitement différent (preset Simey), clippé à la
+                fenêtre. Rendu seulement si elle a un effet (sinon fenêtre mate). */}
+            {p.splitWindow && p.windowStrength > 0 && (
+                <div style={{ position: 'absolute', ...WIN, overflow: 'hidden', borderRadius: 4 }}>
+                    <WindowFoil effect={p.windowEffect} foil={p.windowFoil} strength={p.windowStrength} sat={p.saturation} fpTile={p.fpTile} fpRelief={p.fpRelief} />
+                </div>
+            )}
+
+            {/* UN SEUL reflet lumineux, sur toute la carte (corps + illustration) */}
             <div
                 style={{
                     position: 'absolute',
                     inset: 0,
-                    clipPath: bodyClip,
                     background: GLARE,
                     mixBlendMode: 'screen',
                     opacity: `calc(var(--hover, 0) * ${p.glareStrength})`,
                     transition: 'opacity 360ms ease-out',
                 }}
             />
-
-            {/* ZONE ILLUSTRATION — traitement différent (preset Simey), clippé à la
-                fenêtre. Rendu seulement si elle a un effet (sinon fenêtre mate). */}
-            {p.splitWindow && p.windowStrength > 0 && (
-                <div style={{ position: 'absolute', ...WIN, overflow: 'hidden', borderRadius: 4 }}>
-                    <WindowFoil effect={p.windowEffect} foil={p.windowFoil} strength={p.windowStrength} glare={p.glareStrength} sat={p.saturation} fpTile={p.fpTile} fpRelief={p.fpRelief} />
-                </div>
-            )}
         </div>
     );
 
