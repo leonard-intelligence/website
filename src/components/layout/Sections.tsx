@@ -1986,6 +1986,7 @@ function HoloOverlay({ kind, peak }: { kind: OverlayKind; peak: number }) {
         position: 'absolute',
         inset: '6%',
         pointerEvents: 'none',
+        zIndex: 6, // au-dessus de la carte (AgentCard a zIndex 1) sinon le reflet est masqué
         WebkitMask: 'url(#agent-card-notches)',
         mask: 'url(#agent-card-notches)',
         transition: 'opacity 360ms ease-out',
@@ -1997,9 +1998,9 @@ function HoloOverlay({ kind, peak }: { kind: OverlayKind; peak: number }) {
                 style={{
                     ...base,
                     opacity: `calc(var(--hover, 0) * ${peak})`,
-                    mixBlendMode: 'soft-light',
+                    mixBlendMode: 'screen',
                     background:
-                        'radial-gradient(circle at var(--mx, 50%) var(--my, 50%), rgba(255,253,245,0.95), rgba(255,253,245,0) 58%)',
+                        'radial-gradient(circle at var(--mx, 50%) var(--my, 50%), rgba(255,252,242,0.85), rgba(255,252,242,0) 56%)',
                 }}
             />
         );
@@ -2023,7 +2024,7 @@ function HoloOverlay({ kind, peak }: { kind: OverlayKind; peak: number }) {
                 style={{
                     ...base,
                     opacity: `calc(var(--hover, 0) * 0.6)`,
-                    mixBlendMode: 'soft-light',
+                    mixBlendMode: 'screen',
                     background:
                         'radial-gradient(circle at var(--mx, 50%) var(--my, 50%), rgba(255,255,255,0.9), rgba(255,255,255,0) 55%)',
                 }}
