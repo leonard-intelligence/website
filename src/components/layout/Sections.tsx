@@ -1367,7 +1367,7 @@ function LeonardSymbol({ size = 14 }: { size?: number }) {
 const CARD_GRAIN_URL =
     "url(\"data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='1.6' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 0.55 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>\")";
 
-function AgentCard({ data, rotate, offsetX, offsetY, z }: { data: AgentCardData; rotate: number; offsetX: number; offsetY: number; z: number }) {
+function AgentCard({ data, rotate, offsetX, offsetY, z, surface }: { data: AgentCardData; rotate: number; offsetX: number; offsetY: number; z: number; surface?: React.ReactNode }) {
     // Pull notch params from the store so we can align decorative elements (like
     // the horizontal separator) with the top notch position.
     const notchP = useNotchParams();
@@ -1432,6 +1432,11 @@ function AgentCard({ data, rotate, offsetX, offsetY, z }: { data: AgentCardData;
                     borderRadius: 'inherit',
                 }}
             />
+
+            {/* Couche holo « surface » — posée sur le stock de la carte, SOUS tout
+                le contenu imprimé (textes, marques, illustration) qui l'occulte →
+                le foil n'apparaît que sur la surface plate, comme une vraie carte. */}
+            {surface}
 
             {/* Separator at top-notch level — vertical pills laid out as a
                 dotted line. Each pill is exactly as tall as the notch (so it
@@ -1749,7 +1754,7 @@ function AgentCard({ data, rotate, offsetX, offsetY, z }: { data: AgentCardData;
     );
 }
 
-function AgentCardStack({ sel }: { sel: number }) {
+function AgentCardStack({ sel, surface }: { sel: number; surface?: React.ReactNode }) {
     // Notches with BOTH inner AND outer corners rounded, built as a single
     // SVG <path> per notch+side. All geometry params live in the shared store
     // so the DevTools "Notch" panel can drive them live.
@@ -1885,7 +1890,7 @@ function AgentCardStack({ sel }: { sel: number }) {
                     </filter>
                 </defs>
             </svg>
-            <AgentCard key={sel} data={AGENT_CARDS[sel]} rotate={0} offsetX={6} offsetY={6} z={1} />
+            <AgentCard key={sel} data={AGENT_CARDS[sel]} rotate={0} offsetX={6} offsetY={6} z={1} surface={surface} />
         </div>
     );
 }
@@ -2149,6 +2154,60 @@ function HoloCard() {
         ? `polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%, 0% 0%, 8% ${winTop}, 8% 88%, 92% 88%, 92% ${winTop}, 8% ${winTop}, 0% 0%)`
         : undefined;
 
+    // Couche holo « surface » — injectée DANS la carte, sous le contenu imprimé.
+    // Pas de mask silhouette ici : le div masqué parent (#agent-card-notches) clippe.
+    const surface = (
+        <div
+            aria-hidden="true"
+            style={{
+                position: 'absolute',
+                inset: 0,
+                pointerEvents: 'none',
+                opacity: 'var(--hover, 0)',
+                transition: 'opacity 360ms ease-out',
+            }}
+        >
+            {/* ZONE CORPS — foil découpé dans le logo tuilé, hors fenêtre image */}
+            <div
+                style={{
+                    position: 'absolute',
+                    inset: 0,
+                    clipPath: bodyClip,
+                    backgroundImage: foilBg,
+                    backgroundSize: '220% 220%',
+                    backgroundPosition: 'calc(var(--mx,50%) * 1.7) calc(var(--my,50%) * 1.7)',
+                    WebkitMaskImage: motifMask,
+                    maskImage: motifMask,
+                    WebkitMaskRepeat: 'repeat',
+                    maskRepeat: 'repeat',
+                    WebkitMaskSize: `${cell}px ${cell}px`,
+                    maskSize: `${cell}px ${cell}px`,
+                    mixBlendMode: foilBlend,
+                    filter: `saturate(${p.saturation})`,
+                    opacity: p.foilStrength,
+                }}
+            />
+            {/* reflet lumineux mobile (corps) */}
+            <div
+                style={{
+                    position: 'absolute',
+                    inset: 0,
+                    clipPath: bodyClip,
+                    background: GLARE,
+                    mixBlendMode: 'screen',
+                    opacity: p.glareStrength,
+                }}
+            />
+
+            {/* ZONE ILLUSTRATION — traitement différent : preset Simey, clippé à la fenêtre */}
+            {p.splitWindow && (
+                <div style={{ position: 'absolute', ...WIN, overflow: 'hidden', borderRadius: 4 }}>
+                    <WindowFoil effect={p.windowEffect} foil={p.windowFoil} strength={p.windowStrength} glare={p.glareStrength} sat={p.saturation} />
+                </div>
+            )}
+        </div>
+    );
+
     return (
         <div className="relative" style={{ width: 'clamp(240px, 32vw, 320px)', aspectRatio: '0.7' }}>
             <div {...tilt.bind} style={{ width: '100%', height: '100%', perspective: tilt.perspective }}>
@@ -2164,61 +2223,7 @@ function HoloCard() {
                         willChange: 'transform',
                     }}
                 >
-                    <AgentCardStack sel={0} />
-                    {/* overlay reverse-holo : dans la silhouette de la carte, activé au survol */}
-                    <div
-                        aria-hidden="true"
-                        style={{
-                            position: 'absolute',
-                            inset: '6%',
-                            zIndex: 6,
-                            pointerEvents: 'none',
-                            WebkitMask: 'url(#agent-card-notches)',
-                            mask: 'url(#agent-card-notches)',
-                            opacity: 'var(--hover, 0)',
-                            transition: 'opacity 360ms ease-out',
-                        }}
-                    >
-                        {/* ZONE CORPS — foil découpé dans le logo tuilé, hors fenêtre image */}
-                        <div
-                            style={{
-                                position: 'absolute',
-                                inset: 0,
-                                clipPath: bodyClip,
-                                backgroundImage: foilBg,
-                                backgroundSize: '220% 220%',
-                                backgroundPosition: 'calc(var(--mx,50%) * 1.7) calc(var(--my,50%) * 1.7)',
-                                WebkitMaskImage: motifMask,
-                                maskImage: motifMask,
-                                WebkitMaskRepeat: 'repeat',
-                                maskRepeat: 'repeat',
-                                WebkitMaskSize: `${cell}px ${cell}px`,
-                                maskSize: `${cell}px ${cell}px`,
-                                mixBlendMode: foilBlend,
-                                filter: `saturate(${p.saturation})`,
-                                opacity: p.foilStrength,
-                            }}
-                        />
-                        {/* reflet lumineux mobile (corps) */}
-                        <div
-                            style={{
-                                position: 'absolute',
-                                inset: 0,
-                                clipPath: bodyClip,
-                                background: GLARE,
-                                mixBlendMode: 'screen',
-                                opacity: p.glareStrength,
-                            }}
-                        />
-
-                        {/* ZONE ILLUSTRATION — traitement différent : sheen lisse (sans motif),
-                            foil propre, déplacé à contre-sens, clippé à la fenêtre image */}
-                        {p.splitWindow && (
-                            <div style={{ position: 'absolute', ...WIN, overflow: 'hidden', borderRadius: 4 }}>
-                                <WindowFoil effect={p.windowEffect} foil={p.windowFoil} strength={p.windowStrength} glare={p.glareStrength} sat={p.saturation} />
-                            </div>
-                        )}
-                    </div>
+                    <AgentCardStack sel={0} surface={surface} />
                 </div>
             </div>
         </div>
