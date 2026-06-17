@@ -1,5 +1,5 @@
 // Sections V2 — Leonard Intelligence (design.md: warm neutrals, soft shadows, rounded corners)
-import { ArrowRight, Mic, Users, Map as MapIcon, Ruler, ShieldCheck, Boxes, Plug, Rocket, Gauge, Cpu, Workflow, Database, Layers, LayoutDashboard, Sparkles, Image as ImageIcon, Video, Music, Type as TypeIcon, type LucideIcon } from 'lucide-react';
+import { ArrowRight, Code2, Headset, Megaphone, TrendingUp, Users, Map as MapIcon, Ruler, ShieldCheck, Boxes, Plug, Rocket, Gauge, Cpu, Workflow, Database, Layers, LayoutDashboard, Sparkles, type LucideIcon } from 'lucide-react';
 import { PixelLayer } from '../pixels/PixelLayer';
 import { Pixel } from '../pixels/Pixel';
 import { useBeadCtx, SOURCE_URL } from '../pixels/BeadPxContext';
@@ -465,11 +465,10 @@ export function SectionDeploy() {
 // de 24px (positions et tailles = multiples de 24, comme le hero bg).
 // ============================================================================
 const EXP_CARDS: { icon: LucideIcon; label: string; tags: string[]; pos: React.CSSProperties }[] = [
-    { icon: TypeIcon, label: 'Texte', tags: ['Rédaction', 'Synthèse', 'Extraction', 'Classification'], pos: { left: '5%', top: '5%' } },
-    { icon: ImageIcon, label: 'Image', tags: ['Génération', 'Retouche', 'Analyse', 'OCR'], pos: { right: '6%', top: '23%' } },
-    { icon: Mic, label: 'Voix', tags: ['Synthèse vocale', 'Transcription', 'Temps réel'], pos: { left: '19%', top: '45%' } },
-    { icon: Video, label: 'Vidéo', tags: ['Génération', 'Montage', 'Sous-titres'], pos: { right: '15%', top: '62%' } },
-    { icon: Music, label: 'Musique', tags: ['Composition', 'Habillage', 'Jingles'], pos: { left: '8%', top: '80%' } },
+    { icon: Code2, label: 'Développement', tags: ['Génération', 'Revue', 'Tests', 'Documentation'], pos: { left: '4%', top: '5%' } },
+    { icon: Headset, label: 'Support client', tags: ['Tri des tickets', 'Réponses', 'Escalade', '24/7'], pos: { right: '5%', top: '15%' } },
+    { icon: Megaphone, label: 'Marketing', tags: ['Contenu', 'SEO', 'Campagnes', 'Analyse'], pos: { left: '7%', top: '68%' } },
+    { icon: TrendingUp, label: 'Ventes', tags: ['Prospection', 'Qualification', 'Relances', 'CRM'], pos: { right: '6%', top: '60%' } },
 ];
 
 export function SectionExpertise() {
@@ -500,7 +499,7 @@ export function SectionExpertise() {
 
                     {/* Accroche */}
                     <p className="font-sans" style={{ marginTop: 24, fontSize: 19, lineHeight: '28px', fontWeight: 460, color: TOKENS.mutedText, maxWidth: '64ch' }}>
-                        Tirez profit des meilleurs modèles au monde, dans tous les domaines : texte, image, voix, vidéo, musique, orchestrés sur mesure pour votre métier.
+                        Tirez profit des meilleurs modèles au monde dans toutes les fonctions de votre entreprise : développement, support, marketing, ventes, orchestrés pour votre métier.
                     </p>
 
                     {/* Carte beads — grille stricte 24px */}
