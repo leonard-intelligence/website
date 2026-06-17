@@ -3,6 +3,7 @@ import { ArrowRight, Code2, Headset, Megaphone, TrendingUp, Users, Map as MapIco
 import { PixelLayer } from '../pixels/PixelLayer';
 import { Pixel } from '../pixels/Pixel';
 import { useBeadCtx, SOURCE_URL } from '../pixels/BeadPxContext';
+import { useHeroTitleParams } from '../dev/heroTitleStore';
 import { useNotchParams } from '../dev/notchParamsStore';
 import { useVitruveParams } from '../dev/vitruveParamsStore';
 import { useVortexParams } from '../dev/vortexParamsStore';
@@ -974,6 +975,7 @@ export function BeadSection({
 // accroche centrée (sans surtitre). Sert de respiration / affirmation de marque.
 // ============================================================================
 export function SectionStatement() {
+    const heroTitle = useHeroTitleParams();
     return (
         <section
             className="relative overflow-hidden"
@@ -997,16 +999,18 @@ export function SectionStatement() {
                     className="relative mx-auto flex items-center justify-center text-center"
                     style={{ maxWidth: 1000, minHeight: 'clamp(220px, 28vw, 320px)' }}
                 >
+                    {/* Même design que le titre du héro : font pixel + glow (réglables DevTools › Héro) */}
                     <h2
                         className="font-sans mx-auto"
                         style={{
-                            fontSize: 'clamp(2rem, 4.6vw, 3.4rem)',
-                            lineHeight: 1.1,
-                            fontWeight: 500,
-                            letterSpacing: '-0.02em',
-                            color: '#FFFFFF',
+                            fontFamily: `var(--font-pixel-${heroTitle.variant})`,
+                            fontSize: 'clamp(2rem, 5vw, 4rem)',
+                            lineHeight: 1.15,
+                            fontWeight: 400,
+                            letterSpacing: '0.01em',
+                            color: '#ffffff',
                             maxWidth: '20ch',
-                            textShadow: '0 2px 22px rgba(0,0,0,0.42)',
+                            filter: `drop-shadow(0 2px 14px rgba(0, 0, 0, 0.35))${heroTitle.glow > 0 ? ` drop-shadow(0 0 ${heroTitle.glow}px ${heroTitle.glowColor})` : ''}`,
                         }}
                     >
                         Leonard adapte votre entreprise à l'ère agentique
