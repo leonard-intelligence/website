@@ -24,16 +24,16 @@ export type HoloParams = {
 
 export const DEFAULT_HOLO_PARAMS: HoloParams = {
     motifSize: 30,
-    motifSpace: 18,
-    foilStrength: 0.5,
-    glareStrength: 0.35,
-    saturation: 1.7,
-    tilt: 7,
-    foil: 'rainbow',
-    splitWindow: true,
+    motifSpace: 26,
+    foilStrength: 0.4,
+    glareStrength: 0.4,
+    saturation: 1.35,
+    tilt: 8,
+    foil: 'gold',
+    splitWindow: true, // la fenêtre image reste exclue du foil corps (zone mate)
     windowEffect: 'holo',
     windowFoil: 'silver',
-    windowStrength: 0.5,
+    windowStrength: 0, // rien dans la zone illustration par défaut
 };
 
 let state: HoloParams = { ...DEFAULT_HOLO_PARAMS };

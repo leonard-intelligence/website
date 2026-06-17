@@ -2199,8 +2199,9 @@ function HoloCard() {
                 }}
             />
 
-            {/* ZONE ILLUSTRATION — traitement différent : preset Simey, clippé à la fenêtre */}
-            {p.splitWindow && (
+            {/* ZONE ILLUSTRATION — traitement différent (preset Simey), clippé à la
+                fenêtre. Rendu seulement si elle a un effet (sinon fenêtre mate). */}
+            {p.splitWindow && p.windowStrength > 0 && (
                 <div style={{ position: 'absolute', ...WIN, overflow: 'hidden', borderRadius: 4 }}>
                     <WindowFoil effect={p.windowEffect} foil={p.windowFoil} strength={p.windowStrength} glare={p.glareStrength} sat={p.saturation} />
                 </div>
