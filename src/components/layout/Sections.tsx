@@ -1099,12 +1099,6 @@ export function SectionCapabilities() {
                         >
                             Des agents construits sur vos données, qui connaissent les spécificités techniques et métier de votre entreprise. Instructions, outils, garde-fous : tout est spécifié, mesurable, auditable. Pas de boîte noire.
                         </p>
-                        <span
-                            className="font-mono inline-block"
-                            style={{ marginTop: 24, fontSize: 10, letterSpacing: '0.18em', color: TOKENS.mutedText, opacity: 0.7 }}
-                        >
-                            SPÉCIMEN · DÉMONSTRATION DE SAVOIR-FAIRE
-                        </span>
                     </div>
 
                     {/* Cadre fond bead contenant la carte flottante — droite */}
