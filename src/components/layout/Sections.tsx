@@ -2192,7 +2192,8 @@ function WindowFoil({ effect, foil, strength, glare, sat, fpTile, fpRelief }: { 
                         backgroundRepeat: l.repeat ?? 'no-repeat',
                         mixBlendMode: l.blend,
                         filter: l.filter,
-                        opacity: strength * l.o,
+                        opacity: `calc(var(--hover, 0) * ${strength * l.o})`,
+                        transition: 'opacity 360ms ease-out',
                         WebkitMaskImage: l.mask,
                         maskImage: l.mask,
                         WebkitMaskSize: l.maskSize,
@@ -2204,7 +2205,7 @@ function WindowFoil({ effect, foil, strength, glare, sat, fpTile, fpRelief }: { 
                     }}
                 />
             ))}
-            <div style={{ position: 'absolute', inset: 0, background: GLARE, mixBlendMode: 'screen', opacity: glare }} />
+            <div style={{ position: 'absolute', inset: 0, background: GLARE, mixBlendMode: 'screen', opacity: `calc(var(--hover, 0) * ${glare})`, transition: 'opacity 360ms ease-out' }} />
         </Fragment>
     );
 }
@@ -2255,8 +2256,9 @@ function HoloAgentCard() {
                 position: 'absolute',
                 inset: 0,
                 pointerEvents: 'none',
-                opacity: 'var(--hover, 0)',
-                transition: 'opacity 360ms ease-out',
+                // PAS d'opacité ici : un conteneur opaque<1 isole le blend de son fond
+                // et casse le rendu quand le fondu se termine (le doré « saute »).
+                // On gère l'apparition par couche (opacity = hover × force).
             }}
         >
             {/* ZONE CORPS — foil découpé dans le logo tuilé, hors fenêtre image */}
@@ -2278,7 +2280,8 @@ function HoloAgentCard() {
                     maskSize: `${cell}px ${cell}px`,
                     mixBlendMode: foilBlend,
                     filter: `${p.foil === 'rainbow' ? 'hue-rotate(var(--hue,0deg)) ' : ''}saturate(${p.saturation})`,
-                    opacity: p.foilStrength,
+                    opacity: `calc(var(--hover, 0) * ${p.foilStrength})`,
+                    transition: 'opacity 360ms ease-out',
                 }}
             />
             {/* reflet lumineux mobile (corps) */}
@@ -2289,7 +2292,8 @@ function HoloAgentCard() {
                     clipPath: bodyClip,
                     background: GLARE,
                     mixBlendMode: 'screen',
-                    opacity: p.glareStrength,
+                    opacity: `calc(var(--hover, 0) * ${p.glareStrength})`,
+                    transition: 'opacity 360ms ease-out',
                 }}
             />
 
