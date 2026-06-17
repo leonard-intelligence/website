@@ -1947,6 +1947,9 @@ function useTilt(opts: TiltOpts = {}) {
         c.style.transform = `rotateX(${rx.toFixed(2)}deg) rotateY(${ry.toFixed(2)}deg) scale(${scale})`;
         c.style.setProperty('--mx', `${(nx * 100).toFixed(1)}%`);
         c.style.setProperty('--my', `${(ny * 100).toFixed(1)}%`);
+        // Teinte (deg) pilotée par le curseur : sur un motif ANCRÉ, c'est la couleur
+        // du reflet qui change avec l'angle (réaliste), pas le motif qui se déplace.
+        c.style.setProperty('--hue', `${(((nx - 0.5) + (ny - 0.5)) * 200).toFixed(0)}deg`);
     };
 
     const onPointerEnter: React.PointerEventHandler<HTMLDivElement> = (e) => {
@@ -2022,6 +2025,26 @@ const SPARKLE_URL = (() => {
     return `url("data:image/svg+xml;utf8,${svg}")`;
 })();
 
+// Texture « empreinte » : des lignes parallèles déformées par une turbulence →
+// crêtes organiques type empreinte digitale. Sert de mask ANCRÉ : le motif reste
+// fixe sur la carte, seule la couleur du reflet (hue) bouge avec l'inclinaison.
+const FINGERPRINT_URL = (() => {
+    const W = 240;
+    const lines: string[] = [];
+    for (let y = -20; y <= W + 20; y += 7) lines.push(`<path d='M -20 ${y} H ${W + 20}'/>`);
+    const svg =
+        `<svg xmlns='http://www.w3.org/2000/svg' width='${W}' height='${W}'>` +
+        `<defs><filter id='w' x='-20%' y='-20%' width='140%' height='140%'>` +
+        `<feTurbulence type='turbulence' baseFrequency='0.009 0.013' numOctaves='2' seed='6' result='t'/>` +
+        `<feDisplacementMap in='SourceGraphic' in2='t' scale='62' xChannelSelector='R' yChannelSelector='G'/>` +
+        `</filter></defs>` +
+        `<g filter='url(#w)' stroke='white' stroke-width='1.5' fill='none'>${lines.join('')}</g></svg>`;
+    return `url("data:image/svg+xml,${encodeURIComponent(svg)}")`;
+})();
+// Dégradé irisé lisse (ancré) ; sa teinte tourne avec le curseur via hue-rotate.
+const IRIDESCENT =
+    'linear-gradient(115deg, #ff7eb6 0%, #ffe98a 22%, #8affc1 44%, #7fd4ff 64%, #c79cff 82%, #ff7eb6 100%)';
+
 type WinLayer = {
     bg: string;
     bgBlend?: React.CSSProperties['backgroundBlendMode'];
@@ -2031,6 +2054,9 @@ type WinLayer = {
     repeat?: string;
     filter?: string;
     o: number;
+    mask?: string; // calque découpé par un motif ancré (ex. empreinte)
+    maskSize?: string;
+    maskPos?: string;
 };
 
 // Calques de l'effet holo dans la fenêtre image, selon le preset choisi.
@@ -2103,16 +2129,34 @@ function WindowFoil({ effect, foil, strength, glare, sat }: { effect: WindowEffe
                 },
             ];
             break;
+        case 'empreinte':
+            // Motif « empreinte » ANCRÉ (position fixe) ; seule la teinte tourne avec
+            // le curseur (hue-rotate var(--hue)) → reflet réaliste, pas de parallaxe.
+            layers = [
+                {
+                    bg: IRIDESCENT,
+                    blend: 'color-dodge',
+                    size: '170% 170%',
+                    pos: 'center',
+                    filter: `hue-rotate(var(--hue, 0deg)) saturate(${sat * 1.35}) brightness(1.05)`,
+                    o: 1,
+                    mask: FINGERPRINT_URL,
+                    maskSize: '240px 240px',
+                    maskPos: 'center',
+                },
+            ];
+            break;
         case 'sheen':
         default:
             layers = [{ bg: foilGradient(foil), blend: foilBlendFor(foil), size: '200% 200%', pos: 'calc(var(--mx,50%) * -1.4) calc(var(--my,50%) * -1.4)', filter: `saturate(${sat})`, o: 1 }];
     }
-    // Couche(s) paillettes (le grain « foil ») sur tous les effets sauf le sheen.
+    // Couche(s) paillettes (le grain « foil »). Le motif « empreinte » a déjà sa
+    // texture ancrée, et le sheen reste lisse → pas de paillettes pour ceux-là.
     if (effect === 'amazing') {
         // double couche décalée → texture dense et très brillante (lighten/soft-light)
         layers.push({ bg: SPARKLE_URL, blend: 'lighten', size: '90px 90px', pos: 'calc(var(--mx,50%) * -1.8) calc(var(--my,50%) * -1.8)', repeat: 'repeat', filter: 'brightness(1.9) contrast(1.5)', o: 1 });
         layers.push({ bg: SPARKLE_URL, blend: 'soft-light', size: '64px 64px', pos: 'calc(var(--mx,50%) * 2.2) calc(var(--my,50%) * 2.2)', repeat: 'repeat', filter: 'brightness(1.7) contrast(1.4)', o: 0.9 });
-    } else if (effect !== 'sheen') {
+    } else if (effect !== 'sheen' && effect !== 'empreinte') {
         const dense = effect === 'glitter' ? 1 : 0.75;
         layers.push({
             bg: SPARKLE_URL,
@@ -2140,6 +2184,14 @@ function WindowFoil({ effect, foil, strength, glare, sat }: { effect: WindowEffe
                         mixBlendMode: l.blend,
                         filter: l.filter,
                         opacity: strength * l.o,
+                        WebkitMaskImage: l.mask,
+                        maskImage: l.mask,
+                        WebkitMaskSize: l.maskSize,
+                        maskSize: l.maskSize,
+                        WebkitMaskPosition: l.maskPos,
+                        maskPosition: l.maskPos,
+                        WebkitMaskRepeat: l.mask ? 'repeat' : undefined,
+                        maskRepeat: l.mask ? 'repeat' : undefined,
                     }}
                 />
             ))}
