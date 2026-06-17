@@ -2028,7 +2028,7 @@ const SPARKLE_URL = (() => {
 // Texture « empreinte » : des lignes parallèles déformées par une turbulence →
 // crêtes organiques type empreinte digitale. Sert de mask ANCRÉ : le motif reste
 // fixe sur la carte, seule la couleur du reflet (hue) bouge avec l'inclinaison.
-const FINGERPRINT_URL = (() => {
+function buildFingerprint(relief: number): string {
     const W = 220;
     const lines: string[] = [];
     for (let y = -12; y <= W + 12; y += 4.6) lines.push(`<path d='M -12 ${y.toFixed(1)} H ${W + 12}'/>`);
@@ -2036,11 +2036,11 @@ const FINGERPRINT_URL = (() => {
         `<svg xmlns='http://www.w3.org/2000/svg' width='${W}' height='${W}'>` +
         `<defs><filter id='w' x='-15%' y='-15%' width='130%' height='130%'>` +
         `<feTurbulence type='fractalNoise' baseFrequency='0.008 0.011' numOctaves='2' seed='4' result='t'/>` +
-        `<feDisplacementMap in='SourceGraphic' in2='t' scale='28' xChannelSelector='R' yChannelSelector='G'/>` +
+        `<feDisplacementMap in='SourceGraphic' in2='t' scale='${relief}' xChannelSelector='R' yChannelSelector='G'/>` +
         `</filter></defs>` +
         `<g filter='url(#w)' stroke='white' stroke-width='0.8' fill='none'>${lines.join('')}</g></svg>`;
     return `url("data:image/svg+xml,${encodeURIComponent(svg)}")`;
-})();
+}
 // Dégradé irisé lisse (ancré) ; sa teinte tourne avec le curseur via hue-rotate.
 const IRIDESCENT =
     'linear-gradient(115deg, #ff7eb6 0%, #ffe98a 22%, #8affc1 44%, #7fd4ff 64%, #c79cff 82%, #ff7eb6 100%)';
@@ -2060,7 +2060,7 @@ type WinLayer = {
 };
 
 // Calques de l'effet holo dans la fenêtre image, selon le preset choisi.
-function WindowFoil({ effect, foil, strength, glare, sat }: { effect: WindowEffect; foil: FoilKind; strength: number; glare: number; sat: number }) {
+function WindowFoil({ effect, foil, strength, glare, sat, fpTile, fpRelief }: { effect: WindowEffect; foil: FoilKind; strength: number; glare: number; sat: number; fpTile: number; fpRelief: number }) {
     let layers: WinLayer[];
     switch (effect) {
         case 'holo':
@@ -2144,8 +2144,8 @@ function WindowFoil({ effect, foil, strength, glare, sat }: { effect: WindowEffe
                         ? `hue-rotate(var(--hue, 0deg)) saturate(${sat * 1.35}) brightness(1.05)`
                         : `brightness(1.12) contrast(1.18) saturate(${sat})`,
                     o: 1,
-                    mask: FINGERPRINT_URL,
-                    maskSize: '135px 135px',
+                    mask: buildFingerprint(fpRelief),
+                    maskSize: `${fpTile}px ${fpTile}px`,
                     maskPos: 'center',
                 },
             ];
@@ -2260,8 +2260,10 @@ function HoloAgentCard() {
                     inset: 0,
                     clipPath: bodyClip,
                     backgroundImage: foilBg,
-                    backgroundSize: '220% 220%',
-                    backgroundPosition: 'calc(var(--mx,50%) * 1.7) calc(var(--my,50%) * 1.7)',
+                    backgroundSize: '200% 200%',
+                    // Motif ANCRÉ (position fixe) : pas de parallaxe des bandes → plus de
+                    // patchs foncés qui balaient. Seule la teinte/lumière change.
+                    backgroundPosition: 'center',
                     WebkitMaskImage: motifMask,
                     maskImage: motifMask,
                     WebkitMaskRepeat: 'repeat',
@@ -2269,7 +2271,7 @@ function HoloAgentCard() {
                     WebkitMaskSize: `${cell}px ${cell}px`,
                     maskSize: `${cell}px ${cell}px`,
                     mixBlendMode: foilBlend,
-                    filter: `saturate(${p.saturation})`,
+                    filter: `${p.foil === 'rainbow' ? 'hue-rotate(var(--hue,0deg)) ' : ''}saturate(${p.saturation})`,
                     opacity: p.foilStrength,
                 }}
             />
@@ -2289,7 +2291,7 @@ function HoloAgentCard() {
                 fenêtre. Rendu seulement si elle a un effet (sinon fenêtre mate). */}
             {p.splitWindow && p.windowStrength > 0 && (
                 <div style={{ position: 'absolute', ...WIN, overflow: 'hidden', borderRadius: 4 }}>
-                    <WindowFoil effect={p.windowEffect} foil={p.windowFoil} strength={p.windowStrength} glare={p.glareStrength} sat={p.saturation} />
+                    <WindowFoil effect={p.windowEffect} foil={p.windowFoil} strength={p.windowStrength} glare={p.glareStrength} sat={p.saturation} fpTile={p.fpTile} fpRelief={p.fpRelief} />
                 </div>
             )}
         </div>

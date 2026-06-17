@@ -406,6 +406,8 @@ function HoloTab() {
             <Segmented value={p.windowEffect} onChange={(v) => setHoloParams({ windowEffect: v })} options={WINDOW_EFFECTS} columns={3} />
             <Segmented value={p.windowFoil} onChange={(v) => setHoloParams({ windowFoil: v })} options={FOIL_OPTS} columns={3} />
             <Slider label="Reflet illustration" min={0} max={1} step={0.01} value={p.windowStrength} onChange={(v) => setHoloParams({ windowStrength: v })} />
+            <Slider label="Empreinte · finesse" min={70} max={240} step={2} value={p.fpTile} onChange={(v) => setHoloParams({ fpTile: v })} unit="px" />
+            <Slider label="Empreinte · relief" min={0} max={55} step={1} value={p.fpRelief} onChange={(v) => setHoloParams({ fpRelief: v })} />
 
             <ResetButton onClick={() => resetHoloParams()} />
         </>

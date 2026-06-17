@@ -20,6 +20,8 @@ export type HoloParams = {
     windowEffect: WindowEffect; // style holo de la fenêtre (façon Simey)
     windowFoil: FoilKind; // couleur du foil (effets sheen / glitter)
     windowStrength: number; // 0..1 — intensité du foil dans la fenêtre
+    fpTile: number; // empreinte : taille de la tuile du motif (px) — petit = plus fin
+    fpRelief: number; // empreinte : intensité du relief/ondulation (displacement)
 };
 
 export const DEFAULT_HOLO_PARAMS: HoloParams = {
@@ -34,6 +36,8 @@ export const DEFAULT_HOLO_PARAMS: HoloParams = {
     windowEffect: 'holo',
     windowFoil: 'silver',
     windowStrength: 0, // rien dans la zone illustration par défaut
+    fpTile: 135,
+    fpRelief: 28,
 };
 
 let state: HoloParams = { ...DEFAULT_HOLO_PARAMS };
