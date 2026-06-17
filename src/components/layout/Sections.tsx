@@ -1,5 +1,5 @@
 // Sections V2 — Leonard Intelligence (design.md: warm neutrals, soft shadows, rounded corners)
-import { ArrowRight, Code2, Headset, Megaphone, TrendingUp, Users, Map as MapIcon, Ruler, ShieldCheck, Boxes, Plug, Rocket, Gauge, type LucideIcon } from 'lucide-react';
+import { ArrowRight, Code2, Headset, Megaphone, TrendingUp, Users, Map as MapIcon, Ruler, ShieldCheck, Boxes, Plug, Rocket, Gauge, Workflow, Calculator, type LucideIcon } from 'lucide-react';
 import { PixelLayer } from '../pixels/PixelLayer';
 import { Pixel } from '../pixels/Pixel';
 import { useBeadCtx, SOURCE_URL, SAMPLE_W, SAMPLE_H } from '../pixels/BeadPxContext';
@@ -11,7 +11,7 @@ import { VortexBeadLayer } from './illustrations/VortexBeadLayer';
 import { QrBadge } from './QrBadge';
 import { ReliefButton } from '../ui/ReliefButton';
 import { ConstruitSur } from './ConstruitSur';
-import { Fragment, useEffect, useState } from 'react';
+import { Fragment, useEffect, useRef, useState } from 'react';
 import { useInViewReveal } from '../../hooks/useInViewReveal';
 
 function Reveal({ children, className }: { children: React.ReactNode; className?: string }) {
@@ -382,10 +382,14 @@ export function SectionDeploy() {
 // de 24px (positions et tailles = multiples de 24, comme le hero bg).
 // ============================================================================
 const EXP_CARDS: { icon: LucideIcon; label: string; tags: string[]; pos: React.CSSProperties }[] = [
-    { icon: Code2, label: 'Développement', tags: ['Génération', 'Revue', 'Tests'], pos: { left: '4%', top: '5%' } },
-    { icon: Headset, label: 'Support client', tags: ['Réponses', 'Escalade', '24/7'], pos: { right: '5%', top: '15%' } },
-    { icon: Megaphone, label: 'Marketing', tags: ['Contenu', 'SEO', 'Campagnes'], pos: { left: '7%', top: '68%' } },
-    { icon: TrendingUp, label: 'Ventes', tags: ['Prospection', 'Relances', 'CRM'], pos: { right: '6%', top: '60%' } },
+    // Réparties librement en périphérie (insets + hauteurs irréguliers), le
+    // cœur du vortex laissé dégagé : gauche ≤ ~33 %, droite ≥ ~66 %.
+    { icon: Code2, label: 'Développement', tags: ['Génération', 'Tests', 'Debug'], pos: { left: '2%', top: '6%' } },
+    { icon: Megaphone, label: 'Marketing', tags: ['SEO', 'Ads', 'Conversion'], pos: { left: '7%', top: '40%' } },
+    { icon: Workflow, label: 'Opérations', tags: ['Workflows', 'Factures', 'Contrats'], pos: { left: '4%', top: '75%' } },
+    { icon: Headset, label: 'Support client', tags: ['Réponses', 'Escalade', 'Tri tickets'], pos: { right: '6%', top: '4%' } },
+    { icon: TrendingUp, label: 'Ventes', tags: ['Prospection', 'Relances', 'Leads'], pos: { right: '3%', top: '48%' } },
+    { icon: Calculator, label: 'Finance', tags: ['Dépenses', 'Rapports', 'Fraude'], pos: { right: '8%', top: '74%' } },
 ];
 
 export function SectionExpertise() {
@@ -986,7 +990,7 @@ export function SectionStatement() {
         <section
             className="relative overflow-hidden"
             style={{ minHeight: 'clamp(360px, 46vw, 520px)', paddingBlock: '96px', paddingInline: '32px', backgroundColor: TOKENS.surface }}
-            aria-label="Leonard adapte votre entreprise à l'ère agentique"
+            aria-label="Leonard Intelligence adapte votre entreprise à l'ère agentique"
         >
             {/* Image du héro (même source, même grille de beads), sans filtre foncé.
                 Cadre en cellules entières + marges papier latérales, comme le héro. */}
@@ -1033,7 +1037,7 @@ export function SectionStatement() {
                             filter: `drop-shadow(0 2px 14px rgba(0, 0, 0, 0.35))${heroTitle.glow > 0 ? ` drop-shadow(0 0 ${heroTitle.glow}px ${heroTitle.glowColor})` : ''}`,
                         }}
                     >
-                        Leonard adapte votre entreprise à l'ère agentique
+                        Leonard Intelligence adapte votre entreprise à l'ère agentique
                     </h2>
                 </div>
             </Reveal>
@@ -1881,6 +1885,221 @@ function AgentCardStack({ sel }: { sel: number }) {
             </svg>
             <AgentCard key={sel} data={AGENT_CARDS[sel]} rotate={0} offsetX={6} offsetY={6} z={1} />
         </div>
+    );
+}
+
+// ============================================================================
+// HOLO LAB (test) — plusieurs variantes d'effet « carte holographique » sur la
+// carte Agent ID, pour comparer en survolant. Tilt 3D vers le curseur + reflet
+// optionnel. À retirer une fois la variante choisie.
+// ============================================================================
+type TiltOpts = { maxTilt?: number; scale?: number; perspective?: number };
+
+function useTilt(opts: TiltOpts = {}) {
+    const maxTilt = opts.maxTilt ?? 5;
+    const scale = opts.scale ?? 1.012;
+    const cardRef = useRef<HTMLDivElement>(null);
+    const rect = useRef<DOMRect | null>(null);
+    const ptr = useRef({ x: 0, y: 0 });
+    const raf = useRef(0);
+    const enabled = useRef(false);
+
+    useEffect(() => {
+        enabled.current =
+            window.matchMedia('(hover: hover) and (pointer: fine)').matches &&
+            !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        const invalidate = () => { rect.current = null; };
+        const onHide = () => {
+            const c = cardRef.current;
+            if (raf.current) { cancelAnimationFrame(raf.current); raf.current = 0; }
+            if (c) {
+                c.style.transform = 'rotateX(0deg) rotateY(0deg) scale(1)';
+                c.style.setProperty('--hover', '0');
+            }
+        };
+        window.addEventListener('resize', invalidate, { passive: true });
+        window.addEventListener('scroll', invalidate, { passive: true });
+        document.addEventListener('visibilitychange', onHide);
+        return () => {
+            cancelAnimationFrame(raf.current);
+            window.removeEventListener('resize', invalidate);
+            window.removeEventListener('scroll', invalidate);
+            document.removeEventListener('visibilitychange', onHide);
+        };
+    }, []);
+
+    const apply = () => {
+        raf.current = 0;
+        const r = rect.current;
+        const c = cardRef.current;
+        if (!r || !c) return;
+        const nx = (ptr.current.x - r.left) / r.width;
+        const ny = (ptr.current.y - r.top) / r.height;
+        const ry = (nx - 0.5) * 2 * maxTilt;
+        const rx = -(ny - 0.5) * 2 * maxTilt;
+        c.style.transform = `rotateX(${rx.toFixed(2)}deg) rotateY(${ry.toFixed(2)}deg) scale(${scale})`;
+        c.style.setProperty('--mx', `${(nx * 100).toFixed(1)}%`);
+        c.style.setProperty('--my', `${(ny * 100).toFixed(1)}%`);
+    };
+
+    const onPointerEnter: React.PointerEventHandler<HTMLDivElement> = (e) => {
+        if (!enabled.current) return;
+        rect.current = e.currentTarget.getBoundingClientRect();
+        const c = cardRef.current;
+        if (c) {
+            c.style.transition = 'transform 110ms ease-out';
+            c.style.setProperty('--hover', '1');
+        }
+    };
+    const onPointerMove: React.PointerEventHandler<HTMLDivElement> = (e) => {
+        if (!enabled.current) return;
+        if (!rect.current) rect.current = e.currentTarget.getBoundingClientRect();
+        ptr.current.x = e.clientX;
+        ptr.current.y = e.clientY;
+        if (!raf.current) raf.current = requestAnimationFrame(apply);
+    };
+    const onPointerLeave: React.PointerEventHandler<HTMLDivElement> = () => {
+        if (!enabled.current) return;
+        if (raf.current) { cancelAnimationFrame(raf.current); raf.current = 0; }
+        const c = cardRef.current;
+        if (c) {
+            c.style.transition = 'transform 520ms cubic-bezier(0.22, 1, 0.36, 1)';
+            c.style.transform = 'rotateX(0deg) rotateY(0deg) scale(1)';
+            c.style.setProperty('--hover', '0');
+        }
+    };
+
+    const perspective = opts.perspective ?? 1000;
+    return {
+        cardRef,
+        perspective,
+        bind: { onPointerEnter, onPointerMove, onPointerLeave, onPointerCancel: onPointerLeave },
+    };
+}
+
+type OverlayKind = 'glare' | 'holo';
+
+// Calque d'effet, découpé à la silhouette crantée de la carte via le mask SVG
+// existant (#agent-card-notches, en objectBoundingBox → s'adapte à la boîte).
+function HoloOverlay({ kind, peak }: { kind: OverlayKind; peak: number }) {
+    const base: React.CSSProperties = {
+        position: 'absolute',
+        inset: '6%',
+        pointerEvents: 'none',
+        WebkitMask: 'url(#agent-card-notches)',
+        mask: 'url(#agent-card-notches)',
+        transition: 'opacity 360ms ease-out',
+    };
+    if (kind === 'glare') {
+        return (
+            <div
+                aria-hidden="true"
+                style={{
+                    ...base,
+                    opacity: `calc(var(--hover, 0) * ${peak})`,
+                    mixBlendMode: 'soft-light',
+                    background:
+                        'radial-gradient(circle at var(--mx, 50%) var(--my, 50%), rgba(255,253,245,0.95), rgba(255,253,245,0) 58%)',
+                }}
+            />
+        );
+    }
+    return (
+        <Fragment>
+            <div
+                aria-hidden="true"
+                style={{
+                    ...base,
+                    opacity: `calc(var(--hover, 0) * ${peak})`,
+                    mixBlendMode: 'color-dodge',
+                    backgroundImage:
+                        'linear-gradient(115deg, rgba(255,0,128,0.45) 8%, rgba(255,200,0,0.45) 28%, rgba(0,225,170,0.45) 48%, rgba(0,170,255,0.45) 68%, rgba(180,0,255,0.45) 90%)',
+                    backgroundSize: '260% 260%',
+                    backgroundPosition: 'var(--mx, 50%) var(--my, 50%)',
+                }}
+            />
+            <div
+                aria-hidden="true"
+                style={{
+                    ...base,
+                    opacity: `calc(var(--hover, 0) * 0.6)`,
+                    mixBlendMode: 'soft-light',
+                    background:
+                        'radial-gradient(circle at var(--mx, 50%) var(--my, 50%), rgba(255,255,255,0.9), rgba(255,255,255,0) 55%)',
+                }}
+            />
+        </Fragment>
+    );
+}
+
+type HoloVariant = { label: string; opts: TiltOpts; overlay: { kind: OverlayKind; peak: number } | null };
+
+const HOLO_VARIANTS: HoloVariant[] = [
+    { label: '1 · Tilt très léger (3°)', opts: { maxTilt: 3, scale: 1.008 }, overlay: null },
+    { label: '2 · Tilt + reflet (léger)', opts: { maxTilt: 5, scale: 1.012 }, overlay: { kind: 'glare', peak: 0.5 } },
+    { label: '3 · Tilt + reflet (fort)', opts: { maxTilt: 9, scale: 1.02 }, overlay: { kind: 'glare', peak: 0.9 } },
+    { label: '4 · Reflet seul (sans tilt)', opts: { maxTilt: 0, scale: 1.0 }, overlay: { kind: 'glare', peak: 0.65 } },
+    { label: '5 · Holographique (rainbow)', opts: { maxTilt: 7, scale: 1.015 }, overlay: { kind: 'holo', peak: 0.45 } },
+];
+
+function HoloLabCard({ variant }: { variant: HoloVariant }) {
+    const tilt = useTilt(variant.opts);
+    return (
+        <figure className="flex flex-col items-center" style={{ gap: 16, margin: 0 }}>
+            <div className="relative" style={{ width: 'clamp(180px, 22vw, 240px)', aspectRatio: '0.7' }}>
+                <div {...tilt.bind} style={{ width: '100%', height: '100%', perspective: tilt.perspective }}>
+                    <div
+                        ref={tilt.cardRef}
+                        className="relative"
+                        style={{
+                            width: '100%',
+                            height: '100%',
+                            transformStyle: 'preserve-3d',
+                            transformOrigin: 'center',
+                            transition: 'transform 110ms ease-out',
+                            willChange: 'transform',
+                        }}
+                    >
+                        <AgentCardStack sel={0} />
+                        {variant.overlay && <HoloOverlay kind={variant.overlay.kind} peak={variant.overlay.peak} />}
+                    </div>
+                </div>
+            </div>
+            <figcaption className="font-mono" style={{ fontSize: 12, letterSpacing: '0.02em', color: TOKENS.mutedText, textAlign: 'center' }}>
+                {variant.label}
+            </figcaption>
+        </figure>
+    );
+}
+
+export function SectionHoloLab() {
+    return (
+        <section
+            id="section-holo-lab"
+            className="relative"
+            style={{ backgroundColor: TOKENS.surface, paddingBlock: '88px', paddingInline: '32px', borderTop: '1px dashed rgba(23,23,23,0.18)' }}
+            aria-label="Labo effets holographiques (test)"
+        >
+            <div className="max-w-[1200px] mx-auto">
+                <div className="font-mono" style={{ fontSize: 12, letterSpacing: '0.22em', color: TOKENS.mutedText }}>
+                    LABO · TEST (à retirer)
+                </div>
+                <h2 className="font-sans mt-3" style={{ fontSize: 'clamp(1.6rem, 3vw, 2.4rem)', lineHeight: 1.1, fontWeight: 500, letterSpacing: '-0.02em', ...EMBOSS_DARK }}>
+                    Effets holo — survole chaque carte
+                </h2>
+                <p className="font-sans mt-3" style={{ fontSize: 15, lineHeight: '22px', color: TOKENS.mutedText, maxWidth: '60ch' }}>
+                    Cinq variantes à comparer (l'effet ne s'active qu'avec une souris, et reste désactivé si « réduire les animations » est activé). Dis-moi le numéro que tu préfères.
+                </p>
+                <div
+                    className="mt-12"
+                    style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: 40, justifyItems: 'center' }}
+                >
+                    {HOLO_VARIANTS.map((v) => (
+                        <HoloLabCard key={v.label} variant={v} />
+                    ))}
+                </div>
+            </div>
+        </section>
     );
 }
 
