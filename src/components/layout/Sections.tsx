@@ -4,6 +4,8 @@ import { PixelLayer } from '../pixels/PixelLayer';
 import { Pixel } from '../pixels/Pixel';
 import { useBeadCtx, SOURCE_URL, SAMPLE_W, SAMPLE_H } from '../pixels/BeadPxContext';
 import { useHeroTitleParams } from '../dev/heroTitleStore';
+import { useHoloParams } from '../dev/holoParamsStore';
+import { LEONARD_MOTIF_B64 } from './illustrations/leonardMotif';
 import { useNotchParams } from '../dev/notchParamsStore';
 import { useVitruveParams } from '../dev/vitruveParamsStore';
 import { useVortexParams } from '../dev/vortexParamsStore';
@@ -1977,165 +1979,99 @@ function useTilt(opts: TiltOpts = {}) {
     };
 }
 
-type OverlayKind = 'holo' | 'metal' | 'gold' | 'holoMetal';
-type FoilLayer = { blend: React.CSSProperties['mixBlendMode']; bg: string; size?: string; pos?: string; o: number; filter?: string };
-
-// Bandes irisées / métalliques qui glissent avec le curseur. Découpées à la
-// silhouette crantée de la carte via le mask SVG (#agent-card-notches).
+// Dégradés du foil (irisé / argent / or) qui glissent avec le curseur.
 const RAINBOW =
     'repeating-linear-gradient(105deg, #ff5d8f 0%, #ffd24a 9%, #5dff9b 18%, #4ad7ff 27%, #a96bff 36%, #ff5dc4 45%, #ff5d8f 54%)';
 const SILVER =
     'repeating-linear-gradient(100deg, #ffffff 0%, #6f6f6f 6%, #ffffff 12%, #c3c3c3 18%, #ffffff 24%)';
 const GOLD =
     'repeating-linear-gradient(100deg, #fff7d6 0%, #9c7414 6%, #fff1bf 12%, #c79a2a 18%, #fff7d6 24%)';
-const SWEEP =
-    'linear-gradient(105deg, transparent 32%, rgba(255,255,255,0.85) 47%, rgba(255,255,255,0.25) 53%, transparent 66%)';
 const GLARE =
     'radial-gradient(circle at var(--mx,50%) var(--my,50%), rgba(255,255,255,0.7), rgba(255,255,255,0) 46%)';
 
-function HoloOverlay({ kind, peak }: { kind: OverlayKind; peak: number }) {
-    const base: React.CSSProperties = {
-        position: 'absolute',
-        inset: '6%',
-        pointerEvents: 'none',
-        zIndex: 6, // au-dessus de la carte (AgentCard a zIndex 1) sinon le reflet est masqué
-        WebkitMask: 'url(#agent-card-notches)',
-        mask: 'url(#agent-card-notches)',
-        transition: 'opacity 360ms ease-out',
-    };
-    const layers: FoilLayer[] = [];
+// Mask tuilé : le logo (taille `size`) centré dans une cellule `size + space`,
+// répété → on règle indépendamment la taille du motif et l'espace entre motifs.
+function buildMotifMask(size: number, space: number): string {
+    const cell = size + space;
+    const pad = space / 2;
+    const svg =
+        `<svg xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' width='${cell}' height='${cell}'>` +
+        `<image xlink:href='data:image/png;base64,${LEONARD_MOTIF_B64}' x='${pad}' y='${pad}' width='${size}' height='${size}'/></svg>`;
+    return `url("data:image/svg+xml,${encodeURIComponent(svg)}")`;
+}
 
-    if (kind === 'holo' || kind === 'holoMetal') {
-        // teinte irisée (garde la luminosité de la carte → ne crame pas le gris clair)
-        layers.push({ blend: 'color', bg: RAINBOW, size: '200% 200%', pos: 'calc(var(--mx,50%) * 1.7) calc(var(--my,50%) * 1.7)', o: peak, filter: 'saturate(1.8)' });
-        // éclats irisés (sens inverse) pour la profondeur
-        layers.push({ blend: 'color-dodge', bg: RAINBOW, size: '320% 320%', pos: 'calc(var(--mx,50%) * -1.3) calc(var(--my,50%) * -1.3)', o: peak * 0.45, filter: 'saturate(2)' });
-    }
-    if (kind === 'metal' || kind === 'holoMetal') {
-        layers.push({ blend: 'overlay', bg: SILVER, size: '210% 210%', pos: 'calc(var(--mx,50%) * 2) calc(var(--my,50%) * 2)', o: kind === 'holoMetal' ? peak * 0.7 : peak });
-    }
-    if (kind === 'gold') {
-        layers.push({ blend: 'overlay', bg: GOLD, size: '210% 210%', pos: 'calc(var(--mx,50%) * 2) calc(var(--my,50%) * 2)', o: peak });
-    }
-    // balayage spéculaire (bouge à contre-curseur) + point lumineux
-    layers.push({ blend: 'screen', bg: SWEEP, size: '250% 250%', pos: 'calc(100% - var(--mx,50%)) var(--my,50%)', o: peak * 0.8 });
-    layers.push({ blend: 'screen', bg: GLARE, o: peak * 0.5 });
-
+// Carte unique pilotée par le panneau DevTools › Holo. Foil irisé/métal découpé
+// dans le logo Leonard répété (reverse-holo) + reflet mobile, dans la silhouette.
+function HoloCard() {
+    const p = useHoloParams();
+    const tilt = useTilt({ maxTilt: p.tilt, scale: 1.015 });
+    const cell = p.motifSize + p.motifSpace;
+    const motifMask = buildMotifMask(p.motifSize, p.motifSpace);
+    const foilBg = p.foil === 'silver' ? SILVER : p.foil === 'gold' ? GOLD : RAINBOW;
+    const foilBlend: React.CSSProperties['mixBlendMode'] = p.foil === 'rainbow' ? 'color-dodge' : 'overlay';
     return (
-        <Fragment>
-            {layers.map((l, i) => (
+        <div className="relative" style={{ width: 'clamp(240px, 32vw, 320px)', aspectRatio: '0.7' }}>
+            <div {...tilt.bind} style={{ width: '100%', height: '100%', perspective: tilt.perspective }}>
                 <div
-                    key={i}
-                    aria-hidden="true"
+                    ref={tilt.cardRef}
+                    className="relative"
                     style={{
-                        ...base,
-                        mixBlendMode: l.blend,
-                        backgroundImage: l.bg,
-                        backgroundSize: l.size,
-                        backgroundPosition: l.pos,
-                        backgroundRepeat: 'no-repeat',
-                        filter: l.filter,
-                        opacity: `calc(var(--hover, 0) * ${l.o})`,
+                        width: '100%',
+                        height: '100%',
+                        transformStyle: 'preserve-3d',
+                        transformOrigin: 'center',
+                        transition: 'transform 110ms ease-out',
+                        willChange: 'transform',
                     }}
-                />
-            ))}
-        </Fragment>
-    );
-}
-
-// Reverse-holo : un foil irisé/argenté découpé dans une RÉPÉTITION du logo Leonard
-// (motif tuilé sur toute la carte), niché dans la silhouette de la carte + un glare
-// mobile. Inspiré de pokemon-cards-css (Simey), décliné avec notre marque.
-const LOGO_MOTIF = 'url(/assets/logos/leonard-symbol-black.png)';
-
-function ReverseHoloOverlay({ peak, tile, foil }: { peak: number; tile: number; foil: 'rainbow' | 'silver' }) {
-    const outer: React.CSSProperties = {
-        position: 'absolute',
-        inset: '6%',
-        zIndex: 6,
-        pointerEvents: 'none',
-        WebkitMask: 'url(#agent-card-notches)',
-        mask: 'url(#agent-card-notches)',
-        transition: 'opacity 360ms ease-out',
-        opacity: `calc(var(--hover, 0) * ${peak})`,
-    };
-    // le foil irisé/métal, découpé dans la répétition du logo
-    const foilLayer: React.CSSProperties = {
-        position: 'absolute',
-        inset: 0,
-        backgroundImage: foil === 'silver' ? SILVER : RAINBOW,
-        backgroundSize: '220% 220%',
-        backgroundPosition: 'calc(var(--mx, 50%) * 1.7) calc(var(--my, 50%) * 1.7)',
-        WebkitMaskImage: LOGO_MOTIF,
-        maskImage: LOGO_MOTIF,
-        WebkitMaskRepeat: 'repeat',
-        maskRepeat: 'repeat',
-        WebkitMaskSize: `${tile}px`,
-        maskSize: `${tile}px`,
-        mixBlendMode: foil === 'silver' ? 'overlay' : 'color-dodge',
-        filter: 'saturate(1.7) brightness(1.05)',
-    };
-    // glare mobile sur toute la carte (traité séparément du motif)
-    const glareLayer: React.CSSProperties = {
-        position: 'absolute',
-        inset: 0,
-        background: GLARE,
-        mixBlendMode: 'screen',
-        opacity: 0.6,
-    };
-    return (
-        <div aria-hidden="true" style={outer}>
-            <div style={foilLayer} />
-            <div style={glareLayer} />
-        </div>
-    );
-}
-
-type OverlayCfg =
-    | { mode: 'foil'; kind: OverlayKind; peak: number }
-    | { mode: 'reverse'; peak: number; tile: number; foil: 'rainbow' | 'silver' };
-type HoloVariant = { label: string; opts: TiltOpts; overlay: OverlayCfg | null };
-
-const HOLO_VARIANTS: HoloVariant[] = [
-    { label: '1 · Reverse holo — logo irisé', opts: { maxTilt: 7, scale: 1.015 }, overlay: { mode: 'reverse', peak: 0.95, tile: 42, foil: 'rainbow' } },
-    { label: '2 · Reverse holo — logo argent', opts: { maxTilt: 7, scale: 1.015 }, overlay: { mode: 'reverse', peak: 0.95, tile: 42, foil: 'silver' } },
-    { label: '3 · Reverse holo — motif large', opts: { maxTilt: 7, scale: 1.015 }, overlay: { mode: 'reverse', peak: 0.95, tile: 70, foil: 'rainbow' } },
-    { label: '4 · Holographique (plein)', opts: { maxTilt: 7, scale: 1.015 }, overlay: { mode: 'foil', kind: 'holo', peak: 0.6 } },
-    { label: '5 · Métallique chromé', opts: { maxTilt: 7, scale: 1.015 }, overlay: { mode: 'foil', kind: 'metal', peak: 0.85 } },
-];
-
-function HoloLabCard({ variant }: { variant: HoloVariant }) {
-    const tilt = useTilt(variant.opts);
-    return (
-        <figure className="flex flex-col items-center" style={{ gap: 16, margin: 0 }}>
-            <div className="relative" style={{ width: 'clamp(180px, 22vw, 240px)', aspectRatio: '0.7' }}>
-                <div {...tilt.bind} style={{ width: '100%', height: '100%', perspective: tilt.perspective }}>
+                >
+                    <AgentCardStack sel={0} />
+                    {/* overlay reverse-holo : dans la silhouette de la carte, activé au survol */}
                     <div
-                        ref={tilt.cardRef}
-                        className="relative"
+                        aria-hidden="true"
                         style={{
-                            width: '100%',
-                            height: '100%',
-                            transformStyle: 'preserve-3d',
-                            transformOrigin: 'center',
-                            transition: 'transform 110ms ease-out',
-                            willChange: 'transform',
+                            position: 'absolute',
+                            inset: '6%',
+                            zIndex: 6,
+                            pointerEvents: 'none',
+                            WebkitMask: 'url(#agent-card-notches)',
+                            mask: 'url(#agent-card-notches)',
+                            opacity: 'var(--hover, 0)',
+                            transition: 'opacity 360ms ease-out',
                         }}
                     >
-                        <AgentCardStack sel={0} />
-                        {variant.overlay &&
-                            (variant.overlay.mode === 'foil' ? (
-                                <HoloOverlay kind={variant.overlay.kind} peak={variant.overlay.peak} />
-                            ) : (
-                                <ReverseHoloOverlay peak={variant.overlay.peak} tile={variant.overlay.tile} foil={variant.overlay.foil} />
-                            ))}
+                        {/* foil découpé dans le logo tuilé */}
+                        <div
+                            style={{
+                                position: 'absolute',
+                                inset: 0,
+                                backgroundImage: foilBg,
+                                backgroundSize: '220% 220%',
+                                backgroundPosition: 'calc(var(--mx,50%) * 1.7) calc(var(--my,50%) * 1.7)',
+                                WebkitMaskImage: motifMask,
+                                maskImage: motifMask,
+                                WebkitMaskRepeat: 'repeat',
+                                maskRepeat: 'repeat',
+                                WebkitMaskSize: `${cell}px ${cell}px`,
+                                maskSize: `${cell}px ${cell}px`,
+                                mixBlendMode: foilBlend,
+                                filter: `saturate(${p.saturation})`,
+                                opacity: p.foilStrength,
+                            }}
+                        />
+                        {/* reflet lumineux mobile */}
+                        <div
+                            style={{
+                                position: 'absolute',
+                                inset: 0,
+                                background: GLARE,
+                                mixBlendMode: 'screen',
+                                opacity: p.glareStrength,
+                            }}
+                        />
                     </div>
                 </div>
             </div>
-            <figcaption className="font-mono" style={{ fontSize: 12, letterSpacing: '0.02em', color: TOKENS.mutedText, textAlign: 'center' }}>
-                {variant.label}
-            </figcaption>
-        </figure>
+        </div>
     );
 }
 
@@ -2147,23 +2083,18 @@ export function SectionHoloLab() {
             style={{ backgroundColor: TOKENS.surface, paddingBlock: '88px', paddingInline: '32px', borderTop: '1px dashed rgba(23,23,23,0.18)' }}
             aria-label="Labo effets holographiques (test)"
         >
-            <div className="max-w-[1200px] mx-auto">
+            <div className="max-w-[860px] mx-auto flex flex-col items-center text-center">
                 <div className="font-mono" style={{ fontSize: 12, letterSpacing: '0.22em', color: TOKENS.mutedText }}>
                     LABO · TEST (à retirer)
                 </div>
                 <h2 className="font-sans mt-3" style={{ fontSize: 'clamp(1.6rem, 3vw, 2.4rem)', lineHeight: 1.1, fontWeight: 500, letterSpacing: '-0.02em', ...EMBOSS_DARK }}>
-                    Effets holo — survole chaque carte
+                    Effet reverse-holo
                 </h2>
-                <p className="font-sans mt-3" style={{ fontSize: 15, lineHeight: '22px', color: TOKENS.mutedText, maxWidth: '60ch' }}>
-                    Cinq variantes à comparer (l'effet ne s'active qu'avec une souris, et reste désactivé si « réduire les animations » est activé). Dis-moi le numéro que tu préfères.
+                <p className="font-sans mt-3" style={{ fontSize: 15, lineHeight: '22px', color: TOKENS.mutedText, maxWidth: '54ch' }}>
+                    Survole la carte. Règle le reflet, la taille et l'espace du motif dans DevTools › Holo. (Souris uniquement, désactivé si « réduire les animations ».)
                 </p>
-                <div
-                    className="mt-12"
-                    style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: 40, justifyItems: 'center' }}
-                >
-                    {HOLO_VARIANTS.map((v) => (
-                        <HoloLabCard key={v.label} variant={v} />
-                    ))}
+                <div className="mt-12">
+                    <HoloCard />
                 </div>
             </div>
         </section>

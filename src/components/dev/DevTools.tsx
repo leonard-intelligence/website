@@ -3,6 +3,7 @@ import { PaintMode } from './PaintMode';
 import { useNotchParams, setNotchParams, resetNotchParams, type NotchParams, type CornerStyle } from './notchParamsStore';
 import { useVitruveParams, setVitruveParams, resetVitruveParams, type VitruveParams } from './vitruveParamsStore';
 import { useHeroTitleParams, setHeroTitleParams, resetHeroTitleParams, type PixelVariant } from './heroTitleStore';
+import { useHoloParams, setHoloParams, resetHoloParams, type FoilKind } from './holoParamsStore';
 import {
     useVortexParams, setVortexParams, resetVortexParams, VORTEX_SECTIONS,
     type VortexShape, type VortexColorMode, type VortexParams, type VortexSectionId,
@@ -38,13 +39,14 @@ function ShadowFilter({ id, params }: { id: string; params: ShadowParams }) {
 // ============================================================================
 // DevTools — floating panel, site-aligned (sticky header/tabs, scrolling body)
 // ============================================================================
-type Tab = 'shadow' | 'notch' | 'illu' | 'hero' | 'vortex' | 'paint';
+type Tab = 'shadow' | 'notch' | 'illu' | 'hero' | 'vortex' | 'holo' | 'paint';
 const TABS: SegOption<Tab>[] = [
     { id: 'shadow', label: 'Shadow' },
     { id: 'notch', label: 'Notch' },
     { id: 'illu', label: 'Illu' },
     { id: 'hero', label: 'Héro' },
     { id: 'vortex', label: 'Vortex' },
+    { id: 'holo', label: 'Holo' },
     { id: 'paint', label: 'Paint' },
 ];
 
@@ -200,6 +202,7 @@ export function DevTools() {
                                 {tab === 'illu' && <IlluTab />}
                                 {tab === 'hero' && <HeroTab />}
                                 {tab === 'vortex' && <VortexTab />}
+                                {tab === 'holo' && <HoloTab />}
                                 {tab === 'paint' && <PaintTab active={paintActive} onActiveChange={setPaintActive} />}
                             </Card>
                         </div>
@@ -357,6 +360,39 @@ function HeroTab() {
             <Slider label="Glow" min={0} max={48} step={1} value={p.glow} onChange={(v) => setHeroTitleParams({ glow: v })} unit="px" />
             <ColorField label="Couleur du glow" value={p.glowColor} onChange={(v) => setHeroTitleParams({ glowColor: v })} />
             <ResetButton onClick={() => resetHeroTitleParams()} />
+        </>
+    );
+}
+
+// ----------------------------------------------------------------------------
+// Holo tab — carte reverse-holo (motif logo + foil + reflet)
+// ----------------------------------------------------------------------------
+const FOIL_OPTS: SegOption<FoilKind>[] = [
+    { id: 'rainbow', label: 'Irisé' },
+    { id: 'silver', label: 'Argent' },
+    { id: 'gold', label: 'Or' },
+];
+
+function HoloTab() {
+    const p = useHoloParams();
+    return (
+        <>
+            <SectionLabel>Foil</SectionLabel>
+            <Segmented value={p.foil} onChange={(v) => setHoloParams({ foil: v })} options={FOIL_OPTS} columns={3} />
+
+            <SectionLabel>Reflet</SectionLabel>
+            <Slider label="Intensité du foil" min={0} max={1} step={0.01} value={p.foilStrength} onChange={(v) => setHoloParams({ foilStrength: v })} />
+            <Slider label="Reflet lumineux" min={0} max={1} step={0.01} value={p.glareStrength} onChange={(v) => setHoloParams({ glareStrength: v })} />
+            <Slider label="Saturation" min={1} max={3} step={0.05} value={p.saturation} onChange={(v) => setHoloParams({ saturation: v })} />
+
+            <SectionLabel>Motif logo</SectionLabel>
+            <Slider label="Taille du motif" min={10} max={120} step={1} value={p.motifSize} onChange={(v) => setHoloParams({ motifSize: v })} unit="px" />
+            <Slider label="Espace entre motifs" min={0} max={120} step={1} value={p.motifSpace} onChange={(v) => setHoloParams({ motifSpace: v })} unit="px" />
+
+            <SectionLabel>Mouvement</SectionLabel>
+            <Slider label="Inclinaison" min={0} max={16} step={0.5} value={p.tilt} onChange={(v) => setHoloParams({ tilt: v })} unit="°" />
+
+            <ResetButton onClick={() => resetHoloParams()} />
         </>
     );
 }
