@@ -976,26 +976,43 @@ export function BeadSection({
 // ============================================================================
 export function SectionStatement() {
     const heroTitle = useHeroTitleParams();
-    // Même système de rendu que le héro : beadPx entier (partagé via le contexte,
-    // recalculé au resize) → l'image est posée à `${SAMPLE_W*beadPx} × ${SAMPLE_H*beadPx}`
-    // pour que chaque bead reste net et aligné, exactement comme le héro.
-    const { beadPx } = useBeadCtx();
+    // Même système que le héro : beadPx/beadW/leftPx partagés via le contexte
+    // (recalculés au resize). L'image bead occupe une largeur en cellules entières
+    // (beadW), centrée (leftPx), avec une marge papier de chaque côté qui absorbe le
+    // surplus — c'est ce qui garde les beads nets et alignés au redimensionnement.
+    const { beadPx, beadW, leftPx } = useBeadCtx();
+    const framed = beadPx > 0 && beadW > 0;
     return (
         <section
             className="relative overflow-hidden"
-            style={{ minHeight: 'clamp(360px, 46vw, 520px)', paddingBlock: '96px', paddingInline: '32px', backgroundColor: '#2b2a22' }}
+            style={{ minHeight: 'clamp(360px, 46vw, 520px)', paddingBlock: '96px', paddingInline: '32px', backgroundColor: TOKENS.surface }}
             aria-label="Leonard adapte votre entreprise à l'ère agentique"
         >
-            {/* Image du héro (même source, même grille de beads), sans filtre foncé */}
+            {/* Image du héro (même source, même grille de beads), sans filtre foncé.
+                Cadre en cellules entières + marges papier latérales, comme le héro. */}
             <div
                 aria-hidden="true"
-                className="absolute inset-0"
-                style={{
-                    backgroundImage: `url(${SOURCE_URL})`,
-                    backgroundSize: beadPx ? `${SAMPLE_W * beadPx}px ${SAMPLE_H * beadPx}px` : 'cover',
-                    backgroundPosition: 'center bottom',
-                    backgroundRepeat: 'no-repeat',
-                }}
+                className="absolute"
+                style={
+                    framed
+                        ? {
+                              top: 0,
+                              bottom: 0,
+                              left: leftPx,
+                              width: beadW,
+                              backgroundImage: `url(${SOURCE_URL})`,
+                              backgroundSize: `${SAMPLE_W * beadPx}px ${SAMPLE_H * beadPx}px`,
+                              backgroundPosition: 'center bottom',
+                              backgroundRepeat: 'no-repeat',
+                          }
+                        : {
+                              inset: 0,
+                              backgroundImage: `url(${SOURCE_URL})`,
+                              backgroundSize: 'cover',
+                              backgroundPosition: 'center bottom',
+                              backgroundRepeat: 'no-repeat',
+                          }
+                }
             />
             <Reveal>
                 <div
