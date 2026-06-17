@@ -982,17 +982,11 @@ export function SectionStatement() {
             style={{ minHeight: 'clamp(360px, 46vw, 520px)', paddingBlock: '96px', paddingInline: '32px' }}
             aria-label="Leonard adapte votre entreprise à l'ère agentique"
         >
-            {/* Image du héro (même source) */}
+            {/* Image du héro (même source), sans filtre foncé */}
             <div
                 aria-hidden="true"
                 className="absolute inset-0"
                 style={{ backgroundImage: `url(${SOURCE_URL})`, backgroundSize: 'cover', backgroundPosition: 'center 58%' }}
-            />
-            {/* Voile de lisibilité — sombre et homogène pour un texte centré en blanc */}
-            <div
-                aria-hidden="true"
-                className="absolute inset-0"
-                style={{ background: 'linear-gradient(180deg, rgba(14,14,14,0.42) 0%, rgba(14,14,14,0.55) 100%)' }}
             />
             <Reveal>
                 <div
