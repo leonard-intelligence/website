@@ -31,7 +31,6 @@ function Reveal({ children }: { children: React.ReactNode }) {
 // ── Shared scaffold ─────────────────────────────────────────────────────────
 type LayerProps = {
     id: string;
-    index: string;
     eyebrow: string;
     title: string;
     lead: string;
@@ -47,13 +46,13 @@ type LayerProps = {
     below?: React.ReactNode;
 };
 
-function LayerSection({ id, index, eyebrow, title, lead, points, accent, bg, flip, wide, barePanel, visual, below }: LayerProps) {
+function LayerSection({ id, eyebrow, title, lead, points, accent, bg, flip, wide, barePanel, visual, below }: LayerProps) {
     const panelBg = bg === TOKENS.white ? TOKENS.surface : TOKENS.white;
 
     const heading = (
         <>
             <div className="font-mono" style={{ fontSize: 13, letterSpacing: '0.22em', ...EMBOSS_MUTED }}>
-                {index} · {eyebrow}
+                {eyebrow}
             </div>
             <h2
                 className="font-sans mt-4"
@@ -149,7 +148,6 @@ export function LayerModeles() {
     return (
         <LayerSection
             id="section-modeles"
-            index="01"
             eyebrow="GRANDS MODÈLES DE LANGAGE"
             title="À chaque solution, son modèle."
             lead="Claude, GPT, Mistral ou open-weight hébergé chez vous : chaque tâche a son optimum. Nous arbitrons précision, coût, latence et confidentialité, et nous remplaçons un modèle dès qu'un meilleur existe."
@@ -166,7 +164,6 @@ export function LayerHarnais() {
     return (
         <LayerSection
             id="section-harnais"
-            index="02"
             eyebrow="ÉCOSYSTÈME AGENTIQUE"
             title="Un écosystème qui crée de la valeur."
             lead="Nous construisons un véritable écosystème agentique adapté à votre entreprise : des agents équipés de compétences et d'outils pour accomplir un maximum de tâches en autonomie et apporter de la valeur réelle, mesurable, chaque jour."
@@ -206,7 +203,6 @@ export function LayerDonnees() {
     return (
         <LayerSection
             id="section-donnees"
-            index="03"
             eyebrow="DONNÉES & INTÉGRATIONS"
             title="Toutes vos sources, un seul environnement."
             lead="Base de données, chatbot de votre site, WhatsApp, e-mails, Discord : nous canalisons toutes vos sources vers un même environnement, standardisé. Les flux arrivent dans tous les formats, ils ressortent unifiés, prêts à nourrir vos agents."
@@ -222,7 +218,6 @@ export function LayerContexte() {
     return (
         <LayerSection
             id="section-contexte"
-            index="04"
             eyebrow="CONTEXTE & CONNAISSANCE"
             title="Ne perdez plus rien. Souvenez-vous de tout."
             lead="Chaque échange, chaque décision, chaque dossier nourrit la mémoire de vos agents. L'information ne s'évapore plus : elle se capitalise, et chaque nouvelle tâche démarre avec tout l'historique. Vous gagnez en productivité à chaque itération."
@@ -239,7 +234,6 @@ export function LayerProduits() {
     return (
         <LayerSection
             id="section-produits"
-            index="06"
             eyebrow="PRODUITS & INTERFACES"
             title="Votre dashboard, cousu main."
             lead="Nous construisons votre tableau de bord sur mesure : exactement les fonctionnalités dont vous avez besoin, et nous en ajoutons à la demande. Spécialistes des interfaces agentiques, nous concevons la meilleure expérience entre vous et vos agents, sans jamais vous plonger dans la technique."
@@ -277,7 +271,6 @@ export function LayerSecurite() {
     return (
         <LayerSection
             id="section-securite"
-            index="07"
             eyebrow="AUTONOMIE CONTRÔLÉE"
             title="Le bon curseur entre autonomie et contrôle."
             lead="Nous construisons des systèmes au bon rapport autonomie-contrôle : assez d'autonomie pour aller chercher les meilleurs résultats, assez de contrôle pour protéger les systèmes critiques de votre entreprise. Chaque geste est journalisé, les actions sensibles attendent une validation humaine."

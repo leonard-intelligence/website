@@ -1,5 +1,5 @@
 // Sections V2 — Leonard Intelligence (design.md: warm neutrals, soft shadows, rounded corners)
-import { ArrowRight, Code2, Headset, Megaphone, TrendingUp, Users, Map as MapIcon, Ruler, ShieldCheck, Boxes, Plug, Rocket, Gauge, Cpu, Workflow, Database, Layers, LayoutDashboard, Sparkles, type LucideIcon } from 'lucide-react';
+import { ArrowRight, Code2, Headset, Megaphone, TrendingUp, Users, Map as MapIcon, Ruler, ShieldCheck, Boxes, Plug, Rocket, Gauge, type LucideIcon } from 'lucide-react';
 import { PixelLayer } from '../pixels/PixelLayer';
 import { Pixel } from '../pixels/Pixel';
 import { useBeadCtx, SOURCE_URL } from '../pixels/BeadPxContext';
@@ -7,7 +7,6 @@ import { useNotchParams } from '../dev/notchParamsStore';
 import { useVitruveParams } from '../dev/vitruveParamsStore';
 import { useVortexParams } from '../dev/vortexParamsStore';
 import { VortexBeadLayer } from './illustrations/VortexBeadLayer';
-import { IlluCircuit } from './illustrations/IlluCircuit';
 import { QrBadge } from './QrBadge';
 import { ReliefButton } from '../ui/ReliefButton';
 import { ConstruitSur } from './ConstruitSur';
@@ -79,42 +78,7 @@ export const EMBOSS_MUTED: React.CSSProperties = {
 // ============================================================================
 // SECTION 1 — Tagline + 3-col features
 // ============================================================================
-// ── Capabilities overview grid (intro) — "Do it all" style, links to each layer ─
-const CAPS: { n: string; title: string; desc: string; href: string; icon: LucideIcon }[] = [
-    { n: '01', title: 'Grands modèles de langage', desc: 'À chaque solution, son modèle, propriétaire ou open-weight.', href: '#section-modeles', icon: Cpu },
-    { n: '02', title: 'Écosystème agentique', desc: 'Compétences, outils et autonomie au service de la valeur.', href: '#section-harnais', icon: Workflow },
-    { n: '03', title: 'Données & intégrations', desc: 'Toutes vos sources canalisées vers un environnement unique.', href: '#section-donnees', icon: Database },
-    { n: '04', title: 'Contexte & connaissance', desc: 'Ne perdez plus rien : la mémoire se capitalise.', href: '#section-contexte', icon: Layers },
-    { n: '05', title: 'Capacités métier', desc: "Les compétences qui font de l'agent un expert de votre domaine.", href: '#section-capabilities', icon: Sparkles },
-    { n: '06', title: 'Produits & interfaces', desc: 'Les surfaces où humains et agents travaillent.', href: '#section-produits', icon: LayoutDashboard },
-    { n: '07', title: 'Autonomie contrôlée', desc: 'Le bon rapport autonomie-contrôle, systèmes critiques protégés.', href: '#section-securite', icon: ShieldCheck },
-];
-
-function CapCard({ cap }: { cap: (typeof CAPS)[number] }) {
-    const Icon = cap.icon;
-    return (
-        <a
-            href={cap.href}
-            className="flex flex-col"
-            style={{ padding: '22px 22px 20px', borderRadius: 14, background: TOKENS.white, boxShadow: RM_CARD_SHADOW, textDecoration: 'none' }}
-        >
-            <div className="flex items-start justify-between" style={{ marginBottom: 18 }}>
-                <span
-                    className="inline-flex items-center justify-center"
-                    style={{ width: 38, height: 38, borderRadius: 10, background: 'linear-gradient(180deg, #FFFFFF 0%, #F5F5F2 100%)', boxShadow: RM_TILE_SHADOW }}
-                >
-                    <Icon size={18} strokeWidth={1.6} color={TOKENS.ink} style={{ opacity: 0.7 }} />
-                </span>
-                <span className="font-mono" style={{ fontSize: 11, letterSpacing: '0.12em', color: TOKENS.mutedText }}>{cap.n}</span>
-            </div>
-            <h3 className="font-sans" style={{ fontSize: 18, fontWeight: 600, color: TOKENS.ink, lineHeight: 1.2 }}>{cap.title}</h3>
-            <p className="font-sans" style={{ fontSize: 14, lineHeight: '20px', fontWeight: 440, color: TOKENS.mutedText, marginTop: 8, flex: '1 1 auto' }}>{cap.desc}</p>
-            <span className="inline-flex items-center font-mono" style={{ gap: 6, marginTop: 18, fontSize: 11, letterSpacing: '0.08em', color: TOKENS.ink }}>
-                Découvrir <ArrowRight size={12} />
-            </span>
-        </a>
-    );
-}
+// (CAPS overview grid + CapCard removed with SectionSystem.)
 
 export function SectionIntro() {
     const { beadW, leftPx, heroBottomGap } = useBeadCtx();
@@ -376,54 +340,6 @@ export function SectionIntro() {
 }
 
 // ============================================================================
-// SECTION SYSTEM — "Un seul système, de bout en bout" + grille de capacités.
-// (déplacée sous la carte agent : logos → carte agent → ce bloc → couches)
-// ============================================================================
-export function SectionSystem() {
-    return (
-        <section
-            id="section-system"
-            className="relative"
-            style={{ backgroundColor: TOKENS.surface, paddingBlock: '76px', paddingInline: '32px' }}
-            aria-label="Le système"
-        >
-            <Reveal>
-            <div className="max-w-[1200px] mx-auto">
-                <header className="text-center mb-14">
-                    <div className="font-mono" style={{ fontSize: 12, letterSpacing: '0.22em', color: 'rgba(23,23,23,0.5)' }}>
-                        LE SYSTÈME
-                    </div>
-                    <h2
-                        className="font-sans mt-4 mx-auto"
-                        style={{ fontSize: 'clamp(1.9rem, 3.6vw, 2.9rem)', lineHeight: 1.1, fontWeight: 500, letterSpacing: '-0.02em', maxWidth: '20ch', ...EMBOSS_DARK }}
-                    >
-                        Un seul système, de bout en bout.
-                    </h2>
-                    <p
-                        className="font-sans mt-4 mx-auto"
-                        style={{ fontSize: 17, lineHeight: '24px', fontWeight: 460, color: TOKENS.mutedText, maxWidth: '54ch' }}
-                    >
-                        Toute la stack au service de votre entreprise, et votre entreprise au service de vos clients. Le grand gagnant : votre client.
-                    </p>
-                </header>
-                {/* desktop : circuit imprimé — le système comme un circuit intégré unique */}
-                <div className="hidden md:block">
-                    <IlluCircuit />
-                </div>
-                {/* mobile : la grille de cartes reste plus lisible */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 md:hidden" style={{ gap: 18 }}>
-                    {CAPS.map((c) => (
-                        <CapCard key={c.n} cap={c} />
-                    ))}
-                </div>
-
-            </div>
-            </Reveal>
-        </section>
-    );
-}
-
-// ============================================================================
 // SECTION DEPLOY — entête riche « build & deploy » (eyebrow + titre + corps),
 // placée après les couches. Structure inspirée des intros produit (Mistral),
 // adaptée FR, sans nom de produit et sans tiret cadratin.
@@ -465,10 +381,10 @@ export function SectionDeploy() {
 // de 24px (positions et tailles = multiples de 24, comme le hero bg).
 // ============================================================================
 const EXP_CARDS: { icon: LucideIcon; label: string; tags: string[]; pos: React.CSSProperties }[] = [
-    { icon: Code2, label: 'Développement', tags: ['Génération', 'Revue', 'Tests', 'Documentation'], pos: { left: '4%', top: '5%' } },
-    { icon: Headset, label: 'Support client', tags: ['Tri des tickets', 'Réponses', 'Escalade', '24/7'], pos: { right: '5%', top: '15%' } },
-    { icon: Megaphone, label: 'Marketing', tags: ['Contenu', 'SEO', 'Campagnes', 'Analyse'], pos: { left: '7%', top: '68%' } },
-    { icon: TrendingUp, label: 'Ventes', tags: ['Prospection', 'Qualification', 'Relances', 'CRM'], pos: { right: '6%', top: '60%' } },
+    { icon: Code2, label: 'Développement', tags: ['Génération', 'Revue', 'Tests'], pos: { left: '4%', top: '5%' } },
+    { icon: Headset, label: 'Support client', tags: ['Réponses', 'Escalade', '24/7'], pos: { right: '5%', top: '15%' } },
+    { icon: Megaphone, label: 'Marketing', tags: ['Contenu', 'SEO', 'Campagnes'], pos: { left: '7%', top: '68%' } },
+    { icon: TrendingUp, label: 'Ventes', tags: ['Prospection', 'Relances', 'CRM'], pos: { right: '6%', top: '60%' } },
 ];
 
 export function SectionExpertise() {
@@ -482,19 +398,11 @@ export function SectionExpertise() {
         >
             <Reveal>
                 <div className="max-w-[1200px] mx-auto">
-                    {/* Header row : grand titre + bouton */}
-                    <div className="flex items-end justify-between gap-6" style={{ borderBottom: '1px solid rgba(23,23,23,0.10)', paddingBottom: 28 }}>
-                        <h2 className="font-sans" style={{ fontSize: 'clamp(2.2rem, 4.6vw, 3.4rem)', lineHeight: 1, fontWeight: 500, letterSpacing: '-0.03em', ...EMBOSS_DARK }}>
-                            Nos expertises
+                    {/* Header row : grand titre */}
+                    <div className="flex items-end" style={{ borderBottom: '1px solid rgba(23,23,23,0.10)', paddingBottom: 28 }}>
+                        <h2 className="font-sans" style={{ fontSize: 'clamp(2.2rem, 4.6vw, 3.4rem)', lineHeight: 1.05, fontWeight: 500, letterSpacing: '-0.03em', ...EMBOSS_DARK }}>
+                            Des agents spécialisés ont déjà fait leurs preuves dans de multiples domaines.
                         </h2>
-                        <a
-                            href="#section-system"
-                            className="font-sans inline-flex items-center gap-2 shrink-0"
-                            style={{ padding: '11px 18px', borderRadius: 999, background: TOKENS.white, boxShadow: RM_CARD_SHADOW, fontSize: 14, fontWeight: 500, color: TOKENS.ink, textDecoration: 'none' }}
-                        >
-                            Voir le système
-                            <ArrowRight size={16} />
-                        </a>
                     </div>
 
                     {/* Accroche */}
@@ -545,7 +453,7 @@ export function SectionExpertise() {
                                 <div className="flex items-center" style={{ gap: 11, marginBottom: 12 }}>
                                     <span
                                         className="inline-flex items-center justify-center shrink-0"
-                                        style={{ width: 36, height: 36, borderRadius: 9, background: TOKENS.lime, boxShadow: RM_TILE_SHADOW }}
+                                        style={{ width: 36, height: 36, borderRadius: 4, background: TOKENS.lime, boxShadow: RM_TILE_SHADOW }}
                                     >
                                         <Icon size={18} strokeWidth={1.9} color={TOKENS.ink} />
                                     </span>
