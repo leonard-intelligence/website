@@ -4,6 +4,8 @@
 import { useSyncExternalStore } from 'react';
 
 export type FoilKind = 'rainbow' | 'silver' | 'gold';
+// Effets de la zone illustration, inspirés de pokemon-cards-css (Simey).
+export type WindowEffect = 'sheen' | 'holo' | 'rainbow' | 'radiant' | 'glitter';
 
 export type HoloParams = {
     motifSize: number; // taille du logo dans la tuile (px)
@@ -15,7 +17,8 @@ export type HoloParams = {
     foil: FoilKind;
     // Zone « illustration » (fenêtre de l'image) — traitée différemment du corps.
     splitWindow: boolean; // active une 2e zone holo dans la fenêtre image
-    windowFoil: FoilKind; // foil propre à la fenêtre
+    windowEffect: WindowEffect; // style holo de la fenêtre (façon Simey)
+    windowFoil: FoilKind; // couleur du foil (effets sheen / glitter)
     windowStrength: number; // 0..1 — intensité du foil dans la fenêtre
 };
 
@@ -28,6 +31,7 @@ export const DEFAULT_HOLO_PARAMS: HoloParams = {
     tilt: 7,
     foil: 'rainbow',
     splitWindow: true,
+    windowEffect: 'holo',
     windowFoil: 'silver',
     windowStrength: 0.5,
 };

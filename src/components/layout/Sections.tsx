@@ -4,7 +4,7 @@ import { PixelLayer } from '../pixels/PixelLayer';
 import { Pixel } from '../pixels/Pixel';
 import { useBeadCtx, SOURCE_URL, SAMPLE_W, SAMPLE_H } from '../pixels/BeadPxContext';
 import { useHeroTitleParams } from '../dev/heroTitleStore';
-import { useHoloParams, type FoilKind } from '../dev/holoParamsStore';
+import { useHoloParams, type FoilKind, type WindowEffect } from '../dev/holoParamsStore';
 import { LEONARD_MOTIF_B64 } from './illustrations/leonardMotif';
 import { useNotchParams } from '../dev/notchParamsStore';
 import { useVitruveParams } from '../dev/vitruveParamsStore';
@@ -1989,6 +1989,102 @@ const GOLD =
 const GLARE =
     'radial-gradient(circle at var(--mx,50%) var(--my,50%), rgba(255,255,255,0.7), rgba(255,255,255,0) 46%)';
 
+// ── Effets holo « pokemon-cards-css » (Simey), pour la zone illustration ──────
+const HOLO_BANDS =
+    'repeating-linear-gradient(0deg, hsl(2,100%,73%) 0%, hsl(53,100%,69%) 17%, hsl(93,100%,69%) 33%, hsl(176,100%,76%) 50%, hsl(228,100%,74%) 67%, hsl(283,100%,73%) 83%, hsl(2,100%,73%) 100%)';
+const HOLO_SHEEN =
+    'repeating-linear-gradient(128deg, rgba(12,18,42,0.6) 0%, rgba(200,220,220,0.55) 3.6%, rgba(12,18,42,0.6) 7.2%)';
+const RAINBOW_STREAKS =
+    'repeating-linear-gradient(95deg, hsl(0,100%,71%) 0%, hsl(45,100%,68%) 14%, hsl(110,100%,67%) 28%, hsl(190,100%,72%) 43%, hsl(230,100%,72%) 57%, hsl(280,100%,72%) 71%, hsl(330,100%,72%) 86%, hsl(0,100%,71%) 100%)';
+const RADIANT_HATCH =
+    'repeating-linear-gradient(115deg, #ffffff 0%, #585858 1.6%, #ffffff 3.4%, #c4c4c4 5%, #ffffff 6.6%)';
+
+type WinLayer = {
+    bg: string;
+    bgBlend?: React.CSSProperties['backgroundBlendMode'];
+    blend: React.CSSProperties['mixBlendMode'];
+    size: string;
+    pos: string;
+    repeat?: string;
+    filter?: string;
+    o: number;
+};
+
+// Calques de l'effet holo dans la fenêtre image, selon le preset choisi.
+function WindowFoil({ effect, foil, strength, glare, sat }: { effect: WindowEffect; foil: FoilKind; strength: number; glare: number; sat: number }) {
+    let layers: WinLayer[];
+    switch (effect) {
+        case 'holo':
+            layers = [
+                {
+                    bg: `${HOLO_BANDS}, ${HOLO_SHEEN}`,
+                    bgBlend: 'hard-light',
+                    blend: 'color-dodge',
+                    size: '100% 130%, 220% 220%',
+                    pos: 'calc(var(--mx,50%) * 0.4) calc(var(--my,50%) * 0.4), calc(var(--mx,50%) * -1.2) calc(var(--my,50%) * -1.2)',
+                    filter: `brightness(0.9) contrast(1.7) saturate(${sat})`,
+                    o: 1,
+                },
+            ];
+            break;
+        case 'rainbow':
+            layers = [
+                {
+                    bg: RAINBOW_STREAKS,
+                    blend: 'color-dodge',
+                    size: '320% 100%',
+                    pos: 'calc(var(--mx,50%) * -2.2) 50%',
+                    filter: `contrast(1.4) saturate(${sat * 1.1})`,
+                    o: 1,
+                },
+            ];
+            break;
+        case 'radiant':
+            layers = [
+                {
+                    bg: RADIANT_HATCH,
+                    blend: 'hard-light',
+                    size: '230% 230%',
+                    pos: 'calc(var(--mx,50%) * 2) calc(var(--my,50%) * 2)',
+                    filter: 'contrast(1.25) brightness(1.05)',
+                    o: 1,
+                },
+            ];
+            break;
+        case 'glitter':
+            layers = [
+                { bg: foilGradient(foil), blend: 'color', size: '200% 200%', pos: 'calc(var(--mx,50%) * 1.5) calc(var(--my,50%) * 1.5)', filter: `saturate(${sat})`, o: 0.9 },
+                { bg: CARD_GRAIN_URL, blend: 'color-dodge', size: '120px 120px', pos: 'calc(var(--mx,50%) * -1) calc(var(--my,50%) * -1)', repeat: 'repeat', filter: 'brightness(1.5) contrast(1.6)', o: 0.85 },
+            ];
+            break;
+        case 'sheen':
+        default:
+            layers = [{ bg: foilGradient(foil), blend: foilBlendFor(foil), size: '200% 200%', pos: 'calc(var(--mx,50%) * -1.4) calc(var(--my,50%) * -1.4)', filter: `saturate(${sat})`, o: 1 }];
+    }
+    return (
+        <Fragment>
+            {layers.map((l, i) => (
+                <div
+                    key={i}
+                    style={{
+                        position: 'absolute',
+                        inset: 0,
+                        backgroundImage: l.bg,
+                        backgroundBlendMode: l.bgBlend,
+                        backgroundSize: l.size,
+                        backgroundPosition: l.pos,
+                        backgroundRepeat: l.repeat ?? 'no-repeat',
+                        mixBlendMode: l.blend,
+                        filter: l.filter,
+                        opacity: strength * l.o,
+                    }}
+                />
+            ))}
+            <div style={{ position: 'absolute', inset: 0, background: GLARE, mixBlendMode: 'screen', opacity: glare }} />
+        </Fragment>
+    );
+}
+
 // Mask tuilé : le logo (taille `size`) centré dans une cellule `size + space`,
 // répété → on règle indépendamment la taille du motif et l'espace entre motifs.
 function buildMotifMask(size: number, space: number): string {
@@ -2089,27 +2185,7 @@ function HoloCard() {
                             foil propre, déplacé à contre-sens, clippé à la fenêtre image */}
                         {p.splitWindow && (
                             <div style={{ position: 'absolute', ...WIN, overflow: 'hidden', borderRadius: 4 }}>
-                                <div
-                                    style={{
-                                        position: 'absolute',
-                                        inset: 0,
-                                        backgroundImage: foilGradient(p.windowFoil),
-                                        backgroundSize: '200% 200%',
-                                        backgroundPosition: 'calc(var(--mx,50%) * -1.4) calc(var(--my,50%) * -1.4)',
-                                        mixBlendMode: foilBlendFor(p.windowFoil),
-                                        filter: `saturate(${p.saturation})`,
-                                        opacity: p.windowStrength,
-                                    }}
-                                />
-                                <div
-                                    style={{
-                                        position: 'absolute',
-                                        inset: 0,
-                                        background: GLARE,
-                                        mixBlendMode: 'screen',
-                                        opacity: p.glareStrength,
-                                    }}
-                                />
+                                <WindowFoil effect={p.windowEffect} foil={p.windowFoil} strength={p.windowStrength} glare={p.glareStrength} sat={p.saturation} />
                             </div>
                         )}
                     </div>

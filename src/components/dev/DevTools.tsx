@@ -3,7 +3,7 @@ import { PaintMode } from './PaintMode';
 import { useNotchParams, setNotchParams, resetNotchParams, type NotchParams, type CornerStyle } from './notchParamsStore';
 import { useVitruveParams, setVitruveParams, resetVitruveParams, type VitruveParams } from './vitruveParamsStore';
 import { useHeroTitleParams, setHeroTitleParams, resetHeroTitleParams, type PixelVariant } from './heroTitleStore';
-import { useHoloParams, setHoloParams, resetHoloParams, type FoilKind } from './holoParamsStore';
+import { useHoloParams, setHoloParams, resetHoloParams, type FoilKind, type WindowEffect } from './holoParamsStore';
 import {
     useVortexParams, setVortexParams, resetVortexParams, VORTEX_SECTIONS,
     type VortexShape, type VortexColorMode, type VortexParams, type VortexSectionId,
@@ -372,6 +372,13 @@ const FOIL_OPTS: SegOption<FoilKind>[] = [
     { id: 'silver', label: 'Argent' },
     { id: 'gold', label: 'Or' },
 ];
+const WINDOW_EFFECTS: SegOption<WindowEffect>[] = [
+    { id: 'holo', label: 'Holo' },
+    { id: 'rainbow', label: 'Rainbow' },
+    { id: 'radiant', label: 'Radiant' },
+    { id: 'glitter', label: 'Glitter' },
+    { id: 'sheen', label: 'Sheen' },
+];
 
 function HoloTab() {
     const p = useHoloParams();
@@ -394,6 +401,7 @@ function HoloTab() {
 
             <SectionLabel>Zone illustration (fenêtre image)</SectionLabel>
             <Toggle active={p.splitWindow} onChange={(v) => setHoloParams({ splitWindow: v })} label="Holo séparé dans l'illustration" />
+            <Segmented value={p.windowEffect} onChange={(v) => setHoloParams({ windowEffect: v })} options={WINDOW_EFFECTS} columns={3} />
             <Segmented value={p.windowFoil} onChange={(v) => setHoloParams({ windowFoil: v })} options={FOIL_OPTS} columns={3} />
             <Slider label="Reflet illustration" min={0} max={1} step={0.01} value={p.windowStrength} onChange={(v) => setHoloParams({ windowStrength: v })} />
 
