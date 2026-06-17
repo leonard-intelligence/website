@@ -2043,14 +2043,65 @@ function HoloOverlay({ kind, peak }: { kind: OverlayKind; peak: number }) {
     );
 }
 
-type HoloVariant = { label: string; opts: TiltOpts; overlay: { kind: OverlayKind; peak: number } | null };
+// Reverse-holo : un foil irisé/argenté découpé dans une RÉPÉTITION du logo Leonard
+// (motif tuilé sur toute la carte), niché dans la silhouette de la carte + un glare
+// mobile. Inspiré de pokemon-cards-css (Simey), décliné avec notre marque.
+const LOGO_MOTIF = 'url(/assets/logos/leonard-symbol-black.png)';
+
+function ReverseHoloOverlay({ peak, tile, foil }: { peak: number; tile: number; foil: 'rainbow' | 'silver' }) {
+    const outer: React.CSSProperties = {
+        position: 'absolute',
+        inset: '6%',
+        zIndex: 6,
+        pointerEvents: 'none',
+        WebkitMask: 'url(#agent-card-notches)',
+        mask: 'url(#agent-card-notches)',
+        transition: 'opacity 360ms ease-out',
+        opacity: `calc(var(--hover, 0) * ${peak})`,
+    };
+    // le foil irisé/métal, découpé dans la répétition du logo
+    const foilLayer: React.CSSProperties = {
+        position: 'absolute',
+        inset: 0,
+        backgroundImage: foil === 'silver' ? SILVER : RAINBOW,
+        backgroundSize: '220% 220%',
+        backgroundPosition: 'calc(var(--mx, 50%) * 1.7) calc(var(--my, 50%) * 1.7)',
+        WebkitMaskImage: LOGO_MOTIF,
+        maskImage: LOGO_MOTIF,
+        WebkitMaskRepeat: 'repeat',
+        maskRepeat: 'repeat',
+        WebkitMaskSize: `${tile}px`,
+        maskSize: `${tile}px`,
+        mixBlendMode: foil === 'silver' ? 'overlay' : 'color-dodge',
+        filter: 'saturate(1.7) brightness(1.05)',
+    };
+    // glare mobile sur toute la carte (traité séparément du motif)
+    const glareLayer: React.CSSProperties = {
+        position: 'absolute',
+        inset: 0,
+        background: GLARE,
+        mixBlendMode: 'screen',
+        opacity: 0.6,
+    };
+    return (
+        <div aria-hidden="true" style={outer}>
+            <div style={foilLayer} />
+            <div style={glareLayer} />
+        </div>
+    );
+}
+
+type OverlayCfg =
+    | { mode: 'foil'; kind: OverlayKind; peak: number }
+    | { mode: 'reverse'; peak: number; tile: number; foil: 'rainbow' | 'silver' };
+type HoloVariant = { label: string; opts: TiltOpts; overlay: OverlayCfg | null };
 
 const HOLO_VARIANTS: HoloVariant[] = [
-    { label: '1 · Holographique', opts: { maxTilt: 7, scale: 1.015 }, overlay: { kind: 'holo', peak: 0.6 } },
-    { label: '2 · Holographique intense', opts: { maxTilt: 8, scale: 1.02 }, overlay: { kind: 'holo', peak: 1 } },
-    { label: '3 · Métallique chromé', opts: { maxTilt: 7, scale: 1.015 }, overlay: { kind: 'metal', peak: 0.85 } },
-    { label: '4 · Métallique doré', opts: { maxTilt: 7, scale: 1.015 }, overlay: { kind: 'gold', peak: 0.85 } },
-    { label: '5 · Holo + chromé (foil)', opts: { maxTilt: 7, scale: 1.015 }, overlay: { kind: 'holoMetal', peak: 0.7 } },
+    { label: '1 · Reverse holo — logo irisé', opts: { maxTilt: 7, scale: 1.015 }, overlay: { mode: 'reverse', peak: 0.95, tile: 42, foil: 'rainbow' } },
+    { label: '2 · Reverse holo — logo argent', opts: { maxTilt: 7, scale: 1.015 }, overlay: { mode: 'reverse', peak: 0.95, tile: 42, foil: 'silver' } },
+    { label: '3 · Reverse holo — motif large', opts: { maxTilt: 7, scale: 1.015 }, overlay: { mode: 'reverse', peak: 0.95, tile: 70, foil: 'rainbow' } },
+    { label: '4 · Holographique (plein)', opts: { maxTilt: 7, scale: 1.015 }, overlay: { mode: 'foil', kind: 'holo', peak: 0.6 } },
+    { label: '5 · Métallique chromé', opts: { maxTilt: 7, scale: 1.015 }, overlay: { mode: 'foil', kind: 'metal', peak: 0.85 } },
 ];
 
 function HoloLabCard({ variant }: { variant: HoloVariant }) {
@@ -2072,7 +2123,12 @@ function HoloLabCard({ variant }: { variant: HoloVariant }) {
                         }}
                     >
                         <AgentCardStack sel={0} />
-                        {variant.overlay && <HoloOverlay kind={variant.overlay.kind} peak={variant.overlay.peak} />}
+                        {variant.overlay &&
+                            (variant.overlay.mode === 'foil' ? (
+                                <HoloOverlay kind={variant.overlay.kind} peak={variant.overlay.peak} />
+                            ) : (
+                                <ReverseHoloOverlay peak={variant.overlay.peak} tile={variant.overlay.tile} foil={variant.overlay.foil} />
+                            ))}
                     </div>
                 </div>
             </div>
