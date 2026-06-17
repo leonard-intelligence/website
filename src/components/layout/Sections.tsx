@@ -2029,16 +2029,16 @@ const SPARKLE_URL = (() => {
 // crêtes organiques type empreinte digitale. Sert de mask ANCRÉ : le motif reste
 // fixe sur la carte, seule la couleur du reflet (hue) bouge avec l'inclinaison.
 const FINGERPRINT_URL = (() => {
-    const W = 240;
+    const W = 220;
     const lines: string[] = [];
-    for (let y = -20; y <= W + 20; y += 7) lines.push(`<path d='M -20 ${y} H ${W + 20}'/>`);
+    for (let y = -12; y <= W + 12; y += 4.6) lines.push(`<path d='M -12 ${y.toFixed(1)} H ${W + 12}'/>`);
     const svg =
         `<svg xmlns='http://www.w3.org/2000/svg' width='${W}' height='${W}'>` +
-        `<defs><filter id='w' x='-20%' y='-20%' width='140%' height='140%'>` +
-        `<feTurbulence type='turbulence' baseFrequency='0.009 0.013' numOctaves='2' seed='6' result='t'/>` +
-        `<feDisplacementMap in='SourceGraphic' in2='t' scale='62' xChannelSelector='R' yChannelSelector='G'/>` +
+        `<defs><filter id='w' x='-15%' y='-15%' width='130%' height='130%'>` +
+        `<feTurbulence type='fractalNoise' baseFrequency='0.008 0.011' numOctaves='2' seed='4' result='t'/>` +
+        `<feDisplacementMap in='SourceGraphic' in2='t' scale='28' xChannelSelector='R' yChannelSelector='G'/>` +
         `</filter></defs>` +
-        `<g filter='url(#w)' stroke='white' stroke-width='1.5' fill='none'>${lines.join('')}</g></svg>`;
+        `<g filter='url(#w)' stroke='white' stroke-width='0.8' fill='none'>${lines.join('')}</g></svg>`;
     return `url("data:image/svg+xml,${encodeURIComponent(svg)}")`;
 })();
 // Dégradé irisé lisse (ancré) ; sa teinte tourne avec le curseur via hue-rotate.
@@ -2129,23 +2129,28 @@ function WindowFoil({ effect, foil, strength, glare, sat }: { effect: WindowEffe
                 },
             ];
             break;
-        case 'empreinte':
-            // Motif « empreinte » ANCRÉ (position fixe) ; seule la teinte tourne avec
-            // le curseur (hue-rotate var(--hue)) → reflet réaliste, pas de parallaxe.
+        case 'empreinte': {
+            // Motif « empreinte » ANCRÉ (position fixe) ; seul le reflet bouge :
+            // - irisé → la teinte tourne avec le curseur (hue-rotate var(--hue))
+            // - argent / or → bandes métalliques, le glare mobile fait briller.
+            const irid = foil === 'rainbow';
             layers = [
                 {
-                    bg: IRIDESCENT,
-                    blend: 'color-dodge',
-                    size: '170% 170%',
+                    bg: irid ? IRIDESCENT : foilGradient(foil),
+                    blend: irid ? 'color-dodge' : 'overlay',
+                    size: irid ? '170% 170%' : '180% 180%',
                     pos: 'center',
-                    filter: `hue-rotate(var(--hue, 0deg)) saturate(${sat * 1.35}) brightness(1.05)`,
+                    filter: irid
+                        ? `hue-rotate(var(--hue, 0deg)) saturate(${sat * 1.35}) brightness(1.05)`
+                        : `brightness(1.12) contrast(1.18) saturate(${sat})`,
                     o: 1,
                     mask: FINGERPRINT_URL,
-                    maskSize: '240px 240px',
+                    maskSize: '135px 135px',
                     maskPos: 'center',
                 },
             ];
             break;
+        }
         case 'sheen':
         default:
             layers = [{ bg: foilGradient(foil), blend: foilBlendFor(foil), size: '200% 200%', pos: 'calc(var(--mx,50%) * -1.4) calc(var(--my,50%) * -1.4)', filter: `saturate(${sat})`, o: 1 }];
