@@ -970,6 +970,54 @@ export function BeadSection({
 }
 
 // ============================================================================
+// SECTION STATEMENT — bandeau pleine largeur reprenant l'image du héro, avec une
+// accroche centrée (sans surtitre). Sert de respiration / affirmation de marque.
+// ============================================================================
+export function SectionStatement() {
+    return (
+        <section
+            className="relative overflow-hidden"
+            style={{ minHeight: 'clamp(360px, 46vw, 520px)', paddingBlock: '96px', paddingInline: '32px' }}
+            aria-label="Leonard adapte votre entreprise à l'ère agentique"
+        >
+            {/* Image du héro (même source) */}
+            <div
+                aria-hidden="true"
+                className="absolute inset-0"
+                style={{ backgroundImage: `url(${SOURCE_URL})`, backgroundSize: 'cover', backgroundPosition: 'center 58%' }}
+            />
+            {/* Voile de lisibilité — sombre et homogène pour un texte centré en blanc */}
+            <div
+                aria-hidden="true"
+                className="absolute inset-0"
+                style={{ background: 'linear-gradient(180deg, rgba(14,14,14,0.42) 0%, rgba(14,14,14,0.55) 100%)' }}
+            />
+            <Reveal>
+                <div
+                    className="relative mx-auto flex items-center justify-center text-center"
+                    style={{ maxWidth: 1000, minHeight: 'clamp(220px, 28vw, 320px)' }}
+                >
+                    <h2
+                        className="font-sans mx-auto"
+                        style={{
+                            fontSize: 'clamp(2rem, 4.6vw, 3.4rem)',
+                            lineHeight: 1.1,
+                            fontWeight: 500,
+                            letterSpacing: '-0.02em',
+                            color: '#FFFFFF',
+                            maxWidth: '20ch',
+                            textShadow: '0 2px 22px rgba(0,0,0,0.42)',
+                        }}
+                    >
+                        Leonard adapte votre entreprise à l'ère agentique
+                    </h2>
+                </div>
+            </Reveal>
+        </section>
+    );
+}
+
+// ============================================================================
 // SECTION PHASES — the agentic maturity journey (3 phases). Domain-agnostic,
 // adapted from the "Agentic Law" keynote (no legal specifics, no borrowed metrics).
 // ============================================================================
