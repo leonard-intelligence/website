@@ -1977,10 +1977,22 @@ function useTilt(opts: TiltOpts = {}) {
     };
 }
 
-type OverlayKind = 'glare' | 'holo';
+type OverlayKind = 'holo' | 'metal' | 'gold' | 'holoMetal';
+type FoilLayer = { blend: React.CSSProperties['mixBlendMode']; bg: string; size?: string; pos?: string; o: number; filter?: string };
 
-// Calque d'effet, découpé à la silhouette crantée de la carte via le mask SVG
-// existant (#agent-card-notches, en objectBoundingBox → s'adapte à la boîte).
+// Bandes irisées / métalliques qui glissent avec le curseur. Découpées à la
+// silhouette crantée de la carte via le mask SVG (#agent-card-notches).
+const RAINBOW =
+    'repeating-linear-gradient(105deg, #ff5d8f 0%, #ffd24a 9%, #5dff9b 18%, #4ad7ff 27%, #a96bff 36%, #ff5dc4 45%, #ff5d8f 54%)';
+const SILVER =
+    'repeating-linear-gradient(100deg, #ffffff 0%, #6f6f6f 6%, #ffffff 12%, #c3c3c3 18%, #ffffff 24%)';
+const GOLD =
+    'repeating-linear-gradient(100deg, #fff7d6 0%, #9c7414 6%, #fff1bf 12%, #c79a2a 18%, #fff7d6 24%)';
+const SWEEP =
+    'linear-gradient(105deg, transparent 32%, rgba(255,255,255,0.85) 47%, rgba(255,255,255,0.25) 53%, transparent 66%)';
+const GLARE =
+    'radial-gradient(circle at var(--mx,50%) var(--my,50%), rgba(255,255,255,0.7), rgba(255,255,255,0) 46%)';
+
 function HoloOverlay({ kind, peak }: { kind: OverlayKind; peak: number }) {
     const base: React.CSSProperties = {
         position: 'absolute',
@@ -1991,44 +2003,42 @@ function HoloOverlay({ kind, peak }: { kind: OverlayKind; peak: number }) {
         mask: 'url(#agent-card-notches)',
         transition: 'opacity 360ms ease-out',
     };
-    if (kind === 'glare') {
-        return (
-            <div
-                aria-hidden="true"
-                style={{
-                    ...base,
-                    opacity: `calc(var(--hover, 0) * ${peak})`,
-                    mixBlendMode: 'screen',
-                    background:
-                        'radial-gradient(circle at var(--mx, 50%) var(--my, 50%), rgba(255,252,242,0.85), rgba(255,252,242,0) 56%)',
-                }}
-            />
-        );
+    const layers: FoilLayer[] = [];
+
+    if (kind === 'holo' || kind === 'holoMetal') {
+        // teinte irisée (garde la luminosité de la carte → ne crame pas le gris clair)
+        layers.push({ blend: 'color', bg: RAINBOW, size: '200% 200%', pos: 'calc(var(--mx,50%) * 1.7) calc(var(--my,50%) * 1.7)', o: peak, filter: 'saturate(1.8)' });
+        // éclats irisés (sens inverse) pour la profondeur
+        layers.push({ blend: 'color-dodge', bg: RAINBOW, size: '320% 320%', pos: 'calc(var(--mx,50%) * -1.3) calc(var(--my,50%) * -1.3)', o: peak * 0.45, filter: 'saturate(2)' });
     }
+    if (kind === 'metal' || kind === 'holoMetal') {
+        layers.push({ blend: 'overlay', bg: SILVER, size: '210% 210%', pos: 'calc(var(--mx,50%) * 2) calc(var(--my,50%) * 2)', o: kind === 'holoMetal' ? peak * 0.7 : peak });
+    }
+    if (kind === 'gold') {
+        layers.push({ blend: 'overlay', bg: GOLD, size: '210% 210%', pos: 'calc(var(--mx,50%) * 2) calc(var(--my,50%) * 2)', o: peak });
+    }
+    // balayage spéculaire (bouge à contre-curseur) + point lumineux
+    layers.push({ blend: 'screen', bg: SWEEP, size: '250% 250%', pos: 'calc(100% - var(--mx,50%)) var(--my,50%)', o: peak * 0.8 });
+    layers.push({ blend: 'screen', bg: GLARE, o: peak * 0.5 });
+
     return (
         <Fragment>
-            <div
-                aria-hidden="true"
-                style={{
-                    ...base,
-                    opacity: `calc(var(--hover, 0) * ${peak})`,
-                    mixBlendMode: 'color-dodge',
-                    backgroundImage:
-                        'linear-gradient(115deg, rgba(255,0,128,0.45) 8%, rgba(255,200,0,0.45) 28%, rgba(0,225,170,0.45) 48%, rgba(0,170,255,0.45) 68%, rgba(180,0,255,0.45) 90%)',
-                    backgroundSize: '260% 260%',
-                    backgroundPosition: 'var(--mx, 50%) var(--my, 50%)',
-                }}
-            />
-            <div
-                aria-hidden="true"
-                style={{
-                    ...base,
-                    opacity: `calc(var(--hover, 0) * 0.6)`,
-                    mixBlendMode: 'screen',
-                    background:
-                        'radial-gradient(circle at var(--mx, 50%) var(--my, 50%), rgba(255,255,255,0.9), rgba(255,255,255,0) 55%)',
-                }}
-            />
+            {layers.map((l, i) => (
+                <div
+                    key={i}
+                    aria-hidden="true"
+                    style={{
+                        ...base,
+                        mixBlendMode: l.blend,
+                        backgroundImage: l.bg,
+                        backgroundSize: l.size,
+                        backgroundPosition: l.pos,
+                        backgroundRepeat: 'no-repeat',
+                        filter: l.filter,
+                        opacity: `calc(var(--hover, 0) * ${l.o})`,
+                    }}
+                />
+            ))}
         </Fragment>
     );
 }
@@ -2036,11 +2046,11 @@ function HoloOverlay({ kind, peak }: { kind: OverlayKind; peak: number }) {
 type HoloVariant = { label: string; opts: TiltOpts; overlay: { kind: OverlayKind; peak: number } | null };
 
 const HOLO_VARIANTS: HoloVariant[] = [
-    { label: '1 · Tilt très léger (3°)', opts: { maxTilt: 3, scale: 1.008 }, overlay: null },
-    { label: '2 · Tilt + reflet (léger)', opts: { maxTilt: 5, scale: 1.012 }, overlay: { kind: 'glare', peak: 0.5 } },
-    { label: '3 · Tilt + reflet (fort)', opts: { maxTilt: 9, scale: 1.02 }, overlay: { kind: 'glare', peak: 0.9 } },
-    { label: '4 · Reflet seul (sans tilt)', opts: { maxTilt: 0, scale: 1.0 }, overlay: { kind: 'glare', peak: 0.65 } },
-    { label: '5 · Holographique (rainbow)', opts: { maxTilt: 7, scale: 1.015 }, overlay: { kind: 'holo', peak: 0.45 } },
+    { label: '1 · Holographique', opts: { maxTilt: 7, scale: 1.015 }, overlay: { kind: 'holo', peak: 0.6 } },
+    { label: '2 · Holographique intense', opts: { maxTilt: 8, scale: 1.02 }, overlay: { kind: 'holo', peak: 1 } },
+    { label: '3 · Métallique chromé', opts: { maxTilt: 7, scale: 1.015 }, overlay: { kind: 'metal', peak: 0.85 } },
+    { label: '4 · Métallique doré', opts: { maxTilt: 7, scale: 1.015 }, overlay: { kind: 'gold', peak: 0.85 } },
+    { label: '5 · Holo + chromé (foil)', opts: { maxTilt: 7, scale: 1.015 }, overlay: { kind: 'holoMetal', peak: 0.7 } },
 ];
 
 function HoloLabCard({ variant }: { variant: HoloVariant }) {
