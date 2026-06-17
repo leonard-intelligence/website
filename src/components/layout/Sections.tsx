@@ -2,7 +2,7 @@
 import { ArrowRight, Code2, Headset, Megaphone, TrendingUp, Users, Map as MapIcon, Ruler, ShieldCheck, Boxes, Plug, Rocket, Gauge, type LucideIcon } from 'lucide-react';
 import { PixelLayer } from '../pixels/PixelLayer';
 import { Pixel } from '../pixels/Pixel';
-import { useBeadCtx, SOURCE_URL } from '../pixels/BeadPxContext';
+import { useBeadCtx, SOURCE_URL, SAMPLE_W, SAMPLE_H } from '../pixels/BeadPxContext';
 import { useHeroTitleParams } from '../dev/heroTitleStore';
 import { useNotchParams } from '../dev/notchParamsStore';
 import { useVitruveParams } from '../dev/vitruveParamsStore';
@@ -976,17 +976,26 @@ export function BeadSection({
 // ============================================================================
 export function SectionStatement() {
     const heroTitle = useHeroTitleParams();
+    // Même système de rendu que le héro : beadPx entier (partagé via le contexte,
+    // recalculé au resize) → l'image est posée à `${SAMPLE_W*beadPx} × ${SAMPLE_H*beadPx}`
+    // pour que chaque bead reste net et aligné, exactement comme le héro.
+    const { beadPx } = useBeadCtx();
     return (
         <section
             className="relative overflow-hidden"
-            style={{ minHeight: 'clamp(360px, 46vw, 520px)', paddingBlock: '96px', paddingInline: '32px' }}
+            style={{ minHeight: 'clamp(360px, 46vw, 520px)', paddingBlock: '96px', paddingInline: '32px', backgroundColor: '#2b2a22' }}
             aria-label="Leonard adapte votre entreprise à l'ère agentique"
         >
-            {/* Image du héro (même source), sans filtre foncé */}
+            {/* Image du héro (même source, même grille de beads), sans filtre foncé */}
             <div
                 aria-hidden="true"
                 className="absolute inset-0"
-                style={{ backgroundImage: `url(${SOURCE_URL})`, backgroundSize: 'cover', backgroundPosition: 'center 58%' }}
+                style={{
+                    backgroundImage: `url(${SOURCE_URL})`,
+                    backgroundSize: beadPx ? `${SAMPLE_W * beadPx}px ${SAMPLE_H * beadPx}px` : 'cover',
+                    backgroundPosition: 'center bottom',
+                    backgroundRepeat: 'no-repeat',
+                }}
             />
             <Reveal>
                 <div
