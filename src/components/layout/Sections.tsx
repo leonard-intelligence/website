@@ -1405,6 +1405,10 @@ function AgentCard({ data, rotate, offsetX, offsetY, z, surface }: { data: Agent
                 borderRadius: 10,
                 mask: 'url(#agent-card-notches)',
                 WebkitMask: 'url(#agent-card-notches)',
+                // Groupe d'isolation pour le blending : la couche holo et son fond
+                // restent composités ensemble → pas de « flash » quand le navigateur
+                // promeut la carte en couche GPU (will-change/transform).
+                isolation: 'isolate',
                 padding: '6% 8%',
                 boxSizing: 'border-box',
                 // Geist Mono OpenType features:
@@ -2137,7 +2141,7 @@ function WindowFoil({ effect, foil, strength, glare, sat, fpTile, fpRelief }: { 
             layers = [
                 {
                     bg: irid ? IRIDESCENT : foilGradient(foil),
-                    blend: irid ? 'color-dodge' : 'overlay',
+                    blend: irid ? 'color-dodge' : 'screen',
                     size: irid ? '170% 170%' : '180% 180%',
                     pos: 'center',
                     filter: irid
@@ -2219,7 +2223,9 @@ function buildMotifMask(size: number, space: number): string {
 // Carte unique pilotée par le panneau DevTools › Holo. Foil irisé/métal découpé
 // dans le logo Leonard répété (reverse-holo) + reflet mobile, dans la silhouette.
 const foilGradient = (k: FoilKind) => (k === 'silver' ? SILVER : k === 'gold' ? GOLD : RAINBOW);
-const foilBlendFor = (k: FoilKind): React.CSSProperties['mixBlendMode'] => (k === 'rainbow' ? 'color-dodge' : 'overlay');
+// Blends qui n'ajoutent que de la lumière (jamais d'assombrissement) → le foil ne
+// noircit pas les zones déjà sombres, comme un vrai reflet.
+const foilBlendFor = (k: FoilKind): React.CSSProperties['mixBlendMode'] => (k === 'rainbow' ? 'color-dodge' : 'screen');
 
 // Carte Agent ID avec l'effet holo (tilt + foil de surface). Remplit son conteneur.
 function HoloAgentCard() {
