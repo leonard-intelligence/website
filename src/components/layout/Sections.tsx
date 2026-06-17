@@ -1091,7 +1091,7 @@ export function SectionCapabilities() {
                             className="font-sans mt-4"
                             style={{ fontSize: 'clamp(1.85rem, 3.4vw, 2.75rem)', lineHeight: 1.1, fontWeight: 500, letterSpacing: '-0.02em', ...EMBOSS_DARK }}
                         >
-                            Créer vos agents sur mesure.
+                            Créer vos agents sur mesure, sur vos données.
                         </h2>
                         <p
                             className="font-sans mt-5"
