@@ -1998,6 +1998,24 @@ const RAINBOW_STREAKS =
     'repeating-linear-gradient(95deg, hsl(0,100%,71%) 0%, hsl(45,100%,68%) 14%, hsl(110,100%,67%) 28%, hsl(190,100%,72%) 43%, hsl(230,100%,72%) 57%, hsl(280,100%,72%) 71%, hsl(330,100%,72%) 86%, hsl(0,100%,71%) 100%)';
 const RADIANT_HATCH =
     'repeating-linear-gradient(115deg, #ffffff 0%, #585858 1.6%, #ffffff 3.4%, #c4c4c4 5%, #ffffff 6.6%)';
+// Texture paillettes : un champ d'éclats blancs tuilé (PRNG déterministe) → donne
+// le grain « foil » qui manque aux simples dégradés. Blanc, coloré ensuite par le
+// dégradé en dessous via color-dodge.
+const SPARKLE_URL = (() => {
+    let s = 1337;
+    const rnd = () => ((s = (s * 1103515245 + 12345) & 0x7fffffff) / 0x7fffffff);
+    const W = 150;
+    const dots: string[] = [];
+    for (let i = 0; i < 90; i++) {
+        const x = (rnd() * W).toFixed(1);
+        const y = (rnd() * W).toFixed(1);
+        const r = (0.5 + rnd() * 1.7).toFixed(2);
+        const o = (0.4 + rnd() * 0.6).toFixed(2);
+        dots.push(`<circle cx='${x}' cy='${y}' r='${r}' fill='white' opacity='${o}'/>`);
+    }
+    const svg = `<svg xmlns='http://www.w3.org/2000/svg' width='${W}' height='${W}'>${dots.join('')}</svg>`;
+    return `url("data:image/svg+xml;utf8,${svg}")`;
+})();
 
 type WinLayer = {
     bg: string;
@@ -2054,12 +2072,24 @@ function WindowFoil({ effect, foil, strength, glare, sat }: { effect: WindowEffe
         case 'glitter':
             layers = [
                 { bg: foilGradient(foil), blend: 'color', size: '200% 200%', pos: 'calc(var(--mx,50%) * 1.5) calc(var(--my,50%) * 1.5)', filter: `saturate(${sat})`, o: 0.9 },
-                { bg: CARD_GRAIN_URL, blend: 'color-dodge', size: '120px 120px', pos: 'calc(var(--mx,50%) * -1) calc(var(--my,50%) * -1)', repeat: 'repeat', filter: 'brightness(1.5) contrast(1.6)', o: 0.85 },
             ];
             break;
         case 'sheen':
         default:
             layers = [{ bg: foilGradient(foil), blend: foilBlendFor(foil), size: '200% 200%', pos: 'calc(var(--mx,50%) * -1.4) calc(var(--my,50%) * -1.4)', filter: `saturate(${sat})`, o: 1 }];
+    }
+    // Couche paillettes (le grain « foil ») sur tous les effets sauf le sheen lisse.
+    if (effect !== 'sheen') {
+        const dense = effect === 'glitter' ? 1 : 0.75;
+        layers.push({
+            bg: SPARKLE_URL,
+            blend: 'color-dodge',
+            size: effect === 'glitter' ? '110px 110px' : '150px 150px',
+            pos: 'calc(var(--mx,50%) * -1.6) calc(var(--my,50%) * -1.6)',
+            repeat: 'repeat',
+            filter: 'brightness(1.4) contrast(1.3)',
+            o: dense,
+        });
     }
     return (
         <Fragment>
