@@ -2,7 +2,7 @@
 // Each layer = its own section with a distinct single-stroke illustration + accent.
 // Layer 05 (Capacités métier) is the existing SectionCapabilities (Agent ID card).
 import { useInViewReveal } from '../../hooks/useInViewReveal';
-import { TOKENS, EMBOSS_DARK, EMBOSS_MUTED, CARD_SHADOW } from './Sections';
+import { TOKENS, EMBOSS_DARK, CARD_SHADOW } from './Sections';
 import { SOURCE_URL } from '../pixels/BeadPxContext';
 import { IlluModelField } from './illustrations/IlluModelField';
 import { IlluHarness } from './illustrations/IlluHarness';
@@ -51,11 +51,8 @@ function LayerSection({ id, eyebrow, title, lead, points, accent, bg, flip, wide
 
     const heading = (
         <>
-            <div className="font-mono" style={{ fontSize: 13, letterSpacing: '0.22em', ...EMBOSS_MUTED }}>
-                {eyebrow}
-            </div>
             <h2
-                className="font-sans mt-4"
+                className="font-sans"
                 style={{
                     fontSize: 'clamp(1.6rem, 2.7vw, 2.25rem)',
                     lineHeight: 1.12,
@@ -219,7 +216,7 @@ export function LayerContexte() {
         <LayerSection
             id="section-contexte"
             eyebrow="CONTEXTE & CONNAISSANCE"
-            title="Ne perdez plus rien. Souvenez-vous de tout."
+            title="Construisez votre base de connaissance."
             lead="Chaque échange, chaque décision, chaque dossier nourrit la mémoire de vos agents. L'information ne s'évapore plus : elle se capitalise, et chaque nouvelle tâche démarre avec tout l'historique. Vous gagnez en productivité à chaque itération."
             points={['Aucune information perdue', 'Une mémoire qui se capitalise', "De la productivité qui s'accumule"]}
             accent={TOKENS.forest}

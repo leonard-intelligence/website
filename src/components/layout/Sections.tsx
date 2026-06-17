@@ -1084,11 +1084,8 @@ export function SectionCapabilities() {
                 <div className="max-w-[1200px] mx-auto grid grid-cols-1 lg:grid-cols-2 items-center" style={{ gap: 56 }}>
                     {/* Text — left, en dehors du cadre */}
                     <div>
-                        <div className="font-mono" style={{ fontSize: 13, letterSpacing: '0.22em', ...EMBOSS_MUTED }}>
-                            FICHE TECHNIQUE
-                        </div>
                         <h2
-                            className="font-sans mt-4"
+                            className="font-sans"
                             style={{ fontSize: 'clamp(1.85rem, 3.4vw, 2.75rem)', lineHeight: 1.1, fontWeight: 500, letterSpacing: '-0.02em', ...EMBOSS_DARK }}
                         >
                             Créer vos agents sur mesure, sur vos données.
