@@ -401,7 +401,7 @@ export function SectionExpertise() {
                     {/* Header row : grand titre */}
                     <div className="flex items-end" style={{ borderBottom: '1px solid rgba(23,23,23,0.10)', paddingBottom: 28 }}>
                         <h2 className="font-sans" style={{ fontSize: 'clamp(2.2rem, 4.6vw, 3.4rem)', lineHeight: 1.05, fontWeight: 500, letterSpacing: '-0.03em', ...EMBOSS_DARK }}>
-                            Des agents spécialisés ont déjà fait leurs preuves dans de multiples domaines.
+                            Nous construisons des agents métiers adaptés à vos besoins.
                         </h2>
                     </div>
 
