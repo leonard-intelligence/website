@@ -1192,12 +1192,12 @@ export function SectionCapabilities() {
                             className="absolute inset-0"
                             style={{ backgroundImage: `url(${SOURCE_URL})`, backgroundSize: 'cover', backgroundPosition: 'center 60%' }}
                         />
-                        {/* carte flottante */}
+                        {/* carte flottante — avec l'effet holo (tilt + foil de surface) */}
                         <div
                             className="relative"
                             style={{ height: '92%', aspectRatio: '0.7', filter: 'drop-shadow(0 16px 32px rgba(0,0,0,0.4))' }}
                         >
-                            <AgentCardStack sel={0} />
+                            <HoloAgentCard />
                         </div>
                     </div>
                 </div>
@@ -2136,7 +2136,8 @@ function buildMotifMask(size: number, space: number): string {
 const foilGradient = (k: FoilKind) => (k === 'silver' ? SILVER : k === 'gold' ? GOLD : RAINBOW);
 const foilBlendFor = (k: FoilKind): React.CSSProperties['mixBlendMode'] => (k === 'rainbow' ? 'color-dodge' : 'overlay');
 
-function HoloCard() {
+// Carte Agent ID avec l'effet holo (tilt + foil de surface). Remplit son conteneur.
+function HoloAgentCard() {
     const p = useHoloParams();
     const notch = useNotchParams();
     const tilt = useTilt({ maxTilt: p.tilt, scale: 1.015 });
@@ -2210,50 +2211,22 @@ function HoloCard() {
     );
 
     return (
-        <div className="relative" style={{ width: 'clamp(240px, 32vw, 320px)', aspectRatio: '0.7' }}>
-            <div {...tilt.bind} style={{ width: '100%', height: '100%', perspective: tilt.perspective }}>
-                <div
-                    ref={tilt.cardRef}
-                    className="relative"
-                    style={{
-                        width: '100%',
-                        height: '100%',
-                        transformStyle: 'preserve-3d',
-                        transformOrigin: 'center',
-                        transition: 'transform 110ms ease-out',
-                        willChange: 'transform',
-                    }}
-                >
-                    <AgentCardStack sel={0} surface={surface} />
-                </div>
+        <div {...tilt.bind} style={{ width: '100%', height: '100%', perspective: tilt.perspective }}>
+            <div
+                ref={tilt.cardRef}
+                className="relative"
+                style={{
+                    width: '100%',
+                    height: '100%',
+                    transformStyle: 'preserve-3d',
+                    transformOrigin: 'center',
+                    transition: 'transform 110ms ease-out',
+                    willChange: 'transform',
+                }}
+            >
+                <AgentCardStack sel={0} surface={surface} />
             </div>
         </div>
-    );
-}
-
-export function SectionHoloLab() {
-    return (
-        <section
-            id="section-holo-lab"
-            className="relative"
-            style={{ backgroundColor: TOKENS.surface, paddingBlock: '88px', paddingInline: '32px', borderTop: '1px dashed rgba(23,23,23,0.18)' }}
-            aria-label="Labo effets holographiques (test)"
-        >
-            <div className="max-w-[860px] mx-auto flex flex-col items-center text-center">
-                <div className="font-mono" style={{ fontSize: 12, letterSpacing: '0.22em', color: TOKENS.mutedText }}>
-                    LABO · TEST (à retirer)
-                </div>
-                <h2 className="font-sans mt-3" style={{ fontSize: 'clamp(1.6rem, 3vw, 2.4rem)', lineHeight: 1.1, fontWeight: 500, letterSpacing: '-0.02em', ...EMBOSS_DARK }}>
-                    Effet reverse-holo
-                </h2>
-                <p className="font-sans mt-3" style={{ fontSize: 15, lineHeight: '22px', color: TOKENS.mutedText, maxWidth: '54ch' }}>
-                    Survole la carte. Règle le reflet, la taille et l'espace du motif dans DevTools › Holo. (Souris uniquement, désactivé si « réduire les animations ».)
-                </p>
-                <div className="mt-12">
-                    <HoloCard />
-                </div>
-            </div>
-        </section>
     );
 }
 
