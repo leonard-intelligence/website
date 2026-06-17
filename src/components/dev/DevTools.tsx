@@ -377,6 +377,7 @@ const WINDOW_EFFECTS: SegOption<WindowEffect>[] = [
     { id: 'rainbow', label: 'Rainbow' },
     { id: 'radiant', label: 'Radiant' },
     { id: 'glitter', label: 'Glitter' },
+    { id: 'amazing', label: 'Amazing' },
     { id: 'sheen', label: 'Sheen' },
 ];
 

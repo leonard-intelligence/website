@@ -2079,12 +2079,40 @@ function WindowFoil({ effect, foil, strength, glare, sat }: { effect: WindowEffe
                 { bg: foilGradient(foil), blend: 'color', size: '200% 200%', pos: 'calc(var(--mx,50%) * 1.5) calc(var(--my,50%) * 1.5)', filter: `saturate(${sat})`, o: 0.9 },
             ];
             break;
+        case 'amazing':
+            // « Amazing Rare » (Simey) : foil brillant en lighten + arc-en-ciel en
+            // saturation, position amplifiée par le curseur. Très shiny, texturé
+            // par la double couche de paillettes ajoutée plus bas.
+            layers = [
+                {
+                    bg: `${RAINBOW_STREAKS}, ${HOLO_SHEEN}`,
+                    bgBlend: 'color-burn',
+                    blend: 'lighten',
+                    size: '300% 100%, 220% 220%',
+                    pos: 'calc(var(--mx,50%) * -2.5) 50%, calc(var(--mx,50%) * -1.2) calc(var(--my,50%) * -1.2)',
+                    filter: `brightness(1.15) contrast(1.2) saturate(${sat * 1.2})`,
+                    o: 1,
+                },
+                {
+                    bg: HOLO_BANDS,
+                    blend: 'saturation',
+                    size: '400% 800%',
+                    pos: 'calc(50% + (50% - var(--mx,50%)) * 3) calc(50% + (50% - var(--my,50%)) * 3)',
+                    filter: 'brightness(0.95) contrast(1.1)',
+                    o: 0.9,
+                },
+            ];
+            break;
         case 'sheen':
         default:
             layers = [{ bg: foilGradient(foil), blend: foilBlendFor(foil), size: '200% 200%', pos: 'calc(var(--mx,50%) * -1.4) calc(var(--my,50%) * -1.4)', filter: `saturate(${sat})`, o: 1 }];
     }
-    // Couche paillettes (le grain « foil ») sur tous les effets sauf le sheen lisse.
-    if (effect !== 'sheen') {
+    // Couche(s) paillettes (le grain « foil ») sur tous les effets sauf le sheen.
+    if (effect === 'amazing') {
+        // double couche décalée → texture dense et très brillante (lighten/soft-light)
+        layers.push({ bg: SPARKLE_URL, blend: 'lighten', size: '90px 90px', pos: 'calc(var(--mx,50%) * -1.8) calc(var(--my,50%) * -1.8)', repeat: 'repeat', filter: 'brightness(1.9) contrast(1.5)', o: 1 });
+        layers.push({ bg: SPARKLE_URL, blend: 'soft-light', size: '64px 64px', pos: 'calc(var(--mx,50%) * 2.2) calc(var(--my,50%) * 2.2)', repeat: 'repeat', filter: 'brightness(1.7) contrast(1.4)', o: 0.9 });
+    } else if (effect !== 'sheen') {
         const dense = effect === 'glitter' ? 1 : 0.75;
         layers.push({
             bg: SPARKLE_URL,

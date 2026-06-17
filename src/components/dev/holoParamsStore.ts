@@ -5,7 +5,7 @@ import { useSyncExternalStore } from 'react';
 
 export type FoilKind = 'rainbow' | 'silver' | 'gold';
 // Effets de la zone illustration, inspirés de pokemon-cards-css (Simey).
-export type WindowEffect = 'sheen' | 'holo' | 'rainbow' | 'radiant' | 'glitter';
+export type WindowEffect = 'sheen' | 'holo' | 'rainbow' | 'radiant' | 'glitter' | 'amazing';
 
 export type HoloParams = {
     motifSize: number; // taille du logo dans la tuile (px)
