@@ -392,6 +392,11 @@ function HoloTab() {
             <SectionLabel>Mouvement</SectionLabel>
             <Slider label="Inclinaison" min={0} max={16} step={0.5} value={p.tilt} onChange={(v) => setHoloParams({ tilt: v })} unit="°" />
 
+            <SectionLabel>Zone illustration (fenêtre image)</SectionLabel>
+            <Toggle active={p.splitWindow} onChange={(v) => setHoloParams({ splitWindow: v })} label="Holo séparé dans l'illustration" />
+            <Segmented value={p.windowFoil} onChange={(v) => setHoloParams({ windowFoil: v })} options={FOIL_OPTS} columns={3} />
+            <Slider label="Reflet illustration" min={0} max={1} step={0.01} value={p.windowStrength} onChange={(v) => setHoloParams({ windowStrength: v })} />
+
             <ResetButton onClick={() => resetHoloParams()} />
         </>
     );

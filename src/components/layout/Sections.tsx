@@ -4,7 +4,7 @@ import { PixelLayer } from '../pixels/PixelLayer';
 import { Pixel } from '../pixels/Pixel';
 import { useBeadCtx, SOURCE_URL, SAMPLE_W, SAMPLE_H } from '../pixels/BeadPxContext';
 import { useHeroTitleParams } from '../dev/heroTitleStore';
-import { useHoloParams } from '../dev/holoParamsStore';
+import { useHoloParams, type FoilKind } from '../dev/holoParamsStore';
 import { LEONARD_MOTIF_B64 } from './illustrations/leonardMotif';
 import { useNotchParams } from '../dev/notchParamsStore';
 import { useVitruveParams } from '../dev/vitruveParamsStore';
@@ -2002,13 +2002,27 @@ function buildMotifMask(size: number, space: number): string {
 
 // Carte unique pilotée par le panneau DevTools › Holo. Foil irisé/métal découpé
 // dans le logo Leonard répété (reverse-holo) + reflet mobile, dans la silhouette.
+const foilGradient = (k: FoilKind) => (k === 'silver' ? SILVER : k === 'gold' ? GOLD : RAINBOW);
+const foilBlendFor = (k: FoilKind): React.CSSProperties['mixBlendMode'] => (k === 'rainbow' ? 'color-dodge' : 'overlay');
+
 function HoloCard() {
     const p = useHoloParams();
+    const notch = useNotchParams();
     const tilt = useTilt({ maxTilt: p.tilt, scale: 1.015 });
     const cell = p.motifSize + p.motifSpace;
     const motifMask = buildMotifMask(p.motifSize, p.motifSpace);
-    const foilBg = p.foil === 'silver' ? SILVER : p.foil === 'gold' ? GOLD : RAINBOW;
-    const foilBlend: React.CSSProperties['mixBlendMode'] = p.foil === 'rainbow' ? 'color-dodge' : 'overlay';
+    const foilBg = foilGradient(p.foil);
+    const foilBlend = foilBlendFor(p.foil);
+
+    // Géométrie de la fenêtre « illustration » — identique à celle de la carte :
+    // commence 4% sous l'encoche basse, finit à 12% du bas, marges latérales 8%.
+    const winTop = `calc(${((notch.bottomCy + notch.bottomHeight / 2) * 100).toFixed(2)}% + 4%)`;
+    const WIN = { top: winTop, bottom: '12%', left: '8%', right: '8%' };
+    // Découpe le foil du corps pour exclure la fenêtre (trou rectangulaire).
+    const bodyClip = p.splitWindow
+        ? `polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%, 0% 0%, 8% ${winTop}, 8% 88%, 92% 88%, 92% ${winTop}, 8% ${winTop}, 0% 0%)`
+        : undefined;
+
     return (
         <div className="relative" style={{ width: 'clamp(240px, 32vw, 320px)', aspectRatio: '0.7' }}>
             <div {...tilt.bind} style={{ width: '100%', height: '100%', perspective: tilt.perspective }}>
@@ -2039,11 +2053,12 @@ function HoloCard() {
                             transition: 'opacity 360ms ease-out',
                         }}
                     >
-                        {/* foil découpé dans le logo tuilé */}
+                        {/* ZONE CORPS — foil découpé dans le logo tuilé, hors fenêtre image */}
                         <div
                             style={{
                                 position: 'absolute',
                                 inset: 0,
+                                clipPath: bodyClip,
                                 backgroundImage: foilBg,
                                 backgroundSize: '220% 220%',
                                 backgroundPosition: 'calc(var(--mx,50%) * 1.7) calc(var(--my,50%) * 1.7)',
@@ -2058,16 +2073,45 @@ function HoloCard() {
                                 opacity: p.foilStrength,
                             }}
                         />
-                        {/* reflet lumineux mobile */}
+                        {/* reflet lumineux mobile (corps) */}
                         <div
                             style={{
                                 position: 'absolute',
                                 inset: 0,
+                                clipPath: bodyClip,
                                 background: GLARE,
                                 mixBlendMode: 'screen',
                                 opacity: p.glareStrength,
                             }}
                         />
+
+                        {/* ZONE ILLUSTRATION — traitement différent : sheen lisse (sans motif),
+                            foil propre, déplacé à contre-sens, clippé à la fenêtre image */}
+                        {p.splitWindow && (
+                            <div style={{ position: 'absolute', ...WIN, overflow: 'hidden', borderRadius: 4 }}>
+                                <div
+                                    style={{
+                                        position: 'absolute',
+                                        inset: 0,
+                                        backgroundImage: foilGradient(p.windowFoil),
+                                        backgroundSize: '200% 200%',
+                                        backgroundPosition: 'calc(var(--mx,50%) * -1.4) calc(var(--my,50%) * -1.4)',
+                                        mixBlendMode: foilBlendFor(p.windowFoil),
+                                        filter: `saturate(${p.saturation})`,
+                                        opacity: p.windowStrength,
+                                    }}
+                                />
+                                <div
+                                    style={{
+                                        position: 'absolute',
+                                        inset: 0,
+                                        background: GLARE,
+                                        mixBlendMode: 'screen',
+                                        opacity: p.glareStrength,
+                                    }}
+                                />
+                            </div>
+                        )}
                     </div>
                 </div>
             </div>

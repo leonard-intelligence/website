@@ -8,11 +8,15 @@ export type FoilKind = 'rainbow' | 'silver' | 'gold';
 export type HoloParams = {
     motifSize: number; // taille du logo dans la tuile (px)
     motifSpace: number; // espace entre les motifs (px) — cell = size + space
-    foilStrength: number; // 0..1 — intensité de l'irisé/métal
+    foilStrength: number; // 0..1 — intensité de l'irisé/métal (corps de la carte)
     glareStrength: number; // 0..1 — intensité du reflet lumineux mobile
     saturation: number; // 1..3 — saturation du foil
     tilt: number; // degrés d'inclinaison max
     foil: FoilKind;
+    // Zone « illustration » (fenêtre de l'image) — traitée différemment du corps.
+    splitWindow: boolean; // active une 2e zone holo dans la fenêtre image
+    windowFoil: FoilKind; // foil propre à la fenêtre
+    windowStrength: number; // 0..1 — intensité du foil dans la fenêtre
 };
 
 export const DEFAULT_HOLO_PARAMS: HoloParams = {
@@ -23,6 +27,9 @@ export const DEFAULT_HOLO_PARAMS: HoloParams = {
     saturation: 1.7,
     tilt: 7,
     foil: 'rainbow',
+    splitWindow: true,
+    windowFoil: 'silver',
+    windowStrength: 0.5,
 };
 
 let state: HoloParams = { ...DEFAULT_HOLO_PARAMS };
