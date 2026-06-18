@@ -2478,8 +2478,6 @@ export function FooterV2() {
                         {[
                             { label: 'Méthode', href: '#section-method' },
                             { label: 'Expertises', href: '#section-expertise' },
-                            { label: 'Mentions légales', href: '/mentions-legales' },
-                            { label: 'Contact', href: '#contact' },
                         ].map(({ label, href }) => (
                             <a
                                 key={label}
@@ -2525,7 +2523,7 @@ export function FooterV2() {
                 <span aria-hidden="true" style={{ position: 'absolute', right: 0, bottom: -4, width: 10, height: 10, borderRight: `1px solid ${TOKENS.border}`, borderBottom: `1px solid ${TOKENS.border}` }} />
 
                 <span className="font-mono" style={{ fontSize: 11, letterSpacing: '0.08em', color: TOKENS.mutedText }}>
-                    © {new Date().getFullYear()} LEONARD INTELLIGENCE · BUILD v2 · PARIS, FRANCE
+                    © {new Date().getFullYear()} LEONARD INTELLIGENCE
                 </span>
                 <span className="font-mono" style={{ fontSize: 11, letterSpacing: '0.04em', color: TOKENS.mutedText }}>
                     Construit en France 🇫🇷
