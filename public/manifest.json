@@ -1,11 +1,11 @@
 {
-  "name": "Leonard Intelligence - Experts IA & Automatisation",
+  "name": "Leonard Intelligence - Agence agentique, agents IA sur mesure",
   "short_name": "Leonard Intelligence",
-  "description": "Automatisez vos processus internes avec une IA souveraine et sécurisée.",
+  "description": "Agence agentique. Agents IA sur mesure, conçus, déployés et pilotés pour votre entreprise.",
   "start_url": "/",
   "display": "standalone",
-  "background_color": "#000000",
-  "theme_color": "#000000",
+  "background_color": "#F7F7F5",
+  "theme_color": "#F7F7F5",
   "lang": "fr",
   "icons": [
     {

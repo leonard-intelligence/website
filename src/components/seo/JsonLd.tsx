@@ -14,9 +14,10 @@ export function JsonLd({ type = 'Organization', breadcrumbs }: JsonLdProps) {
         name: 'Leonard Intelligence',
         url: siteUrl,
         logo: `${siteUrl}/logo_black_512.png`,
-        description: 'Cabinet de conseil expert en IA Générative et Data pour entreprises.',
+        description: "Agence agentique : conception, déploiement et pilotage d'agents IA sur mesure pour les entreprises.",
         inLanguage: 'fr-FR',
-        sameAs: ['https://www.linkedin.com/company/leonard-intelligence', 'https://twitter.com/leonardintelligence'],
+        areaServed: 'FR',
+        sameAs: ['https://www.linkedin.com/company/leonard-intelligence'],
         address: {
             '@type': 'PostalAddress',
             addressCountry: 'FR',
@@ -35,20 +36,29 @@ export function JsonLd({ type = 'Organization', breadcrumbs }: JsonLdProps) {
         name: 'Leonard Intelligence',
         url: siteUrl,
         description:
-            'Automatisez vos processus internes avec une IA souveraine et sécurisée. Texte, image, audio, vidéo.',
+            "Conception, déploiement et pilotage d'agents IA sur mesure, branchés à vos outils, pour augmenter les performances de votre entreprise.",
         areaServed: 'FR',
         serviceType: [
-            'Conseil en Intelligence Artificielle',
-            'Automatisation de processus',
-            'Déploiement IA souverain',
+            "Conception d'agents IA",
+            'Automatisation de workflows agentiques',
+            "Déploiement et pilotage d'agents IA",
         ],
         knowsAbout: [
-            'Intelligence Artificielle Générative',
-            'Agents IA Autonomes',
-            'Traitement du Langage Naturel',
-            'Vision par Ordinateur',
-            'Traitement Audio et Signal',
+            'Agents IA autonomes',
+            'Grands modèles de langage (LLM)',
+            'Orchestration agentique',
+            'Intégration de données et de contexte',
+            'Interfaces et produits agentiques',
         ],
+    };
+
+    const websiteSchema = {
+        '@context': 'https://schema.org',
+        '@type': 'WebSite',
+        name: 'Leonard Intelligence',
+        url: siteUrl,
+        inLanguage: 'fr-FR',
+        publisher: { '@type': 'Organization', name: 'Leonard Intelligence' },
     };
 
     const breadcrumbSchema =
@@ -77,6 +87,10 @@ export function JsonLd({ type = 'Organization', breadcrumbs }: JsonLdProps) {
                     <script
                         type="application/ld+json"
                         dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceSchema) }}
+                    />
+                    <script
+                        type="application/ld+json"
+                        dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteSchema) }}
                     />
                 </>
             )}

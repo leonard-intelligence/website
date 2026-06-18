@@ -13,8 +13,8 @@ interface SEOProps {
 const heroBg = '/logo_black_512.png';
 
 export function SEO({
-    title = 'Leonard Intelligence - Experts IA & Automatisation',
-    description = 'Automatisez vos processus internes avec une IA souveraine et sécurisée. Texte, image, audio, vidéo. Déploiement Local ou Cloud UE.',
+    title = 'Leonard Intelligence - Agence agentique, agents IA sur mesure',
+    description = 'Agence agentique française. Nous concevons, déployons et pilotons des agents IA sur mesure, branchés à vos outils, pour augmenter les performances de votre entreprise.',
     canonical,
     image = heroBg,
     type = 'website',
@@ -38,7 +38,9 @@ export function SEO({
             <meta property="og:title" content={title} />
             <meta property="og:description" content={description} />
             <meta property="og:locale" content="fr_FR" />
+            <meta property="og:site_name" content="Leonard Intelligence" />
             <meta property="og:image" content={fullImage} />
+            <meta property="og:image:alt" content={title} />
 
             {/* Twitter */}
             <meta name="twitter:card" content="summary_large_image" />
