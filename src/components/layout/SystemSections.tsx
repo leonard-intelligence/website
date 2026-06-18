@@ -206,6 +206,7 @@ export function LayerDonnees() {
             points={['Toutes les sources pertinentes, sans exception', 'Centralisées dans un environnement standardisé', "Des données unifiées, prêtes à l'emploi"]}
             accent={TOKENS.gold}
             bg={TOKENS.surface}
+            flip
             visual={<IlluConnect accent={TOKENS.gold} />}
         />
     );
