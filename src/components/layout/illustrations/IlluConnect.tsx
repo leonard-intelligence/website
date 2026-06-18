@@ -136,7 +136,7 @@ export function IlluConnect({ accent }: { accent: string }) {
                 >
                     <span className="inline-flex items-center" style={{ gap: 7, marginBottom: 6 }}>
                         <PulseDot color={accent} size={7} />
-                        <span className="font-mono" style={{ fontSize: 8.5, letterSpacing: '0.16em', color: mutedText }}>UNIFIÉ</span>
+                        <span className="font-mono" style={{ fontSize: 10, letterSpacing: '0.16em', color: mutedText }}>UNIFIÉ</span>
                     </span>
                     <div className="font-sans" style={{ fontSize: 14.5, fontWeight: 600, color: ink, lineHeight: 1.15, whiteSpace: 'nowrap' }}>Contexte unifié</div>
                     <div className="font-mono" style={{ fontSize: 10, color: mutedText, marginTop: 5, whiteSpace: 'nowrap' }}>un environnement standardisé</div>
@@ -158,12 +158,12 @@ export function IlluConnect({ accent }: { accent: string }) {
                     }}
                 >
                     <span style={{ width: 18, height: 18, borderRadius: 5, background: TOKENS.lime, boxShadow: 'inset 0 0 0 0.7px rgba(255,255,255,0.6), 0 1px 2px rgba(0,0,0,0.15)' }} />
-                    <span className="font-mono" style={{ fontSize: 8.5, letterSpacing: '0.14em', color: mutedText }}>AGENT</span>
+                    <span className="font-mono" style={{ fontSize: 10, letterSpacing: '0.14em', color: mutedText }}>AGENT</span>
                 </div>
             </div>
             </div>
 
-            <div className="font-mono" style={{ fontSize: 9.5, letterSpacing: '0.14em', color: mutedText, textAlign: 'center', marginTop: 10 }}>
+            <div className="font-mono" style={{ fontSize: 10.5, letterSpacing: '0.14em', color: mutedText, textAlign: 'center', marginTop: 10 }}>
                 TOUS FORMATS EN ENTRÉE · UNIFIÉS EN SORTIE
             </div>
         </div>

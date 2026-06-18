@@ -397,6 +397,27 @@ const EXP_CARDS: { icon: LucideIcon; label: string; tags: string[]; pos: React.C
     { icon: Calculator, label: 'Finance', tags: ['Dépenses', 'Rapports', 'Fraude'], pos: { right: '8%', top: '74%' } },
 ];
 
+// Carte d'expertise (réutilisée : flottante sur le vortex en desktop, empilée en mobile).
+function ExpertiseCard({ icon: Icon, label, tags, className, style }: { icon: LucideIcon; label: string; tags: string[]; className?: string; style?: React.CSSProperties }) {
+    return (
+        <div className={className} style={style}>
+            <div className="flex items-center" style={{ gap: 11, marginBottom: 12 }}>
+                <span className="inline-flex items-center justify-center shrink-0" style={{ width: 36, height: 36, borderRadius: 4, background: TOKENS.lime, boxShadow: RM_TILE_SHADOW }}>
+                    <Icon size={18} strokeWidth={1.9} color={TOKENS.ink} />
+                </span>
+                <span className="font-sans" style={{ fontSize: 15.5, fontWeight: 600, color: TOKENS.ink }}>{label}</span>
+            </div>
+            <div className="flex flex-wrap" style={{ gap: 6 }}>
+                {tags.map((t) => (
+                    <span key={t} className="font-mono" style={{ padding: '4px 9px', borderRadius: 999, border: '1px solid rgba(23,23,23,0.12)', fontSize: 10.5, letterSpacing: '0.03em', color: TOKENS.mutedText }}>
+                        {t}
+                    </span>
+                ))}
+            </div>
+        </div>
+    );
+}
+
 export function SectionExpertise() {
     const vortex = useVortexParams('expertises');
     return (
@@ -425,7 +446,7 @@ export function SectionExpertise() {
                         className="relative"
                         style={{
                             marginTop: 40,
-                            height: 'clamp(520px, 50vw, 600px)',
+                            height: 'clamp(360px, 50vw, 600px)',
                             borderRadius: 18,
                             overflow: 'hidden',
                             backgroundColor: '#EEEDE9',
@@ -453,34 +474,30 @@ export function SectionExpertise() {
                             <LeonardSymbol size={60} />
                         </div>
 
-                        {/* cartes expertises réparties dans le cadre */}
-                        {EXP_CARDS.map(({ icon: Icon, label, tags, pos }) => (
-                            <div
-                                key={label}
-                                className="absolute flex flex-col"
-                                style={{ ...pos, width: 'clamp(244px, 25vw, 296px)', padding: '14px 16px', borderRadius: 14, background: TOKENS.white, boxShadow: `${RM_CARD_SHADOW}, 0 12px 28px rgba(0,0,0,0.12)` }}
-                            >
-                                <div className="flex items-center" style={{ gap: 11, marginBottom: 12 }}>
-                                    <span
-                                        className="inline-flex items-center justify-center shrink-0"
-                                        style={{ width: 36, height: 36, borderRadius: 4, background: TOKENS.lime, boxShadow: RM_TILE_SHADOW }}
-                                    >
-                                        <Icon size={18} strokeWidth={1.9} color={TOKENS.ink} />
-                                    </span>
-                                    <span className="font-sans" style={{ fontSize: 15.5, fontWeight: 600, color: TOKENS.ink }}>{label}</span>
-                                </div>
-                                <div className="flex flex-wrap" style={{ gap: 6 }}>
-                                    {tags.map((t) => (
-                                        <span
-                                            key={t}
-                                            className="font-mono"
-                                            style={{ padding: '4px 9px', borderRadius: 999, border: '1px solid rgba(23,23,23,0.12)', fontSize: 10.5, letterSpacing: '0.03em', color: TOKENS.mutedText }}
-                                        >
-                                            {t}
-                                        </span>
-                                    ))}
-                                </div>
-                            </div>
+                        {/* cartes expertises — flottantes sur le vortex (desktop uniquement) */}
+                        {EXP_CARDS.map((c) => (
+                            <ExpertiseCard
+                                key={c.label}
+                                icon={c.icon}
+                                label={c.label}
+                                tags={c.tags}
+                                className="hidden md:flex absolute flex-col"
+                                style={{ ...c.pos, width: 'clamp(244px, 25vw, 296px)', padding: '14px 16px', borderRadius: 14, background: TOKENS.white, boxShadow: `${RM_CARD_SHADOW}, 0 12px 28px rgba(0,0,0,0.12)` }}
+                            />
+                        ))}
+                    </div>
+
+                    {/* mobile : cartes empilées sous le vortex (pas de chevauchement) */}
+                    <div className="md:hidden grid grid-cols-1 sm:grid-cols-2" style={{ gap: 12, marginTop: 16 }}>
+                        {EXP_CARDS.map((c) => (
+                            <ExpertiseCard
+                                key={c.label}
+                                icon={c.icon}
+                                label={c.label}
+                                tags={c.tags}
+                                className="flex flex-col"
+                                style={{ padding: '14px 16px', borderRadius: 14, background: TOKENS.white, boxShadow: `${RM_CARD_SHADOW}, 0 12px 28px rgba(0,0,0,0.12)` }}
+                            />
                         ))}
                     </div>
                 </div>
@@ -1183,7 +1200,7 @@ export function SectionCapabilities() {
                     <div
                         className="relative overflow-hidden mx-auto flex items-center justify-center"
                         style={{
-                            width: 'clamp(440px, 44vw, 540px)',
+                            width: 'min(540px, 86vw)',
                             aspectRatio: '1 / 1',
                             borderRadius: 22,
                             boxShadow: '0 20px 48px rgba(0,0,0,0.18), inset 0 0 0 1px rgba(255,255,255,0.12)',
@@ -2429,7 +2446,7 @@ export function SectionCTA() {
                 </p>
                 <dl
                     className="font-mono mx-auto mt-8 text-left"
-                    style={{ maxWidth: 360, padding: '20px 24px', borderRadius: 12, backgroundColor: TOKENS.pale, boxShadow: CARD_SHADOW, fontSize: 13, lineHeight: 1.9 }}
+                    style={{ maxWidth: 320, padding: '20px 24px', borderRadius: 12, backgroundColor: TOKENS.pale, boxShadow: CARD_SHADOW, fontSize: 12.5, lineHeight: 1.9 }}
                 >
                     {[
                         ['DURÉE', '30:00'],

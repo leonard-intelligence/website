@@ -110,7 +110,7 @@ function LayerSection({ id, eyebrow, title, lead, points, accent, bg, flip, wide
         <section
             id={id}
             className="relative"
-            style={{ backgroundColor: bg, paddingBlock: '88px', paddingInline: '32px' }}
+            style={{ backgroundColor: bg, paddingBlock: 'clamp(56px, 9vw, 88px)', paddingInline: 'clamp(18px, 6vw, 32px)' }}
             aria-label={eyebrow}
         >
             <Reveal>
