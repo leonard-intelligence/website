@@ -4,6 +4,9 @@ import { SAMPLE_W, SAMPLE_H, SOURCE_URL } from '../pixels/BeadPxContext';
 import { ReliefButton } from '../ui/ReliefButton';
 import { useHeroTitleParams } from '../dev/heroTitleStore';
 
+// Lien de prise de rendez-vous (boutons de contact)
+const CALENDLY_URL = import.meta.env.VITE_CALENDLY_URL || 'https://calendly.com/leonard-intelligence/30min';
+
 type Sz = {
     beadPx: number;
     beadW: number;     // bead area width in px (integer × beadPx)
@@ -130,9 +133,21 @@ export function Hero() {
                         />
                     </a>
                     <a
-                        href="#contact"
-                        className="text-white hover:opacity-70 transition-opacity inline-flex items-center px-5"
-                        style={{ height: `${3 * sz.beadPx}px`, fontSize: '15px', fontWeight: 410 }}
+                        href={CALENDLY_URL}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-white hover:opacity-90 transition-opacity inline-flex items-center px-5"
+                        style={{
+                            height: `${3 * sz.beadPx}px`,
+                            fontSize: '15px',
+                            fontWeight: 410,
+                            borderRadius: 13,
+                            background: 'linear-gradient(to right, rgba(0,0,0,0.18), rgba(0,0,0,0.10))',
+                            border: '1px solid rgba(255,255,255,0.2)',
+                            backdropFilter: 'blur(15px) saturate(118%)',
+                            WebkitBackdropFilter: 'blur(15px) saturate(118%)',
+                            boxShadow: '0 1px 3px 0 rgba(0,0,0,0.15)',
+                        }}
                     >
                         Contact
                     </a>
@@ -162,7 +177,7 @@ export function Hero() {
                         filter: `drop-shadow(0 2px 14px rgba(0, 0, 0, 0.35))${heroTitle.glow > 0 ? ` drop-shadow(0 0 ${heroTitle.glow}px ${heroTitle.glowColor})` : ''}`,
                     }}
                 >
-                    L'intelligence se cultive.
+                    Cultivez l'intelligence de votre entreprise
                 </h1>
 
                 {/* Bottom-left frosted card */}
@@ -191,7 +206,7 @@ export function Hero() {
                                 filter: 'drop-shadow(0 1px 8px rgba(0, 0, 0, 0.35))',
                             }}
                         >
-                            Agence agentique.
+                            Automatisez votre organisation
                         </h2>
                         <p
                             style={{
@@ -202,11 +217,11 @@ export function Hero() {
                                 textShadow: '0 1px 8px rgba(0, 0, 0, 0.25)',
                             }}
                         >
-                            Nous cultivons les agents de votre entreprise : conçus sur-mesure, déployés en production, branchés à vos systèmes et vos données.
+                            Leonard Intelligence est une agence agentique qui met au service les meilleurs outils d'intelligence artificielle pour augmenter les performances de votre business.
                         </p>
 
                         <div className="mt-6 flex flex-wrap items-center gap-3">
-                            <ReliefButton tone="lime" size="md" href="#contact" iconRight={<ArrowRight />}>
+                            <ReliefButton tone="lime" size="md" href={CALENDLY_URL} target="_blank" rel="noopener noreferrer" iconRight={<ArrowRight />}>
                                 Discutons de votre projet
                             </ReliefButton>
 

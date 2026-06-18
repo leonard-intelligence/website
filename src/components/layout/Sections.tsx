@@ -16,6 +16,9 @@ import { ConstruitSur } from './ConstruitSur';
 import { Fragment, useEffect, useRef, useState } from 'react';
 import { useInViewReveal } from '../../hooks/useInViewReveal';
 
+// Lien de prise de rendez-vous (boutons de contact)
+const CALENDLY_URL = import.meta.env.VITE_CALENDLY_URL || 'https://calendly.com/leonard-intelligence/30min';
+
 function Reveal({ children, className }: { children: React.ReactNode; className?: string }) {
     const { ref, shown } = useInViewReveal<HTMLDivElement>();
     return (
@@ -2441,7 +2444,7 @@ export function SectionCTA() {
                     ))}
                 </dl>
                 <div className="mt-10 flex flex-wrap justify-center items-center gap-3">
-                    <ReliefButton tone="lime" size="md" href="#contact" id="contact" iconRight={<ArrowRight />}>
+                    <ReliefButton tone="lime" size="md" href={CALENDLY_URL} id="contact" target="_blank" rel="noopener noreferrer" iconRight={<ArrowRight />}>
                         Réserver la cartographie
                     </ReliefButton>
                 </div>
@@ -2507,7 +2510,7 @@ export function FooterV2() {
                             Leonard Intelligence est une agence agentique
                             <span style={{ color: TOKENS.mutedText }}> dédiée aux opérations des entreprises.</span>
                         </p>
-                        <ReliefButton tone="dark" size="sm" href="#contact" className="mt-5" iconRight={<ArrowRight />}>
+                        <ReliefButton tone="dark" size="sm" href={CALENDLY_URL} target="_blank" rel="noopener noreferrer" className="mt-5" iconRight={<ArrowRight />}>
                             Discutons
                         </ReliefButton>
                     </div>
