@@ -1,205 +1,153 @@
-// 04 · CONTEXTE & CONNAISSANCE — "Une mémoire qui se capitalise." (decorative).
-// Vue façon Obsidian : un graphe de connaissance où les notes se lient et
-// s'accumulent. Cœur accentué (forest) = la connaissance vivante, reliée ;
-// périphérie grise = le reste du corpus. Positions placées à la main (look
-// force-directed, pas de physique), respiration CSS très lente et désactivée
-// sous prefers-reduced-motion. Gravure embossée comme les autres sections.
+// 04 · CONTEXTE & CONNAISSANCE — un graphe de connaissance qui se construit.
+// Croissance en phyllotaxie (tournesol) : « l'intelligence se cultive ». Le
+// graphe part d'un point au centre et grandit beaucoup ; les points deviennent
+// de plus en plus petits à mesure que le corpus s'étend vers l'extérieur, puis
+// ça repart en boucle (croissance → palier → fondu → ça repart). Cœur accentué
+// (forest) = la connaissance vivante reliée ; périphérie grise = le corpus.
+// Désactivé sous prefers-reduced-motion (graphe complet figé).
+import { useEffect, useRef, useState } from 'react';
 import { TOKENS } from '../Sections';
 import { EMBOSS } from './kit';
 
-// ── Le graphe — coordonnées sur un repère 100×100, placées à la main pour
-//    un rendu organique (amas central dense, satellites épars). ───────────────
-type Node = {
-    id: string;
-    x: number;
-    y: number;
-    r: number;          // rayon (plus grand = note plus reliée / importante)
-    label?: string;
-    pos?: 'top' | 'bottom' | 'left' | 'right'; // côté du libellé
-    hot?: boolean;      // appartient au cœur accentué (forest)
-    drift?: number;     // index de respiration (0–3), répartit les phases
-};
+// ── Graphe précalculé sur un repère 100×100, en spirale de phyllotaxie. ───────
+const GOLDEN = Math.PI * (3 - Math.sqrt(5)); // angle d'or ≈ 2.39996 rad
+const N = 64;            // nombre de nœuds à terme
+const SPREAD = 5.2;      // espacement radial (unités viewBox)
+const CX = 50, CY = 50;  // centre
+const R_MAX = 3.2, R_MIN = 0.55, R_POW = 1.25; // les points rétrécissent vers l'extérieur
 
-const NODES: Node[] = [
-    // ── Cœur accentué — la connaissance reliée qui se capitalise ──
-    { id: 'dossier', x: 47, y: 49, r: 6.2, label: 'Dossier client', pos: 'right', hot: true, drift: 0 },
-    { id: 'playbook', x: 33, y: 35, r: 4.6, label: 'Playbook', pos: 'left', hot: true, drift: 2 },
-    { id: 'regle', x: 62, y: 36, r: 4.0, label: 'Règle métier', pos: 'right', hot: true, drift: 1 },
-    { id: 'decision', x: 58, y: 63, r: 4.3, label: 'Décision', pos: 'right', hot: true, drift: 3 },
-    { id: 'synthese', x: 38, y: 64, r: 3.4, label: 'Synthèse', pos: 'left', hot: true, drift: 1 },
-    { id: 'h1', x: 49, y: 33, r: 2.0, hot: true, drift: 2 },
-    { id: 'h2', x: 46, y: 64, r: 1.8, hot: true, drift: 0 },
+type GNode = { x: number; y: number; r: number; parent: number; hot: boolean };
 
-    // ── Périphérie grise — le corpus accumulé ──
-    { id: 'historique', x: 22, y: 56, r: 3.6, label: 'Historique', pos: 'left', drift: 3 },
-    { id: 'precedent', x: 75, y: 55, r: 3.4, label: 'Précédent', pos: 'right', drift: 0 },
-    { id: 'contrat', x: 70, y: 22, r: 3.2, label: 'Contrat', pos: 'top', drift: 2 },
-    { id: 'note', x: 26, y: 22, r: 2.8, label: 'Note', pos: 'top', drift: 1 },
-    { id: 'd1', x: 84, y: 38, r: 1.7, drift: 3 },
-    { id: 'd2', x: 16, y: 38, r: 1.6, drift: 0 },
-    { id: 'd3', x: 78, y: 72, r: 2.0, drift: 1 },
-    { id: 'd4', x: 33, y: 78, r: 1.7, drift: 2 },
-    { id: 'd5', x: 58, y: 80, r: 1.5, drift: 3 },
-];
+const GNODES: GNode[] = (() => {
+    const nodes: GNode[] = [];
+    for (let i = 0; i < N; i++) {
+        const rad = SPREAD * Math.sqrt(i);
+        const a = i * GOLDEN;
+        const x = CX + rad * Math.cos(a);
+        const y = CY + rad * Math.sin(a);
+        // rayon : grand au cœur, de plus en plus petit vers la périphérie
+        const r = R_MAX * Math.pow(1 - i / N, R_POW) + R_MIN;
+        // parent = le nœud antérieur le plus proche → relie le graphe en arbre
+        let parent = -1;
+        if (i > 0) {
+            let best = Infinity;
+            for (let j = Math.max(0, i - 14); j < i; j++) {
+                const d = (nodes[j].x - x) ** 2 + (nodes[j].y - y) ** 2;
+                if (d < best) { best = d; parent = j; }
+            }
+        }
+        nodes.push({ x, y, r, parent, hot: i < N * 0.32 });
+    }
+    return nodes;
+})();
 
-const NODE = (id: string): Node => NODES.find((n) => n.id === id)!;
-
-// ── Les liens. `hot` = arête du cœur (forest), sinon gris translucide. ────────
-type Edge = { a: string; b: string; hot?: boolean };
-const EDGES: Edge[] = [
-    // tissu du cœur
-    { a: 'dossier', b: 'playbook', hot: true },
-    { a: 'dossier', b: 'regle', hot: true },
-    { a: 'dossier', b: 'decision', hot: true },
-    { a: 'dossier', b: 'synthese', hot: true },
-    { a: 'dossier', b: 'h1', hot: true },
-    { a: 'dossier', b: 'h2', hot: true },
-    { a: 'playbook', b: 'regle', hot: true },
-    { a: 'regle', b: 'decision', hot: true },
-    { a: 'synthese', b: 'decision', hot: true },
-    { a: 'playbook', b: 'synthese', hot: true },
-    // accroches vers le corpus
-    { a: 'playbook', b: 'historique' },
-    { a: 'synthese', b: 'historique' },
-    { a: 'decision', b: 'precedent' },
-    { a: 'regle', b: 'precedent' },
-    { a: 'regle', b: 'contrat' },
-    { a: 'playbook', b: 'note' },
-    { a: 'historique', b: 'd2' },
-    { a: 'precedent', b: 'd1' },
-    { a: 'contrat', b: 'd1' },
-    { a: 'precedent', b: 'd3' },
-    { a: 'historique', b: 'd4' },
-    { a: 'decision', b: 'd5' },
-    { a: 'd3', b: 'd5' },
-    { a: 'note', b: 'd2' },
-];
-
-const GREY_EDGE = 'rgba(23,23,23,0.13)';
-const GREY_NODE = 'rgba(23,23,23,0.34)';
-const GREY_RING = 'rgba(23,23,23,0.10)';
+// ── Phases du cycle (ms) : croissance → palier → fondu, puis ça repart. ───────
+const GROW = 5200, HOLD = 1500, FADE = 700;
+const CYCLE = GROW + HOLD + FADE;
+const APPEAR = 0.045; // fenêtre d'apparition d'un nœud (fraction de la croissance)
 
 export function IlluCompound({ accent }: { accent: string }) {
-    const { ink, mutedText, white, pale, surface } = TOKENS;
-    const forest = accent; // l'accent transmis (TOKENS.forest) pilote la couleur du graphe
+    const { white, pale, surface } = TOKENS;
+    const forest = accent; // l'accent transmis (TOKENS.forest) pilote la couleur
+
+    const reduce =
+        typeof window !== 'undefined' &&
+        !!window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
+
+    // horloge du cycle (ms) — figée au graphe complet sous reduced-motion
+    const [clock, setClock] = useState(reduce ? GROW : 0);
+    const rafRef = useRef<number>(0);
+
+    useEffect(() => {
+        if (reduce) return;
+        let start = 0;
+        const tick = (ts: number) => {
+            if (!start) start = ts;
+            setClock((ts - start) % CYCLE);
+            rafRef.current = requestAnimationFrame(tick);
+        };
+        rafRef.current = requestAnimationFrame(tick);
+        return () => cancelAnimationFrame(rafRef.current);
+    }, [reduce]);
+
+    // Avancement de la croissance (eased) + opacité globale (fondu de fin).
+    let growE: number;
+    let globalOp: number;
+    if (reduce) {
+        growE = 1; globalOp = 1;
+    } else if (clock < GROW) {
+        const t = clock / GROW;
+        growE = 1 - (1 - t) * (1 - t); // easeOut : la croissance décélère
+        globalOp = 1;
+    } else if (clock < GROW + HOLD) {
+        growE = 1; globalOp = 1;
+    } else {
+        growE = 1; globalOp = 1 - (clock - GROW - HOLD) / FADE;
+    }
+
+    const nodeOp = (i: number) => Math.max(0, Math.min(1, (growE - i / N) / APPEAR)) * globalOp;
+    const nodeScale = (i: number) => {
+        const local = Math.max(0, Math.min(1, (growE - i / N) / APPEAR));
+        return 0.3 + 0.7 * local;
+    };
 
     return (
         <div className="w-full mx-auto font-sans" style={{ maxWidth: 520 }} aria-hidden="true">
-            <div className="font-sans" style={{ fontSize: 16, fontWeight: 600, color: ink, lineHeight: 1.2 }}>
-                Une mémoire qui se capitalise
-            </div>
-            <div className="font-mono" style={{ fontSize: 10.5, color: mutedText, marginTop: 6, marginBottom: 16 }}>
-                Chaque dossier se relie aux précédents, et le savoir s'accumule.
-            </div>
-
             <div
                 className="relative w-full"
                 style={{
                     aspectRatio: '1 / 1',
                     borderRadius: 16,
-                    background: `radial-gradient(120% 120% at 47% 49%, ${white} 0%, ${pale} 58%, ${surface} 100%)`,
+                    background: `radial-gradient(120% 120% at 50% 50%, ${white} 0%, ${pale} 58%, ${surface} 100%)`,
                     boxShadow: EMBOSS,
                     overflow: 'hidden',
                 }}
             >
-                <style>{`
-                    @keyframes ic-breathe-0 { 0%,100% { transform: translate(0,0); } 50% { transform: translate(0.5px,-0.7px); } }
-                    @keyframes ic-breathe-1 { 0%,100% { transform: translate(0,0); } 50% { transform: translate(-0.6px,0.5px); } }
-                    @keyframes ic-breathe-2 { 0%,100% { transform: translate(0,0); } 50% { transform: translate(0.7px,0.4px); } }
-                    @keyframes ic-breathe-3 { 0%,100% { transform: translate(0,0); } 50% { transform: translate(-0.4px,-0.6px); } }
-                    @keyframes ic-pulse { 0%,100% { opacity: 0.55; } 50% { opacity: 0.95; } }
-                    .ic-n0 { animation: ic-breathe-0 9s ease-in-out infinite; }
-                    .ic-n1 { animation: ic-breathe-1 11s ease-in-out infinite; }
-                    .ic-n2 { animation: ic-breathe-2 10s ease-in-out infinite; }
-                    .ic-n3 { animation: ic-breathe-3 12s ease-in-out infinite; }
-                    .ic-core { animation: ic-pulse 6.5s ease-in-out infinite; }
-                    @media (prefers-reduced-motion: reduce) {
-                        .ic-n0, .ic-n1, .ic-n2, .ic-n3, .ic-core { animation: none !important; }
-                    }
-                `}</style>
-
                 <svg
                     viewBox="0 0 100 100"
                     width="100%"
                     height="100%"
                     preserveAspectRatio="xMidYMid meet"
-                    style={{ position: 'absolute', inset: 0, display: 'block', overflow: 'visible' }}
+                    style={{ position: 'absolute', inset: 0, display: 'block' }}
                     aria-hidden="true"
                 >
-                    {/* halo doux sous le cœur accentué */}
-                    <circle className="ic-core" cx={NODE('dossier').x} cy={NODE('dossier').y} r="20" fill={`${forest}14`} />
+                    {/* halo doux au cœur */}
+                    <circle cx={CX} cy={CY} r="18" fill={`${forest}12`} opacity={globalOp} />
 
-                    {/* arêtes — gris d'abord (dessous), forest ensuite (dessus) */}
-                    {EDGES.filter((e) => !e.hot).map((e, i) => {
-                        const a = NODE(e.a);
-                        const b = NODE(e.b);
+                    {/* arêtes — chaque nœud relié à son parent, apparaît avec lui */}
+                    {GNODES.map((n, i) => {
+                        if (n.parent < 0) return null;
+                        const p = GNODES[n.parent];
+                        const op = Math.min(nodeOp(i), nodeOp(n.parent));
+                        if (op <= 0.01) return null;
+                        const hot = n.hot && p.hot;
                         return (
                             <line
-                                key={`g${i}`}
-                                x1={a.x} y1={a.y} x2={b.x} y2={b.y}
-                                stroke={GREY_EDGE} strokeWidth="0.5" strokeLinecap="round"
-                            />
-                        );
-                    })}
-                    {EDGES.filter((e) => e.hot).map((e, i) => {
-                        const a = NODE(e.a);
-                        const b = NODE(e.b);
-                        return (
-                            <line
-                                key={`h${i}`}
-                                x1={a.x} y1={a.y} x2={b.x} y2={b.y}
-                                stroke={`${forest}80`} strokeWidth="0.62" strokeLinecap="round"
+                                key={`e${i}`}
+                                x1={p.x} y1={p.y} x2={n.x} y2={n.y}
+                                stroke={hot ? `${forest}80` : 'rgba(23,23,23,0.16)'}
+                                strokeWidth={hot ? 0.55 : 0.4}
+                                strokeLinecap="round"
+                                opacity={op}
                             />
                         );
                     })}
 
-                    {/* nœuds */}
-                    {NODES.map((n) => {
-                        const fill = n.hot ? forest : GREY_NODE;
-                        const ring = n.hot ? `${forest}33` : GREY_RING;
+                    {/* nœuds — grands au cœur, de plus en plus petits vers l'extérieur */}
+                    {GNODES.map((n, i) => {
+                        const op = nodeOp(i);
+                        if (op <= 0.01) return null;
+                        const rr = n.r * nodeScale(i);
+                        const fill = n.hot ? forest : 'rgba(23,23,23,0.34)';
                         return (
-                            <g key={n.id} className={`ic-n${n.drift ?? 0}`}>
-                                {/* anneau translucide */}
-                                <circle cx={n.x} cy={n.y} r={n.r + 1.5} fill="none" stroke={ring} strokeWidth="0.7" />
-                                {/* corps : fond clair + liseré coloré, façon note */}
-                                <circle cx={n.x} cy={n.y} r={n.r} fill={white} stroke={fill} strokeWidth="0.9" />
-                                <circle cx={n.x} cy={n.y} r={n.r} fill={n.hot ? `${forest}26` : 'rgba(23,23,23,0.06)'} />
+                            <g key={`n${i}`} opacity={op}>
+                                <circle cx={n.x} cy={n.y} r={rr + 1.1} fill="none" stroke={n.hot ? `${forest}33` : 'rgba(23,23,23,0.10)'} strokeWidth="0.6" />
+                                <circle cx={n.x} cy={n.y} r={rr} fill={white} stroke={fill} strokeWidth="0.8" />
+                                <circle cx={n.x} cy={n.y} r={rr} fill={n.hot ? `${forest}26` : 'rgba(23,23,23,0.06)'} />
                             </g>
                         );
                     })}
                 </svg>
-
-                {/* libellés mono, placés en absolu (même technique qu'IlluHarness) */}
-                {NODES.filter((n) => n.label).map((n) => {
-                    const off = n.r + 3.4; // distance du libellé au bord, en unités de viewBox
-                    const place: Record<string, { left: string; top: string; tx: string }> = {
-                        right: { left: `${n.x + off}%`, top: `${n.y}%`, tx: 'translate(0, -50%)' },
-                        left: { left: `${n.x - off}%`, top: `${n.y}%`, tx: 'translate(-100%, -50%)' },
-                        top: { left: `${n.x}%`, top: `${n.y - off}%`, tx: 'translate(-50%, -100%)' },
-                        bottom: { left: `${n.x}%`, top: `${n.y + off}%`, tx: 'translate(-50%, 0)' },
-                    };
-                    const p = place[n.pos ?? 'right'];
-                    return (
-                        <span
-                            key={`l-${n.id}`}
-                            className="font-mono"
-                            style={{
-                                position: 'absolute',
-                                left: p.left,
-                                top: p.top,
-                                transform: p.tx,
-                                fontSize: 10,
-                                letterSpacing: '0.01em',
-                                lineHeight: 1,
-                                whiteSpace: 'nowrap',
-                                color: n.hot ? ink : mutedText,
-                                pointerEvents: 'none',
-                            }}
-                        >
-                            {n.label}
-                        </span>
-                    );
-                })}
             </div>
         </div>
     );

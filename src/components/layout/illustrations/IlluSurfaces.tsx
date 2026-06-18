@@ -4,6 +4,7 @@
 // au centre (message utilisateur, réponse, tâche outillée en cours), et une colonne
 // d'outils/widgets à droite (tuile métrique, liste de tâches, pastille de statut).
 // Palette claire + Geist. Niveau de finition aligné sur IlluHarness (gravure embossée).
+import { useEffect, useState } from 'react';
 import { TOKENS } from '../Sections';
 import { Spinner, Check, PulseDot } from './kit';
 
@@ -24,21 +25,16 @@ const INK_PILL_BG = 'linear-gradient(180deg, #2C2C2C 0%, #1A1A1A 100%)';
 const INK_PILL_SHADOW =
     '0 0 0 1px rgba(0,0,0,0.4), 0 4px 10px rgba(0,0,0,0.22), inset 0 1px 0 rgba(255,255,255,0.18), inset 0 -1px 2px rgba(0,0,0,0.35)';
 
-// ── Pixel agent glyph (avatar de l'agent) ────────────────────────────────────
-function PixelGlyph({ size = 12, tone = 0.6 }: { size?: number; tone?: number }) {
-    const c = (o: number) => `rgba(23,23,23,${o})`;
+// ── Avatar de l'agent : un noyau forest qui « vit » (respire) dans un petit
+//    cercle, avec une impulsion (ping) qui irradie — présence vivante. ─────────
+function AgentDot({ size = 12 }: { size?: number }) {
+    const { forest } = TOKENS;
+    const core = Math.max(3.5, size * 0.44);
     return (
-        <svg width={size} height={size} viewBox="0 0 12 12" fill="none" aria-hidden="true" style={{ flexShrink: 0, display: 'block' }}>
-            <rect x="5.27" y="1.84" width="1.47" height="1.47" fill={c(tone)} />
-            <rect x="5.27" y="8.45" width="1.47" height="1.47" fill={c(tone)} />
-            <rect x="5.63" y="5.88" width="0.73" height="0.73" fill={c(tone * 0.33)} />
-            <rect x="3.06" y="8.81" width="0.73" height="0.73" fill={c(tone * 0.33)} />
-            <rect x="8.2" y="8.81" width="0.73" height="0.73" fill={c(tone * 0.33)} />
-            <rect x="0.12" y="8.45" width="1.47" height="1.47" fill={c(tone)} />
-            <rect x="2.33" y="5.14" width="1.47" height="1.47" fill={c(tone)} />
-            <rect x="8.2" y="5.14" width="1.47" height="1.47" fill={c(tone)} />
-            <rect x="10.41" y="8.45" width="1.47" height="1.47" fill={c(tone)} />
-        </svg>
+        <span style={{ position: 'relative', width: size, height: size, display: 'inline-flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }} aria-hidden="true">
+            <span className="agent-ping" style={{ position: 'absolute', inset: 0, borderRadius: 999, border: `1px solid ${forest}` }} />
+            <span className="agent-core" style={{ width: core, height: core, borderRadius: 999, background: forest }} />
+        </span>
     );
 }
 
@@ -169,20 +165,17 @@ function AgentMsg({ children }: { children: React.ReactNode }) {
     const { mutedText } = TOKENS;
     return (
         <div className="flex items-start" style={{ gap: 9, width: '100%' }}>
-            <span style={{ width: 18, height: 18, flexShrink: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', borderRadius: 6, background: TOKENS.white, boxShadow: EMBOSS_SOFT }}><PixelGlyph /></span>
+            <span style={{ width: 18, height: 18, flexShrink: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', borderRadius: 6, background: TOKENS.white, boxShadow: EMBOSS_SOFT }}><AgentDot /></span>
             <p className="font-sans" style={{ margin: 0, flex: '1 1 0%', fontSize: 11.5, fontWeight: 440, lineHeight: 1.6, color: mutedText }}>{children}</p>
         </div>
     );
 }
 
-// Carte « appel d'outil / tâche en cours » — l'agent exécute une étape.
-function ToolCard() {
+// Carte « appel d'outil / tâche » — les étapes progressent au fil de la conversation.
+type StepState = 'done' | 'run' | 'queue';
+const TOOL_STEPS = ['Lecture du dossier client', "Synthèse de l'historique", 'Rédaction de la réponse'];
+function ToolCard({ states, done }: { states: StepState[]; done: boolean }) {
     const { ink, mutedText, white, surface, border } = TOKENS;
-    const steps: { label: string; state: 'done' | 'run' | 'queue' }[] = [
-        { label: 'Lecture du dossier client', state: 'done' },
-        { label: 'Synthèse de l\'historique', state: 'done' },
-        { label: 'Rédaction de la réponse', state: 'run' },
-    ];
     return (
         <div style={{ marginLeft: 27, width: 'calc(100% - 27px)' }}>
             <div style={{ borderRadius: 10, background: white, boxShadow: EMBOSS, overflow: 'hidden' }}>
@@ -192,34 +185,92 @@ function ToolCard() {
                     </span>
                     <span className="font-mono" style={{ flex: '1 1 auto', fontSize: 10, letterSpacing: '0.02em', color: ink }}>Tâche · Traiter la demande #2481</span>
                     <span className="font-mono inline-flex items-center" style={{ gap: 5, fontSize: 8.5, color: mutedText }}>
-                        <Spinner color={ink} size={9} /> en cours
+                        {done ? <><Check color={TOKENS.forest} size={10} /> terminé</> : <><Spinner color={ink} size={9} /> en cours</>}
                     </span>
                 </div>
                 <div className="flex flex-col" style={{ gap: 6, padding: '9px 11px' }}>
-                    {steps.map((s) => (
-                        <div key={s.label} className="flex items-center" style={{ gap: 8 }}>
-                            <span className="inline-flex items-center justify-center" style={{ width: 13, flex: '0 0 auto' }}>
-                                {s.state === 'done' && <Check color={TOKENS.forest} size={11} />}
-                                {s.state === 'run' && <Spinner color={ink} size={11} />}
-                                {s.state === 'queue' && <span style={{ width: 6, height: 6, borderRadius: 999, background: TOKENS.gold }} />}
-                            </span>
-                            <span className="font-sans truncate" style={{ flex: '1 1 auto', fontSize: 10.5, color: s.state === 'run' ? ink : mutedText, fontWeight: s.state === 'run' ? 500 : 440 }}>{s.label}</span>
-                            {s.state === 'done' && <span className="font-mono" style={{ fontSize: 8.5, color: mutedText, flex: '0 0 auto' }}>ok</span>}
-                        </div>
-                    ))}
+                    {TOOL_STEPS.map((label, i) => {
+                        const s = states[i];
+                        return (
+                            <div key={label} className="flex items-center" style={{ gap: 8 }}>
+                                <span className="inline-flex items-center justify-center" style={{ width: 13, flex: '0 0 auto' }}>
+                                    {s === 'done' && <Check color={TOKENS.forest} size={11} />}
+                                    {s === 'run' && <Spinner color={ink} size={11} />}
+                                    {s === 'queue' && <span style={{ width: 6, height: 6, borderRadius: 999, background: TOKENS.gold }} />}
+                                </span>
+                                <span className="font-sans truncate" style={{ flex: '1 1 auto', fontSize: 10.5, color: s === 'run' ? ink : mutedText, fontWeight: s === 'run' ? 500 : 440 }}>{label}</span>
+                                {s === 'done' && <span className="font-mono" style={{ fontSize: 8.5, color: mutedText, flex: '0 0 auto' }}>ok</span>}
+                            </div>
+                        );
+                    })}
                 </div>
             </div>
         </div>
     );
 }
 
+// Indicateur « l'agent écrit… » — trois points qui rebondissent.
+function Typing() {
+    const { mutedText, white } = TOKENS;
+    return (
+        <div className="flex items-start" style={{ gap: 9, width: '100%' }}>
+            <span style={{ width: 18, height: 18, flexShrink: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', borderRadius: 6, background: white, boxShadow: EMBOSS_SOFT }}><AgentDot /></span>
+            <span className="inline-flex items-center" style={{ gap: 4, padding: '9px 12px', borderRadius: 9, background: ROW_BG, boxShadow: BUBBLE_SHADOW }}>
+                {[0, 1, 2].map((i) => (
+                    <span key={i} className="conv-dot" style={{ width: 5, height: 5, borderRadius: 999, background: mutedText, animationDelay: `${i * 160}ms` }} />
+                ))}
+            </span>
+        </div>
+    );
+}
+
+// Conversation simulée : se rejoue en boucle (message → écrit… → réponse →
+// tâche outillée qui progresse → réponse finale → pause → fondu → ça repart).
+// Durée de chaque phase (ms), index = numéro de phase ; 11 = fondu de sortie.
+const CONV_PHASES = [400, 1000, 900, 900, 900, 850, 850, 800, 900, 1000, 2800, 600];
+const CONV_FINAL = 9; // état complet figé sous prefers-reduced-motion
+
 function Conversation() {
     const { ink, mutedText, white, surface, border, pale } = TOKENS;
+    const reduce =
+        typeof window !== 'undefined' &&
+        !!window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
+    const [phase, setPhase] = useState(reduce ? CONV_FINAL : 0);
+
+    useEffect(() => {
+        if (reduce) return;
+        let timer: number;
+        const run = (p: number) => {
+            setPhase(p);
+            timer = window.setTimeout(() => run((p + 1) % CONV_PHASES.length), CONV_PHASES[p]);
+        };
+        run(0);
+        return () => clearTimeout(timer);
+    }, [reduce]);
+
+    const toolStates: StepState[] =
+        phase <= 4 ? ['run', 'queue', 'queue']
+        : phase === 5 ? ['done', 'run', 'queue']
+        : phase === 6 ? ['done', 'done', 'run']
+        : ['done', 'done', 'done'];
+
     return (
         <div className="flex flex-col" style={{ flex: '1 1 auto', minWidth: 0, background: white }}>
+            <style>{`
+                @keyframes conv-in { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+                .conv-in { animation: conv-in 360ms cubic-bezier(0.22,1,0.36,1) both; }
+                @keyframes conv-dot { 0%,80%,100% { opacity: 0.25; transform: translateY(0); } 40% { opacity: 0.9; transform: translateY(-2px); } }
+                .conv-dot { animation: conv-dot 1100ms ease-in-out infinite; }
+                @keyframes agent-ping { 0% { transform: scale(0.6); opacity: 0.7; } 100% { transform: scale(1.5); opacity: 0; } }
+                .agent-ping { animation: agent-ping 1700ms ease-out infinite; transform-origin: center; }
+                @keyframes agent-core { 0%,100% { transform: scale(0.85); opacity: 0.8; } 50% { transform: scale(1.08); opacity: 1; } }
+                .agent-core { animation: agent-core 1700ms ease-in-out infinite; transform-origin: center; }
+                @media (prefers-reduced-motion: reduce) { .conv-in, .conv-dot, .agent-ping, .agent-core { animation: none !important; } .agent-ping { opacity: 0.4; transform: none; } }
+            `}</style>
+
             {/* en-tête de la conversation */}
             <div className="flex items-center" style={{ gap: 9, padding: '11px 16px', borderBottom: `1px solid ${border}`, flexShrink: 0 }}>
-                <span style={{ width: 20, height: 20, flexShrink: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', borderRadius: 6, background: surface, boxShadow: EMBOSS_SOFT }}><PixelGlyph size={12} /></span>
+                <span style={{ width: 20, height: 20, flexShrink: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', borderRadius: 6, background: surface, boxShadow: EMBOSS_SOFT }}><AgentDot size={12} /></span>
                 <div style={{ flex: '1 1 auto', minWidth: 0 }}>
                     <div className="font-sans" style={{ fontSize: 12, fontWeight: 600, color: ink, lineHeight: '15px' }}>Assistant agent</div>
                     <div className="font-mono" style={{ fontSize: 8.5, letterSpacing: '0.04em', color: mutedText, lineHeight: '12px' }}>Relation client · Session active</div>
@@ -231,11 +282,13 @@ function Conversation() {
 
             {/* fil */}
             <div className="relative" style={{ flex: '1 1 auto', minHeight: 0, overflow: 'hidden' }}>
-                <div className="flex flex-col" style={{ gap: 11, padding: '16px 16px 54px' }}>
-                    <UserBubble>Traite la demande #2481 et prépare une réponse au client.</UserBubble>
-                    <AgentMsg>Je récupère le contexte du dossier et je m'appuie sur les outils branchés à votre espace.</AgentMsg>
-                    <ToolCard />
-                    <AgentMsg>Réponse rédigée. Une action sensible (envoi) requiert votre validation avant départ.</AgentMsg>
+                <div className="flex flex-col" style={{ gap: 11, padding: '16px 16px 54px', opacity: phase === 11 ? 0 : 1, transition: 'opacity 450ms ease' }}>
+                    {phase >= 1 && <div className="conv-in"><UserBubble>Traite la demande #2481 et prépare une réponse au client.</UserBubble></div>}
+                    {phase === 2 && <Typing />}
+                    {phase >= 3 && <div className="conv-in"><AgentMsg>Je récupère le contexte du dossier et je m'appuie sur les outils branchés à votre espace.</AgentMsg></div>}
+                    {phase >= 4 && <div className="conv-in"><ToolCard states={toolStates} done={phase >= 7} /></div>}
+                    {phase === 8 && <Typing />}
+                    {phase >= 9 && <div className="conv-in"><AgentMsg>Réponse rédigée. Une action sensible (envoi) requiert votre validation avant départ.</AgentMsg></div>}
                 </div>
                 {/* fondu bas */}
                 <div aria-hidden="true" style={{ position: 'absolute', left: 0, right: 0, bottom: 0, height: 64, background: 'linear-gradient(rgba(255,255,255,0) 0%, #FFFFFF 72%)', pointerEvents: 'none' }} />
@@ -253,70 +306,61 @@ function Conversation() {
 }
 
 // ── Colonne d'outils / widgets ───────────────────────────────────────────────
-function MetricTile({ value, unit, label, delta }: { value: string; unit?: string; label: string; delta: string }) {
-    const { ink, mutedText, white, forest } = TOKENS;
-    return (
-        <div style={{ padding: '12px 13px', borderRadius: 11, background: white, boxShadow: EMBOSS }}>
-            <div className="flex items-center justify-between">
-                <span className="font-mono" style={{ fontSize: 8.5, letterSpacing: '0.12em', color: mutedText }}>{label}</span>
-                <span className="font-mono inline-flex items-center" style={{ gap: 3, fontSize: 9, color: forest }}>
-                    <svg width="9" height="9" viewBox="0 0 12 12" fill="none" stroke={forest} strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M2.5 8 6 4l3.5 4" /></svg>
-                    {delta}
-                </span>
-            </div>
-            <div className="flex items-baseline" style={{ gap: 3, marginTop: 7 }}>
-                <span className="font-sans" style={{ fontSize: 26, fontWeight: 600, letterSpacing: '-0.02em', color: ink, fontVariantNumeric: 'tabular-nums' }}>{value}</span>
-                {unit && <span className="font-sans" style={{ fontSize: 12, fontWeight: 500, color: mutedText }}>{unit}</span>}
-            </div>
-        </div>
-    );
-}
-
-function TaskList() {
-    const { ink, mutedText, white, surface, border, gold } = TOKENS;
-    const tasks: { label: string; state: 'done' | 'run' | 'queue' }[] = [
-        { label: 'Qualifier #2482', state: 'run' },
-        { label: 'Relancer #2479', state: 'done' },
-        { label: 'Vérifier #2483', state: 'queue' },
-    ];
-    return (
-        <div style={{ borderRadius: 11, background: white, boxShadow: EMBOSS, overflow: 'hidden' }}>
-            <div className="flex items-center" style={{ gap: 8, padding: '9px 12px', borderBottom: `1px solid ${border}`, background: surface }}>
-                <span className="font-mono" style={{ flex: '1 1 auto', fontSize: 8.5, letterSpacing: '0.12em', color: mutedText }}>FILE D'ATTENTE</span>
-                <span className="font-mono" style={{ fontSize: 8.5, color: mutedText, padding: '1px 7px', borderRadius: 999, background: white, boxShadow: PILL_SHADOW }}>3</span>
-            </div>
-            <div className="flex flex-col" style={{ gap: 6, padding: 10 }}>
-                {tasks.map((t) => (
-                    <div key={t.label} className="flex items-center" style={{ gap: 9, padding: '7px 9px', borderRadius: 8, background: TOKENS.pale, boxShadow: EMBOSS_SOFT }}>
-                        <span className="inline-flex items-center justify-center" style={{ width: 13, flex: '0 0 auto' }}>
-                            {t.state === 'done' && <Check color={TOKENS.forest} size={11} />}
-                            {t.state === 'run' && <Spinner color={ink} size={11} />}
-                            {t.state === 'queue' && <span style={{ width: 6, height: 6, borderRadius: 999, background: gold }} />}
-                        </span>
-                        <span className="font-sans truncate" style={{ flex: '1 1 auto', fontSize: 10.5, fontWeight: t.state === 'run' ? 500 : 440, color: t.state === 'queue' ? mutedText : ink }}>{t.label}</span>
-                    </div>
-                ))}
-            </div>
-        </div>
-    );
-}
+// (MetricTile + TaskList retirés — remplacés par les modules d'avancement ci-dessous)
 
 function ToolsColumn() {
-    const { mutedText, forest, pale, border } = TOKENS;
+    const { ink, mutedText, white, surface, border, forest, pale } = TOKENS;
+    // Checklist de la routine de l'agent — les tâches du sujet traité (relation client).
+    const tasks: { label: string; done: boolean }[] = [
+        { label: 'Récupérer les nouvelles demandes', done: true },
+        { label: "Lire l'historique de chaque dossier", done: true },
+        { label: 'Qualifier et prioriser les demandes', done: true },
+        { label: 'Rédiger les réponses personnalisées', done: true },
+        { label: 'Soumettre les actions sensibles à validation', done: true },
+        { label: 'Mettre à jour le CRM', done: false },
+    ];
+    const doneCount = tasks.filter((t) => t.done).length;
     return (
         <div
             className="hidden min-[1040px]:flex flex-col"
             style={{ width: 224, flexShrink: 0, gap: 11, padding: 14, background: pale, borderLeft: `1px solid ${border}` }}
         >
-            <span className="font-mono" style={{ fontSize: 8.5, letterSpacing: '0.14em', color: mutedText }}>OUTILS</span>
-            <MetricTile value="98" unit="%" label="RÉSOLU AUTO." delta="+6" />
-            <TaskList />
-            {/* pastille de statut */}
-            <div className="flex items-center" style={{ gap: 8, marginTop: 'auto', padding: '8px 11px', borderRadius: 9, background: TOKENS.white, boxShadow: EMBOSS_SOFT }}>
-                <PulseDot color={forest} size={7} />
-                <div style={{ flex: '1 1 auto', minWidth: 0 }}>
-                    <div className="font-sans" style={{ fontSize: 10.5, fontWeight: 600, color: TOKENS.ink, lineHeight: '13px' }}>Agent opérationnel</div>
-                    <div className="font-mono" style={{ fontSize: 8, letterSpacing: '0.04em', color: mutedText, lineHeight: '11px' }}>5 connecteurs actifs</div>
+            {/* Module PROGRESSION — checklist de la routine, façon Cowork (coché + barré) */}
+            <div style={{ borderRadius: 11, background: white, boxShadow: EMBOSS, overflow: 'hidden' }}>
+                <div className="flex items-center" style={{ gap: 8, padding: '9px 12px', borderBottom: `1px solid ${border}`, background: surface }}>
+                    <span className="font-mono" style={{ flex: '1 1 auto', fontSize: 8.5, letterSpacing: '0.12em', color: mutedText }}>PROGRESSION</span>
+                    <span className="font-mono" style={{ fontSize: 8, color: mutedText, padding: '1px 7px', borderRadius: 999, background: white, boxShadow: PILL_SHADOW }}>{doneCount} / {tasks.length}</span>
+                </div>
+                <div className="flex flex-col" style={{ gap: 9, padding: '11px 11px' }}>
+                    {tasks.map((t, i) => (
+                        <div key={i} className="flex items-start" style={{ gap: 9 }}>
+                            <span className="inline-flex items-center justify-center" style={{ width: 16, height: 16, borderRadius: 999, flex: '0 0 auto', marginTop: 1, background: t.done ? forest : 'transparent' }}>
+                                {t.done
+                                    ? <svg width="9" height="9" viewBox="0 0 12 12" fill="none" stroke="#fff" strokeWidth="2.1" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M2.4 6.3 4.9 8.7 9.6 3.4" /></svg>
+                                    : <Spinner color={ink} size={11} />}
+                            </span>
+                            <span className="font-sans" style={{ flex: '1 1 auto', fontSize: 10.5, lineHeight: '14px', color: t.done ? mutedText : ink, fontWeight: t.done ? 440 : 500, textDecoration: t.done ? 'line-through' : 'none' }}>{t.label}</span>
+                        </div>
+                    ))}
+                </div>
+            </div>
+
+            {/* Module CONTEXTE — la routine + les connecteurs branchés */}
+            <div style={{ marginTop: 'auto', borderRadius: 11, background: white, boxShadow: EMBOSS, overflow: 'hidden' }}>
+                <div className="flex items-center" style={{ gap: 8, padding: '9px 12px', borderBottom: `1px solid ${border}`, background: surface }}>
+                    <span className="font-mono" style={{ flex: '1 1 auto', fontSize: 8.5, letterSpacing: '0.12em', color: mutedText }}>CONTEXTE</span>
+                </div>
+                <div className="flex flex-col" style={{ gap: 9, padding: 10 }}>
+                    <div className="flex items-center" style={{ gap: 8 }}>
+                        <span className="inline-flex items-center justify-center" style={{ width: 18, height: 18, borderRadius: 6, background: pale, boxShadow: EMBOSS_SOFT, flex: '0 0 auto' }}>
+                            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke={mutedText} strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9" /><path d="M12 7v5l3 2" /></svg>
+                        </span>
+                        <span className="font-sans truncate" style={{ flex: '1 1 auto', fontSize: 10.5, fontWeight: 500, color: ink }}>Relation client · quotidien</span>
+                    </div>
+                    <div className="flex items-center" style={{ gap: 8 }}>
+                        <span style={{ flex: '0 0 auto', display: 'inline-flex' }}><PulseDot color={forest} size={7} /></span>
+                        <span className="font-sans truncate" style={{ flex: '1 1 auto', fontSize: 10, color: mutedText }}>5 connecteurs actifs</span>
+                    </div>
                 </div>
             </div>
         </div>
@@ -342,7 +386,7 @@ export function IlluSurfaces({ accent, onImage }: { accent: string; onImage?: bo
                         </span>
                         <span className="font-mono truncate" style={{ fontSize: 9.5, letterSpacing: '0.12em', color: mutedText, minWidth: 0, flex: '1 1 auto', textAlign: 'center' }}>LEONARD · ESPACE DE TRAVAIL</span>
                         <span className="ml-auto inline-flex items-center font-mono" style={{ gap: 6, fontSize: 9, color: mutedText, padding: '3px 9px', borderRadius: 100, background: surface, boxShadow: PILL_SHADOW, whiteSpace: 'nowrap', flexShrink: 0 }}>
-                            <PixelGlyph size={9} />
+                            <AgentDot size={9} />
                             Agent intégré
                         </span>
                     </div>
@@ -353,20 +397,6 @@ export function IlluSurfaces({ accent, onImage }: { accent: string; onImage?: bo
                         <ToolsColumn />
                     </div>
                 </div>
-            </div>
-            {/* légende */}
-            <div className="flex justify-center" style={{ padding: '13px 4px 0' }}>
-                <span
-                    className="font-sans"
-                    style={{
-                        fontSize: 9,
-                        fontWeight: 500,
-                        color: onImage ? 'rgba(255,255,255,0.85)' : mutedText,
-                        textShadow: onImage ? '0 1px 8px rgba(0,0,0,0.4)' : undefined,
-                    }}
-                >
-                    L'agent, intégré à votre outil. Pas dans un onglet à côté.
-                </span>
             </div>
         </div>
     );

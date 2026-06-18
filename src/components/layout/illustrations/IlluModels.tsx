@@ -25,29 +25,59 @@ export function IlluModels() {
         const el = ref.current;
         if (!el) return;
         if (window.matchMedia?.('(prefers-reduced-motion: reduce)').matches) return;
-        const timers: number[] = [];
+
+        // Pause entre deux vagues, une fois la précédente terminée.
+        const PAUSE = 1700;
+        let timers: number[] = [];
+        let running = false;
+
+        const clearTimers = () => {
+            timers.forEach((t) => clearTimeout(t));
+            timers = [];
+        };
+
+        // Une vague : chaque logo s'allume dans sa couleur de marque, dans le
+        // désordre ; à la fin on attend un peu, puis ça repart (boucle continue).
+        const runWave = () => {
+            const order = MODELS.map((m) => m.name);
+            for (let i = order.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [order[i], order[j]] = [order[j], order[i]];
+            }
+            let lastOff = 0;
+            order.forEach((name, i) => {
+                const onAt = 280 + i * 300 + Math.random() * 140;
+                const offAt = onAt + 780;
+                lastOff = Math.max(lastOff, offAt);
+                timers.push(window.setTimeout(() => setActive((a) => ({ ...a, [name]: true })), onAt));
+                timers.push(window.setTimeout(() => setActive((a) => ({ ...a, [name]: false })), offAt));
+            });
+            timers.push(window.setTimeout(runWave, lastOff + PAUSE));
+        };
+
+        const start = () => {
+            if (running) return;
+            running = true;
+            runWave();
+        };
+        const stop = () => {
+            running = false;
+            clearTimers();
+            setActive({});
+        };
+
+        // Tourne uniquement quand la section est visible (pause sinon).
         const obs = new IntersectionObserver(
             (entries) => {
-                if (!entries.some((e) => e.isIntersecting)) return;
-                obs.disconnect();
-                // ordre aléatoire (Fisher-Yates)
-                const order = MODELS.map((m) => m.name);
-                for (let i = order.length - 1; i > 0; i--) {
-                    const j = Math.floor(Math.random() * (i + 1));
-                    [order[i], order[j]] = [order[j], order[i]];
-                }
-                order.forEach((name, i) => {
-                    const onAt = 280 + i * 300 + Math.random() * 140;
-                    timers.push(window.setTimeout(() => setActive((a) => ({ ...a, [name]: true })), onAt));
-                    timers.push(window.setTimeout(() => setActive((a) => ({ ...a, [name]: false })), onAt + 780));
-                });
+                if (entries.some((e) => e.isIntersecting)) start();
+                else stop();
             },
             { threshold: 0.35 },
         );
         obs.observe(el);
         return () => {
             obs.disconnect();
-            timers.forEach((t) => clearTimeout(t));
+            clearTimers();
         };
     }, []);
 

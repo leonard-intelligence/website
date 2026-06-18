@@ -216,7 +216,7 @@ export function LayerContexte() {
         <LayerSection
             id="section-contexte"
             eyebrow="CONTEXTE & CONNAISSANCE"
-            title="Construisez votre base de connaissance."
+            title="Capitalisez sur votre savoir. Il travaille pour vous."
             lead="Chaque échange, chaque décision, chaque dossier nourrit la mémoire de vos agents. L'information ne s'évapore plus : elle se capitalise, et chaque nouvelle tâche démarre avec tout l'historique. Vous gagnez en productivité à chaque itération."
             points={['Aucune information perdue', 'Une mémoire qui se capitalise', "De la productivité qui s'accumule"]}
             accent={TOKENS.forest}
