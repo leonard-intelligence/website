@@ -32,12 +32,12 @@ export const DEFAULT_HOLO_PARAMS: HoloParams = {
     saturation: 1.35,
     tilt: 8,
     foil: 'gold',
-    splitWindow: true, // la fenêtre image reste exclue du foil corps (zone mate)
-    windowEffect: 'holo',
+    splitWindow: true,
+    windowEffect: 'empreinte',
     windowFoil: 'silver',
-    windowStrength: 0, // rien dans la zone illustration par défaut
-    fpTile: 135,
-    fpRelief: 28,
+    windowStrength: 0.59,
+    fpTile: 128,
+    fpRelief: 55,
 };
 
 let state: HoloParams = { ...DEFAULT_HOLO_PARAMS };
