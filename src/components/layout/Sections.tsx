@@ -397,15 +397,16 @@ const EXP_CARDS: { icon: LucideIcon; label: string; tags: string[]; pos: React.C
     { icon: Calculator, label: 'Finance', tags: ['Dépenses', 'Rapports', 'Fraude'], pos: { right: '8%', top: '74%' } },
 ];
 
-// Carte d'expertise (réutilisée : flottante sur le vortex en desktop, empilée en mobile).
-function ExpertiseCard({ icon: Icon, label, tags, className, style }: { icon: LucideIcon; label: string; tags: string[]; className?: string; style?: React.CSSProperties }) {
+// Carte d'expertise (réutilisée : flottante sur le vortex en desktop, sur 2 colonnes
+// en mobile). `compact` empile l'icône au-dessus du label (cartes étroites).
+function ExpertiseCard({ icon: Icon, label, tags, className, style, compact }: { icon: LucideIcon; label: string; tags: string[]; className?: string; style?: React.CSSProperties; compact?: boolean }) {
     return (
         <div className={className} style={style}>
-            <div className="flex items-center" style={{ gap: 11, marginBottom: 12 }}>
-                <span className="inline-flex items-center justify-center shrink-0" style={{ width: 36, height: 36, borderRadius: 4, background: TOKENS.lime, boxShadow: RM_TILE_SHADOW }}>
+            <div className={compact ? 'flex flex-col' : 'flex items-center'} style={{ gap: compact ? 8 : 11, marginBottom: 12 }}>
+                <span className="inline-flex items-center justify-center shrink-0" style={{ width: 34, height: 34, borderRadius: 4, background: TOKENS.lime, boxShadow: RM_TILE_SHADOW }}>
                     <Icon size={18} strokeWidth={1.9} color={TOKENS.ink} />
                 </span>
-                <span className="font-sans" style={{ fontSize: 15.5, fontWeight: 600, color: TOKENS.ink }}>{label}</span>
+                <span className="font-sans" style={{ fontSize: 15, fontWeight: 600, color: TOKENS.ink, lineHeight: 1.15 }}>{label}</span>
             </div>
             <div className="flex flex-wrap" style={{ gap: 6 }}>
                 {tags.map((t) => (
@@ -441,9 +442,9 @@ export function SectionExpertise() {
                         Tirez profit des meilleurs modèles au monde dans toutes les fonctions de votre entreprise : développement, support, marketing, ventes, orchestrés pour votre métier.
                     </p>
 
-                    {/* Carte beads — grille stricte 24px */}
+                    {/* Carte beads — grille stricte 24px (desktop : vortex + cartes flottantes) */}
                     <div
-                        className="relative"
+                        className="relative hidden md:block"
                         style={{
                             marginTop: 40,
                             height: 'clamp(360px, 50vw, 600px)',
@@ -487,18 +488,34 @@ export function SectionExpertise() {
                         ))}
                     </div>
 
-                    {/* mobile : cartes empilées sous le vortex (pas de chevauchement) */}
-                    <div className="md:hidden grid grid-cols-1 sm:grid-cols-2" style={{ gap: 12, marginTop: 16 }}>
-                        {EXP_CARDS.map((c) => (
-                            <ExpertiseCard
-                                key={c.label}
-                                icon={c.icon}
-                                label={c.label}
-                                tags={c.tags}
-                                className="flex flex-col"
-                                style={{ padding: '14px 16px', borderRadius: 14, background: TOKENS.white, boxShadow: `${RM_CARD_SHADOW}, 0 12px 28px rgba(0,0,0,0.12)` }}
-                            />
-                        ))}
+                    {/* mobile : motif bead en fond, cartes par-dessus sur 2 colonnes */}
+                    <div
+                        className="md:hidden relative"
+                        style={{
+                            marginTop: 24,
+                            borderRadius: 18,
+                            overflow: 'hidden',
+                            backgroundColor: '#EEEDE9',
+                            backgroundImage:
+                                'linear-gradient(rgba(23,23,23,0.045) 1px, transparent 1px), linear-gradient(90deg, rgba(23,23,23,0.045) 1px, transparent 1px)',
+                            backgroundSize: '24px 24px',
+                            boxShadow: 'inset 0 0 0 1px rgba(23,23,23,0.06)',
+                        }}
+                    >
+                        <VortexBeadLayer params={vortex} />
+                        <div className="relative grid grid-cols-2" style={{ gap: 10, padding: 12, zIndex: 2 }}>
+                            {EXP_CARDS.map((c) => (
+                                <ExpertiseCard
+                                    key={c.label}
+                                    icon={c.icon}
+                                    label={c.label}
+                                    tags={c.tags}
+                                    compact
+                                    className="flex flex-col"
+                                    style={{ padding: '12px 13px', borderRadius: 13, background: TOKENS.white, boxShadow: `${RM_CARD_SHADOW}, 0 12px 28px rgba(0,0,0,0.12)` }}
+                                />
+                            ))}
+                        </div>
                     </div>
                 </div>
             </Reveal>
