@@ -17,9 +17,9 @@ export function Home() {
                 <SectionCapabilities />
                 <LayerDonnees />
                 <LayerModeles />
+                <LayerProduits />
                 <LayerHarnais />
                 <LayerContexte />
-                <LayerProduits />
                 <LayerSecurite />
                 <SectionMethod />
                 <SectionStatement />
