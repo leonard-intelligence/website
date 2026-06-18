@@ -4,7 +4,6 @@ import { LayerModeles, LayerHarnais, LayerDonnees, LayerContexte, LayerProduits,
 import { SEO } from '../components/seo/SEO';
 import { JsonLd } from '../components/seo/JsonLd';
 import { BeadPxProvider } from '../components/pixels/BeadPxContext';
-import { DevTools } from '../components/dev/DevTools';
 
 export function Home() {
     return (
@@ -12,7 +11,6 @@ export function Home() {
             <main id="main-content">
                 <SEO />
                 <JsonLd />
-                {import.meta.env.DEV && <DevTools />}
                 <Hero />
                 <SectionIntro />
                 <SectionExpertise />
