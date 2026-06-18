@@ -1171,6 +1171,7 @@ export function SectionMethod() {
 // SECTION 3 — Capabilities (alternating text + visual)
 // ============================================================================
 export function SectionCapabilities() {
+    const { beadPx } = useBeadCtx();
     return (
         <section
             id="section-capabilities"
@@ -1206,11 +1207,16 @@ export function SectionCapabilities() {
                             boxShadow: '0 20px 48px rgba(0,0,0,0.18), inset 0 0 0 1px rgba(255,255,255,0.12)',
                         }}
                     >
-                        {/* fond bead (même source que le héro) */}
+                        {/* fond bead — rendu en beads à taille entière (comme le héro) */}
                         <div
                             aria-hidden="true"
                             className="absolute inset-0"
-                            style={{ backgroundImage: `url(${SOURCE_URL})`, backgroundSize: 'cover', backgroundPosition: 'center 60%' }}
+                            style={{
+                                backgroundImage: `url(${SOURCE_URL})`,
+                                backgroundSize: beadPx ? `${SAMPLE_W * beadPx}px ${SAMPLE_H * beadPx}px` : 'cover',
+                                backgroundPosition: 'center 60%',
+                                backgroundRepeat: 'no-repeat',
+                            }}
                         />
                         {/* carte flottante — avec l'effet holo (tilt + foil de surface) */}
                         <div

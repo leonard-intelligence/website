@@ -3,7 +3,7 @@
 // Layer 05 (Capacités métier) is the existing SectionCapabilities (Agent ID card).
 import { useInViewReveal } from '../../hooks/useInViewReveal';
 import { TOKENS, EMBOSS_DARK, CARD_SHADOW } from './Sections';
-import { SOURCE_URL } from '../pixels/BeadPxContext';
+import { SOURCE_URL, SAMPLE_W, SAMPLE_H, useBeadCtx } from '../pixels/BeadPxContext';
 import { IlluModelField } from './illustrations/IlluModelField';
 import { IlluHarness } from './illustrations/IlluHarness';
 import { IlluHarnessTrace } from './illustrations/IlluHarnessTrace';
@@ -229,6 +229,7 @@ export function LayerContexte() {
 }
 
 export function LayerProduits() {
+    const { beadPx } = useBeadCtx();
     return (
         <LayerSection
             id="section-produits"
@@ -250,11 +251,16 @@ export function LayerProduits() {
                         padding: 'clamp(20px, 4.5vw, 56px)',
                     }}
                 >
-                    {/* fond bead (même source que le héro, cadrage ciel) */}
+                    {/* fond bead — rendu en beads à taille entière (comme le héro) */}
                     <div
                         aria-hidden="true"
                         className="absolute inset-0"
-                        style={{ backgroundImage: `url(${SOURCE_URL})`, backgroundSize: 'cover', backgroundPosition: 'center 22%' }}
+                        style={{
+                            backgroundImage: `url(${SOURCE_URL})`,
+                            backgroundSize: beadPx ? `${SAMPLE_W * beadPx}px ${SAMPLE_H * beadPx}px` : 'cover',
+                            backgroundPosition: 'center 22%',
+                            backgroundRepeat: 'no-repeat',
+                        }}
                     />
                     <div className="relative">
                         <IlluSurfaces accent={TOKENS.lime} onImage />
