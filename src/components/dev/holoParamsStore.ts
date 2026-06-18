@@ -27,9 +27,9 @@ export type HoloParams = {
 export const DEFAULT_HOLO_PARAMS: HoloParams = {
     motifSize: 30,
     motifSpace: 26,
-    foilStrength: 0.4,
+    foilStrength: 0.49,
     glareStrength: 0.4,
-    saturation: 1.35,
+    saturation: 3,
     tilt: 8,
     foil: 'gold',
     splitWindow: true,
