@@ -661,10 +661,19 @@
   animation: corner-expand 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
+/* Défilement fluide pour les ancres internes (ex. « Contact » → #rdv en bas). */
+html {
+  scroll-behavior: smooth;
+}
+
 /* ==========================================================================
    ACCESSIBILITY: Reduced Motion
    ========================================================================== */
 @media (prefers-reduced-motion: reduce) {
+
+  html {
+    scroll-behavior: auto;
+  }
 
   .reveal,
   .reveal-up,

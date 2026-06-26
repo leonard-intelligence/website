@@ -134,9 +134,7 @@ export function Hero() {
                         />
                     </a>
                     <a
-                        href={CALENDLY_URL}
-                        target="_blank"
-                        rel="noopener noreferrer"
+                        href="#rdv"
                         className="text-white hover:opacity-90 transition-opacity inline-flex items-center px-5"
                         style={{
                             height: `${3 * sz.beadPx}px`,

@@ -2448,9 +2448,9 @@ export function AgentTemplate() {
 export function SectionCTA() {
     return (
         <section
-            id="section-cta"
+            id="rdv"
             className="relative"
-            style={{ backgroundColor: TOKENS.white, paddingBlock: '76px', paddingInline: '32px' }}
+            style={{ backgroundColor: TOKENS.white, paddingBlock: '76px', paddingInline: '32px', scrollMarginTop: '24px' }}
             aria-label="Démarrer un projet"
         >
             <Reveal>
