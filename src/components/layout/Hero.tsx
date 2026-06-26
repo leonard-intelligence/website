@@ -15,8 +15,24 @@ type Sz = {
     topPx: number;
 };
 
+// Taille des beads à partir du viewport. Calculée dès le premier rendu (init lazy
+// du useState) pour que la navbar ne saute pas de 0×0 à sa taille réelle → CLS.
+function computeSz(): Sz {
+    if (typeof window === 'undefined') return { beadPx: 0, beadW: 0, beadH: 0, leftPx: 0, topPx: 0 };
+    const vw = window.innerWidth;
+    const vh = window.innerHeight;
+    const beadPx = Math.max(1, Math.ceil(Math.max(vw / (SAMPLE_W + 2), vh / (SAMPLE_H + 1))));
+    const visibleCols = Math.max(1, Math.floor((vw - 2 * beadPx) / beadPx));
+    const visibleRows = Math.max(1, Math.floor((vh - beadPx) / beadPx));
+    const beadW = visibleCols * beadPx;
+    const beadH = visibleRows * beadPx;
+    const leftPx = Math.floor((vw - beadW) / 2);
+    const topPx = beadPx;
+    return { beadPx, beadW, beadH, leftPx, topPx };
+}
+
 export function Hero() {
-    const [sz, setSz] = useState<Sz>({ beadPx: 0, beadW: 0, beadH: 0, leftPx: 0, topPx: 0 });
+    const [sz, setSz] = useState<Sz>(computeSz);
     const heroTitle = useHeroTitleParams();
     // Preload every Geist Pixel variant so the DevTools switch is instant
     // (otherwise a variant is only fetched on first use → swap/blank flash).
@@ -36,22 +52,7 @@ export function Hero() {
     }, []);
 
     useEffect(() => {
-        const update = () => {
-            const vw = window.innerWidth;
-            const vh = window.innerHeight;
-            // 1-bead minimum border on top + L + R; bottom absorbs the modulo.
-            // Smallest integer beadPx that fits at least one full bead margin around.
-            const beadPx = Math.max(1, Math.ceil(Math.max(vw / (SAMPLE_W + 2), vh / (SAMPLE_H + 1))));
-            // Integer-cell bead area
-            const visibleCols = Math.max(1, Math.floor((vw - 2 * beadPx) / beadPx));
-            const visibleRows = Math.max(1, Math.floor((vh - beadPx) / beadPx));
-            const beadW = visibleCols * beadPx;
-            const beadH = visibleRows * beadPx;
-            // Anchor: top fixed at 1 bead, left centered horizontally (absorbs slack on L/R)
-            const leftPx = Math.floor((vw - beadW) / 2);
-            const topPx = beadPx;
-            setSz({ beadPx, beadW, beadH, leftPx, topPx });
-        };
+        const update = () => setSz(computeSz());
         update();
         window.addEventListener('resize', update);
         return () => window.removeEventListener('resize', update);

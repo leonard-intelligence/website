@@ -26,23 +26,28 @@ export function useBeadCtx() {
     return useContext(BeadCtxObj);
 }
 
+// Calcul du contexte bead à partir du viewport. Mêmes formules que le Hero.
+// Évalué dès le premier rendu (init lazy) pour que les fonds bead aient leur
+// taille définitive d'emblée → pas de décalage de layout (CLS).
+function computeCtx(): BeadCtx {
+    if (typeof window === 'undefined') return { beadPx: 0, beadW: 0, leftPx: 0, heroBottomGap: 0 };
+    const vw = window.innerWidth;
+    const vh = window.innerHeight;
+    const beadPx = Math.max(1, Math.ceil(Math.max(vw / (SAMPLE_W + 2), vh / (SAMPLE_H + 1))));
+    const visibleCols = Math.max(1, Math.floor((vw - 2 * beadPx) / beadPx));
+    const visibleRows = Math.max(1, Math.floor((vh - beadPx) / beadPx));
+    const beadW = visibleCols * beadPx;
+    const beadH = visibleRows * beadPx;
+    const leftPx = Math.floor((vw - beadW) / 2);
+    const heroBottomGap = vh - beadPx - beadH; // paper between bead image bottom and hero section bottom
+    return { beadPx, beadW, leftPx, heroBottomGap };
+}
+
 export function BeadPxProvider({ children }: { children: ReactNode }) {
-    const [ctx, setCtx] = useState<BeadCtx>({ beadPx: 0, beadW: 0, leftPx: 0, heroBottomGap: 0 });
+    const [ctx, setCtx] = useState<BeadCtx>(computeCtx);
 
     useEffect(() => {
-        const update = () => {
-            const vw = window.innerWidth;
-            const vh = window.innerHeight;
-            // Same formula as Hero
-            const beadPx = Math.max(1, Math.ceil(Math.max(vw / (SAMPLE_W + 2), vh / (SAMPLE_H + 1))));
-            const visibleCols = Math.max(1, Math.floor((vw - 2 * beadPx) / beadPx));
-            const visibleRows = Math.max(1, Math.floor((vh - beadPx) / beadPx));
-            const beadW = visibleCols * beadPx;
-            const beadH = visibleRows * beadPx;
-            const leftPx = Math.floor((vw - beadW) / 2);
-            const heroBottomGap = vh - beadPx - beadH; // paper between bead image bottom and hero section bottom
-            setCtx({ beadPx, beadW, leftPx, heroBottomGap });
-        };
+        const update = () => setCtx(computeCtx());
         update();
         window.addEventListener('resize', update);
         return () => window.removeEventListener('resize', update);
