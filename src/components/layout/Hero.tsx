@@ -166,7 +166,7 @@ export function Hero() {
                     className="font-sans text-center mx-auto"
                     style={{
                         fontFamily: `var(--font-pixel-${heroTitle.variant})`,
-                        fontSize: 'clamp(2rem, 5.6vw, 4.5rem)',
+                        fontSize: 'clamp(2.5rem, 5.6vw, 4.5rem)',
                         lineHeight: 1.15,
                         fontWeight: 400,
                         letterSpacing: '0.01em',
