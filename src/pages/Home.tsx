@@ -1,5 +1,5 @@
 import { Hero } from '../components/layout/Hero';
-import { SectionIntro, SectionExpertise, SectionMethod, SectionCapabilities, SectionStatement, SectionCTA, FooterV2 } from '../components/layout/Sections';
+import { EmbossFilters, SectionIntro, SectionExpertise, SectionMethod, SectionCapabilities, SectionStatement, SectionCTA, FooterV2 } from '../components/layout/Sections';
 import { LayerModeles, LayerHarnais, LayerDonnees, LayerContexte, LayerProduits, LayerSecurite } from '../components/layout/SystemSections';
 import { SEO } from '../components/seo/SEO';
 import { JsonLd } from '../components/seo/JsonLd';
@@ -11,6 +11,7 @@ export function Home() {
             <main id="main-content">
                 <SEO />
                 <JsonLd />
+                <EmbossFilters />{/* filtres SVG d'ombre interne des titres (emboss) */}
                 <Hero />
                 <SectionIntro />
                 <SectionExpertise />

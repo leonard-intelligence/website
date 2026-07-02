@@ -76,8 +76,40 @@ export const EMBOSS_MUTED: React.CSSProperties = {
     filter: 'url(#inset-shadow-dark)',
 };
 
-// NB: Inner-shadow SVG filters + the debug panel have moved to src/components/dev/DevTools.tsx.
-// Sections.tsx now only exports the section components and the EMBOSS_* style objects above.
+// ── Filtre SVG d'ombre interne (emboss) des titres ────────────────────────────
+// Consommé par EMBOSS_DARK / EMBOSS_MUTED via filter: url(#inset-shadow-dark).
+// Doit être présent une fois dans le DOM : monter <EmbossFilters /> en tête de page.
+// (Valeurs reprises des réglages par défaut du panneau debug, désormais retiré.)
+const EMBOSS_FILTER_PARAMS = { blur: 1.3, dx: -0.5, dy: 2.5, floodColor: '#000000', floodOpacity: 0.55 };
+
+function InsetShadowFilter({ id }: { id: string }) {
+    const p = EMBOSS_FILTER_PARAMS;
+    return (
+        <filter id={id} x="-15%" y="-15%" width="130%" height="140%">
+            <feGaussianBlur in="SourceAlpha" stdDeviation={p.blur} result="blur" />
+            <feOffset in="blur" dx={p.dx} dy={p.dy} result="offsetBlur" />
+            <feComposite in="SourceAlpha" in2="offsetBlur" operator="arithmetic" k2={1} k3={-1} result="diff" />
+            <feFlood floodColor={p.floodColor} floodOpacity={p.floodOpacity} result="shadowColor" />
+            <feComposite in="shadowColor" in2="diff" operator="in" result="shadowOnly" />
+            <feMerge>
+                <feMergeNode in="SourceGraphic" />
+                <feMergeNode in="shadowOnly" />
+            </feMerge>
+        </filter>
+    );
+}
+
+/** Injecte les filtres SVG d'ombre interne des titres. À monter une seule fois par page. */
+export function EmbossFilters() {
+    return (
+        <svg width="0" height="0" style={{ position: 'absolute' }} aria-hidden="true">
+            <defs>
+                <InsetShadowFilter id="inset-shadow-dark" />
+                <InsetShadowFilter id="inset-shadow-light" />
+            </defs>
+        </svg>
+    );
+}
 
 // (HeroToIntroDrip removed — user will paint the drip manually via Paint mode.)
 
