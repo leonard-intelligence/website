@@ -11,13 +11,9 @@ import { useVitruveParams } from '../dev/vitruveParamsStore';
 import { useVortexParams } from '../dev/vortexParamsStore';
 import { VortexBeadLayer } from './illustrations/VortexBeadLayer';
 import { QrBadge } from './QrBadge';
-import { ReliefButton } from '../ui/ReliefButton';
 import { ConstruitSur } from './ConstruitSur';
 import { Fragment, useEffect, useRef, useState } from 'react';
 import { useInViewReveal } from '../../hooks/useInViewReveal';
-
-// Lien de prise de rendez-vous (boutons de contact)
-const CALENDLY_URL = import.meta.env.VITE_CALENDLY_URL || 'https://calendly.com/leonard-intelligence/30min';
 
 function Reveal({ children, className }: { children: React.ReactNode; className?: string }) {
     const { ref, shown } = useInViewReveal<HTMLDivElement>();
@@ -2475,58 +2471,6 @@ export function AgentTemplate() {
 }
 
 // ============================================================================
-// SECTION 4 — Final CTA
-// ============================================================================
-export function SectionCTA() {
-    return (
-        <section
-            id="rdv"
-            className="relative"
-            style={{ backgroundColor: TOKENS.white, paddingBlock: '76px', paddingInline: '32px', scrollMarginTop: '24px' }}
-            aria-label="Démarrer un projet"
-        >
-            <Reveal>
-            <div className="max-w-[800px] mx-auto text-center">
-                <h2
-                    className="font-sans"
-                    style={{ fontSize: 'clamp(1.75rem, 3.4vw, 2.75rem)', lineHeight: 1.1, fontWeight: 500, letterSpacing: '-0.02em', ...EMBOSS_DARK }}
-                >
-                    30 minutes pour savoir où un agent vous fait gagner du temps.
-                </h2>
-                <p
-                    className="font-sans mt-5 mx-auto"
-                    style={{ fontSize: '17px', lineHeight: '24px', fontWeight: 460, color: TOKENS.mutedText, maxWidth: '48ch' }}
-                >
-                    On cartographie vos workflows à fort levier. À l'issue : un diagnostic écrit des 2-3 processus où un agent de production aurait le plus d'impact, et une estimation de faisabilité. Sans engagement.
-                </p>
-                <dl
-                    className="font-mono mx-auto mt-8 text-left"
-                    style={{ maxWidth: 320, padding: '20px 24px', borderRadius: 12, backgroundColor: TOKENS.pale, boxShadow: CARD_SHADOW, fontSize: 12.5, lineHeight: 1.9 }}
-                >
-                    {[
-                        ['DURÉE', '30:00'],
-                        ['FORMAT', 'APPEL VISIO'],
-                        ['LIVRABLE', 'DIAGNOSTIC_WORKFLOWS.PDF'],
-                        ['ENGAGEMENT', 'AUCUN'],
-                    ].map(([k, v]) => (
-                        <div key={k} className="flex justify-between gap-4">
-                            <dt style={{ color: TOKENS.mutedText, letterSpacing: '0.08em' }}>{k}</dt>
-                            <dd style={{ color: TOKENS.ink }}>{v}</dd>
-                        </div>
-                    ))}
-                </dl>
-                <div className="mt-10 flex flex-wrap justify-center items-center gap-3">
-                    <ReliefButton tone="lime" size="md" href={CALENDLY_URL} id="contact" target="_blank" rel="noopener noreferrer" iconRight={<ArrowRight />}>
-                        Réserver la cartographie
-                    </ReliefButton>
-                </div>
-            </div>
-            </Reveal>
-        </section>
-    );
-}
-
-// ============================================================================
 // SECTION 5 — Footer
 // ============================================================================
 export function FooterV2() {
@@ -2582,9 +2526,6 @@ export function FooterV2() {
                             Leonard Intelligence est une agence agentique
                             <span style={{ color: TOKENS.mutedText }}> dédiée aux opérations des entreprises.</span>
                         </p>
-                        <ReliefButton tone="dark" size="sm" href={CALENDLY_URL} target="_blank" rel="noopener noreferrer" className="mt-5" iconRight={<ArrowRight />}>
-                            Discutons
-                        </ReliefButton>
                     </div>
                 </div>
             </div>

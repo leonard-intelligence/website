@@ -1,11 +1,7 @@
 import { useEffect, useState } from 'react';
-import { ArrowRight } from 'lucide-react';
 import { SAMPLE_W, SAMPLE_H, SOURCE_URL } from '../pixels/BeadPxContext';
 import { ReliefButton } from '../ui/ReliefButton';
 import { useHeroTitleParams } from '../dev/heroTitleStore';
-
-// Lien de prise de rendez-vous (boutons de contact)
-const CALENDLY_URL = import.meta.env.VITE_CALENDLY_URL || 'https://calendly.com/leonard-intelligence/30min';
 
 type Sz = {
     beadPx: number;
@@ -133,23 +129,6 @@ export function Hero() {
                             className="w-auto object-contain"
                         />
                     </a>
-                    <a
-                        href="#rdv"
-                        className="text-white hover:opacity-90 transition-opacity inline-flex items-center px-5"
-                        style={{
-                            height: `${3 * sz.beadPx}px`,
-                            fontSize: '15px',
-                            fontWeight: 410,
-                            borderRadius: 13,
-                            background: 'linear-gradient(to right, rgba(0,0,0,0.18), rgba(0,0,0,0.10))',
-                            border: '1px solid rgba(255,255,255,0.2)',
-                            backdropFilter: 'blur(15px) saturate(118%)',
-                            WebkitBackdropFilter: 'blur(15px) saturate(118%)',
-                            boxShadow: '0 1px 3px 0 rgba(0,0,0,0.15)',
-                        }}
-                    >
-                        Contact
-                    </a>
                 </nav>
 
                 {/* Hero painted layer removed — pixels moved into the intro section
@@ -220,10 +199,6 @@ export function Hero() {
                         </p>
 
                         <div className="mt-6 flex flex-wrap items-center gap-3">
-                            <ReliefButton tone="lime" size="md" href={CALENDLY_URL} target="_blank" rel="noopener noreferrer" iconRight={<ArrowRight />}>
-                                Discutons de votre projet
-                            </ReliefButton>
-
                             <ReliefButton tone="light" size="md" href="#section-capabilities">
                                 Voir une fiche agent
                             </ReliefButton>
